@@ -84,3 +84,8 @@ exclude:
   - LICENSE
   - README.md
   - CNAME
+
+# Configuración de la Jekyll Feed Plugin
+feed:
+  path: "feed.xml"
+  posts_limit: 10
