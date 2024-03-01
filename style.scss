@@ -234,8 +234,23 @@ nav {
 
     @include mobile {
       margin: 0 10px;
-      color: $white;
+      color: $blue;
     }
+  }
+}
+
+/* Estilos para los enlaces de Blog y Contacto */
+nav .contact-link,
+nav .blog-link {
+  color: white;
+  margin-left: 20px; /* Ajusta según sea necesario */
+  font-weight: 300;
+  letter-spacing: 1px;
+  text-align: right;
+
+  @include mobile {
+    margin: 0 10px;
+    color: $blue; /* Color alternativo para dispositivos móviles */
   }
 }
 
