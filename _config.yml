@@ -89,3 +89,6 @@ exclude:
 feed:
   path: "feed.xml"
   posts_limit: 10
+
+# tema de jekyll
+theme: jekyll-theme-cayman
