@@ -2,6 +2,7 @@
 title: "Modificaciones del escenario Openstack"
 date: 2021-03-12T14:06:50+01:00
 categories: [Cloud]
+excerpt: "En el siguiente post, haciendo uso del escenario openstack creado en una de las practicas anteriores haremos una serie de modificaciones en dicho escenario como pueden ser la creacion de una red DMZ, crear un nodo en la nueva red DMZ y mover una de las maquinas anteriormente creadas de la red interna a DMZ."
 ---
 ### **Introducción** ###
 

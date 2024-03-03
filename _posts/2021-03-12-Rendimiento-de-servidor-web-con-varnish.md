@@ -2,6 +2,7 @@
 title: "Rendimiento de servidor Web con Varnish"
 date: 2021-03-12T18:53:19+01:00
 categories: [Servicios]
+excerpt: "En este post se realizaran una serie de tareas en el que se revisara y comprobara el redimiento de servidor web haciendo uso de varnish."
 ---
 
 * Tarea 1: Vamos a configurar una máquina con la configuración ganadora: nginx + fpm_php (socket unix.Para ello ejecuta la receta ansible que encontraras en este repositorio. Accede al wordpress y termina la configuración del sitio.

@@ -2,6 +2,7 @@
 title: "Montaje de pila ELK"
 date: 2021-03-12T18:22:23+01:00
 categories: [Sistemas]
+excerpt: "Es un conjunto de herramientas de gran potencial de código abierto que se combinan para crear una herramienta de administración de registros permitiendo la monitorización, consolidación y análisis de logs generados en múltiples servidores, estas herramientas son:ElasticSearch, Logstash y Kibana."
 ---
 
 ### **¿Que es una pila ELK?** ###

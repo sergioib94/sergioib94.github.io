@@ -2,6 +2,7 @@
 title: "Vpn Site to Site"
 date: 2021-03-12T19:00:38+01:00
 categories: [Seguridad]
+excerpt: "En este post se iran indicando los pasos de configuracion para poder crear una vpn site to site haciendo uso de un escenario virtual en openstack creado en posts anteriores."
 ---
 
 ### **Introduccion** ###
