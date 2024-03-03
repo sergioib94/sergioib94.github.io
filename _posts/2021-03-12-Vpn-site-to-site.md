@@ -4,7 +4,7 @@ date: 2021-03-12T19:00:38+01:00
 categories: [Seguridad]
 ---
 
-### Introduccion ###
+### **Introduccion** ###
 
 Configuraremos una conexión VPN sitio a sitio entre dos equipos del cloud openstack:
 

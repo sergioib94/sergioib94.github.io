@@ -4,7 +4,7 @@ date: 2021-03-13T13:08:14+01:00
 categories: [Cloud]
 ---
 
-### Introduccion ###
+### **Introduccion** ###
 
 Para esta practica contaremos con un escenario de 3 nodos creados con vagrant:
 

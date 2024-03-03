@@ -4,7 +4,7 @@ date: 2021-04-03T13:25:45+02:00
 categories: [Base de Datos, Apuntes]
 ---
 
-### Introducción ###
+### **Introducción** ###
 
 En este post se va a explicar tanto la instalacion y configuracion de mongodb ademas de varios de los concepos basicos como pueden ser el uso de proyecciones y operadores CRUD. 
 

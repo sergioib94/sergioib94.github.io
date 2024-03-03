@@ -4,7 +4,7 @@ date: 2021-03-13T12:44:43+01:00
 categories: [Servicios]
 ---
 
-### Balanceador de carga ###
+### **Balanceador de carga** ###
 
 En la maquina de nuestro escenario llamada balanceador, instalamos haproxy:
 
