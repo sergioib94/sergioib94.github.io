@@ -10,8 +10,6 @@ Softether VPN es uno de los softwares VPN multiprotocolo mas potentes y rápido 
 
 Una de las funciones con las que cuenta este software es la de clonación de openvpn server, mediante la cual si se tiene un server openvpn, este se puede convertir rápidamente en un server Softether.
 
-<!--more-->
-
 ### Caracteristicas de SoftEther ###
 
 * De código abierto.
