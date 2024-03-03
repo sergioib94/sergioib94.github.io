@@ -2,6 +2,9 @@
 title: "Active Directory"
 date: 2021-05-23T15:28:17+02:00
 categories: [Sistemas, Apuntes]
+excerpt: "C++ es un lenguaje de programación compilado creado en 1979 derivado del lenguaje C quedándose con lo mejor de C y añadiendo funcionalidades nuevas. 
+
+Una de las mejoras que añade C++ es la posibilidad de usar la programación orientada a objetos la cual nos permite ampliar los tipos de datos que podemos utilizar permitiendo definir clases y objetos."
 ---
 
 ### **¿Que es?** ###

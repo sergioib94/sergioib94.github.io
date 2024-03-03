@@ -2,6 +2,7 @@
 title: "Proxy y balanceador de carga"
 date: 2021-03-13T12:44:43+01:00
 categories: [Servicios]
+excerpt: "En este posts se explicara el uso y configuracion de un balanceador de carga usando para ello una maquina virtual de un escenario virtual creado en posts anteriores."
 ---
 
 ### **Balanceador de carga** ###

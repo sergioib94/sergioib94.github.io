@@ -2,6 +2,7 @@
 title: "Introducción a las Bases De Datos (Oracle)"
 date: 2021-09-07T11:33:23+02:00
 categories: [Base de Datos, Apuntes]
+excerpt: "En este post se comentaran y explicaran de la forma mas clara posble los conceptos basicos para poder trabajar con BBDD Oracle."
 ---
 
 ### **Tipos de sentencias en oracle** ###

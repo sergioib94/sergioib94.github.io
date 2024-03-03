@@ -2,6 +2,7 @@
 title: "Kubernetes Letschat"
 date: 2021-03-13T12:13:11+01:00
 categories: [Cloud]
+excerpt: "En este post, lo que haremos sera primero crear un cluster de kubernetes, para lo cual nuestro equipo debe de contar con al menos 4 o 5 Gb de ram al menos ya se van a crear 3 maquinas virtuales, un nodo master o controlador y 2 nodos secundarios."
 ---
 
 ### **Introduccion** ###

@@ -2,6 +2,7 @@
 title: "Instalacion Openstack con Kolla Ansible"
 date: 2021-03-13T13:08:14+01:00
 categories: [Cloud]
+excerpt: "En este post crearemos un escenario virtual haciendo uso de vagrant y montaremos una instalacion de openstack haciendo uso de varias maquinas"
 ---
 
 ### **Introduccion** ###
