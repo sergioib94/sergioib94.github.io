@@ -2,7 +2,9 @@
 title: "Compilacion programa C con Makefile"
 date: 2021-03-11T16:10:39+01:00
 categories: [Sistemas]
+excerpt: "En este post a modo de aprendizaje para aprender mas sobre debian y su paqueteria se va a proceder a la compilacion de un paquete escrito en C, en este caso el paquete less para posteriormente ser capaces de compilar nuestro sistema operativo."
 ---
+
 ## **Introduccion** ##
 
 En este post a modo de aprendizaje para aprender mas sobre debian y su paqueteria se va a proceder a la compilacion de un paquete escrito en C, en este caso el paquete less para posteriormente ser capaces de compilar nuestro sistema operativo.

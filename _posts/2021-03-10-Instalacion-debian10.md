@@ -1,7 +1,8 @@
 ---
-title: "Instalacion de Debian10"
+title: "Instalacion de Debian 10"
 date: 2021-03-10T21:20:45+01:00
 categories: [Sistemas]
+excerpt: "En un portátil (HP pavilion 15) con 1TB de disco se crearan particiones LVM donde se instalara un sistema debían 10."
 ---
 
 ## **Instacacion Debian 10** ##

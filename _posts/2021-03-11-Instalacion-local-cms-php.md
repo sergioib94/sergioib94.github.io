@@ -2,6 +2,7 @@
 title: "Instalacion local CMS PHP"
 date: 2021-03-11T10:13:49+01:00
 categories: [Aplicaciones Web]
+excerpt: "En el siguiente post veremos haciendo uso de una maquina virtual en vagrant con sistema operativo unix e instalaremos en dicha maquina un servidor LAMP para instalar y configurar drupal."
 ---
 
 ### **Instalación de un servidor LAMP** ###

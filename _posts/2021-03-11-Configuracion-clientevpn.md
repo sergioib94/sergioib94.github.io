@@ -2,6 +2,7 @@
 title: "Configuracion cliente VPN con certificado x509"
 date: 2021-03-11T16:19:25+01:00
 categories: [Cloud]
+excerpt: "En el siguiente post se configurara una configuracion de VPN para poder acceder desde casa a una red distinta como puede ser la red del centro de trabajo o en este caso la red del instituto."
 ---
 
 ## **Introducción** ##

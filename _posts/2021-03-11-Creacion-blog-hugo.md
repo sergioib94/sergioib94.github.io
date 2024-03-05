@@ -2,6 +2,7 @@
 title: "Creacion blog Hugo"
 date: 2021-03-11T08:07:44+01:00
 categories: [Aplicaciones Web]
+excerpt: "En este post se hablara de como ha sido creado este blog usando hugo donde se van a ir publicando trabajos y apuntos relacionados con el grado superior de Administracion de Sistemas Informaticos en Red (ASIR) ademas de apuntes o documentacion de interes y ademas la configuracion continua que se hara a traves de Github y Netlify."
 ---
 
 ### **Introducción** ##

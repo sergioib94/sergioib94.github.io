@@ -2,7 +2,9 @@
 title: "Integridad, firmas y autentificacion"
 date: 2021-03-11T16:00:38+01:00
 categories: [Seguridad]
+excerpt: "En esta apartado mediante un conjunto de tareas trabajaremos temas de seguridad como las firmas electronicas usando gpg, correos seguros usando thunderbird/evolution, integridad de archivos y autentificacion con ssh."
 ---
+
 ## **Introduccion** ##
 
 En esta apartado mediante un conjunto de tareas trabajaremos temas de seguridad como las firmas electronicas usando gpg, correos seguros usando thunderbird/evolution, integridad de archivos y autentificacion con ssh.

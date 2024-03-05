@@ -2,6 +2,7 @@
 title: "Virtualhost apache"
 date: 2021-03-11T09:47:06+01:00
 categories: [Servicios]
+excerpt: "En este post mediando una serie de tareas se configurara un virtualhost apache en un una maquina virtual creada con vagrant."
 ---
 
 ### **Introducción** ###

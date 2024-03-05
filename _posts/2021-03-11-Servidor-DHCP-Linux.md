@@ -2,6 +2,7 @@
 title: "Servidor DHCP Linux"
 date: 2021-03-11T09:33:55+01:00
 categories: [Servicios]
+excerpt: "En el siguiente post se instalara y configurara un servidor DHCP en un escenario virtual."
 ---
 
 ### **Funcionamiento de un servidor DHCP** ###

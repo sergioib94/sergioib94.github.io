@@ -2,6 +2,7 @@
 title: "Mapeo URL Virtualhost"
 date: 2021-03-11T09:54:31+01:00
 categories: [Servicios]
+excerpt: "En el siguiente post se creara un nuevo host virtual en vagrant y se realizara una configuracion para mapear urls."
 ---
 
 * Crea un nuevo host virtual que es accedido con el nombre www.mapeo.com, cuyo DocumentRoot sea /srv/mapeo.

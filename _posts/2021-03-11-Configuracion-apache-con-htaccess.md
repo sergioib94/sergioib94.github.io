@@ -2,6 +2,7 @@
 title: "Configuracion apache con .htaccess"
 date: 2021-03-11T16:17:14+01:00
 categories: [Servicios]
+excerpt: "En el siguiente post se iran indicando los pasos o tareas para ir configurando apache con .htaccess, para ello lo primero sera darnos de alta en un proveedor de hosting como puede ser en este caso 000.webhost (gratuito)."
 ---
 
 * Date de alta en un proveedor de hosting. ¿Si necesitamos configurar el servidor web que han configurado los administradores del proveedor?, ¿qué podemos hacer? Explica la directiva AllowOverride de apache2. Utilizando archivos .htaccess realiza las siguientes configuraciones:
