@@ -2,11 +2,12 @@
 title: "Cortafuegos en escenario Openstack"
 date: 2021-03-12T17:53:20+01:00
 categories: [Seguridad]
+excerpt: "En el siguiente post se va a configurar un cortafuegos que nos permita controlar el trafico de red en un nodo instalado en un escenario en openstack creado en practicas anteriores."
 ---
 
 ### **Introducción** ###
 
-Vamos a construir un cortafuegos en la mquina dulcinea de nuestro escenario en openstack que nos permita controlar el tráfico de nuestra red. El cortafuegos que vamos a construir debe funcionar tras un reinicio.
+Vamos a construir un cortafuegos en la maquina dulcinea de nuestro escenario en openstack que nos permita controlar el tráfico de nuestra red. El cortafuegos que vamos a construir debe funcionar tras un reinicio.
 
 En este caso la maquina dulcinea cuenta con 3 interfaces de red:
 

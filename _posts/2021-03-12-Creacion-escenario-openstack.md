@@ -2,6 +2,7 @@
 title: "Creacion de escenario Openstack"
 date: 2021-03-12T11:43:35+01:00
 categories: [Cloud]
+excerpt: "En este post se creara un escenario en openstack con varias maquinas virtuales donde a lo largo del curso se realizaran la mayoria de las practicas."
 ---
 
 ### **Introduccion** ###

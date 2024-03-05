@@ -2,6 +2,7 @@
 title: "Actualizacion de Centos7 a Centos8"
 date: 2021-03-12T12:52:53+01:00
 categories: [Sistemas]
+excerpt: "Esta practica se realizara en una maquina virtual llamada Quijote en un escenario opestack creado en practicas anteriores que cuenta con un sistema operativo Centos 7 que se actualizara a Centos 8."
 ---
 
 ### **Introduccion** ###

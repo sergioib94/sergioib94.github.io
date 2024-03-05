@@ -2,13 +2,14 @@
 title: "Instalacion de Mezzanine en Openstack"
 date: 2021-03-12T16:01:48+01:00
 categories: [Aplicaciones Web]
+excerpt: "En este post vamos a desplegar un CMS python basado en django, en este caso se ha elegido Mezzanine."
 ---
 
 ### **Introducción** ###
 
 En este post vamos a desplegar un CMS python basado en django, en este caso se ha elegido Mezzanine.
 
-Para ello contaremos conn dos entornos de trabajo, uno sera el entorno de desarrollo que sera mi propia maquina con un entorno virtual, y por otro lado el entorno de produccion que sera el nodo Quijote del entorno openstack creado y la practica de "Creacion de escenario Openstack".
+Para ello contaremos con dos entornos de trabajo, uno sera el entorno de desarrollo que sera mi propia maquina con un entorno virtual, y por otro lado el entorno de produccion que sera el nodo Quijote del entorno openstack creado y la practica de "Creacion de escenario Openstack".
 
 ### **Entorno de desarrollo** ###
 
