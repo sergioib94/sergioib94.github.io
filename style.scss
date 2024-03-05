@@ -234,7 +234,7 @@ nav {
 
     @include mobile {
       margin: 0 10px;
-      color: $blue;
+      color: $white;
     }
   }
 }
@@ -250,7 +250,7 @@ nav .blog-link {
 
   @include mobile {
     margin: 0 10px;
-    color: $blue; /* Color alternativo para dispositivos móviles */
+    color: $white; /* Color alternativo para dispositivos móviles */
   }
 }
 
