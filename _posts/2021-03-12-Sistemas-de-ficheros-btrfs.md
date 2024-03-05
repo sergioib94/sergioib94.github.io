@@ -2,9 +2,7 @@
 title: "Sistemas de ficheros Btrfs"
 date: 2021-03-12T17:50:31+01:00
 categories: [Sistemas]
-excerpt: "Btrfs es un sistema de archivos copy-on-write anunciado por Oracle Corporation para GNU/Linux.
-
-Su objetivo es sustituir al actual sistema de archivos ext4, eliminando el mayor número de sus limitaciones, en especial con el tamaño máximo de los ficheros; además de la adopción de nuevas tecnologías no soportadas por ext3. Se afirma también que se "centrará en la tolerancia a fallos, reparación y fácil administración."
+excerpt: "Btrfs es un sistema de archivos copy-on-write anunciado por Oracle Corporation para GNU/Linux."
 ---
 
 ### **Introducción** ###
