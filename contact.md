@@ -1,15 +1,13 @@
 ---
 layout: page
-title: About
-permalink: /about/
+title: Contacto
+permalink: /contact/
 ---
 
-Some information about you!
+Bienvenid@s al blog personal de Sergio ibáñez. Actualmente soy tecnico informático en sevilla.
 
-### More Information
-
-A place to include any other types of information that you'd like to include about yourself.
+El propósito principal de esta página es subir las tareas solicitadas a lo largo ASIR, ademas de aquellos conocimientos que se vayan adquiriendo con el tiempo, para que además de ayudarme a mi mismo, ayudar a todo aquel que llegue aquí buscando información/aprendizaje
 
 ### Contact me
 
-[email@domain.com](mailto:email@domain.com)
+[sergioib309@gmail.com](mailto:email@domain.com)
