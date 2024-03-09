@@ -21,9 +21,11 @@ footer-links:
   email: sergioib309@gmail.com
   facebook:
   flickr:
-  github: sergioib94
+  - title: GitHub
+    url: https://github.com/sergioib94
   instagram:
-  linkedin: sergio ibañez nuñez
+  - title: LinkedIn
+    url: https://www.linkedin.com/in/sergio ibañez Nuñez
   pinterest:
   rss: # just type anything here for a working RSS icon
   twitter:
