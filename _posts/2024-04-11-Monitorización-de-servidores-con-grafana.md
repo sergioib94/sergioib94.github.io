@@ -110,4 +110,4 @@ Con grafana tenemos la opcion tanto de crear nuestro propio dashboard dependiend
 
 En este caso para importar los dashboards se puede indicar tanto la url del dashboard como la ID, en esta practica se ha usado el dashboard Node exporter siendo el mas descargado por lo que para su uso indicamos la ID de node-exportes (1860) y ya podremos empezar a usar el dashboard.
 
-![Dashboard](\images\Grafana\metrica.png)
+![Dashboard](/images/Grafana/metrica.png)
