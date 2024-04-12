@@ -2,7 +2,7 @@
 title: "Monitorizacion de servidores con grafana"
 date: 2024-04-11T13:14:06+02:00
 categories: [Sistemas, Monitorización]
-excerpt: ""
+excerpt: "Grafana open source es un software de análisis y visualización de código abierto. Le permite consultar, visualizar, alertar y explorar sus métricas, registros y seguimientos sin importar dónde estén almacenados. Le proporciona herramientas para convertir los datos de su base de datos de series temporales (TSDB) en gráficos y visualizaciones interesantes."
 ---
 
 ### **Instalación de grafana en debian** ###
