@@ -58,7 +58,7 @@ sudo systemctl enable grafana-server.service
 
 Con esto ya estaria completa la instalacion de grafana y ya podriamos acceder a la web de grafana para poder loguearnos, para ello hay que indicar en la barra de busqueda de cualquier navegador la ip de nuestra maquina (o su dominio), indicando el puerto 3000 que es el usado por grafana por defecto. en mi caso se accede con la direccion 192.168.1.146:3000
 
-![Grafana login](sergioib94.github.io\images\grafana_login.png)
+![Grafana login](\images\grafana_login.png)
 
 NOTA: por defecto la primera vez que se accede a grafana las credenciales siempre van a ser admin/admin, una ves se acceda por primera vez pedira un cambio e contraseña y podremos empezar a trabajar con grafana.
 
@@ -102,7 +102,7 @@ Para añadir la base de datos de prometeus a grafana accedemos primero al sitio 
 
 En el menu de la izquierda vamos a la opcion "connections" y despues a la opcion "data sources", donde nos aparecera la opcion para añadir nuestra base de datos, en este caso prometheus, para ello sera necesario añadir la URL http://localhost:9090.
 
-![Data source](sergioib94.github.io\images\data-source.png)
+![Data source](\images\data-source.png)
 
 ### **Cracion de dashboards** ###
 
