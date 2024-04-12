@@ -106,7 +106,7 @@ En el menu de la izquierda vamos a la opcion "connections" y despues a la opcion
 
 ### **Cracion de dashboards** ###
 
-Con grafana tenemos la opcion tanto de crear nuestro propio dashboard dependiendo de las necesidaddes de monitarizacion que tenga neustro sistema asi como tambien la opcion de importar dashboards creados por la comunidad en [Grafana dashboards]: https://grafana.com/grafana/dashboards/
+Con grafana tenemos la opcion tanto de crear nuestro propio dashboard dependiendo de las necesidaddes de monitarizacion que tenga neustro sistema asi como tambien la opcion de importar dashboards creados por la comunidad en [Grafana dashboards](https://grafana.com/grafana/dashboards/)
 
 En este caso para importar los dashboards se puede indicar tanto la url del dashboard como la ID, en esta practica se ha usado el dashboard Node exporter siendo el mas descargado por lo que para su uso indicamos la ID de node-exportes (1860) y ya podremos empezar a usar el dashboard.
 
