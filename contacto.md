@@ -1,7 +1,7 @@
 ---
 layout: page
-title: Contact
-permalink: /contact/
+title: Contacto
+permalink: /contacto/
 ---
 
 Bienvenid@s al blog personal de Sergio ibáñez. Actualmente soy tecnico informático en sevilla.
