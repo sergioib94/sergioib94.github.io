@@ -56,7 +56,7 @@ Finalmente habilitamos grafana en el inicio de servidor para que inicie en el ar
 sudo systemctl enable grafana-server.service
 ~~~
 
-Con esto ya estaria completa la instalacion de grafana y ya podriamos acceder a la web de grafana para poder loguearnos, para ello hay que indicar en la barra de busqueda de cualquier navegador la ip de nuestra maquina (o su dominio), indicando el puerto 3000 que es el usado por grafana por defecto. en mi caso se accede con la direccion 192.168.1.146:3000
+Con esto ya estaria completa la instalacion de grafana y ya podriamos acceder a la web de grafana para poder loguearnos, para ello hay que indicar en la barra de busqueda de cualquier navegador la ip de nuestra maquina (o su dominio), indicando el puerto 3000 que es el usado por grafana por defecto. en mi caso se accede con la direccion 192.168.110.129:3000
 
 ![Grafana login](/images/Grafana/grafana_login.png)
 
@@ -108,6 +108,34 @@ En el menu de la izquierda vamos a la opcion "connections" y despues a la opcion
 
 Con grafana tenemos la opcion tanto de crear nuestro propio dashboard dependiendo de las necesidaddes de monitarizacion que tenga neustro sistema asi como tambien la opcion de importar dashboards creados por la comunidad en [Grafana dashboards](https://grafana.com/grafana/dashboards/)
 
-En este caso para importar los dashboards se puede indicar tanto la url del dashboard como la ID, en esta practica se ha usado el dashboard Node exporter siendo el mas descargado por lo que para su uso indicamos la ID de node-exportes (1860) y ya podremos empezar a usar el dashboard.
+En este caso para importar los dashboards en el menu de la izquierda buscamos la opcion de "dashboards", abrimos la opcion "create dashboard" y despues entre las tres opciones que nos ofrece grafana seleccionamos la opcion "import dashboard". Una vez ahi para importar el dashboard podemos indicar tanto la url del dashboard como la ID, 
+
+A modo de ejemplo se ha usado el dashboard Node exporter siendo el mas descargado por lo que para su uso indicamos la ID de node-exportes (1860) y ya podremos empezar a usar el dashboard.
 
 ![Dashboard](/images/Grafana/metrica.png)
+
+Si por el contrario en lugar de importar dashboards creados por la comunidad queremos crear nuestros propios dashboards personalizados dependiendo de las necesidades que tengamos a la hora de monitorizar tendriamos que realizar los siguientes pasos:
+
+Al igual que se ha hecho anteriormente, en el menu de la izquierda buscamos la opcion de "dashboards" y abrimos la opcion "create dashboard" pero esta vez en lugar de seleccionar la opcion "import dashboard", elegimos la opcion "+ add visualization".
+
+Al acceder a "add visualization" lo primero que nos pedira grafana sera que elijamos un data source que sera desde donde grafana obtenga los datos de las metricas. Al tratarse de una maquina recien creada en mi caso el unico data source que da la opcion de seleccionar sera el de prometheus pero segun las necesidades que tengamos podemos instalar cualquier otro para poder usarlo.
+
+![Prometheus](/images/Grafana/prometheus.png)
+
+Al crear un dashboard vacio, lo primero que haremos sera crear los paneles. Un panel es el bloque básico para la visualización de los datos. Grafana provee diferentes tipos de paneles y cada uno de ellos provee un editor de consulta (query) dependiendo del tipo de Data Source seleccionado.
+
+![Panel vacio](/images/Grafana/panel.png)
+
+Vamos a crear un panel de tipo grafico en el que por ejemplo consultaremos la tasa promedio de solicitudes HTTP en los últimos 5 minutos, para ello en la parte de abajo donde visualizamos los paneles encontraremos la opcion "query" donde podremos realizar diversas consultas de datos en el apartado "metrics". Como por ejemplo lo que queremos consultar es la tasa promedio de solicitudes http la metrica que necesitamos seia la de "prometheus_http_request_total".
+
+Tambien podemos agrgar un rango de tiempo para que los datos esten lo mas actualizados posibles, en este caso como rango de tiempo se ha puesto de 5 min, para ello bajo el apartado metrica nos aparecera una opcion llamada "hint: add rate" donde tendremos para elegir distintos rangos de actualizacion, desde 1 min a 24h.
+
+Cuando tengamos claro el tipo de consulta que haremos, en el apartado derecho seleccionaremos el tipo de grafica para mostrar los datos ademas de poder seleccionar diversas opciones para que esos datos se muestren lo mejor y mas claramente posible.
+
+### **Configuraciones de paneles** ###
+
+A la hora de configurar y editar nuestros paneles en el menu de la derecha contamos con varias opciones que nos pueden ser utiles para poder diferenciar los datos que mostrara dicho panel en el dashboard. La primera opcion que veremos sera la que nos permitira seleccionar la forma grafica en la que los datos se nos mostraran.
+
+* Panel options
+
+En este apartado podremos ponerle un nombre y descripcion (si fuese necesario) al panel que se haya creado. Ademas de indicar un nombre y descripcion tambien contaremos con una opcion que puede ser muy util que seria la opcion "panel links" lo que nos permitira compartir paneles entre distintos miembros de un equipo o distintos usuarios compartiendo la url que genere el panel.
