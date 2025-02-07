@@ -21,7 +21,10 @@ html {
 
 body {
 	background: $white;
-  font: 18px/1.4 $helvetica;
+  //font: 18px/1.4 $helvetica;
+  font-family: 'Inter', sans-serif;
+  line-height: 1.6;
+  font-size: 16px;
   color: $darkGray;
 }
 
