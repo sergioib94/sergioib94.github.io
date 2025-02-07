@@ -94,3 +94,6 @@ feed:
 
 # tema de jekyll
 theme: jekyll-theme-cayman
+
+# importacion de google fonts para el cambio de fuente a open sans
+google_fonts: "Open Sans:wght@400;600"
