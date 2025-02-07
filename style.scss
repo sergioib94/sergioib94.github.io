@@ -307,3 +307,65 @@ footer {
 // ... Otherwise it really bloats up the top of the CSS file and makes it difficult to find the start
 @import "highlights";
 @import "svg-icons";
+
+/* Navegación */
+.main-navigation {
+  text-align: center;
+  margin: 15px 0;
+}
+
+.main-navigation a {
+  margin: 0 15px;
+  text-decoration: none;
+  font-weight: bold;
+  color: white;
+}
+
+.main-navigation a:hover {
+  text-decoration: underline;
+}
+
+/* Botón de modo oscuro */
+#dark-mode-toggle {
+  background: #222;
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+#dark-mode-toggle:hover {
+  background: #444;
+}
+
+/* Pie de página */
+.site-footer {
+  text-align: center;
+  margin-top: 40px;
+  padding: 20px;
+  background: #222;
+  color: white;
+}
+
+/* Modo oscuro */
+body.dark-mode {
+  background-color: #121212;
+  color: white;
+}
+
+.dark-mode header {
+  background: #1e1e1e;
+}
+
+.dark-mode footer {
+  background: #000;
+}
+
+.dark-mode nav a {
+  color: #f39c12;
+}
+
+.dark-mode nav a:hover {
+  text-decoration: underline;
+}
