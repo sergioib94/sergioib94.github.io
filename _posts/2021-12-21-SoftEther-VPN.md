@@ -2,16 +2,16 @@
 title: "Introducción SoftEther VPN"
 date: 2021-12-21T13:44:30+01:00
 categories: [Seguridad]
-excerpt: "Softether VPN es uno de los softwares VPN multiprotocolo mas potentes y rápido del mundo actualmente. Funciona en sistemas Windows, Solaris, Mac, FreeBSD y algunas distribuciones de Linux. Ademas de ser de software libre, también es una alternativa muy buena a openvpn y a los servidores VPN de microsoft."
+excerpt: "SoftEther VPN es uno de los software VPN multiprotocolo más potentes y rápidos del mundo en la actualidad. Funciona en sistemas Windows, Solaris, Mac, FreeBSD y algunas distribuciones de Linux. Además de ser de software libre, también es una alternativa muy buena a openvpn y a los servidores VPN de microsoft."
 ---
 
 ### **Introducción** ###
 
-Softether VPN es uno de los softwares VPN multiprotocolo mas potentes y rápido del mundo actualmente. Funciona en sistemas Windows, Solaris, Mac, FreeBSD y algunas distribuciones de Linux. Ademas de ser de software libre, también es una alternativa muy buena a openvpn y a los servidores VPN de microsoft.
+Softether VPN es uno de los softwares VPN multiprotocolo mas potentes y rápido del mundo actualmente. Funciona en sistemas Windows, Solaris, Mac, FreeBSD y algunas distribuciones de Linux. Además de ser de software libre, también es una alternativa muy buena a openvpn y a los servidores VPN de microsoft.
 
 Una de las funciones con las que cuenta este software es la de clonación de openvpn server, mediante la cual si se tiene un server openvpn, este se puede convertir rápidamente en un server Softether.
 
-### Caracteristicas de SoftEther ###
+### Características de SoftEther ###
 
 * De código abierto.
 * Fácil de establecer conexiones VPN tanto remotas como de sitio a sitio.
@@ -54,7 +54,7 @@ Autentificación por contraseña de toda la vida.
 
 * Certificado:
 
-Autentificacion haciendo uso de un certificado creado en el propio servidor softether a través del comando certcreate o bien haciendo uso de otras herramientas como let's encrypt
+Autentificación haciendo uso de un certificado creado en el propio servidor softether a través del comando certcreate o bien haciendo uso de otras herramientas como let's encrypt
 
 ### Protocolos que usa Softether ###
 
@@ -778,7 +778,7 @@ The command completed successfully.
 VPN Server>
 ~~~
 
-Para poder usar Softether lo primero sera crear un concentrador virtual o hub al que posteriormente se puedan conectar los clientes.
+Para poder usar Softether lo primero sera crear un concentrador virtual o hub al que posteriormente se puedan conectar los clientes. En SoftEther VPN, un hub virtual es un punto central de conexión donde se gestionan los clientes VPN. Es similar a un switch en una red física, permitiendo la comunicación entre los dispositivos conectados.
 
 ~~~
 VPN Server>HubCreate Empresa
@@ -792,7 +792,29 @@ Confirm input: ************
 The command completed successfully.
 ~~~
 
-Por otro lado, empezaremos a configurar un puente local para que los clientes en la misma red puedan conectarse sin problemas. Este puente local se puede hacer de dos formas, la primera es usando la función de SecureNAT:
+Por otro lado, empezaremos a configurar un puente local para que los clientes en la misma red puedan conectarse sin problemas. Este puente local se puede hacer de dos formas, la primera es usando la función de SecureNAT y la segunda seria configurar un puente local haciendo uso de la interfaz tap:
+
+* Casos en los que se aplica la opción SecureNAT:
+
+1. Redes pequeas o de pruebas (no requiere configuraciones avanzadas ni tocar la configuraci-on de red del servidor).
+2. Clientes moviles o con IP dinámicas debido a que SecureNAT permite conexiones sin necesidad de cambiar reglas de firewall o rutas y funciona bien para usuarios remotos que se conectan desde redes públicas o con restricciones.
+3. Ambientes con restricciones de red a que SecureNAT encapsula el tráfico en HTTPS, lo que permite eludir restricciones en redes corporativas o escolares y no necesitas abrir puertos adicionales en el firewall del servidor.
+
+Ejemplo practico
+
+Un trabajador remoto necesita conectarse a la red de la empresa sin modificar su router o la configuración del firewall. SecureNAT le asigna una IP virtual sin interferir con su red local.
+
+* Casos en los que se aplica el uso de la interfaz tap
+
+1. Integración total con la red local, ya que al contrario que SecureNat la interfaz tap hace que los clientes VPN tengan una IP en la misma subred que el resto de dispositivos locales lo que permite que los clientes accedan a los recursos compartidos como impresoras y servidores locales
+2. VPN Site to site
+3. Rendimiento optimizado debido a que ebita la sobrecarga de NAT, mejorando asi la velocidad y estabilidad del tráfico de red.
+
+Ejemplo práctico:
+
+Una empresa con oficinas en dos ciudades necesita que los empleados accedan a la misma red interna sin restricciones. Un puente TAP les asigna IPs de la misma red, como si estuvieran físicamente en la sede principal.
+
+En el caso de querer configurar SecureNAT, es tan sencillo como ejecutar el siguiente comando:
 
 ~~~
 VPN Server/VPN1>SecureNatEnable
@@ -800,7 +822,7 @@ SecureNatEnable command - Enable the Virtual NAT and DHCP Server Function (Secur
 The command completed successfully.
 ~~~
 
-En el caso de hacerlo creando la interfaz tap, tendriamos que hacer lo siguiente:
+En el caso de querer usar la interfaz tap, tendriamos que hacer lo siguiente:
 
 ~~~
 VPN Server>BridgeCreate /DEVICE:"soft" /TAP:yes Empresa
@@ -824,8 +846,6 @@ For details please refer the documents of your VM. If it is a shared-VM and admi
 
 The command completed successfully.
 ~~~
-
-En el caso de querer configurar SecureNAT, es tan sencillo como ejecutar el siguiente comando:
 
 Esta creación de puente local es posible que muestre un error de privilegios insuficientes, es necesario asegurarse de que el controlador de red usado este configurado en modo promiscuo.
 

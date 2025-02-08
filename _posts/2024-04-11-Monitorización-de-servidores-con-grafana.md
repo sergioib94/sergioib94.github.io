@@ -178,7 +178,7 @@ Al cambiar la variable $server, los gráficos mostrarán solo los datos de ese s
 
 * ¿Como configurar una variable en grafana?
 
-Para dica configuracion seguirmos los siguientes pasos:
+Para dicha configuracion seguirmos los siguientes pasos:
 
 1. Vamos a dashboards settings y seleccionamos la opcion "Variables".
 2. Creamos una nueva variable.
@@ -201,7 +201,7 @@ server3:9100
 
 4. En Multi-value, activamos la opción para permitir seleccionar múltiples servidores.
 5. En Include All option, marcamos la casilla para agregar la opción All, que mostrará los datos de todos los servidores simultáneamente.
-6. Guardamos la variable y vuelvemos al dashboard.
+6. Guardamos la variable y volvemos al dashboard.
 
 * Filtros y segmentación
 
@@ -242,7 +242,7 @@ Podemos configurar alertas para detectar problemas antes de que afecten el rendi
 
 Ejemplo práctico:
 
-Si qqueremos recibir una alerta cuando el uso de CPU supera el 85% durante más de 5 minutos:
+Si queremos recibir una alerta cuando el uso de CPU supera el 85% durante más de 5 minutos:
 
 1. Vamos a Alerting y creamos la nueva alerta con la opcion "New Alert".
 2. Definimos la métrica a monitorear con esta consulta en PromQL:
@@ -251,14 +251,14 @@ Si qqueremos recibir una alerta cuando el uso de CPU supera el 85% durante más 
 100 - (avg(rate(node_cpu_seconds_total{mode="idle"}[5m])) * 100) > 85
 ~~~
 
-3. Establecemos la condición If above 8 for 5m.
+3. Establecemos la condición If above 85 for 5m.
 4. Configuramos la acción (correo, stack, telegram, etc...). Grafana permite enviar alertas a traves de diferentes plataformas.
 
 * ¿Como configuramos una alerta para slack por ejemplo?
 
 1. vamos a "Alerting" y abrimos la opción llamada "notification channels".
 2. Creamos un nuevo canal y seleccionamos Slack en este caso.
-3. Ingresamos la URL del webhook de slack.
+3. Ingresamos la URL del webhook de slack (Un webhook es un mecanismo que permite que una aplicación envíe datos en tiempo real a otra aplicación cuando ocurre un evento específico.).
 4. Guardamos y asignamos este canal a las alertas configuradas.
 
 * Grupos de alerta para una gestión eficiente
@@ -267,7 +267,7 @@ Si se tienen muchas alertas configuradas, es recomendable agruparlas para evitar
 
 Ejemplo práctico:
 
-Si monitorizamos múltiples servidores, en lugar de recibir una alerta por cada uno, se pueden agrupar y recibir un solo mensaje que indique cuántos servidores están en estado crítico.
+Si monitoreamos múltiples servidores, en lugar de recibir una alerta por cada uno, se pueden agrupar y recibir un solo mensaje que indique cuántos servidores están en estado crítico.
 
 * ¿Como hacerlo?
 
