@@ -2,8 +2,19 @@
 title: "Monitorización de servidores con Grafana"
 date: 2024-04-11T13:14:06+02:00
 categories: [Sistemas, Monitorización]
-excerpt: "Grafana open source es un software de análisis y visualización de código abierto. Le permite consultar, visualizar, alertar y explorar sus métricas, registros y seguimientos sin importar dónde estén almacenados. Le proporciona herramientas para convertir los datos de su base de datos de series temporales (TSDB) en gráficos y visualizaciones interesantes."
+excerpt: "Aprende a instalar, configurar y personalizar Grafana para la monitorización avanzada de servidores. Descubre cómo integrar Prometheus, crear dashboards interactivos y configurar alertas para una gestión eficiente de tu infraestructura."
 ---
+
+### **Requisitos previos** ###
+
+* Tener acceso a una máquina debian (máquina virtual o física) con permisos de root
+* Conocimientos básicos de administración de sistemas Linux
+* Conexión a internet para descargar paquetes
+* Herramientas necesarias instaladas: wget, curl, net-tools (si no están, instálalas con sudo apt install -y wget curl net-tools).
+
+### **¿Que es grafana?** ###
+
+Grafana open source es un software de análisis y visualización de código abierto. Le permite consultar, visualizar, alertar y explorar sus métricas, registros y seguimientos sin importar dónde estén almacenados. Le proporciona herramientas para convertir los datos de su base de datos de series temporales (TSDB) en gráficos y visualizaciones interesantes.
 
 ### **Instalación de Grafana en debian** ###
 
@@ -60,9 +71,9 @@ Con esto ya estaría completa la instalación de grafana y ya podríamos acceder
 
 ![Grafana login](/images/Grafana/grafana_login.png)
 
-NOTA: por defecto la primera vez que se accede a grafana las credenciales siempre van a ser admin/admin, una ves se acceda por primera vez pedirá un cambio e contraseña y podremos empezar a trabajar con grafana.
+NOTA: por defecto la primera vez que se accede a grafana las credenciales siempre van a ser admin/admin, una vez se acceda por primera vez pedirá un cambio de contraseña y podremos empezar a trabajar con grafana.
 
-Al acceder a grafana, en el menu de la izquierda encontraremos varias opciones interesantes para trabajar como pueden ser los dashboards que podremos configurar para revisar las métricas y monitorizar las maquinas de nuestro sistema, explorar Si su fuente de datos admite datos de gráficos y tablas, Explore muestra los resultados tanto en forma de gráfico como de tabla, alertas que nos permitirá conocer los problemas en sus sistemas momentos después de que ocurren o data sources que proporciona instrucciones paso a paso sobre cómo agregar una fuente de datos de Prometheus, InfluxDB o MS SQL Server.
+Al acceder a grafana, en el menú de la izquierda encontraremos varias opciones interesantes para trabajar como pueden ser los dashboards que podremos configurar para revisar las métricas y monitorizar las maquinas de nuestro sistema, explorar Si su fuente de datos admite datos de gráficos y tablas, Explore muestra los resultados tanto en forma de gráfico como de tabla, alertas que nos permitirá conocer los problemas en sus sistemas momentos después de que ocurren o data sources que proporciona instrucciones paso a paso sobre cómo agregar una fuente de datos de Prometheus, InfluxDB o MS SQL Server.
 
 ### **Instalación de Prometheus** ###
 
@@ -94,21 +105,21 @@ En mi caso la version de prometheus usada es la siguiente
 node_exporter, version 1.5.1 (branch: debian/sid, revision: 1.5.0-1)
 ~~~
 
-### **Configuración del data source de prometheus** ###
+### **Configuración de prometheus en grafana** ###
 
 Grafana necesita una base de datos que guarde las métricas guardadas por grafana, en este caso se hará uso de prometheus, otras opciones pueden ser graphite, influxDB u openTSDB entre otros.
 
 Para añadir la base de datos de prometheus a grafana accedemos primero al sitio web de nuestro grafana como se ha indicado anteriormente, buscando en nuestro navegador la ip o dominio de nuestra maquina e indicando el puerto 3000.
 
-En el menu de la izquierda vamos a la opción "connections" y después a la opción "data sources", donde nos aparecerá la opción para añadir nuestra base de datos, en este caso prometheus, para ello sera necesario añadir la URL http://localhost:9090.
+En el menú de la izquierda vamos a la opción "connections" y después a la opción "data sources", donde nos aparecerá la opción para añadir nuestra base de datos, en este caso prometheus, para ello será necesario añadir la URL http://localhost:9090.
 
 ![Data source](/images/Grafana/data-source.png)
 
-### **Creación de dashboards** ### ###
+### **Creación de dashboards** ###
 
-Con grafana tenemos la opción tanto de crear nuestro propio dashboard dependiendo de las necesidades de monitorización que tenga nuestro sistema asi como también la opción de importar dashboards creados por la comunidad en [Grafana dashboards](https://grafana.com/grafana/dashboards/)
+Con grafana tenemos la opción tanto de crear nuestro propio dashboard dependiendo de las necesidades de monitorización que tenga nuestro sistema así como también la opción de importar dashboards creados por la comunidad en [Grafana dashboards](https://grafana.com/grafana/dashboards/)
 
-En este caso para importar los dashboards en el menu de la izquierda buscamos la opción de "dashboards", abrimos la opción "create dashboard" y después entre las tres opciones que nos ofrece grafana seleccionamos la opción "import dashboard". Una vez ahi para importar el dashboard podemos indicar tanto la url del dashboard como la ID, 
+En este caso para importar los dashboards en el menú de la izquierda buscamos la opción de "dashboards", abrimos la opción "create dashboard" y después entre las tres opciones que nos ofrece grafana seleccionamos la opción "import dashboard". Una vez ahi para importar el dashboard podemos indicar tanto la url del dashboard como la ID, 
 
 A modo de ejemplo se ha usado el dashboard Node exporter siendo el mas descargado por lo que para su uso indicamos la ID de node-exportes (1860) y ya podremos empezar a usar el dashboard.
 
@@ -116,13 +127,13 @@ A modo de ejemplo se ha usado el dashboard Node exporter siendo el mas descargad
 
 Si por el contrario en lugar de importar dashboards creados por la comunidad queremos crear nuestros propios dashboards personalizados dependiendo de las necesidades que tengamos a la hora de monitorizar tendríamos que realizar los siguientes pasos:
 
-Al igual que se ha hecho anteriormente, en el menu de la izquierda buscamos la opción de "dashboards" y abrimos la opción "create dashboard" pero esta vez en lugar de seleccionar la opción "import dashboard", elegimos la opción "+ add visualization".
+Al igual que se ha hecho anteriormente, en el menú de la izquierda buscamos la opción de "dashboards" y abrimos la opción "create dashboard" pero esta vez en lugar de seleccionar la opción "import dashboard", elegimos la opción "+ add visualization".
 
-Al acceder a "add visualization" lo primero que nos pedirá grafana sera que elijamos un data source que sera desde donde grafana obtenga los datos de las métricas. Al tratarse de una maquina recién creada en mi caso el único data source que da la opción de seleccionar sera el de prometheus pero según las necesidades que tengamos podemos instalar cualquier otro para poder usarlo.
+Al acceder a "add visualization" lo primero que nos pedirá grafana será que elijamos un data source que será desde donde grafana obtenga los datos de las métricas. Al tratarse de una maquina recién creada en mi caso el único data source que da la opción de seleccionar será el de prometheus pero según las necesidades que tengamos podemos instalar cualquier otro para poder usarlo.
 
 ![Prometheus](/images/Grafana/prometheus.png)
 
-Al crear un dashboard vacío, lo primero que haremos sera crear los paneles. Un panel es el bloque básico para la visualización de los datos. Grafana provee diferentes tipos de paneles y cada uno de ellos provee un editor de consulta (query) dependiendo del tipo de Data Source seleccionado.
+Al crear un dashboard vacío, lo primero que haremos será crear los paneles. Un panel es el bloque básico para la visualización de los datos. Grafana provee diferentes tipos de paneles y cada uno de ellos provee un editor de consulta (query) dependiendo del tipo de Data Source seleccionado.
 
 ![Panel vacío](/images/Grafana/panel.png)
 
@@ -132,10 +143,134 @@ También podemos agregar un rango de tiempo para que los datos estén lo mas act
 
 Cuando tengamos claro el tipo de consulta que haremos, en el apartado derecho seleccionaremos el tipo de gráfica para mostrar los datos ademas de poder seleccionar diversas opciones para que esos datos se muestren lo mejor y mas claramente posible.
 
+La consulta nos quedaria de la siguiente forma:
+
+~~~
+rate(prometheus_http_request_total[5m])
+~~~
+
 ### **Configuraciones de paneles** ###
 
-A la hora de configurar y editar nuestros paneles en el menu de la derecha contamos con varias opciones que nos pueden ser útiles para poder diferenciar los datos que mostrara dicho panel en el dashboard. La primera opción que veremos sera la que nos permitirá seleccionar la forma gráfica en la que los datos se nos mostraran.
+A la hora de configurar y editar nuestros paneles en el menú de la derecha contamos con varias opciones que nos pueden ser útiles para poder diferenciar los datos que mostrara dicho panel en el dashboard. La primera opción que veremos será la que nos permitirá seleccionar la forma gráfica en la que los datos se nos mostraran.
 
 * Panel options
 
 En este apartado podremos ponerle un nombre y descripción (si fuese necesario) al panel que se haya creado. Ademas de indicar un nombre y descripción también contaremos con una opción que puede ser muy util que seria la opción "panel links" lo que nos permitirá compartir paneles entre distintos miembros de un equipo o distintos usuarios compartiendo la url que genere el panel.
+
+### **Personalización avanzada de dashboards y alertas en grafana** ###
+
+* Dashboards avanzados
+Los dashboards en Grafana permiten visualizar métricas de manera clara y personalizada. Para optimizar su uso, puedes aplicar las siguientes técnicas avanzadas:
+
+* Uso de variables en dashboards
+Las variables en Grafana permiten cambiar dinámicamente los datos mostrados en los paneles sin modificar las consultas manualmente. Esto es útil cuando deseas filtrar información en tiempo real.
+
+Ejemplo práctico:
+
+Si estás monitoreando múltiples servidores, puedes crear una variable $server con la lista de servidores disponibles.
+En tu consulta PromQL, en lugar de escribir manualmente cada servidor, usas:
+
+~~~
+node_cpu_seconds_total{instance="$server"}
+~~~
+
+Al cambiar la variable $server, los gráficos mostrarán solo los datos de ese servidor.
+
+* ¿Como configurar una variable en grafana?
+
+Para dica configuracion seguirmos los siguientes pasos:
+
+1. Vamos a dashboards settings y seleccionamos la opcion "Variables".
+2. Creamos una nueva variable.
+3. Configuramos la variable.
+
+Usando el ejemplo indicado anteriormente, se configurará la variable $server de la siguiente manera:
+
+    * Nombre de la variable: Server
+    * Tipo: query
+    * Data source: Prometheus
+    * Query: label_values(node_cpu_seconds_total, instance)
+
+Indicando label_values(métrica, etiqueta) obtendremos todos los valores únicos de la etiqueta "instance" en la métrica node_cpu_seconds_total. Esto devolverá una lista de servidores registrados en Prometheus, por ejemplo:
+
+~~~
+server1:9100
+server2:9100
+server3:9100
+~~~
+
+4. En Multi-value, activamos la opción para permitir seleccionar múltiples servidores.
+5. En Include All option, marcamos la casilla para agregar la opción All, que mostrará los datos de todos los servidores simultáneamente.
+6. Guardamos la variable y vuelvemos al dashboard.
+
+* Filtros y segmentación
+
+Grafana permite filtrar datos en tiempo real sin necesidad de cambiar las consultas directamente en PromQL.
+
+Ejemplo práctico:
+
+Si estás monitoreando diferentes servicios en un clúster, puedes agregar filtros para ver solo las métricas de un servicio en específico, como nginx, mysql, o redis.
+
+* ¿Cómo configurarlo?
+
+1. Añade una variable de tipo Custom con valores como nginx | mysql | redis.
+2. En la consulta, usamos:
+
+~~~
+node_network_receive_bytes_total{job="$servicio"}
+~~~
+
+3. Ahora puedes seleccionar el servicio desde un menú desplegable y ver los datos filtrados.
+
+* Uso de templates y dashboards reutilizables
+
+Si necesitas monitorizar múltiples entornos (Producción, Desarrollo, Testing), es recomendable crear dashboards reutilizables en lugar de duplicarlos.
+
+* ¿Cómo hacer un dashboard genérico y reutilizable?
+
+1. Usa variables para definir instancias o entornos ($env = prod | dev | test).
+2. En las consultas, usa $env en lugar de nombres fijos.
+3. Guarda el dashboard como Template y reutilízalo en distintas configuraciones.
+
+### **Configuración avanzada de alertas** ###
+
+Las alertas en Grafana permiten monitorear valores críticos en los sistemas y recibir notificaciones cuando se superan ciertos umbrales.
+
+* Definir condiciones personalizadas
+
+Podemos configurar alertas para detectar problemas antes de que afecten el rendimiento del sistema.
+
+Ejemplo práctico:
+
+Si qqueremos recibir una alerta cuando el uso de CPU supera el 85% durante más de 5 minutos:
+
+1. Vamos a Alerting y creamos la nueva alerta con la opcion "New Alert".
+2. Definimos la métrica a monitorear con esta consulta en PromQL:
+
+~~~
+100 - (avg(rate(node_cpu_seconds_total{mode="idle"}[5m])) * 100) > 85
+~~~
+
+3. Establecemos la condición If above 8 for 5m.
+4. Configuramos la acción (correo, stack, telegram, etc...). Grafana permite enviar alertas a traves de diferentes plataformas.
+
+* ¿Como configuramos una alerta para slack por ejemplo?
+
+1. vamos a "Alerting" y abrimos la opción llamada "notification channels".
+2. Creamos un nuevo canal y seleccionamos Slack en este caso.
+3. Ingresamos la URL del webhook de slack.
+4. Guardamos y asignamos este canal a las alertas configuradas.
+
+* Grupos de alerta para una gestión eficiente
+
+Si se tienen muchas alertas configuradas, es recomendable agruparlas para evitar recibir demasiadas notificaciones.
+
+Ejemplo práctico:
+
+Si monitorizamos múltiples servidores, en lugar de recibir una alerta por cada uno, se pueden agrupar y recibir un solo mensaje que indique cuántos servidores están en estado crítico.
+
+* ¿Como hacerlo?
+
+1. Configuramos un Grupo de alertas en Grafana.
+2. Usamos etiquetas (labels) para clasificar alertas por tipo (cpu, memoria, disco).
+3. Configuramos el envío de notificaciones con una frecuencia específica (ej. cada 10 minutos).
