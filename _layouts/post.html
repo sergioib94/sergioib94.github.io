@@ -3,15 +3,24 @@ layout: default
 ---
 
 <article class="post">
-  <h1>{{ page.title }}</h1>
+    <header class="post-header">
+        <h1 class="post-title">{{ page.title }}</h1>
+        <p class="post-meta">📅 Publicado el {{ page.date | date: "%d de %B de %Y" }}</p>
+    </header>
 
-  <div class="entry">
-    {{ content }}
-  </div>
+    <div class="post-content">
+        {{ content }}
+    </div>
 
-  <div class="date">
-    Escrito el {{ page.date | date: "%B %e, %Y" }}
-  </div>
+    <hr>
 
-  {% include disqus.html %}
+    <!-- Navegación entre posts -->
+    <div class="post-navigation">
+        {% if page.previous.url %}
+            <a href="{{ page.previous.url }}" class="btn prev">⬅️ Post Anterior: {{ page.previous.title }}</a>
+        {% endif %}
+        {% if page.next.url %}
+            <a href="{{ page.next.url }}" class="btn next">➡️ Post Siguiente: {{ page.next.title }}</a>
+        {% endif %}
+    </div>
 </article>
