@@ -5,7 +5,7 @@ permalink: /blog/
 ---
 
 # 📖 Blog Técnico  
-Explora artículos sobre administración de sistemas, automatización y monitorización.
+Explora artículos sobre administración de sistemas.
 
 <div class="post-grid">
     {% for post in site.posts %}
