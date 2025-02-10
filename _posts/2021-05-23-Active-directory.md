@@ -29,31 +29,31 @@ Todos estos objetos son contenidos en una partición específica dentro de la ba
 
 Las unidaddes organizativas (OU) son contenedores de Active Diretory dentro de un dominio con los que podemos agrupar para organizar multitud de objetos de active directory como pueden ser: usuarios de dominios, grupos de dominios, equipos e incluso otras unidades organizativas.
 
-![jerarquia active directory](/Active-Directory/jerarquia.png)
+![jerarquia active directory](/images/Active-Directory/jerarquia.png)
 
 ### Instalacion (En windows server 2016) ###
 
 1. Nos dirigimos al Administrador de Servidor o Server Manager y hacemos clic en Agregar roles o características.
 
-![](/Active-Directory/ws-1.png)
+![agregar roles](/images/Active-Directory/ws-1.png)
 
 2. En la ventana inicial hacemos clic en siguiente y elegimos la opción de la Instalación basada en roles.
 
-![](/Active-Directory/ws-2.png)
+![](/images/images/Active-Directory/ws-2.png)
 
 3. Hacemos clic en siguiente y elegimos el servidor donde queremos instalar nuestro rol de AD DS.
 
-![](/Active-Directory/ws-3.png)
+![](/images/Active-Directory/ws-3.png)
 
 4. Hacemos clic en siguiente y elegimos el rol solicitado (Servicios de dominio de Active Directory), agregamos las características.
 
-![](/Active-Directory/ws-4.png)
+![](/images/Active-Directory/ws-4.png)
 
 5. Hacemos clic en siguiente seleccionamos las características y clic en siguiente y se desplegarán las caracteristicas que se van a instalar.
        
 6. Hacemos clic en siguiente y comenzamos con la instalacion.
 
-![](/Active-Directory/ws-6.png)
+![](/images/Active-Directory/ws-6.png)
        
 7. Una vez instalado nuestro rol de Active Directory reiniciamos el servidor para aplicar los cambios. Antes de iniciar nuestro asistente de AD DS debemos promover nuestro servidor a controlador de dominio.
        
@@ -69,33 +69,33 @@ Veremos que contamos con 3 opciones de configuración:
 
 En nuestro caso elegiremos la opción Agregar un nuevo bosque, elegiremos el nombre para nuestro domino y damos clic en Siguiente.
 
-![](/Active-Directory/ws-8.png)
+![](/images/Active-Directory/ws-8.png)
 
 9. Después que el sistema valide si el nombre de dominio es válido, se desplegarán las opciones del controlador de dominio, donde contamos con algunas opciones muy importantes que debemos tener en cuenta a nivel de funcionalidad de nuestro servidor. 
 
 El nivel funcional que se indique debe ser siempre el mas bajo de la red, es decir, en mi caso el servidor con Active Directory cuenta con windows server 2012 por lo que el nivel funcional tanto de dominio como de bosque, sera de windows 2012, sin embargo si en nuestra red contamos con algun otro servidor con windows server 2008 por ejemplo, el nivel funcional se debe de establecer en windows server 2008.
 
-![](/Active-Directory/ws-10.png)
+![](/images/Active-Directory/ws-10.png)
 
 10. En la siguiente ventana tenemos las opciones de DNS.
 
-![](/Active-Directory/ws-11.png)
+![](/images/Active-Directory/ws-11.png)
        
 11. Hacemos clic en siguiente, y veremos el nombre de NETBIOS asignado por el sistema, nosotros decidimos si lo cambiamos o dejamos ése por defecto.
 
-![](/Active-Directory/ws-12.png)
+![](/images/Active-Directory/ws-12.png)
        
 12. Clic en Siguiente, se desplegará la ventana informativa de ubicación de la base de datos de AD DS.
 
-![](/Active-Directory/ws-13.png)
+![](/images/Active-Directory/ws-13.png)
        
 13. Clic en Siguiente, a continuación se desplegará una ventana informativa con el proceso a realizar, si notamos en la parte inferior podemos realizar este mismo procedimiento usando Powershell, Windows Server nos da la opción de ver y copiar el script.
 
-![](/Active-Directory/ws-14.png)
+![](/images/Active-Directory/ws-14.png)
        
 14. Hacemos clic en siguiente, y Windows Server realizará una validación para que todos los requisitos de instalación estén correctos y así poder comenzar la instalación.
 
-![](/Active-Directory/ws-15.png)
+![](/images/Active-Directory/ws-15.png)
        
 15. Hacemos clic en Instalar para iniciar el proceso de promover nuestro servidor a controlador de dominio.
        
@@ -127,11 +127,11 @@ Podemos crear un usuario a través de diferentes herramientas como lo son: Los a
 
 Allí podremos elegir lo que deseemos crear, usuarios, equipos, grupos, etc. Elegimos Usuario y podremos ver cómo cambia la estructura de creación comparada con versiones anteriores (a nivel de apariencia).
 
-![](/Active-Directory/ad-3.png)
+![](/images/Active-Directory/ad-3.png)
 
 Una vez tengamos los cambios necesarios en el perfil del usuario damos clic en Aceptar para guardar dicha configuración.
 
-![](/Active-Directory/ad-5.png)
+![](/images/Active-Directory/ad-5.png)
 
 Si deseamos crear nuestros usuarios o equipos a través de cmd, podemos ejecutar el comando DCA.MSC o dirigirnos al menú Herramientas y elegir la opción Usuarios y equipos de Active Directory.
 
@@ -139,7 +139,7 @@ El mismo procedimiento realizamos para la creación de cualquier otro objeto en 
 
 En la ventana desplegada ingresamos información del equipo, así mismo indicamos a que dominio se va a incluir dicho equipo y para guardar los cambios damos clic en Aceptar.
 
-![](/Active-Directory/ad-4.png)
+![](/images/Active-Directory/ad-4.png)
 
 En el centro de administración de Active Directory podemos gestionar otras funciones de nuestro rol, en el panel lateral derecho podemos encontrar lo siguiente:
 
@@ -163,11 +163,11 @@ Podríamos incluir Pruebas dentro de la OU:
 
 * Ingresamos los datos en la ventana del Centro de administración:
 
-![](/Active-Directory/ad-6.png)
+![](/images/Active-Directory/ad-6.png)
 
 * Podremos ver que nuestra OU Pruebas ha sido creada correctamente dentro de nuestro árbol:
 
-![](/Active-Directory/ad-7.png)
+![](/images/Active-Directory/ad-7.png)
 
 ## **Tareas Active Directory** ##
 
@@ -177,13 +177,13 @@ Esta vez crearemos un usuario de forma distinta al creado anteriormente. Esta ve
 
 Una vez estemos en la ventana de usuarios y equipos de active directory podremos crear un usuario haciendo clic derecho en cualquier lugar de la ventana y eligiendo la opción "nuevo" y despues la opcion de "usuario". Por ejemplo en mi caso si quiero crear un usuario dentro de mi dominio de pruebas lo que haria seria hacer clic en el nombre de mi dominio para que al crear el usuario, se crease el usuario dentro del dominio. Ej:
 
-![](/Active-Directory/usuario1.png)
+![](/images/Active-Directory/usuario1.png)
 
-![](/Active-Directory/usuario2.png)
+![](/images/Active-Directory/usuario2.png)
 
 Cuando se nos abra la ventana para crearnos el usuarios e introduzcamos los datos, tendremos que ponerle una contraseña (la contraseña que se pone incialmente suele ser una contraseña temporal) aunque tendremos varias opciones de configuracion de la cuenta:
 
-![](/Active-Directory/usuario3.png)
+![](/images/Active-Directory/usuario3.png)
 
 * La primera opción que encontramos es la que nos permite que el usuario cambie la contraseña por la que el quiera al loguearse ya que la contraseña con la que el admin creo su cuenta seria temporal y de un solo uso.
 
@@ -201,7 +201,7 @@ Cuando un usuario inicia sesión en el dominio, Active Directory crea un token 
 
 Hacemos clic en la raíz de nuestro dominio, en mi caso el dominio Practicas y haciendo clic derecho elegimos la opción "nuevo" y despues la opción "grupo". Una vez que se nos abra la ventana para crear el grupo tendremos que asignarle un nombre asi como elegir el ambito y el tipo de grupo que será. Ej:
 
-![](/Active-Directory/grupos1.png)
+![](/images/Active-Directory/grupos1.png)
 
 Los ámbitos de grupos son los sigientes: 
 
@@ -224,9 +224,9 @@ Por otro lado tenemos dos tipos de grupos:
 
 En este ejemplo para tener mejor organizados los grupos, he creado una Unidad Organizativa (OU), llamada grupo donde estan alojados varios grupos (como si fuese una empresa real):
 
-![](/Active-Directory/grupos2.png)
+![](/images/Active-Directory/grupos2.png)
 
-![](/Active-Directory/grupos3.png)
+![](/images/Active-Directory/grupos3.png)
 
 * #### **Agregar usuarios a grupos** ####
 
@@ -234,7 +234,7 @@ Para ello hacemos clic en el usuario que se haya creado y abrimos las propiedade
 
 Después de agregar tendremos que indicar a que grupo se agregara el usuario, por ejemplo si mi dominio se llama Pruebas y en la empresa sera uno de los administradores, seria Admin (para ello debe existir previamente el grupo que especifiquemos sino obviamente no podremos agregar ningun usuario). Ej:
 
-![](/Active-Directory/ug1.png)
+![](/images/Active-Directory/ug1.png)
 
 * #### **Restablecer cuentas de usuario** ####
 
