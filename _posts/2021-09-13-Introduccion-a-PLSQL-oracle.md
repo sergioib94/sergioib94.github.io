@@ -302,8 +302,8 @@ end MostrarNom7082;
 
 | **Tipo**         | **Descripción**                                         | **Devuelve un valor?** | **Ejemplo de uso**               |
 |-----------------|-----------------------------------------------------|-------------------|--------------------------------|
-| **Procedimiento** | Bloque de código que ejecuta una acción específica. | ❌ No            | `EXEC InsertarEmpleado(123, 'Juan')` |
-| **Función**      | Bloque de código que devuelve un valor.              | ✅ Sí            | `SELECT ObtenerSalario(123) FROM dual;` |
+| **Procedimiento** | Bloque de código que ejecuta una acción específica. |  No            | `EXEC InsertarEmpleado(123, 'Juan')` |
+| **Función**      | Bloque de código que devuelve un valor.              |  Sí            | `SELECT ObtenerSalario(123) FROM dual;` |
 
 
 * **Programación modular**
