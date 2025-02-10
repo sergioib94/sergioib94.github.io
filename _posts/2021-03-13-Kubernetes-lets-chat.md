@@ -691,7 +691,7 @@ replicaset.apps/letschat-7c66bd64f5   1         1         1       26h
 replicaset.apps/mongo-5c694c878b      1         1         1       26h
 ~~~
 
-![letschat](/images/kubernetes-lestchat/Prueba_ping.jpeg)
+![letschat](/images/kubernetes-lestchat/letschat.png)
 
 Una vez que se haya comprobado que funcione, probamos a escalar varias replicas de la siguiente forma:
 
