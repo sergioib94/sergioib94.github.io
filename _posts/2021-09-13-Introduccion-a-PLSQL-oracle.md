@@ -2,10 +2,30 @@
 title: "Introducción a PLSQL (Oracle)"
 date: 2021-09-13T12:36:20+02:00
 categories: [Base de Datos, Apuntes]
-excerpt: "En este post se comentaran aspectos basicos a tener en cuenta de PLSQL para trabajar con ello en oracle."
+excerpt: "En este post se comentarán aspectos basicos a tener en cuenta de PLSQL para trabajar con ello en oracle."
 ---
 
-### **PLSQ** ###
+### **Introducción de PLSQ** ###
+
+* **¿Que es?**
+
+PL/SQL (Procedural Language/Structured Query Language) es un lenguaje de programación procedimental desarrollado por Oracle como una extensión de SQL. Permite combinar las capacidades de consulta de datos de SQL con estructuras de programación avanzadas como variables, bucles, condiciones, procedimientos, funciones y cursores.
+
+* **¿Para que sirve?**
+
+PL/SQL se utiliza principalmente en bases de datos Oracle para escribir bloques de código que pueden ser ejecutados directamente dentro del servidor de la base de datos. Sus aplicaciones incluyen:
+
+1. Automatización de procesos dentro de la base de datos: Permite crear procedimientos almacenados y funciones para realizar cálculos o validaciones sin depender de una aplicación externa.
+
+2. Manejo eficiente de transacciones: PL/SQL permite ejecutar múltiples sentencias SQL en un solo bloque, asegurando que todas se ejecuten correctamente o ninguna en caso de error.
+
+3. Optimización del rendimiento: Como el código se ejecuta directamente en la base de datos, se minimiza el tráfico de red entre la aplicación y el servidor, lo que mejora el rendimiento.
+
+4. Seguridad y control de acceso: Se pueden definir procedimientos con privilegios específicos para restringir el acceso a datos sensibles sin exponer directamente las tablas.
+
+5. Automatización de eventos con triggers: Los triggers en PL/SQL permiten ejecutar código automáticamente cuando ocurre un evento en la base de datos, como insertar o eliminar registros.
+
+6. Integración con aplicaciones empresariales: PL/SQL es ampliamente utilizado en sistemas de gestión empresarial (ERP, CRM, etc.) que requieren lógica de negocio dentro de la base de datos.
 
 * **Características**
 
@@ -48,13 +68,13 @@ Tienen 3 partes:
 	FROM tabla;
 ~~~
 
-* Exception (opcional) → acciones a realizar cuando se producen errores.
+* **Exception (opcional)** → acciones a realizar cuando se producen errores.
 
 ~~~
 	WHEN nombre_excepcion then
 ~~~
 
-* End; (obligatorio) → para cerrar el programa una ver hecho.
+* **End; (obligatorio)** → para cerrar el programa una vez hecho.
 
 ### **Tipos de bloques de código** ###
 
@@ -70,7 +90,7 @@ Tienen 3 partes:
 
 * **Declaración de variables (nombre tipo)**
 
-Oracle recomienda que el nombre de las variables empiece por v y el de los procedimientos por por para distinguir estos procesos de algunos nombres como de tablas por ejemplo.
+Oracle recomienda que el nombre de las variables empiece por v y el de los procedimientos por para distinguir estos procesos de algunos nombres como de tablas por ejemplo.
 
 Además de variables, pueden declararse constantes. Las constantes pueden ser útiles por ejemplo en un programa que calcule áreas geométricas y tenga que utilizar un valor constante como puede ser el valor de pi, en lugar de repetir varias veces el valor de pi se declara como constante para poder usarse varias veces dicha constante para asi mejorar la legibilidad del código.
 
@@ -99,7 +119,7 @@ from emp
 where empno =7082;
 ~~~
 
-De esta forma estaremos guardando el 10% del salario en la variable comisión del empleado 7082. hay que hacerlo con cuidado porque si devuelve varios valores no se podra guardar en una unica variable number, para ello usaremos los cursores, si devuelve solo uno si se podra guardar en la variable.
+De esta forma estaremos guardando el 10% del salario en la variable comisión del empleado 7082. Hay que hacerlo con cuidado porque si devuelve varios valores no se podra guardar en una unica variable number, para ello usaremos los cursores, si devuelve solo uno si se podra guardar en la variable.
 
 * **Mostrar por pantalla una variable**
 
@@ -162,7 +182,7 @@ Begin
 End;
 ~~~
 
-* **Estructuras de control**
+### **Estructuras de control** ###
 
 * **Sentencia if**
 
@@ -278,9 +298,19 @@ begin
 end MostrarNom7082;
 ~~~
 
+**¿Cuando usar funciones o procedimientos?**
+
+|      Función      |         Descripción           |   Devuelve un valor   |             Ejemplo de uso           | 
+|-------------------|-------------------------------|-----------------------|--------------------------------------|
+| Procedimiento     |  Bloque de código que ejecuta |          No			|	EXEC InsertarEmpleado(123, 'Juan') |
+|                   |  una acción específica.       |                       |									   |
+|-------------------|-------------------------------|-----------------------|--------------------------------------|
+| Función           |  Bloque de código que devuelve| 		   Si 			| SELECT ObtenerSalario(123) FROM dual;|
+|					|  un valor.                    |                       | 									   |
+
 * **Programación modular**
 
-La programación modular es dividir un programa grande, en varios trozos mas pequeños de forma cada trozo resuelva una parte del problema (cada trozo preferiblemente debe ser de 12 lineas) de forma que se vea fácilmente el funcionamiento del programa.
+La programación modular es dividir un programa grande, en varios trozos más pequeños de forma cada trozo resuelva una parte del problema (cada trozo preferiblemente debe ser de 12 lineas) de forma que se vea fácilmente el funcionamiento del programa.
 
 La programación modular usa parámetros, los parámetros pueden ser de entrada o salida. De entrada, a un código llega un parámetro de entrada 
 
@@ -295,7 +325,7 @@ PL/SQL utiliza cursores para gestionar las instrucciones select. Un cursor es un
 
 * **Cursores implícitos** → se utiliza para operaciones select into. Se usa cuando la consulta devuelve un único registro.
       
-* **Cursores explícitos** → se utilizan cuando la consulta devuelve un conjunto de registros, aunque también pueden ser usados para consultas que devuelven un único registro ya que de esta forma forma la consulta es mas rápida.
+* **Cursores explícitos** → se utilizan cuando la consulta devuelve un conjunto de registros, aunque también pueden ser usados para consultas que devuelven un único registro ya que de esta forma forma la consulta es más rápida.
 
 Los cursores explícitos se declaran como cualquier otra variable de pl/sql, sin embargo los cursores implícitos no son necesario declararlos. Ej:
 
