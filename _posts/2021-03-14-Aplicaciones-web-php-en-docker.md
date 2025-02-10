@@ -807,7 +807,7 @@ sergioib@debian-sergio:~//bookmedik$ cat build/bookmedik/schema.sql | docker exe
 
 Comprobacion de funcionamiento:
 
-![bookmedik_1](/tarea-docker/Tarea1.png)
+![bookmedik_1](/images/tarea-docker/Tarea1.png)
 
 ### Tarea 2: Ejecución de una aplicación web PHP en docker ###
 
@@ -933,7 +933,7 @@ db:
 
 Comprobamos su funcionamiento despues de desplegarlo:
 
-![bookmedik_2](/tarea-docker/Tarea2.png)
+![bookmedik_2](/images/tarea-docker/Tarea2.png)
 
 ### Tarea 4: Ejecución de un CMS en docker ###
 
@@ -990,7 +990,7 @@ services:
 
 Comprobamos su funcionamiento:
 
-![drupal](/tarea-docker/Tarea4.png)
+![drupal](/images/tarea-docker/Tarea4.png)
 
 ### Tarea 5: Ejecución de un CMS en docker ###
 
@@ -1030,4 +1030,4 @@ services:
 
 Comprobacion del funcionamiento:
 
-![joomla](/tarea-docker/Tarea5.png)
+![joomla](/images/tarea-docker/Tarea5.png)

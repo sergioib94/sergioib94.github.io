@@ -279,6 +279,6 @@ pip install python3-openstackclient
 
 Con esto ya tendriamos un Openstack desplegado y dispuesto para su uso:
 
-![openstack](/instalacion-openstack/openstack.png)
+![openstack](/images/instalacion-openstack/openstack.png)
 
-![proyecto openstack](/instalacion-openstack/proyecto_openstack.png)
+![proyecto openstack](/images/instalacion-openstack/proyecto_openstack.png)

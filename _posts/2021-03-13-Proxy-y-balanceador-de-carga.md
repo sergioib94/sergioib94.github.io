@@ -47,13 +47,13 @@ ENABLED=1
 
 Balanceador en funcionamiento:
 
-![apache1](/proxy-balanceador/apache1.png)
+![apache1](/images/proxy-balanceador/apache1.png)
 
-![apache2](/proxy-balanceador/apache2.png)
+![apache2](/images/proxy-balanceador/apache2.png)
 
 Tarea 2: Entrega una captura de pantalla donde se vea la página web de estadísticas de haproxy (abrir en un navegador web la URL http://172.22.x.x/haproxy?stats, pedirá un usuario y un password, ambos cda).
 
-![estadisticas haproxy](/proxy-balanceador/tarea2_balanceador.png)
+![estadisticas haproxy](/images/proxy-balanceador/tarea2_balanceador.png)
 
 Tarea 3: Desde uno de los servidores (apache1 ó apache2), verificar los logs del servidor Apache. En todos los casos debería figurar como única dirección IP cliente la IP interna de la máquina balanceador 10.10.10.1. ¿Por qué?
 
@@ -81,11 +81,11 @@ Configuramos para empezar el fichero /etc/haproxy/haproxy.cfg añadiéndole las 
 
 Tarea 4: Verificar la estructura y valores de las cookies PHPSESSID intercambiadas. En la primera respuesta HTTP (inicio de sesión), se establece su valor con un parámetro HTTP SetCookie en la cabecera de la respuesta. Las sucesivas peticiones del cliente incluyen el valor de esa cookie (parámetro HTTP Cookie en la cabecera de las peticiones.
 
-![coockie1](/proxy-balanceador/coockie1.png)
+![coockie1](/images/proxy-balanceador/coockie1.png)
 
-![coockie2](/proxy-balanceador/coockie2.png)
+![coockie2](/images/proxy-balanceador/coockie2.png)
 
-![cabecera cookie](/proxy-balanceador/cabecera_cookie.png)
+![cabecera cookie](/images/proxy-balanceador/cabecera_cookie.png)
 
 ### Proxy ###
 
@@ -105,7 +105,7 @@ acl redlocal src 192.168.200.0/24
 http_access allow redlocal
 ~~~
 
-![acceso proxy](/proxy-balanceador/acceso_proxy.png)
+![acceso proxy](/images/proxy-balanceador/acceso_proxy.png)
 
 Tarea 2: Prueba que tu ordenador está navegando a través del proxy (HTTP/HTTPS) configurando el proxy de dos maneras diferentes:
       
@@ -117,7 +117,7 @@ Para configurar el acceso a proxy en firefox:
 
 Menú → Preferencias → General → Configuración de red → Configuración
 
-![configuracion proxy](/proxy-balanceador/configuracion_proxy.png)
+![configuracion proxy](/images/proxy-balanceador/configuracion_proxy.png)
 
 Configuramos el proxy de la siguiente forma y accedemos a alguna pagina mientras vemos los logs de nuestro proxy para comprobar su correcto funcionamiento.
 
@@ -153,7 +153,7 @@ Configuramos las variables de entorno:
 
 Como ejemplo, en el cliente accedemos por w3m a la moodle mientras en la maquina proxy comprobamos el log.
 
-![acceso w3m](/proxy-balanceador/acceso_w3m.png)
+![acceso w3m](/images/proxy-balanceador/acceso_w3m.png)
 
 Log:
 
