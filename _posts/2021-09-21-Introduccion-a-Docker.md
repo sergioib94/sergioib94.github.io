@@ -838,11 +838,11 @@ Una vez desplegado, comenzaremos con la instalación y comprobaremos que funcion
 
 Comenzamos con la instalación y comprobamos que podemos usar drupal:
 
-![Elección de idioma](/intro-docker/idioma.png)
+![Elección de idioma](/images/Intro-Docker/idioma.png)
 
-![Comenzamos la instalación](/intro-docker/instalacion.png)
+![Comenzamos la instalación](/images/Intro-Docker/instalacion.png)
 
-![Drupal](/intro-docker/drupal.png)
+![Drupal](/images/Intro-Docker/drupal.png)
 
 ### **Instalación de Docker en Windows** ###
 
@@ -856,13 +856,13 @@ La instalación de docker al igual que la mayoria de instalaciones en windows es
 
 Una vez descargado, ejecutamos el fichero .exe y comenzara el proceso de instalación.
 
-![instalación docker](/intro-docker/docker1.png)
+![instalación docker](/images/Intro-Docker/docker1.png)
 
 Cuando la instalación finalice, debera reiniciarse el equipo para que docker pueda poder usarse (en algunos casos se iniciará y abrirá sin necesidad de reinicio).
 
 A la hora de empezar a usar docker por primera vez, es posible que nos salga un error parecido al siguiente:
 
-![error wls2](/intro-docker/docker-error.png)
+![error wls2](/images/Intro-Docker/docker-error.png)
 
 Este error se debe a que docker detecta que nuestra versión de WLS (Windows Subsystem for Linux) es antigua por lo que deberemos instalar la version actual que seria la versión 2 que es la que ahoramismo esta sustituyendo tanto el uso de Hyper-v y VirtualBox en el uso de docker.
 
@@ -874,15 +874,15 @@ Empezamos descargandonos la actualización [aqui](https://wslstorestorage.blob.c
 
 Una vez descargado WLS2, ejecutamos el instalador y acabar la instalacion reiniciamos docker.
 
-![instalación docker](/intro-docker/docker3.png)
+![instalación docker](/images/Intro-Docker/docker3.png)
 
 Probamos a crear un par de contenedores a traves de la cmd:
 
-![creación de contenedores](/intro-docker/docker4.png)
+![creación de contenedores](/images/Intro-Docker/docker4.png)
 
 Podemos ver que en windows podemos trabajar tanto por linea de comandos como por entorno gráfico.
 
-![docker desktop](/intro-docker/docker5.png)
+![docker desktop](/images/Intro-Docker/docker5.png)
 
 * Usando Hyper-V:
 
@@ -894,6 +894,6 @@ Inicio > Configuración > Aplicaciones > Características Opcionales
 
 Marcamos "Hyper-V" y damos click en "Aceptar" para reiniciar Windows.
 
-![instalación Hyper-V](/intro-docker/docker2.png)
+![instalación Hyper-V](/images/Intro-Docker/docker2.png)
 
 Después de reiniciar vamos a la configuración de docker, desmarcamos la opción de "Use the WSL 2 Based engine" y damos click en "Save & Restart".
