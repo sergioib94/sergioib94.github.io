@@ -2,16 +2,24 @@
 title: "Introducción a las Bases De Datos (Oracle)"
 date: 2021-09-07T11:33:23+02:00
 categories: [Base de Datos, Apuntes]
-excerpt: "En este post se comentaran y explicaran de la forma mas clara posble los conceptos basicos para poder trabajar con BBDD Oracle."
+excerpt: "En este post se comentarán y explicarán de la forma mas clara posible los conceptos basicos para poder trabajar con BBDD Oracle."
 ---
+
+### **Introducción ###
+
+Las bases de datos son una parte fundamental en el almacenamiento y gestión de información en el mundo digital. Oracle Database es uno de los sistemas de gestión de bases de datos más utilizados en entornos empresariales debido a su potencia, escalabilidad y seguridad.
+
+Este post proporciona una introducción clara y estructurada a los conceptos básicos necesarios para trabajar con bases de datos en Oracle. Aprenderás sobre los tipos de sentencias SQL (DDL, DML, DCL), los modelos de bases de datos, los roles y permisos, los tipos de datos, las funciones más comunes y cómo administrar tablas y restricciones.
+
+Si estás comenzando con Oracle o quieres repasar los fundamentos, esta guía te ayudará a comprender cómo interactuar con la base de datos y ejecutar consultas eficientes.
 
 ### **Tipos de sentencias en oracle** ###
 
-* DDL → nos permitirá crear,modificar o eliminar los objetos de la base de datos. Las instrucciones serian Create, Alter (modificar), Drop (eliminar objetos).
+* DDL → Nos permitirá crear,modificar o eliminar los objetos de la base de datos. Las instrucciones serian Create, Alter (modificar), Drop (eliminar objetos).
 
-* DML → permite manipular los datos. Esto se hace con las siguientes instrucciones: Insert, Update, Delete (elimina datos) y Select.
+* DML → Permite manipular los datos. Esto se hace con las siguientes instrucciones: Insert, Update, Delete (elimina datos) y Select.
 
-* DCL → tiene las siguientes instrucciones: Commit (guardar), Rollback (deshacer hasta el ultimo commit), grant (para dar permisos a un usuario) y revoke (quitar permisos a un usuario).
+* DCL → Tiene las siguientes instrucciones: Commit (guardar), Rollback (deshacer hasta el ultimo commit), grant (para dar permisos a un usuario) y revoke (quitar permisos a un usuario).
 
 SQL es un lenguaje navegacional, no hay que decirle los pasos a dar, sino decirle el objetivo final y sql da los pasos hasta el final.
 
@@ -52,7 +60,7 @@ Diccionario de datos es la base de datos con información de mi base de datos (u
 * Logicos → AND, OR, NOT.
 * Comparación de cadenas con comodines→ like (% → sustituye cualquier cadena y _ sustituye los caracteres individuales).
 
-* Regexp_Like (nombre,’ expresión regular’) → compara el primer parámetro con la 	expresión regular, si esta bien devolverá un True. Es mas lento que like.
+* REGEXP_LIKE (nombre,’ expresión regular’) → compara el primer parámetro con la 	expresión regular, si esta bien devolverá un True. Es mas lento que like.
 
 * La pertenencia a un conjunto → in. Ej: nombre in (‘pepe’,’juan’,’ana’) si nombre pertenece a pepe,juan o ana devolvera un True. Se puede usar con NOT.
       
@@ -174,7 +182,7 @@ A las restricciones hay que darles un nombre, no pueden existir dos restriccione
 * Clave primaria (a nivel de tabla) → constraint “nombre de la restricción” primary key(“columna”)
       
 * Claves primarias compuestas:
-    ◦ A nivel de columna no se puede hacer, a nivel de tabla si.
+    ◦ No pueden definirse a nivel de columna, pero sí a nivel de tabla..
     ◦ Constraint “nombre de la restriccion” Primary Key (clave1,clave2)
           
 * Claves ajenas → se pueden poner tantas como sea necesario siempre que existan en la otra tabla.
@@ -248,17 +256,18 @@ constraint_name, constraint_type(c → check, p → primary key, r → foreing k
 
 * ALTER TABLE nombre_tabla
 
-**{ADD (columna)** → añade columnas en una tabla. 
-    * Si la tabla esta rellena no se puede añadir una columna vacia y ponerla como not null, se tendría que rellenar la columna previamente.
+**ADD (columna)** → añade columnas en una tabla. 
+    * Si la tabla esta rellena no se puede añadir una columna vacia y ponerla como not null, se tendría que rellenar la columna previamente. Ej: ALTER TABLE empleados ADD COLUMN telefono VARCHAR2(15);
 
-**[MODIFY (colum [….])]** → modifica columnas
+**[MODIFY (colum [….])]** → modifica columnas. Ejemplo: ALTER TABLE empleados MODIFY COLUMN nombre VARCHAR2(50);. En este caso haciendo uso del ejemplo anterior, estariamos cambiando el valor anterior de varchar 15 a varchar 50.
 
 **[DROP COLUMN (colum…..)]** → borra columnas
     * no permite borrar claves primarias refereciadas a claves ajenas
     * no borra ultimas columnas de las tablas
+    Ej: ALTER TABLE empleados DROP COLUMN direccion;
       
 **[ADD CONSTRAINT restricción]** → añade restricciones
-    * Solo pueden añadirse y borrarse primary key, foreing keys, check, unique y not null
+    * Solo pueden añadirse y borrarse primary key, foreing keys, check, unique y not null. Ej: ALTER TABLE empleados ADD CONSTRAINT pk_empleados PRIMARY KEY (id_empleado);
       
 **[DROP CONSTRAINT restricción]** → elimina restricciones
     * cada usuario puede borrar sus propias tablas
