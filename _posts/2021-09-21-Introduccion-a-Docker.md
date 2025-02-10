@@ -2,18 +2,36 @@
 title: "Introducción a Docker"
 date: 2021-09-21T13:14:06+02:00
 categories: [Aplicaciones Web, Apuntes]
-excerpt: "Docker nos permite de forma sencilla crear contenedores ligeros y faciles de mover donde ejecutar nuestras aplicaciones software sobre cualquier máquina con Docker instalado, independientemente del sistema operativo que la máquina tenga, facilitando así también los despliegues."
+excerpt: "Docker nos permite de forma sencilla crear contenedores ligeros y fáciles de mover donde ejecutar nuestras aplicaciones software sobre cualquier máquina con Docker instalado, independientemente del sistema operativo que la máquina tenga, facilitando así también los despliegues."
 ---
 
-### **¿Que es Docker?** ###
+### **¿Qué es Docker?** ###
 
 Docker es un proyecto de software libre que permite automatizar el despliegue de aplicaciones dentro de contenedores.
 
-Docker nos permite de forma sencilla crear contenedores ligeros y faciles de mover donde ejecutar nuestras aplicaciones software sobre cualquier máquina con Docker instalado, independientemente del sistema operativo que la máquina tenga, facilitando así también los despliegues.
+Docker nos permite de forma sencilla crear contenedores ligeros y fáciles de mover donde ejecutar nuestras aplicaciones software sobre cualquier máquina con Docker instalado, independientemente del sistema operativo que la máquina tenga, facilitando así también los despliegues.
 
 **¿Que son los contenedores?**
 
 Los contenedores son una forma de virtulización del sistema opertaivo, son como maquinas virtuales aisladas en los que podemos ejecutar cualquier cosa como por ejemplo microservicios, aplicaciones, etc... 
+
+¿En qué se diferencian los contenedores de las máquinas virtuales?
+Aunque tanto los contenedores como las máquinas virtuales permiten la ejecución de aplicaciones en entornos aislados, existen diferencias clave entre ambos.
+
+|        Características          |        Contenedores (docker)        |        Máquinas Virtuales        |
+|---------------------------------|-------------------------------------|----------------------------------|
+| Aislamiento                     |    Compartido con el sistema host   |       Completamente aislado      |
+|---------------------------------|-------------------------------------|----------------------------------|
+| Consumo de recursos             |     Bajo (solo usa lo necesario)    |     Alto (requiere SO completo)  |
+|---------------------------------|-------------------------------------|----------------------------------|
+| Velocidad                       |       Muy rápido (milisegundos)     |      Lento (segundos/minutos)    |
+|---------------------------------|-------------------------------------|----------------------------------|
+| Tamaño                          |              Ligero (MB)            |             Pesado (GB)          |
+|---------------------------------|-------------------------------------|----------------------------------|
+| Arranque                        |              Inmediato              |               Lento              |
+|---------------------------------|-------------------------------------|----------------------------------|
+| Uso de CPU/RAM                  |    Optimizado, solo lo necesario    |        Consume más recursos      |
+|---------------------------------|-------------------------------------|----------------------------------|
 
 ### **Caracteristicas de Docker** ###
 
@@ -25,7 +43,7 @@ Los contenedores son una forma de virtulización del sistema opertaivo, son como
 
 * **Seguridad**: Es seguro haciendo uso de namespaces y cgroups, los recursos están aislados.
 
-* **Uso de imagenes**: Una imagen Docker podríamos entenderla como un Sistema Operativo con aplicaciones instaladas. A partir de una imagen se puede crear un contenedor. Las imágenes de docker son portables entre diferentes plataformas, el único requisito es que en el sistema huésped esté disponible docker.
+* **Uso de imágenes**: Una imagen Docker podríamos entenderla como un Sistema Operativo con aplicaciones instaladas. A partir de una imagen se puede crear un contenedor. Las imágenes de docker son portables entre diferentes plataformas, el único requisito es que en el sistema huésped esté disponible docker.
 
 ### **Instalación de Docker (Debian Buster)** ###
 
@@ -60,7 +78,7 @@ echo \
   $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 ~~~
 
-5. Instalamos doscker:
+5. Instalamos Docker:
 
 ~~~
 sudo apt-get update
@@ -81,7 +99,7 @@ sudo usermod -aG docker $USER
 docker run "nombre de la imagen"
 ~~~
 
-Podemos obtener varias imagenes de docker en la sigiente pagina [Dockerhub](https://hub.docker.com/). En el caso de que una imagen tenga varias versiones podemos ejecutar la version deseada de la siguiente forma:
+Podemos obtener varias imágenes de docker en la sigiente pagina [Dockerhub](https://hub.docker.com/). En el caso de que una imagen tenga varias versiones podemos ejecutar la version deseada de la siguiente forma:
 
 ~~~
 docker run "nombre de la imagen":"version"
@@ -95,15 +113,15 @@ En el caso de no indicar la version, por defecto se ejecutara la ultima version 
 docker run -d "nombre de la imagen"
 ~~~
 
-* Descargar imagenes docker:
+* Descargar imágenes docker:
 
 ~~~
 docker pull "nombre de la imagen"
 ~~~
 
-Aunque este comando no es del todo necesario ya que si la imagen que queremos ejecutar no la tenemos, al ejecutar docker run se descarga de forma automatica siempre y cuando exista la imagen que queremos. Este comando se usa sobre todo en el caso de querer descargar imagenes sin que se ejecuten automticamente.
+Aunque este comando no es del todo necesario ya que si la imagen que queremos ejecutar no la tenemos, al ejecutar docker run se descarga de forma automatica siempre y cuando exista la imagen que queremos. Este comando se usa sobre todo en el caso de querer descargar imágenes sin que se ejecuten automticamente.
 
-* Comprobar las imagenes que tenemos en nuestra maquina:
+* Comprobar las imágenes que tenemos en nuestra maquina:
 
 ~~~
 docker images
@@ -127,9 +145,9 @@ debian                     latest              5890f8ba95f6        7 months ago 
 php                        7.4.3-apache        d753d5b380a1        7 months ago       414MB
 ~~~
 
-En mi caso estas son las imagenes que tengo en mi equipo, algunas usadas en otras practicas y ejemplos y otras descargadas y modificadas por mi.
+En mi caso estas son las imágenes que tengo en mi equipo, algunas usadas en otras practicas y ejemplos y otras descargadas y modificadas por mi.
 
-Cada imagen cuenta con una ID unica que podremos usar posteriormente para eliminar las imagenes.
+Cada imagen cuenta con una ID unica que podremos usar posteriormente para eliminar las imágenes.
 
 * Mostrar contenedores que se estan ejecutando:
 
@@ -554,9 +572,9 @@ Esta que hemos visto es una forma de crear una imagen personalizada en docker, p
 
 Unos ejemplos sobre el uso de dockerfile los podemos encontrar en el post [aplicaciones web php en docker](https://sergioib.netlify.app/posts/aplicaciones-web-php-en-docker/) en el que a traves de unos ejercicios hacemos uso de una imagen de la aplicacion bookmedic y la personalizamos.
 
-La estructura de los dockerfile sera la siguiente:
+La estructura de los dockerfile será la siguiente:
 
-* En los ficheros dockerfile la primera linea que indicaremos sera un **FROM** indicando la imagen "padre" o imagen base que va a usarse.
+* En los ficheros dockerfile la primera linea que indicaremos será un **FROM** indicando la imagen "padre" o imagen base que va a usarse.
 
 * La linea de **WORKDIR**, en el que se va a declarar en que directorio se va a realizar todo el trabajo, en el caso de que no exista el directorio, se creara de forma automática.
 
@@ -569,26 +587,33 @@ La estructura de los dockerfile sera la siguiente:
 Ejemplo:
 
 ~~~
+# Imágen base de PHP con docker
 FROM php:7.4-apache
 
+# Variables de entorno
 ENV MARIADB_USER admin
 ENV MARIADB_PASS admin
 ENV MARIADB_HOST servidor_mysql2
 
+# Instalación de paquetes necesarios
 RUN apt-get update
 RUN docker-php-ext-install pdo pdo_mysql mysqli json
 RUN a2enmod rewrite
 
+# Exponer puerto 80
 EXPOSE 80
 
+# Habilitar módulos de Apache
 WORKDIR /var/www/html
 
+# Copiar archivos de la aplicación
 COPY bookmedik/ /var/www/html
 
 ADD script.sh /usr/local/bin/script.sh
 
 RUN chmod +x /usr/local/bin/script.sh
 
+# Comando que ejecutará el contenedor
 CMD ["script.sh"]
 ~~~
 
@@ -598,11 +623,11 @@ Una vez creado el contenedor se ejecutaran los comandos indicados con run, es de
 
 Como nuestro contenedor tendra un apache y php, se abrira el puerto 80 para que haga uso de el apache usando para ello la linea **EXPOSE**.
 
-El directorio de trabajo indicado sera /var/www/html y copiaremos en ese directorio los ficheros de nuestro directorio bookmedik (una aplicacion web que hace de agenda).
+El directorio de trabajo indicado será /var/www/html y copiaremos en ese directorio los ficheros de nuestro directorio bookmedik (una aplicacion web que hace de agenda).
 
 añdimos s nuestro contenedor el script indicado usando **ADD** en la ubicacion necesaria y jecutamos otro RUN para darle permisos de ejecucion a al script y que de esa forma mysql reciba los datos necesario y al ejecutar apache se pueda usar la aplicacion web de bookmedik
 
-El contenido de nuestro script.sh sera el siguiente:
+El contenido de nuestro script.sh será el siguiente:
 
 ~~~
 #!/bin/bash
@@ -712,7 +737,7 @@ docker volume prune
 docker volume inspect "nombre del volumen"
 ~~~
 
-Como ejemplo se va a crear un contenedor con una imagen base de debian haciendo uso de la opción -v para asi indicar la ubicación de nuestro volumen creado.
+Como ejemplo se va a crear un contenedor con una imagen base de debian haciendo uso de la opción -v para así indicar la ubicación de nuestro volumen creado.
 
 ~~~
 #Creamos primero un volumen que usaremos de prueba.
@@ -742,7 +767,7 @@ Para poner en practica este método, empezaremos creando un directorio donde se 
 
 Docker-Compose es una herramienta soluciona el problema de tener que repetir cada comando al levantar nuestro contenedores, ya que parte de un fichero YML en el que estan indicados todos los elementos que necesita Docker para montar nuestros escenarios de multicontenedor. Es importante el orden en el que se escriben los parámetros.
 
-Para hacer uso de docker compose, lo primero sera instalarlo:
+Para hacer uso de docker compose, lo primero será instalarlo:
 
 ~~~
 # Añadimos la clave GPG
@@ -761,7 +786,7 @@ Vamos ha hacer una prueba de instalación, instalando como ejemplo un contenedor
 
 Para ello crearemos una carpeta deply donde guardaremos nuestro docker compose, a diferencia de con dockerfile que lo guardabamos todo lo relacionado con la instalacion del contenedor en un directorio buil (no es necesaria esta distincion entre directorio build y directorio deploy, es solo para que se entienda mejor).
 
-Nuestro fichero docker compose sera el siguiente:
+Nuestro fichero docker compose será el siguiente:
 
 ~~~
 version: "3.1"
@@ -791,9 +816,9 @@ services:
 
 En este ejemplo estamos creando dos contenedores, uno al que llamamos db que alojara la base de datos de mariadb y otro contenedor en el que se desplegará drupal.
 
-En el contenedor de mariadb, indicamos tanto la imagen que se usará, asi como las variables de entorno necesarias para que dicha base de datos funcione correctamente (nombre de la base de datos, usuario, contraseña, contraseña de administrador) y querer que permanezcan persistentes los datos de nuestra base de datos, creamos un volumen persistente haciendo uso de bind mount.
+En el contenedor de mariadb, indicamos tanto la imagen que se usará, así como las variables de entorno necesarias para que dicha base de datos funcione correctamente (nombre de la base de datos, usuario, contraseña, contraseña de administrador) y querer que permanezcan persistentes los datos de nuestra base de datos, creamos un volumen persistente haciendo uso de bind mount.
 
-Por otro lado al contenedor de drupal solo sera necesario indicar la imagen que en este caso es una imagen drupal configurada por mi ya que la configuración por defecto daba error a la hora de instarse, indicamos los puertos a usar (en mi caso el puerto 8083 ya que los puertos 82, 81 y 80 los tengo ocupados con otros contenedores).
+Por otro lado al contenedor de drupal solo será necesario indicar la imagen que en este caso es una imagen drupal configurada por mi ya que la configuración por defecto daba error a la hora de instarse, indicamos los puertos a usar (en mi caso el puerto 8083 ya que los puertos 82, 81 y 80 los tengo ocupados con otros contenedores).
 
 Desplegamos el docker compose ejecutando el siguiente comando en el directorio donde este el fichero:
 
