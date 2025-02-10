@@ -65,18 +65,13 @@ Autentificación haciendo uso de un certificado creado en el propio servidor sof
 
 ### Diferencias con Open VPN y Wireguard ###
 
-|                                 |   OpenVPN       |      Wireguard          |     SoftEther      | 
-|---------------------------------|-----------------|-------------------------|--------------------|
-| Rendimiento                     |   100 mbps      |      900 mbps (aprox)   |     1 Gbps         |
-| (velocidad de conexión)         |                 |                         |                    |
-|---------------------------------|-----------------|-------------------------|--------------------|
-| Configuración                   |   sencilla      |      sencilla           |     sencilla       |
-|---------------------------------|-----------------|-------------------------|--------------------|
-| Seguridad                       |   baja          |      media-alta         |     alta           |
-|---------------------------------|-----------------|-------------------------|--------------------|
-| Estabilidad                     |   buena         |      buena              |     buena          |
-|---------------------------------|-----------------|-------------------------|--------------------|
-| Transmisión de contenido        |   medio         |      alto               |     alto           |
+| **Característica**             | **OpenVPN**      | **WireGuard**         | **SoftEther**     |
+|--------------------------------|-----------------|-----------------------|------------------|
+| **Rendimiento** (velocidad de conexión) | 100 Mbps       | 900 Mbps (aprox)     | 1 Gbps           |
+| **Configuración**              | Sencilla        | Sencilla              | Sencilla         |
+| **Seguridad**                  | Baja           | Media-alta            | Alta             |
+| **Estabilidad**                | Buena          | Buena                 | Buena            |
+| **Transmisión de contenido**    | Medio          | Alto                  | Alto             |
 
 ### Casos prácticos ###
 
