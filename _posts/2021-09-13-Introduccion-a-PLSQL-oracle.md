@@ -300,13 +300,11 @@ end MostrarNom7082;
 
 **¿Cuando usar funciones o procedimientos?**
 
-|      Función      |         Descripción           |   Devuelve un valor   |             Ejemplo de uso           | 
-|-------------------|-------------------------------|-----------------------|--------------------------------------|
-| Procedimiento     |  Bloque de código que ejecuta |          No			|	EXEC InsertarEmpleado(123, 'Juan') |
-|                   |  una acción específica.       |                       |									   |
-|-------------------|-------------------------------|-----------------------|--------------------------------------|
-| Función           |  Bloque de código que devuelve| 		   Si 			| SELECT ObtenerSalario(123) FROM dual;|
-|					|  un valor.                    |                       | 									   |
+| **Tipo**         | **Descripción**                                         | **Devuelve un valor?** | **Ejemplo de uso**               |
+|-----------------|-----------------------------------------------------|-------------------|--------------------------------|
+| **Procedimiento** | Bloque de código que ejecuta una acción específica. | ❌ No            | `EXEC InsertarEmpleado(123, 'Juan')` |
+| **Función**      | Bloque de código que devuelve un valor.              | ✅ Sí            | `SELECT ObtenerSalario(123) FROM dual;` |
+
 
 * **Programación modular**
 
