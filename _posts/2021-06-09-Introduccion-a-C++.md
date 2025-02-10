@@ -93,7 +93,7 @@ La precedencia de operadores es la siguiente:
 * Multiplicaciones, divisiones y módulos
 * Sumas y restas
 * Operador lógico. && (Y)
-* Operador lógico. || (O)
+* Operador lógico. "||" (O)
 * Operadores de comparación
 * Operadores de asignación
 
