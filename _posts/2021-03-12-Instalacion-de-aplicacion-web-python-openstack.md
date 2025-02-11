@@ -235,13 +235,13 @@ En la página de administración en el menú de configuración(settings) podemos
 
 Ejemplo de nombre:
 
-![mezzanine](/mezzanine/mezzanine1.png)
+![mezzanine](/images/mezzanine/mezzanine1.png)
 
 Ejemplo de post:
 
-![mezzanine](/mezzanine/mezzanine2.png)
+![mezzanine](/images/mezzanine/mezzanine2.png)
 
-![mezzanine post](/mezzanine/mezzanine_post.png)
+![mezzanine post](/images/mezzanine/mezzanine_post.png)
 
 Guardamos los ficheros generados durante la instalación en un repositorio github. Guardaremos también en ese repositorio la copia de seguridad de la bese de datos. 
 

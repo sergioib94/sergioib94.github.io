@@ -130,10 +130,10 @@ iptables -t nat -A PREROUTING -i eth0 -p tcp --dport 443 -j DNAT --to 10.0.2.5
 
 Instalamos el certificado en nuestro navegador, por ejemplo en Mozilla Firefox, para ello entramos en Preferencias -> Privacidad & Seguridad -> Certificados -> Ver certificados -> Importar.
 
-![certificado](/https-openstack/certificado.png)
+![certificado](/images/https-openstack/certificado.png)
 
 Probamos a acceder al fichero info.php que tenemos ya en nuestro servidor web:
 
-![prueba https](/https-openstack/prueba_https.png)
+![prueba https](/images/https-openstack/prueba_https.png)
 
 Como se ve en la imagen, nos aparece el candado, aunque nos sale como sitio seguro, esto puede deberse a que a la hora de crear el fichero csr, el dato OU esta mal y por lo tanto no queda validado correctamente (se puso informatica cuando debe ser informática).

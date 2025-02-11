@@ -145,11 +145,11 @@ jobs:
 
 Prueba de Funcionamiento correcto:
 
-![integracion continua funcionando](/integracion-continua/buen_ic.png)
+![integracion continua funcionando](/images/integracion-continua/buen_ic.png)
 
 Prueba de error:
 
-![error integracion continua](/integracion-continua/error_ic.png)
+![error integracion continua](/images/integracion-continua/error_ic.png)
 
 Crea el pipeline en el sistema de CI/CD para que pase automáticamente los tests. Muestra el fichero de configuración y una captura de pantalla con un resultado exitoso de la IC y otro con un error.
 

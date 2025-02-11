@@ -109,7 +109,7 @@ libavutil-dev libswscale-dev libpango1.0-dev libssh2-1-dev libtelnet-dev libvncs
 
 Comprobamos que guacamole realmente esta funcionando
 
-![Guacamole server](/guacamole/Guacamole-server.png)
+![Guacamole server](/images/guacamole/Guacamole-server.png)
 
 * Una vez instalado guacamole, realizaremos la configuración necesaria en apache2 y tomcat (utilizando el protocolo AJP) para que la aplicación sea servida por el servidor web.
 	
@@ -174,15 +174,15 @@ Reiniciamos el servicio de apache para que los cambios se guarden y añadimos el
 
 Ponemos en el navegador el nombre que le hemos dado en apache a la aplicacion, en mi caso guacamole.sergio.org y comprobamos que se nos abre la aplicación de guacamole.
 
-![guacamole inicio](/guacamole/guacamole_inicio.png)
+![guacamole inicio](/images/guacamole/guacamole_inicio.png)
 
 Accedemos a través del usuario y contraseña configurados anterior mente en el fichero user-mapping.xml.
 
-![guacamole](/guacamole/guacamole.png)
+![guacamole](/images/guacamole/guacamole.png)
 
 En la parte inferior se nos muestran las dos conexiones configuradas anteriormente, una a mi maquina real, y otra a una maquina vagrant, comprobamos que realmente guacamole funciona conectándonos como ejemplo a la maquina real.
 
-![conexion guacamole](/guacamole/conexion_guacamole.png)
+![conexion guacamole](/images/guacamole/conexion_guacamole.png)
 
 Comprobamos que funciona la aplicación perfectamente.
 
@@ -262,16 +262,16 @@ postgresql-password: uaurio01
 
 De esta forma contaremos con un usuario a parte del administrador para acceder a nuestro guacamole. Ahora probamos a crear una conexión remota accediendo como administrador.
 
-![admin](/guacamole/admin.png)
+![admin](/images/guacamole/admin.png)
 
 Una vez que hemos accedido como admin, en el apartado de configuración, vamos a conexiones y una vez ahí probamos a crear la conexión que hemos hecho anteriormente con el usuario normal a nuestra maquina.
 
-![creacion conexion](/guacamole/creacion_conexion.png)
+![creacion conexion](/images/guacamole/creacion_conexion.png)
 
 Los parámetros a configurar son los mismos que se configuran en user-pammipn.xml, al guardar esta conexion, volvemos al inicio y podremos acceder sin problemas a la maquina.
 
-![conexion autentificada](/guacamole/conexion_autentificada.png)
+![conexion autentificada](/images/guacamole/conexion_autentificada.png)
 
 Probamos tambien a conectarnos a alguna de las maquinas del escenario openstack con el que contamos, en este caso nos conectamos a Dulcinea.
 
-![conexion Dulcinea](/guacamole/conexion_dulcinea.png)
+![conexion Dulcinea](/images/guacamole/conexion_dulcinea.png)

@@ -408,7 +408,7 @@ Para comprobar que php-fpm a sido bien instalado y esta funcionando, creamos un 
 
 De forma que si accedemos a quijote a través del navegador obtengamos algo como esto:
 
-![info.php](/servidor-web-bbdd-y-dns/info.php.png)
+![info.php](/images/servidor-web-bbdd-y-dns/info.php.png)
 
 Añadimos la regla dnat en dulcinea para acceder al puerto 80,443 a quijote.
 

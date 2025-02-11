@@ -74,7 +74,7 @@ Commercial support is available at
 
 Funcionamiento:
 
-![inicio](/nginx/nginx1.png)
+![inicio](/images/nginx/nginx1.png)
 
 ### **Virtualhosting** ###
 
@@ -138,11 +138,11 @@ Prueba de funcionamiento:
 
 iesgn
 
-![iesgn](/nginx/nginx2.png)
+![iesgn](/images/nginx/nginx2.png)
 
 departamentos:
 
-![departamentos.iesgn](/nginx/nginx3.png)
+![departamentos.iesgn](/images/nginx/nginx3.png)
 
 ### **Mapeo URL** ###
 
@@ -274,7 +274,7 @@ server {
 
 Prueba de funcionamiento:
 
-![error 404](/nginx/nginx6.png)
+![error 404](/images/nginx/nginx6.png)
 
 * Tarea 6: Añade al escenario otra máquina conectada por una red interna al servidor. A la URL departamentos.iesgn.org/intranet sólo se debe tener acceso desde el cliente de la red local, y no se pueda acceder desde la anfitriona por la red pública. A la URL departamentos.iesgn.org/internet, sin embargo, sólo se debe tener acceso desde la anfitriona por la red pública, y no desde la red local.
 
@@ -327,7 +327,7 @@ Bienvenido desde intranet
 
 Cliente fuera de la red (intranet):
 
-![error 403](/nginx/nginx8.png)
+![error 403](/images/nginx/nginx8.png)
 
 Cliente de la red interna (internet):
 
@@ -425,8 +425,8 @@ pagina secreta revelada
 
 Desde fuera de la red interna por el contrario se nos pide autentificacion:
 
-![](/nginx/nginx10.png)
+![](/images/nginx/nginx10.png)
 
-![](/nginx/nginx11.png)
+![](/images/nginx/nginx11.png)
 
 Como vemos en esta practica es muy similar a la anteriormente hecha usando un virtualhost apache debido a que apache y nginx cumplen la misma funcion, salvo que nginx a demostrado tener mejor rendimiento.

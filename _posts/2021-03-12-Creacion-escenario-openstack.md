@@ -31,7 +31,7 @@ En este post se creara un escenario en openstack con varias maquinas virtuales d
 
 Escenario una vez creadas las instancias:
 
-![escenario openstack](/escenario-openstack/topologia.png)
+![escenario openstack](/images/escenario-openstack/topologia.png)
 
 Una vez creadas las instancias, solo faltaría hacer accesible de forma indirecta a las instancias de sancho y quijote a través de dulcinea. En este caso la red 10.0.0.0/24, tiene 2 maquinas de un trabajo creado anteriormente para otra asignatura.
 

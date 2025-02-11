@@ -113,27 +113,27 @@ Quit the server with CONTROL-C.
 
 Acceso a /admin:
 
-![/admin](/despliegue-aplicacion-python/admin.png)
+![/admin](/images/despliegue-aplicacion-python/admin.png)
 
 * Crea dos preguntas, con posibles respuestas.
 
 Una vez en la zona de administración de nuestro proyecto, en el apartado questions, hacemos clic en add y creamos dos nuevas preguntas con sus respectivas respuestas.
 
-![django](/despliegue-aplicacion-python/django2.png)
+![django](/images/despliegue-aplicacion-python/django2.png)
 
-![django](static/despliegue-aplicacion-python/django3.png)
+![django](/images/despliegue-aplicacion-python/django3.png)
 
 * Comprueba en el navegador que la aplicación está funcionando, accede a la url \polls.
 
 Accedemos ahora a http://127.0.0.1:8000/polls para comprobar que la aplicación funciona correctamente:
 
-![django](/despliegue-aplicacion-python/django-poll.png)
+![django](/images/despliegue-aplicacion-python/django-poll.png)
 
 Comprobamos que se nos muestren las dos preguntas creadas anteriormente y que se nos muestren las posibles respuestas:
 
-![django](/despliegue-aplicacion-python/django.poll1.png)
+![django](/images/despliegue-aplicacion-python/django.poll1.png)
 
-![django](/despliegue-aplicacion-python/django-poll2.png)
+![django](/images/despliegue-aplicacion-python/django-poll2.png)
 
 * Tarea2: entorno de producción
 
@@ -334,9 +334,9 @@ Superuser created successfully.
 
 Una vez hecho esto ya podremos accedes a nuestra aplicación desde el navegador:
 
-![dejango](/despliegue-aplicacion-python/django1.png)
+![dejango](/images/despliegue-aplicacion-python/django1.png)
 
-![despliegue django](/despliegue-aplicacion-python/despliegue_django.png)
+![despliegue django](/images/despliegue-aplicacion-python/despliegue_django.png)
 
 * Debes asegurarte que el contenido estático se está sirviendo: ¿Se muestra la imagen de fondo de la aplicación? ¿Se ve de forma adecuada la hoja de estilo de la zona de administración?. Para arreglarlo puedes encontrar documentación en How to use Django with Apache and mod_wsgi.
 
@@ -358,7 +358,7 @@ Alias /static/polls/ /var/www/html/django_tutorial/polls/static/
 
 Comprobamos que se vea ya de forma correcta:
 
-![despliegue django](/despliegue-aplicacion-python/despliegue_django2.png)
+![despliegue django](/images/despliegue-aplicacion-python/despliegue_django2.png)
 
 * Desactiva en la configuración (fichero settings.py) el modo debug a False. Para que los errores de ejecución no den información sensible de la aplicación.
 
@@ -371,7 +371,7 @@ DEBUG = False
 
 Para probar el funcionamiento creamos una pregunta y entramos en /polls:
 
-![despliegue django](static/despliegue-aplicacion-python/desoliegue_django3.png)
+![despliegue django](/images/despliegue-aplicacion-python/desoliegue_django3.png)
 
 * Tarea 3: Modificación de nuestra aplicación.
 
@@ -385,14 +385,14 @@ Para ello o único que hacemos es introducir en el html una etiqueta h2 con nues
 <h2> Sergio Ibañez Nuñez </h2>
 ~~~
 
-![primer modificacion](/despliegue-aplicacion-python/modificacion1.png)
+![primer modificacion](/images/despliegue-aplicacion-python/modificacion1.png)
 
 * Modifica la imagen de fondo que se ve la aplicación.
 Vamos a crear una nueva tabla en la base de datos, para ello sigue los siguientes pasos:
 
 Para ello nos descargamos una imagen cualquiera y la guardamos en /polls/static/polls/images/ con el mismo nombre que el fondo actual, background.jpg de forma que se sobrescriban y al actualizar se cambiara el fondo.
 
-![modificacion 2](/despliegue-aplicacion-python/modificacion2.png)
+![modificacion 2](/images/despliegue-aplicacion-python/modificacion2.png)
 
 * Añade un nuevo modelo al fichero polls/models.py:
 
@@ -446,7 +446,7 @@ Y añade al final la siguiente línea:
 
 Comprobacion:
 
-![modificacion 3](/despliegue-aplicacion-python/modificacion3.png)
+![modificacion 3](/images/despliegue-aplicacion-python/modificacion3.png)
 
 Despliega el cambio producido al crear la nueva tabla en el entorno de producción.
 
@@ -484,5 +484,5 @@ Running migrations:
 
 Recargamos apache y comprobamos los cambios.
 
-![migracion](/despliegue-aplicacion-python/migracion.png)
+![migracion](/images/despliegue-aplicacion-python/migracion.png)
 

@@ -450,7 +450,7 @@ mysql>
 	iptables -A FORWARD -i eth0 -o eth2 -p tcp -m multiport --sports 80,443 -m state --state ESTABLISHED -j ACCEPT
 ~~~
 
-![prueba web externa](/cortafuegos/prueba_web_externa.png)
+![prueba web externa](/images/cortafuegos/prueba_web_externa.png)
 
 * LAN ↔ EXT
 
@@ -517,7 +517,7 @@ iptables -A FORWARD -i eth0 -o eth1 -p tcp --dport 25 -m state --state NEW,ESTAB
 iptables -A FORWARD -i eth1 -o eth0 -p tcp --sport 25 -m state --state ESTABLISHED -j ACCEPT
 ~~~
 
-![prueba de correo freston](/cortafuegos/prueba_correo_freston.png)
+![prueba de correo freston](/images/cortafuegos/prueba_correo_freston.png)
 
 **envios desde dmz**
 

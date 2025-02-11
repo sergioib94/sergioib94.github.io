@@ -127,4 +127,4 @@ log /var/log/office1.log
 
 Una vez establecido el tunel vpn comprobamos que tanto servidor como cliente en ambas redes tienen conexion ejecutando un ping por ejemplo.
 
-![Pueba de ping](/site-to-site/Pueba_ping.jpeg)
+![Pueba de ping](/images/site-to-site/Pueba_ping.jpeg)
