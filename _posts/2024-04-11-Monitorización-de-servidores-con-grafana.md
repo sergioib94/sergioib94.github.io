@@ -131,7 +131,7 @@ Al igual que se ha hecho anteriormente, en el menú de la izquierda buscamos la 
 
 Al acceder a "add visualization" lo primero que nos pedirá grafana será que elijamos un data source que será desde donde grafana obtenga los datos de las métricas. Al tratarse de una maquina recién creada en mi caso el único data source que da la opción de seleccionar será el de prometheus pero según las necesidades que tengamos podemos instalar cualquier otro para poder usarlo.
 
-![Prometheus](/images/Grafana/prometheus.png)
+![Prometheus](/images/Grafana/prometheus.png) 
 
 Al crear un dashboard vacío, lo primero que haremos será crear los paneles. Un panel es el bloque básico para la visualización de los datos. Grafana provee diferentes tipos de paneles y cada uno de ellos provee un editor de consulta (query) dependiendo del tipo de Data Source seleccionado.
 
