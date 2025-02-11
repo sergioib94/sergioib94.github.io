@@ -2,14 +2,14 @@
 title: "Conceptos Basicos de Mongodb"
 date: 2021-04-03T13:25:45+02:00
 categories: [Base de Datos, Apuntes]
-excerpt: "En este post se va a explicar tanto la instalacion y configuracion de mongodb ademas de varios de los concepos basicos como pueden ser el uso de proyecciones y operadores CRUD."
+excerpt: "En este post se va a explicar tanto la instalación y configuración de mongodb ademas de varios de los conceptos basicos como pueden ser el uso de proyecciones y operadores CRUD."
 ---
 
 ### **Introducción** ###
 
-En este post se va a explicar tanto la instalacion y configuracion de mongodb ademas de varios de los concepos basicos como pueden ser el uso de proyecciones y operadores CRUD. 
+En este post se va a explicar tanto la instalación y configuración de mongodb ademas de varios de los conceptos basicos como pueden ser el uso de proyecciones y operadores CRUD. 
 
-Este post son una serie de explicaciones y apuntes realizados siguiendo varios cursos online. Se usaran varias herramientas como pueden ser mongo shell (cliente de linea de comandos), mongo compass (cliente grafico) y un servidor Atlas de mongodb (proporcionado en el curso de mongo university).
+Este post son una serie de explicaciones y apuntes realizados siguiendo varios cursos online. Se usarán varias herramientas como pueden ser mongo shell (cliente de linea de comandos), mongo compass (cliente grafico) y un servidor Atlas de Mongodb (proporcionado en el curso de mongo university).
 
 ### Instalación de mongodb (debian 10) ###
 
@@ -45,17 +45,17 @@ systemctl enable --now mongod
 
 Ya tendremos mongo instalado y listo para usar.
 
-### Configuracion basica y conexion de herramientas ###
+### Configuración basica y conexion de herramientas ###
 
 ### Mongodb compass ###
 
-Compass cuenta con una interfaz visual para mongodb nos permite tanto explorar los datos que contiene una base de datos asi como tambien gestionarla.
+Compass cuenta con una interfaz visual para MongoDB que permite explorar y gestionar los datos de la base de datos.
 
 ### Mongo shell ###
 
-La shell de mongo es una una interfaz javascript interactiva para mongodb. La shell mongo para consultar y actualizar datos, así como para realizar operaciones administrativas.
+La shell de mongo es una interfaz javascript interactiva para mongodb. La shell mongo para consultar y actualizar datos, así como para realizar operaciones administrativas.
 
-Instalacion de la shell en Linux
+Instalación de la shell en Linux
 
 * Para ello, vamos al centro de descargas de mongodb (https://www.mongodb.com/try/download/shell) y al seleccionar nuestro sistema operativo, descargamos el archivo.
 
@@ -1007,6 +1007,17 @@ MongoDB Enterprise Cluster0-shard-0:PRIMARY> db.movieDetails.find({runtime: {$ne
 { "title" : "Star Trek II: The Wrath of Khan", "runtime" : 113 }
 Type "it" for more
 ~~~
+
+
+| **Operador** | **Descripción** | **Ejemplo** |
+|-------------|----------------|-------------|
+| `$gt` | Mayor que | `db.usuarios.find({edad: {$gt: 18}})` |
+| `$lt` | Menor que | `db.usuarios.find({edad: {$lt: 60}})` |
+| `$gte` | Mayor o igual que | `db.usuarios.find({edad: {$gte: 21}})` |
+| `$lte` | Menor o igual que | `db.usuarios.find({edad: {$lte: 65}})` |
+| `$eq` | Igual a | `db.usuarios.find({nombre: {$eq: "Pedro"}})` |
+| `$ne` | No igual a | `db.usuarios.find({nombre: {$ne: "Pedro"}})` |
+
 
 * Operadores lógicos
       

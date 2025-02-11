@@ -9,15 +9,15 @@ excerpt: "Active Directory es un servicio de directorio que almacena objetos de 
 
 Active Directory es un servicio de directorio que almacena objetos de datos en su entorno de red local. El servicio registra datos en los usuarios, dispositivos, aplicaciones, grupos, y dispositivos en una estructura jerárquica.
 
-La estructura de los datos permite encontrar los detalles de los recursos conectados a la red desde una ubicación. En esencia, Active Directory actúa como un directorio telefónico para su red, por lo que puede buscar y administrar dispositivos fácilmente.
+La estructura jerárquica de Active Directory facilita la localización y administración de los recursos de la red desde un único punto. En esencia, Active Directory actúa como un directorio telefónico para su red, por lo que puede buscar y administrar dispositivos fácilmente.
 
 **Bosque**
 
-Es el nivel mas alto de organizacion en active directory. Un bosque es un grupo de dominios, cuando múltiples árboles se agrupan juntos se convierten en un bosque.
+Es el nivel más alto de organizacion en active directory. Un bosque es un grupo de dominios, cuando múltiples árboles se agrupan juntos se convierten en un bosque.
 
 **Árbol**
 
-El árbol es una entidad con un solo dominio o grupo de objetos seguido por dominios secundarios. Los distintos arboles en un bosque se conectan entre si a traves de una relación de confianza (la confianza entre los distintos dominios se hara de forma automatica) que permite que los distintos dominios compartan la información.
+El árbol es una entidad con un solo dominio o grupo de objetos seguido por dominios secundarios. Los distintos árboles en un bosque se conectan entre sí a través de relaciones de confianza, permitiendo compartir información entre dominios de manera automática (la confianza entre los distintos dominios se hara de forma automatica) que permite que los distintos dominios compartan la información.
 
 **Dominios**
 
@@ -27,9 +27,18 @@ Todos estos objetos son contenidos en una partición específica dentro de la ba
 
 **Unidad Organizativa**
 
-Las unidaddes organizativas (OU) son contenedores de Active Diretory dentro de un dominio con los que podemos agrupar para organizar multitud de objetos de active directory como pueden ser: usuarios de dominios, grupos de dominios, equipos e incluso otras unidades organizativas.
+Las unidades organizativas (OU) son contenedores de Active Diretory dentro de un dominio con los que podemos agrupar para organizar multitud de objetos de active directory como pueden ser: usuarios de dominios, grupos de dominios, equipos e incluso otras unidades organizativas.
 
 ![jerarquia active directory](/images/Active-Directory/jerarquia.png)
+
+
+| **Elemento**  | **Descripción** | **Ejemplo** |
+|--------------|----------------|------------|
+| **Bosque**   | Grupo de uno o más dominios que comparten un esquema y configuración. | `Empresa.com` y `Filial.empresa.com` forman parte del mismo bosque. |
+| **Árbol**    | Conjunto de dominios organizados jerárquicamente dentro de un bosque. | `ventas.empresa.com`, `soporte.empresa.com` son parte del mismo árbol. |
+| **Dominio**  | Contenedor lógico que administra objetos como usuarios y equipos. | `dominio.local` |
+| **Unidad Organizativa (OU)** | Contenedor dentro de un dominio que agrupa objetos y facilita la gestión. | `Usuarios`, `Equipos`, `Grupos` |
+
 
 ### Instalacion (En windows server 2016) ###
 
@@ -73,7 +82,7 @@ En nuestro caso elegiremos la opción Agregar un nuevo bosque, elegiremos el nom
 
 9. Después que el sistema valide si el nombre de dominio es válido, se desplegarán las opciones del controlador de dominio, donde contamos con algunas opciones muy importantes que debemos tener en cuenta a nivel de funcionalidad de nuestro servidor. 
 
-El nivel funcional que se indique debe ser siempre el mas bajo de la red, es decir, en mi caso el servidor con Active Directory cuenta con windows server 2012 por lo que el nivel funcional tanto de dominio como de bosque, sera de windows 2012, sin embargo si en nuestra red contamos con algun otro servidor con windows server 2008 por ejemplo, el nivel funcional se debe de establecer en windows server 2008.
+El nivel funcional que se indique debe ser siempre el más bajo de la red, es decir, en mi caso el servidor con Active Directory cuenta con windows server 2012 por lo que el nivel funcional tanto de dominio como de bosque, será de windows 2012, sin embargo si en nuestra red contamos con algun otro servidor con windows server 2008 por ejemplo, el nivel funcional se debe de establecer en windows server 2008.
 
 ![](/images/Active-Directory/ws-10.png)
 
@@ -193,13 +202,22 @@ Cuando se nos abra la ventana para crearnos el usuarios e introduzcamos los dato
 
 * La ultima opción que encontramos es para indicar que la cuenta del usuario esta deshabilitada, por ejemplo si estamos en una empresa y ese empleado a dejado el trabajo.
 
-Una vez creados los usuario lo siguiente sera agregar dichos usuarios a los grupos apropiados en caso de que sea necesario.
+Una vez creados los usuario lo siguiente será agregar dichos usuarios a los grupos apropiados en caso de que sea necesario.
+
+
+| **Opción** | **Descripción** |
+|------------|----------------|
+| **El usuario debe cambiar la contraseña al iniciar sesión** | Se usa para forzar el cambio en el primer inicio de sesión. |
+| **El usuario no puede cambiar la contraseña** | Solo un administrador podrá modificarla. |
+| **La contraseña nunca expira** | Se usa en cuentas de servicio o equipos sin usuarios. |
+| **La cuenta está deshabilitada** | Se usa cuando un empleado deja la empresa. |
+
 
 * #### **Crear grupos** ####
 
 Cuando un usuario inicia sesión en el dominio, Active Directory crea un token o una especie de identidad que indica automáticamente en que grupos está incluido este usuario; Un grupo puede crearse para fines distintos, por ejemplo, para acceder a ciertas rutas, para poder imprimir, para que le lleguen determinados correos etc.
 
-Hacemos clic en la raíz de nuestro dominio, en mi caso el dominio Practicas y haciendo clic derecho elegimos la opción "nuevo" y despues la opción "grupo". Una vez que se nos abra la ventana para crear el grupo tendremos que asignarle un nombre asi como elegir el ambito y el tipo de grupo que será. Ej:
+Hacemos clic en la raíz de nuestro dominio, en mi caso el dominio Practicas y haciendo clic derecho elegimos la opción "nuevo" y despues la opción "grupo". Una vez que se nos abra la ventana para crear el grupo tendremos que asignarle un nombre así como elegir el ambito y el tipo de grupo que será. Ej:
 
 ![](/images/Active-Directory/grupos1.png)
 
@@ -207,7 +225,7 @@ Los ámbitos de grupos son los sigientes:
 
 * **Dominio Local**
 
-Es el grupo mas restrictivo ya que solo sera accesible por usuarios que esten en el mismo dominio.
+Es el grupo más restrictivo ya que solo será accesible por usuarios que esten en el mismo dominio.
  
 * **Global**
 
@@ -228,17 +246,24 @@ En este ejemplo para tener mejor organizados los grupos, he creado una Unidad Or
 
 ![](/images/Active-Directory/grupos3.png)
 
+
+| **Tipo de Grupo** | **Descripción** | **Ejemplo de uso** |
+|------------------|----------------|--------------------|
+| **Grupo de Seguridad** | Se usa para asignar permisos de acceso a recursos. | Acceso a carpetas compartidas o permisos en aplicaciones. |
+| **Grupo de Distribución** | Se usa para enviar correos electrónicos a múltiples usuarios. | Grupo de correo para empleados de un departamento. |
+
+
 * #### **Agregar usuarios a grupos** ####
 
 Para ello hacemos clic en el usuario que se haya creado y abrimos las propiedades del usuario. Una vez se nos habra la ventana de propiedades, vamos a la pestaña "miembro de" y hacemos clic en agregar.
 
-Después de agregar tendremos que indicar a que grupo se agregara el usuario, por ejemplo si mi dominio se llama Pruebas y en la empresa sera uno de los administradores, seria Admin (para ello debe existir previamente el grupo que especifiquemos sino obviamente no podremos agregar ningun usuario). Ej:
+Después de agregar tendremos que indicar a que grupo se agregara el usuario, por ejemplo si mi dominio se llama Pruebas y en la empresa será uno de los administradores, seria Admin (para ello debe existir previamente el grupo que especifiquemos sino obviamente no podremos agregar ningun usuario). Ej:
 
 ![](/images/Active-Directory/ug1.png)
 
 * #### **Restablecer cuentas de usuario** ####
 
-Esta opción es bastante util ya que a la gente se les suele olvidar a menudo la contraseña, al quedarse la centa bloqueada, el admin puede restablecer la contraseña por defecto para que asi el usuario pueda volver a tener acceso con otra contraseña.
+Esta opción es bastante util ya que a la gente se les suele olvidar a menudo la contraseña, al quedarse la centa bloqueada, el admin puede restablecer la contraseña por defecto para que así el usuario pueda volver a tener acceso con otra contraseña.
 
 En el caso de que la cuenta haya sido bloqueada por algun motivo y el suaurio no puede acceder a ella la solución seria bastante facil ya que lo unico que habria que hacer es abrir las propiedades de la cuenta de usuario y en la pestaña "cuenta/account" seleccionar la opción desbloquear cuenta.
 

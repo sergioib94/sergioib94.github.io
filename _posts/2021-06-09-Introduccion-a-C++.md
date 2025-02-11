@@ -70,7 +70,7 @@ int main (int argc, char *argv[])
 
 Los datos que nosotros indicamos en un programa lo podemos indicar de varias formas:
 
-* Literales: nos permiten representar valores, por ejemplo un literal entero sera por ejemplo 5.
+* Literales: nos permiten representar valores, por ejemplo un literal entero será por ejemplo 5.
 
 * Variables: son identificadores en los que se guarda un valor. Las variables se declaran de un tipo de dato, por ejemplo una variable entera puede guardar datos enteros.
 
@@ -134,7 +134,7 @@ int main () {
 }
 ~~~
 
-Este programa lo que hace es que en programa principal cuando encuentra el identificador de la constante, en este caso altura y anchura, se sustituye el identificador por sus valores correspondientes, en este caso 5 y 10 respectivamente por lo que a la hora de ejecutar el programa principal el programa hará “área = 10 * 5” y el valor entero se mostrara en pantalla a través de cout << y después se mostrara el salto de linea.
+Este programa lo que hace es que en programa principal cuando encuentra el identificador de la constante, en este caso altura y anchura, se sustituye el identificador por sus valores correspondientes, en este caso 5 y 10 respectivamente por lo que a la hora de ejecutar el programa principal el programa hará “área = 10 * 5” y el valor entero se mostrará en pantalla a través de cout << y después se mostrará el salto de linea.
 
 ### Variables ### 
 
@@ -146,12 +146,12 @@ int variable1;
 
 En este caso en la variable1 solo se almacenaran datos enteros. 
 
-El nombre de las variables debe ir en minúsculas para asi diferenciarse de las constantes que van en mayúsculas, además el nombre de las variables deben estar compuestos por caracteres, números o subrayados, pero no puede empezar por un numero.
+El nombre de las variables debe ir en minúsculas para así diferenciarse de las constantes que van en mayúsculas, además el nombre de las variables deben estar compuestos por caracteres, números o subrayados, pero no puede empezar por un numero.
 
 Ejemplos de declaración de variables:
 
 ~~~
-	int variable1; → si no incluimos el valor, este se pondrá por defecto, en el caso de los enteros el valor por defecto es 0. en este caso posteriormente en el programa sera necesario inicializar la variable dandole un valor.
+	int variable1; → si no incluimos el valor, este se pondrá por defecto, en el caso de los enteros el valor por defecto es 0. en este caso posteriormente en el programa será necesario inicializar la variable dandole un valor.
 
 	int variable2=10;
 	int variable3, variable4;
@@ -313,7 +313,7 @@ string nombre_completo;
 nombre_completo=nombre+“ ”+apellido
 ~~~
 
-El resultado de la concatenacion sera “sergio ibañez”.
+El resultado de la concatenacion será “sergio ibañez”.
 
 ### Entrada y salida de datos ###
 
