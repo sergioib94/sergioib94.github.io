@@ -447,3 +447,27 @@ body.dark-mode {
   margin-top: 10px;
   display: block;
 }
+
+.boton-menu {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: #157878;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 10px 0;
+  text-align: center;
+}
+
+.boton-menu a {
+  color: white;
+  text-decoration: none;
+  font-size: 18px;
+  flex: 1;
+  text-align: center;
+}
+
+.boton-menu img {
+  height: 25px; /* Ajusta el tamaño del contador */
+}
