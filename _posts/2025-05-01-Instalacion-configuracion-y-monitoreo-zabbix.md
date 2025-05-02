@@ -7,6 +7,8 @@ excerpt: "Este post describe paso a paso cómo instalar y configurar Zabbix 6.0 
 
 ## **¿que es Zabix?** ##
 
+Zabbix es una plataforma de monitorización de infraestructura de TI de código abierto que permite supervisar el estado y rendimiento de servidores, redes, aplicaciones, servicios y otros recursos tecnológicos en tiempo real.
+
 ## **Requisitos previos** ##
 
 Para este post se han usado los siguientes elementos para realizar instalacion, configuracion y monitoreo haciendo uso de zabbix:
