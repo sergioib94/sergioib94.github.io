@@ -151,3 +151,33 @@ Después introducimos la información de la base de datos que hemos configurado 
 Por ultimo le pondremos nombre a nuestro servidor zabbix y con esto completaremos la instalación para poder acceder. El acceso lo realizaremos con el usuario por defecto "Admin" y la contraseña "zabbix".
 
 ![zabbix server](/images/Zabbix/zabbix_server.PNG)
+
+Una vez que tienes tu entorno Zabbix completamente funcional, puedes comenzar a realizar prácticas para familiarizarte con sus principales funcionalidades. Aquí tienes una serie de ejercicios recomendados:
+
+## **Ejemplos de practicas de monitorización en zabbix** ##
+
+Previamente para poder practicar la monitorización con zabbix en el frontend debemos configurar primero el equipo ya que cada métrica, trigger o gráfico debe estar vinculado a un host específico (físico, virtual o lógico). La creación del equipo es bastante simple, en el menu de opciones de la izquierda buscaremos la opción configuración -> equipos.
+
+1. Crear un trigger de alerta simple
+
+En este caso podemos crear un trigger que nos alerte cuando un parámetro (%CPU, uso de RAM, espacio en disco, etc...) de nuestro servidor sobrepase cierto valor. En este caso se creara un trigger que nos alerte cuando nuestro servidor supere el 80% de uso de CPU para ello en el frontend de zabbix buscaremos la opción configuración -> Equipos -> (host creado) -> crear iniciador.
+
+En la pantalla que tendremos para rellenar los datos de configuración del iniciándolos campos mas importantes a rellenar serian: Nombre (dado que es obligatorio), la gravedad ya sera util para clasificar como de grave sera el problema de nuestra maquina y la expresión (evalúa el valor de un ítem (métrica) y si se cumple una condición, dispara una alerta). Para este caso en concreto en el que la alerta aparecerá cuando la CPU supere el 80%, la configuración quedaría de la siguiente forma:
+
+![Trigger CPU](/images/Zabbix/trigger_CPU.PNG)
+
+Para poner a prueba el trigger instalaremos el comando "stress" en nuestra maquina servidor. El comando stress lo que hará sera lanzar procesos que consumirán los recursos que se le vayan indicando como parámetro, en este caso la CPU.
+
+~~~
+sudo apt install stress
+stress --cpu 2 --timeout 60
+~~~
+
+* --cpu 2: lanza procesos que hacen cálculos intensivos (usa 2 núcleos).
+* --timeout 60: ejecuta la carga durante el tiempo establecido (en segundos) y después se detiene.
+
+Una vez ejecutado el comando stress, volveremos al frontend de Zabbix y para comprobar si realmente funciona el trigger abrimos la opción Monitorización -> Problemas. Si el trigger esta funcionando correctamente nos debería aparecer algo como esto:
+
+![Prueba CPU](/images/Zabbix/prueba_trigguer_CPU.PNG)
+
+*Nota: los datos que llegan del servidor tardar unos segundos en actualizarse en el frontend por lo que es posible que aunque el comando funcione, no aparezca el trigger inmediatamente*
