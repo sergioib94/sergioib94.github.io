@@ -63,7 +63,7 @@ sudo apt install php php-mysql php-bcmath php-mbstring php-gd php-xml php-ldap p
 
 La interfaz web de Zabbix está hecha en PHP, por lo que se necesita tenerlo instalado con ciertas extensiones.
 
-## **Instalación de Zabbix** ## ##
+## **Instalación de Zabbix** ##
 
 A la hora de instalar Zabbix en nuestro sistema lo primero sera añadir el repositorio oficial de Zabbix.
 
@@ -82,7 +82,7 @@ Una vez hayamos añadido el repositorio y hayamos descargado e instalado el paqu
 sudo apt install zabbix-server-mysql zabbix-frontend-php zabbix-apache-conf zabbix-sql-scripts zabbix-agent -y
 ~~~
 
-Despues crearemos la base de datos de zabbix en mariadb previamente instalada:
+Después crearemos la base de datos de zabbix en mariadb previamente instalada:
 
 ~~~
 sudo mysql -u root -p
@@ -114,7 +114,7 @@ zcat /usr/share/zabbix-sql-scripts/mysql/server.sql.gz | mysql -u sergioib -p za
 
 Introducimos la contraseña especificada anteriormente para completar la importación y en cuanto a la instalación de zabbix ya estaría todo listo.
 
-## **Configuración de zabbix** ## ##
+## **Configuración de Zabbix** ##
 
 Para la configuración empezamos abriendo el fichero zabbix-server.conf para editarlo
 
