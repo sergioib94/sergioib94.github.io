@@ -1,11 +1,27 @@
 ---
-title: "Instalacion local CMS PHP"
+title: "Despliegue de un servidor LAMP local y configuración de CMS PHP"
 date: 2021-03-11T10:13:49+01:00
 categories: [Aplicaciones Web]
-excerpt: "En el siguiente post veremos haciendo uso de una maquina virtual en vagrant con sistema operativo unix e instalaremos en dicha maquina un servidor LAMP para instalar y configurar drupal."
+excerpt: "En el siguiente post desplegaremos un entorno LAMP (Linux, Apache, MySQL y PHP) sobre una maquina virtual en Vagrant con sistema operativo unix con el fin de alojar un CMS local en este caso Drupal y moodle. Este tipo de infraestructura es ampliamente utilizada para entornos de desarrollo, pruebas e incluso producción en pequeñas empresas."
 ---
 
-### **Instalación de un servidor LAMP** ###
+### **Introducción** ###
+
+En el siguiente post desplegaremos un entorno LAMP (Linux, Apache, MySQL y PHP) sobre una maquina virtual en Vagrant con sistema operativo unix con el fin de alojar un CMS local en este caso Drupal. Este tipo de infraestructura es ampliamente utilizada para entornos de desarrollo, pruebas e incluso producción en pequeñas empresas.
+
+**Entorno utilizado**
+
+* Sistema Operativo: Debian Buster
+
+* Apache: 2.4.52
+
+* PHP: 7.3
+
+* MariaDB: 10.3.25
+
+* CMS: Drupal 8.9.7 y moodle 38
+
+### **Instalación y configuración de un servidor LAMP** ###
 
 Empezamos creando una instancia de vagrant basado en un box debian o ubuntu y una vez creado ejecutamos vagrant init en el directorio donde crearemos el vagrantfile.
 	
@@ -22,21 +38,39 @@ end
 
 Una vez configurado el vagrantfile levantamos el escenario usando vagrant up y luego nos conectamos al servidor con vagrant ssh.
 
-Lo primero que haremos en la maquina sera ejecutar un update y un upgrade. Después de el update y el upgrade, empezaremos a descargar la pila LAMP (apache, mariadb y php): 
+Lo primero que haremos en la maquina sera ejecutar un update y un upgrade para actualizar los repositorios y paquetes del sistema a su última versión.
 
-Apache:
+~~~
+sudo apt update && sudo apt upgrade -y
+~~~
+
+Después del update y el upgrade, empezaremos a descargar y configurar la pila LAMP, empezando por Apache que servirá los archivos del CMS al navegador del cliente: 
+
+* Apache
 
 ~~~
 sudo apt install apache2
 ~~~
 
-Mariadb:
+Una vez instalado sera necesario comprobar que el estado del servidor apache sea enable.
+
+~~~
+sudo systemctl status apache2
+~~~
+
+* Mariadb:
 
 ~~~
 apt install mariadb-server mariadb-client
 ~~~
 
-PHP:
+Una vez instalada la base de datos de MariaDB, aseguramos la base de datos para evitar problemas, por lo que cambiamos la contraseña del root de MariaDB, eliminamos usuarios anónimos, desactivamos acceso remoto a root, etc.
+
+~~~
+sudo mysql_secure_installation
+~~~
+
+* Instalamos PHP que se encargará de procesar la lógica del CMS y conectarse con la base de datos.
 
 ~~~
 apt install php7.3
@@ -91,7 +125,7 @@ MariaDB [(none)]> grant all on drupalbd.* to drupal identified by 'drupal';
 Query OK, 0 rows affected (0.001 sec)
 ~~~
 
-* Descargamos la versión que nos parezca más oportuna de Drupal y realiza la instalación.
+* Descargamos la versión que nos parezca más oportuna de Drupal y realizamos la instalación.
 
 ~~~
 wget https://www.drupal.org/download-latest/zip
@@ -253,7 +287,7 @@ Configuración de moodle.conf:
 		</Directory>
 ~~~
 
-Instalación de la base de datos para moodle (en el servidor de base de datos): 
+* Instalación de la base de datos para moodle (en el servidor de base de datos): 
 
 ~~~
 vagrant@server-bd:~$ sudo mysql -u root -p
