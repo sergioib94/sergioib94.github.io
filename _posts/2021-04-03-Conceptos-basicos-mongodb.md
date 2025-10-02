@@ -2,7 +2,7 @@
 layout: post
 title: "Conceptos Basicos de Mongodb"
 date: 2021-04-03T13:25:45+02:00
-categories: [Base de Datos, Apuntes]
+categories: [Base-de-Datos, Apuntes]
 excerpt: "En este post se va a explicar tanto la instalación y configuración de mongodb ademas de varios de los conceptos basicos como pueden ser el uso de proyecciones y operadores CRUD."
 ---
 
