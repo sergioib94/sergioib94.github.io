@@ -5,10 +5,14 @@ icon: fas fa-envelope
 order: 5
 ---
 
-Bienvenid@s al blog personal de Sergio ibáñez. Actualmente soy técnico informático en Sevilla.
+# Contacto
 
-El propósito principal de esta página es subir las tareas solicitadas a lo largo ASIR, ademas de aquellos conocimientos que se vayan adquiriendo con el tiempo, para que además de ayudarme a mi mismo, ayudar a todo aquel que llegue aquí buscando información/aprendizaje
+Si quieres ponerte en contacto conmigo, aquí tienes varias formas:
 
-Contacto
+- 📧 **Email:** tu_email@example.com  
+- 💼 **LinkedIn:** [Perfil profesional](https://www.linkedin.com/in/sergio-ibañez-nuñez/)  
+- 💻 **GitHub:** [Repositorio personal](https://github.com/sergioib94)  
 
-sergioib309@gmail.com
+---
+
+👉 También puedes dejar comentarios en los artículos del blog si quieres dar feedback o preguntar sobre algún tema técnico.
