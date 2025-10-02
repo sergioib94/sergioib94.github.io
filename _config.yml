@@ -37,3 +37,17 @@ paginate: 5
 # Menú principal
 menu:
   tabs: true
+
+# LAYOUTS POR DEFECTO
+defaults:
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: post
+      
+  - scope:
+      path: ""
+      type: pages  
+    values:
+      layout: page
