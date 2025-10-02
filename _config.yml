@@ -1,12 +1,13 @@
 title: "Sergio Ibáñez"
 tagline: "Desarrollador Web & Blog Técnico"
-description: "Blog personal sobre desarrollo web y tecnologia"
+description: "Blog personal sobre desarrollo web y tecnología"
 url: "https://sergioib94.github.io"
+baseurl: ""   
 lang: es
 timezone: Europe/Madrid
 
 # TEMA PARA VERSION 7.3.1
-remote_theme: cotes2020/jekyll-theme-chirpy
+theme: jekyll-theme-chirpy
 
 # MODO OSCURO
 theme_mode:
