@@ -1,4 +1,5 @@
 ---
+layout: post
 title: "Instalación, configuración y monitorización usando Zabbix"
 date: 2025-05-01T13:19:00+02:00
 categories: [Sistemas, Monitorización]
