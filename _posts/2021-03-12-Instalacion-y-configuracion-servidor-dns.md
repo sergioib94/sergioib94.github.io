@@ -1,4 +1,5 @@
 ---
+layout: post
 title: "Instalacion y configuracion servidor DNS"
 date: 2021-03-12T12:56:19+01:00
 categories: [Servicios]

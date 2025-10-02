@@ -1,4 +1,5 @@
 ---
+layout: post
 title: "Kubernetes Letschat"
 date: 2021-03-13T12:13:11+01:00
 categories: [Cloud]

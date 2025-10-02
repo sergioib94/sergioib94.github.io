@@ -1,4 +1,5 @@
 ---
+layout: post
 title: "Despliegue CMS Java"
 date: 2021-03-12T13:49:27+01:00
 categories: [Aplicaciones Web]

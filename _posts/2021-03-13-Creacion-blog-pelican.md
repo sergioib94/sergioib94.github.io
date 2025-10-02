@@ -1,4 +1,5 @@
 ---
+layout: post
 title: "Creacion blog Pelican"
 date: 2021-03-13T22:18:18+01:00
 categories: [Aplicaciones Web]

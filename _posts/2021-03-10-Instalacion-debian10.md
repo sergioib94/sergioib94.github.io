@@ -1,4 +1,5 @@
 ---
+layout: post
 title: "Instalacion de Debian 10"
 date: 2021-03-10T21:20:45+01:00
 categories: [Sistemas]

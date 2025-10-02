@@ -1,4 +1,5 @@
 ---
+layout: post
 title: "Active Directory"
 date: 2021-05-23T15:28:17+02:00
 categories: [Sistemas, Apuntes]

@@ -1,4 +1,5 @@
 ---
+layout: post
 title: "Monitorización de servidores con Grafana"
 date: 2024-04-11T13:14:06+02:00
 categories: [Sistemas, Monitorización]
