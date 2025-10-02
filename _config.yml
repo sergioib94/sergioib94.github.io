@@ -1,92 +1,36 @@
-# ARCHIVO: _config.yml
-# Configuración completa para Chirpy
-
-lang: es
-timezone: Europe/Madrid
+## CONFIGURACIÓN ESPECÍFICA PARA GITHUB PAGES
 title: "Sergio Ibáñez"
-tagline: "Blog Técnico"
-description: "Blog personal sobre desarrollo web, GitHub Pages, JavaScript y tecnología"
-keywords: [blog, desarrollo, web, programación, tecnología]
-
-url: "https://sergioib94.github.io"
+tagline: "Desarrollador Web & Blog Técnico"
+description: "Blog personal sobre desarrollo web y tecnología"
 baseurl: ""
-github:
-  username: sergioib94
+url: "https://sergioib94.github.io"
+lang: "es"
 
-# ============ TEMA ============
-remote_theme: cotes2020/jekyll-theme-chirpy
+# TEMA - CONFIGURACIÓN EXACTA PARA GITHUB PAGES
+remote_theme: cotes2020/jekyll-theme-chirpy@6.3.0
 
-# ============ MODO CLARO/OSCURO ============
+# CONFIGURACIÓN ESENCIAL
 theme_mode:
   light: false
   dark: true
-  auto: true
 
-# ============ REDES SOCIALES ============
 social:
   name: "Sergio Ibáñez"
-  email: "tu-email@gmail.com"  # Cambia esto
+  email: "tu-email@gmail.com"
   links:
     - "https://github.com/sergioib94"
-    # - "https://linkedin.com/in/tu-perfil"
-    # - "https://twitter.com/tu-usuario"
 
-# ============ AVATAR ============
-avatar: "/assets/images/avatar.jpg"  # Añade tu foto en esta ruta
-
-# ============ PÁGINA PRINCIPAL ============
-home_layout: home
-pagination:
-  enabled: true
-  per_page: 6
-
-# ============ COMENTARIOS ============
-
+# COMENTARIOS (opcional)
 comments:
-  active: "giscus"
-  giscus:
-    repo: "sergioib94/sergioib94.github.io"
-    repo_id: "COPIAR_DE_GISCUS"        # ← Copia de giscus.app
-    category: "Announcements"
-    category_id: "COPIAR_DE_GISCUS"    # ← Copia de giscus.app
-    mapping: "pathname"
-    reactions_enabled: "1"
-    emit_metadata: "0"
-    input_position: "bottom"
-    lang: "es"
+  active: ""  # Vacío por ahora
 
-# ============ SEO ============
-seo:
-  type: "Blog"
-  twitter:
-    username: ""  # Tu usuario Twitter si tienes
+# PAGINACIÓN
+paginate: 5
 
-google_site_verification: 
-bing_site_verification: 
-
-# ============ ANALYTICS ============
-analytics:
-  google:
-    id: ""  # Tu ID de Google Analytics
-
-# ============ PLUGINS ============
-#plugins:
-#  - jekyll-feed
-#  - jekyll-paginate
-#  - jekyll-sitemap
-
-sass:
-  sourcemap: never
-
-# ============ ARCHIVOS EXCLUIDOS ============
+# EXCLUIR ARCHIVOS PROBLEMÁTICOS
 exclude:
   - "*.gem"
   - "*.gemspec"
   - "Gemfile"
   - "Gemfile.lock"
   - "node_modules"
-  - "vendor/bundle/"
-  - "vendor/cache/"
-  - "vendor/gems/"
-  - "vendor/ruby/"
-  - "_plugins/posts-lastmod-hook.rb"
