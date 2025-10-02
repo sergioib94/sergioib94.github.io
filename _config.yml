@@ -52,6 +52,39 @@ defaults:
     values:
       layout: page
 
+# ============ NAVEGACIÓN ============
+
+tabs:
+  home:
+    title: Home
+    url: /
+    order: 0
+    
+  about:
+    title: Sobre Mí
+    url: /about/
+    order: 1
+    
+  categories:
+    title: Categorías  
+    url: /categories/
+    order: 2
+    
+  tags:
+    title: Etiquetas
+    url: /tags/
+    order: 3
+    
+  archives:
+    title: Archivos
+    url: /archives/
+    order: 4
+    
+  contact:
+    title: Contacto
+    url: /contact/
+    order: 5
+
 # NAVEGACIÓN SUPERIOR
 
 header_pages:
