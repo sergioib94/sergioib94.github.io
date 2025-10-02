@@ -30,3 +30,7 @@ active: ""
 # PAGINACION 
 
 paginate: 5
+
+# Menú principal
+menu:
+  tabs: true
