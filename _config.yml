@@ -1,6 +1,6 @@
-title: "Sergio Ibáñez"
-tagline: "Desarrollador Web & Blog Técnico"
-description: "Blog personal sobre desarrollo web y tecnología"
+title: "Sergio Ibáñez Núñez"
+tagline: "System Administrator | DevOps | IT"
+description: "Blog personal sobre administración de sistemas, Linux, DevOps, monitorización y proyectos técnicos."
 url: "https://sergioib94.github.io"
 baseurl: ""   # MUY IMPORTANTE
 lang: es
@@ -19,7 +19,8 @@ social:
 name: Sergio Ibanez 
 email: tu-email@gmail.com 
 links: 
-- https://github.com/sergioib94 
+- https://github.com/sergioib94
+- https://www.linkedin.com/in/sergio-ibañez-nuñez/
 
 # COMENTARIOS 
 
