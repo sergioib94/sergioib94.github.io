@@ -7,3 +7,23 @@ lang: es
 timezone: Europe/Madrid
 
 theme: jekyll-theme-chirpy   # en lugar de remote_theme
+
+# MODO OSCURO 
+
+theme_mode: - dark 
+
+# SOCIAL 
+
+social: 
+name: Sergio Ibanez 
+email: tu-email@gmail.com 
+links: - https://github.com/sergioib94 
+
+# COMENTARIOS 
+
+comments: 
+active: "" 
+
+# PAGINACION 
+
+paginate: 5
