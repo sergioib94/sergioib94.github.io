@@ -7,7 +7,7 @@ order: 5
 
 Si quieres ponerte en contacto conmigo, aquí tienes varias formas:
 
-- 📧 **Email:** tu_email@example.com  
+- 📧 **Email:** sergioib309@gmail.com 
 - 💼 **LinkedIn:** [Perfil profesional](https://www.linkedin.com/in/sergio-ibañez-nuñez/)  
 - 💻 **GitHub:** [Repositorio personal](https://github.com/sergioib94)  
 
