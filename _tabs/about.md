@@ -1,8 +1,28 @@
 ---
-# the default layout is 'page'
-icon: fas fa-info-circle
-order: 4
+# layout: page
+layout: about
+title: Sobre Mí
+icon: fas fa-user
+order: 1
 ---
 
-> Add Markdown syntax content to file `_tabs/about.md`{: .filepath } and it will show up on this page.
-{: .prompt-tip }
+## 👋 Hola, soy Sergio
+
+## 🛠️ Tecnologías y Herramientas
+
+
+## 🎓 Formación
+
+[Describe tu formación académica y cursos relevantes]
+
+## 💼 Experiencia
+
+[Describe tu experiencia profesional]
+
+## 🎯 Objetivos
+
+Seguir aprendiendo y compartiendo conocimiento sobre desarrollo web y nuevas tecnologías.
+
+---
+
+*"Siempre aprendiendo, siempre mejorando"*
