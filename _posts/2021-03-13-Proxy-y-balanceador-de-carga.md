@@ -1,4 +1,5 @@
 ---
+layout: post
 title: "Proxy y balanceador de carga"
 date: 2021-03-13T12:44:43+01:00
 categories: [Servicios]

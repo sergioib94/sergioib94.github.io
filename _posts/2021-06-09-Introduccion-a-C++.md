@@ -1,4 +1,5 @@
 ---
+layout: post
 title: "Introducción a C++"
 date: 2021-06-09T16:43:19+02:00
 categories: [Apuntes]

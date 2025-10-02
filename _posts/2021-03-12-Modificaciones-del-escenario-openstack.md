@@ -1,4 +1,5 @@
 ---
+layout: post
 title: "Modificaciones del escenario Openstack"
 date: 2021-03-12T14:06:50+01:00
 categories: [Cloud]

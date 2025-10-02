@@ -1,4 +1,5 @@
 ---
+layout: post
 title: "Instalacion de Mezzanine en Openstack"
 date: 2021-03-12T16:01:48+01:00
 categories: [Aplicaciones Web]

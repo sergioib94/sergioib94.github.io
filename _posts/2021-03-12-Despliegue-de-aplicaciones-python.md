@@ -1,4 +1,5 @@
 ---
+layout: post
 title: "Despliegue de aplicaciones python"
 date: 2021-03-12T12:22:28+01:00
 categories: [Aplicaciones Web]

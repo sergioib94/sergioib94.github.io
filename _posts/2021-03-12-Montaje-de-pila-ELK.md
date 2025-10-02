@@ -1,4 +1,5 @@
 ---
+layout: post
 title: "Montaje de pila ELK"
 date: 2021-03-12T18:22:23+01:00
 categories: [Sistemas]

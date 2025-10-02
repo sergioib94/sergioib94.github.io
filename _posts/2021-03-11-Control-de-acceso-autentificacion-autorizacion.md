@@ -1,4 +1,5 @@
 ---
+layout: post
 title: "Control de acceso, autentificacion y autorizacion"
 date: 2021-03-11T16:13:52+01:00
 categories: [Servicios]

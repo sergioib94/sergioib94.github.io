@@ -1,4 +1,5 @@
 ---
+layout: post
 title: "Introducción SoftEther VPN"
 date: 2021-12-21T13:44:30+01:00
 categories: [Seguridad]
