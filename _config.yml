@@ -1,73 +1,9 @@
-# ╔═════════════════════════════════════╗
-# ║   Configuración principal del blog  ║
-# ╚═════════════════════════════════════╝
-title: "Sergio Ibáñez Núñez"
-tagline: "System Administrator | DevOps | IT"
-description: "Blog personal sobre administración de sistemas, Linux, DevOps, monitorización y proyectos técnicos."
+title: "Sergio Ibáñez"
+tagline: "Desarrollador Web & Blog Técnico"
+description: "Blog personal sobre desarrollo web y tecnología"
 url: "https://sergioib94.github.io"
-baseurl: ""  # Dejar vacío en GitHub Pages
+baseurl: ""   # MUY IMPORTANTE
 lang: es
 timezone: Europe/Madrid
 
-author:
-  name: "Sergio Ibáñez Núñez"
-  avatar: "/assets/img/avatar.png"   # (opcional, sube tu imagen a assets/img)
-  bio: "Técnico IT y administrador de sistemas especializado en Linux, Windows, Docker, Ansible, Terraform y monitorización."
-  email: "tu_email@example.com"
-  links:
-    - label: "LinkedIn"
-      icon: "fab fa-linkedin"
-      url: "https://www.linkedin.com/in/sergio-ibañez-nuñez/"
-    - label: "GitHub"
-      icon: "fab fa-github"
-      url: "https://github.com/sergioib94"
-    - label: "Portfolio"
-      icon: "fas fa-globe"
-      url: "https://sergioib94.github.io"
-
-# ╔═════════════════════════════════════╗
-# ║   Navegación principal (menú)       ║
-# ╚═════════════════════════════════════╝
-navbar:
-  - title: "Inicio"
-    url: /
-  - title: "Blog"
-    url: /posts/
-  - title: "Proyectos"
-    url: /projects/
-  - title: "Sobre mí"
-    url: /about/
-  - title: "Contacto"
-    url: /contact/
-
-# ╔═════════════════════════════════════╗
-# ║   Configuración de apariencia       ║
-# ╚═════════════════════════════════════╝
-theme_mode: light  # light | dark | auto
-toc: true
-paginate: 10
-
-# ╔═════════════════════════════════════╗
-# ║   SEO y Analítica                   ║
-# ╚═════════════════════════════════════╝
-google_analytics:
-  id: "G-XXXXXXXXXX"  # Reemplázalo por tu ID de GA si lo usas
-
-# ╔═════════════════════════════════════╗
-# ║   Social sharing (Open Graph + SEO) ║
-# ╚═════════════════════════════════════╝
-social:
-  name: "Sergio Ibáñez Núñez"
-  image: "/assets/img/avatar.png"
-  twitter: ""   # tu usuario si quieres
-
-# ╔═════════════════════════════════════╗
-# ║   Comentarios (opcional)            ║
-# ╚═════════════════════════════════════╝
-comments:
-  provider: "giscus"  # alternatives: disqus, utterances, giscus
-  giscus:
-    repo: "sergioib94/sergioib94.github.io"
-    repo_id: ""   # lo configuras en GitHub Discussions
-    category: "General"
-    category_id: ""
+theme: jekyll-theme-chirpy   # en lugar de remote_theme
