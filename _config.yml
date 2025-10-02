@@ -51,3 +51,12 @@ defaults:
       type: pages  
     values:
       layout: page
+
+# NAVEGACIÓN SUPERIOR
+
+header_pages:
+  - about.md
+  - categories.md
+  - tags.md
+  - archives.md
+  - contact.md

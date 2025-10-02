@@ -1,5 +1,6 @@
 ---
-title: "Sobre mí"
+layout: page
+title: Sobre Mí
 icon: fas fa-user
 order: 1
 ---
