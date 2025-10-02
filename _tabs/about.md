@@ -3,7 +3,7 @@ layout: page
 title: About
 permalink: /about/
 icon: fas fa-user
-order: 1
+order: 3
 ---
 
 # ¡Hola, soy Sergio! 👋
