@@ -65,10 +65,10 @@ tabs:
     url: /about/
     order: 1
     
-  categories:
-    title: Categorías  
-    url: /categories/
-    order: 2
+  #categories:
+   #title: Categorías  
+    #url: /categories/
+    #order: 2
     
   tags:
     title: Etiquetas
