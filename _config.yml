@@ -14,6 +14,7 @@ github:
   username: sergioib94
 
 # ============ TEMA ============
+remote_theme: cotes2020/jekyll-theme-chirpy
 theme: jekyll-theme-chirpy
 
 # ============ MODO CLARO/OSCURO ============
