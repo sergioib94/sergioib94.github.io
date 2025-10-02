@@ -156,7 +156,7 @@ Una vez que tienes tu entorno Zabbix completamente funcional, puedes comenzar a 
 
 ## **Ejemplos de practicas de monitorización en zabbix** ##
 
-Previamente para poder practicar la monitorización con zabbix en el frontend debemos configurar primero el equipo ya que cada métrica, trigger o gráfico debe estar vinculado a un host específico (físico, virtual o lógico). La creación del equipo es bastante simple, en el menu de opciones de la izquierda buscaremos la opción configuración -> equipos.
+Previamente para poder practicar la monitorización con zabbix en el frontend debemos configurar primero el equipo ya que cada métrica, trigger o gráfico debe estar vinculado a un host específico (físico, virtual o lógico). La creación del equipo es bastante simple, en el menu de opciones de la izquierda buscaremos la opción configuración → equipos.
 
 1. Crear un trigger de alerta simple
 
@@ -176,8 +176,19 @@ stress --cpu 2 --timeout 60
 * --cpu 2: lanza procesos que hacen cálculos intensivos (usa 2 núcleos).
 * --timeout 60: ejecuta la carga durante el tiempo establecido (en segundos) y después se detiene.
 
-Una vez ejecutado el comando stress, volveremos al frontend de Zabbix y para comprobar si realmente funciona el trigger abrimos la opción Monitorización -> Problemas. Si el trigger esta funcionando correctamente nos debería aparecer algo como esto:
+Una vez ejecutado el comando stress, volveremos al frontend de Zabbix y para comprobar si realmente funciona el trigger abrimos la opción Monitorización → Problemas. Si el trigger esta funcionando correctamente nos debería aparecer algo como esto:
 
 ![Prueba CPU](/images/Zabbix/prueba_trigguer_CPU.PNG)
 
 *Nota: los datos que llegan del servidor tardar unos segundos en actualizarse en el frontend por lo que es posible que aunque el comando funcione, no aparezca el trigger inmediatamente*
+
+2. Configuración de notificaciones por email
+
+Este tipo de notificaciones pueden ser útiles si se combinan con triggers como el creado anteriormente, por ejemplo en el caso anterior, una vez que el uso de CPU sobrepasara o llegara al 80% mandaría una notificación al correo especificado para la alerta. Para configurar este tipo de alertas haremos lo siguiente:
+
+Ir a Administración → Medios → Tipos de medios donde añadir o editar Email.
+
+Ponemos los datos SMTP (puedes usar Gmail, Outlook, o un servidor propio)
+
+Luego ir a Administración → Usuarios y añadir el medio de contacto al usuario (correo, horario, severidad)
+
