@@ -6,7 +6,10 @@ baseurl: ""   # MUY IMPORTANTE
 lang: es
 timezone: Europe/Madrid
 
-theme: jekyll-theme-chirpy   # en lugar de remote_theme
+#Tema
+
+theme: jekyll-theme-chirpy
+remote_theme: cotes2020/jekyll-theme-chirpy
 
 # MODO OSCURO 
 
