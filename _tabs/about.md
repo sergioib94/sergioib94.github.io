@@ -1,6 +1,7 @@
 ---
 layout: page
-title: Sobre Mí
+title: About
+permalink: /about/
 icon: fas fa-user
 order: 1
 ---
