@@ -1,6 +1,6 @@
 ---
 layout: page
-title: Contacto
+title: contacto
 icon: fas fa-envelope
 order: 5
 ---
