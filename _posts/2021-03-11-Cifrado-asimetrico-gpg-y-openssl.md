@@ -2,7 +2,7 @@
 layout: post
 title: "Cifrado Asimetrico GPG Y Openssl"
 date: 2021-03-11T09:15:13+01:00
-tags: [Seguridad]
+categories: [Seguridad]
 excerpt: "En el siguiente post a traves de una serie de tareas se ira indicando como realizar un cifrado asimetrico haciendo uso de GPG y openssl."
 ---
 
