@@ -1,7 +1,5 @@
 ---
-# layout: page
 layout: about
-title: Sobre Mí
 icon: fas fa-user
 order: 1
 ---
