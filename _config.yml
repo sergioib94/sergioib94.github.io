@@ -95,6 +95,7 @@ header_pages:
   - contact.md
 
 # CONFIGURACIÓN PARA TABS/COLLECTIONS
+
 collections:
   tabs:
     output: true
@@ -106,3 +107,43 @@ defaults:
       type: pages
     values:
       layout: page
+
+# CONFIGURACIÓN PARA CATEGORÍAS Y TAGS
+plugins:
+  - jekyll-archives
+
+jekyll-archives:
+  enabled:
+    - categories
+    - tags
+  layouts:
+    category: category
+    tag: tag
+  permalinks:
+    category: /categories/:name/
+    tag: /tags/:name/
+
+# COLECCIONES ESENCIALES
+
+collections:
+  tabs:
+    output: true
+    permalink: /:name/
+    
+  categories:
+    output: true
+    permalink: /categories/:name/
+
+defaults:
+  - scope:
+      path: "_tabs"
+      type: pages
+    values:
+      layout: page
+      
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: post
+      toc: true
