@@ -1,11 +1,9 @@
 ---
 layout: page
-title: contacto
+title: Contacto
 icon: fas fa-envelope
 order: 5
 ---
-
-# Contacto
 
 Si quieres ponerte en contacto conmigo, aquí tienes varias formas:
 
