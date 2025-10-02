@@ -1,36 +1,32 @@
-## CONFIGURACIÓN ESPECÍFICA PARA GITHUB PAGES
+# CONFIGURACION ESPECIFICA PARA GITHUB PAGES
 title: "Sergio Ibáñez"
 tagline: "Desarrollador Web & Blog Técnico"
-description: "Blog personal sobre desarrollo web y tecnología"
+description: "Blog personal sobre desarrollo web y tecnologia"
 baseurl: ""
 url: "https://sergioib94.github.io"
 lang: "es"
 
-# TEMA - CONFIGURACIÓN EXACTA PARA GITHUB PAGES
-remote_theme: cotes2020/jekyll-theme-chirpy@6.3.0
+# TEMA - CONFIGURACION EXACTA PARA GITHUB PAGES
+remote_theme: cotes2020/jekyll-theme-chirpy
 
-# CONFIGURACIÓN ESENCIAL
-theme_mode:
-  light: false
-  dark: true
+# CONFIGURACION ESENCIAL
+theme_mode: dark
 
 social:
-  name: "Sergio Ibáñez"
+  name: "Sergio Ibanez"
   email: "tu-email@gmail.com"
   links:
     - "https://github.com/sergioib94"
 
 # COMENTARIOS (opcional)
 comments:
-  active: ""  # Vacío por ahora
+  active: ""
 
-# PAGINACIÓN
+# PAGINACION
 paginate: 5
 
-# EXCLUIR ARCHIVOS PROBLEMÁTICOS
+# EXCLUIR SOLO LO ESTRICTAMENTE NECESARIO
 exclude:
   - "*.gem"
-  - "*.gemspec"
-  - "Gemfile"
-  - "Gemfile.lock"
+  - "*.gemspec" 
   - "node_modules"
