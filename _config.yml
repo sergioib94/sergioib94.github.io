@@ -93,3 +93,16 @@ header_pages:
   - tags.md
   - archives.md
   - contact.md
+
+# CONFIGURACIÓN PARA TABS/COLLECTIONS
+collections:
+  tabs:
+    output: true
+    permalink: /:name/
+
+defaults:
+  - scope:
+      path: "_tabs"
+      type: pages
+    values:
+      layout: page
