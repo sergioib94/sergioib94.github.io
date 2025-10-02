@@ -2,7 +2,7 @@
 layout: post
 title: "Introducción a PLSQL (Oracle)"
 date: 2021-09-13T12:36:20+02:00
-categories: [Base de Datos, Apuntes]
+categories: [Base-de-Datos, Apuntes]
 excerpt: "En este post se comentarán aspectos basicos a tener en cuenta de PLSQL para trabajar con ello en oracle."
 ---
 
