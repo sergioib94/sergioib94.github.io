@@ -70,10 +70,10 @@ tabs:
    # url: /categories/
    # order: 2
     
-  tags:
-    title: Etiquetas
-    url: /tags/
-    order: 3
+  #tags:
+    #title: Etiquetas
+    #url: /tags/
+    #order: 3
     
   archives:
     title: Archivos
