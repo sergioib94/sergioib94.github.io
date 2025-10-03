@@ -35,8 +35,8 @@ active: ""
 paginate: 5
 
 # Menú principal
-# menu:
-  #tabs: true
+menu:
+  tabs: true
 
 # LAYOUTS POR DEFECTO
 defaults:
@@ -65,10 +65,10 @@ tabs:
     url: /about/
     order: 1
     
-  categories:
-    title: Categorías  
-    url: /categories/
-    order: 2
+  #categories:
+   # title: Categorías  
+   # url: /categories/
+   # order: 2
     
   tags:
     title: Etiquetas
@@ -115,18 +115,3 @@ defaults:
       layout: post
       toc: true
 
-# solucion
-
-plugins:
-  - jekyll-archives
-
-jekyll-archives:
-  enabled:
-    - categories
-    - tags
-  layouts:
-    category: archive
-    tag: archive
-  permalinks:
-    category: /categories/:name/
-    tag: /tags/:name/
