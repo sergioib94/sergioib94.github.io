@@ -115,3 +115,9 @@ defaults:
       layout: post
       toc: true
 
+# markdown
+
+markdown: kramdown
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
