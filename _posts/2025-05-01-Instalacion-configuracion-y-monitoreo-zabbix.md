@@ -155,8 +155,8 @@ Después de eso reiniciamos y habilitamos el servicio
 <div class="highlight">
 <pre class="chroma">
 <code class="language-bash" data-lang="bash">
-    sudo systemctl restart zabbix-server zabbix-agent apache2
-    sudo systemctl enable zabbix-server zabbix-agent apache2
+sudo systemctl restart zabbix-server zabbix-agent apache2
+sudo systemctl enable zabbix-server zabbix-agent apache2
 </code>
 </pre>
 </div>
