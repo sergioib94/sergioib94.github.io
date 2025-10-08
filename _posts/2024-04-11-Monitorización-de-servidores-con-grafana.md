@@ -21,52 +21,70 @@ Grafana open source es un software de análisis y visualización de código abie
 
 Empezaremos instalando Grafana en nuestro sistema debian haciendo uso del repositorio oficial de grafana, pero antes necesitaremos instalar el software necesario que necesita grafana para poder funcionar ejecutando los siguientes comandos.
 
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
 sudo apt install -y apt-transport-https
 sudo apt install -y software-properties-common wget
-~~~
+</code>
+</pre>
+</div>
 
 El siguiente paso es descargar la llave GPG, para poder firmar los paquetes instalado
 
-~~~
-sudo wget -q -O /usr/share/keyrings/grafana.key https://apt.grafana.com/gpg.key
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">sudo wget -q -O /usr/share/keyrings/grafana.key https://apt.grafana.com/gpg.key</code>
+</pre>
+</div>
 
 Ahora es necesario crear el fichero /etc/apt/sources.list.d/grafana.list para añadir los repositorios de Grafana.
 
-~~~
-echo "deb [signed-by=/usr/share/keyrings/grafana.key] https://apt.grafana.com stable main" | sudo tee -a /etc/apt/sources.list.d/grafana.list
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">echo "deb [signed-by=/usr/share/keyrings/grafana.key] https://apt.grafana.com stable main" | sudo tee -a /etc/apt/sources.list.d/grafana.list</code>
+</pre>
+</div>
 
 Actualizamos la lista de paquetes de nuestro sistema
 
-~~~
-sudo apt update
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">sudo apt update</code>
+</pre>
+</div>
 
 Una vez actualizado los paquetes del sistema ya podemos empezar a instalar grafana
 
-~~~
-sudo apt install grafana
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">sudo apt install grafana</code>
+</pre>
+</div>
 
 Cuando ya tengamos grafana instalado, podremos iniciarlo y añadirlo al arranque de nuestra maquina
 
-~~~
-sudo systemctl start grafana-server
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">sudo systemctl start grafana-server</code>
+</pre>
+</div>
 
 Para poder asegurarnos de que el servidor se inicia correctamente (debe aparecer con estado active (running)) podemos ejecutar el comando usado anteriormente haciendo uso de la opción "status".
 
-~~~
-sudo systemctl status grafana-server
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">sudo systemctl status grafana-server</code>
+</pre>
+</div>
 
 Finalmente habilitamos grafana en el inicio de servidor para que inicie en el arranque
 
-~~~
-sudo systemctl enable grafana-server.service
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">sudo systemctl enable grafana-server.service</code>
+</pre>
+</div>
 
 Con esto ya estaría completa la instalación de grafana y ya podríamos acceder a la web de grafana para poder logearnos, para ello hay que indicar en la barra de búsqueda de cualquier navegador la ip de nuestra maquina (o su dominio), indicando el puerto 3000 que es el usado por grafana por defecto. en mi caso se accede con la dirección 192.168.110.129:3000
 
@@ -82,29 +100,37 @@ Grafana necesitas añadir un nuevo data source, que es la base de datos que guar
 
 Comenzamos instalando prometheus
 
-~~~
-apt install prometheus prometheus-node-exporter
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">apt install prometheus prometheus-node-exporter</code>
+</pre>
+</div>
 
 Tras la instalación de prometheus tenemos que comprobar tanto que tenemos dos conexiones TCP escuchando en los puertos 9090 y 9100, esto lo comprobamos con el siguiente comando
 
-~~~
-netstat -plunt
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">netstat -plunt</code>
+</pre>
+</div>
 
 Nota: para poder hacer uso del comando netstat tendremos que tener instalado en el sistema el paquete net-tools
 
 Como la version de prometheus que usemos tiene que ser compatible con la de grafana, es recomendable revisar nuestra version de prometheus
 
-~~~
-prometheus-node-exporter --version
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">prometheus-node-exporter --version</code>
+</pre>
+</div>
 
 En mi caso la version de prometheus usada es la siguiente
 
-~~~
-node_exporter, version 1.5.1 (branch: debian/sid, revision: 1.5.0-1)
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">node_exporter, version 1.5.1 (branch: debian/sid, revision: 1.5.0-1)</code>
+</pre>
+</div>
 
 ### **Configuración de prometheus en grafana** ###
 
@@ -146,9 +172,11 @@ Cuando tengamos claro el tipo de consulta que haremos, en el apartado derecho se
 
 La consulta nos quedaria de la siguiente forma:
 
-~~~
-rate(prometheus_http_request_total[5m])
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">rate(prometheus_http_request_total[5m])</code>
+</pre>
+</div>
 
 ### **Configuraciones de paneles** ###
 
@@ -171,9 +199,11 @@ Ejemplo práctico:
 Si estás monitoreando múltiples servidores, puedes crear una variable $server con la lista de servidores disponibles.
 En tu consulta PromQL, en lugar de escribir manualmente cada servidor, usas:
 
-~~~
-node_cpu_seconds_total{instance="$server"}
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">node_cpu_seconds_total{instance="$server"}</code>
+</pre>
+</div>
 
 Al cambiar la variable $server, los gráficos mostrarán solo los datos de ese servidor.
 
@@ -194,11 +224,15 @@ Usando el ejemplo indicado anteriormente, se configurará la variable $server de
 
 Indicando label_values(métrica, etiqueta) obtendremos todos los valores únicos de la etiqueta "instance" en la métrica node_cpu_seconds_total. Esto devolverá una lista de servidores registrados en Prometheus, por ejemplo:
 
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
 server1:9100
 server2:9100
 server3:9100
-~~~
+</code>
+</pre>
+</div>
 
 4. En Multi-value, activamos la opción para permitir seleccionar múltiples servidores.
 5. En Include All option, marcamos la casilla para agregar la opción All, que mostrará los datos de todos los servidores simultáneamente.
@@ -217,9 +251,11 @@ Si estás monitoreando diferentes servicios en un clúster, puedes agregar filtr
 1. Añade una variable de tipo Custom con valores como nginx | mysql | redis.
 2. En la consulta, usamos:
 
-~~~
-node_network_receive_bytes_total{job="$servicio"}
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">node_network_receive_bytes_total{job="$servicio"}</code>
+</pre>
+</div>
 
 3. Ahora puedes seleccionar el servicio desde un menú desplegable y ver los datos filtrados.
 
@@ -248,9 +284,11 @@ Si queremos recibir una alerta cuando el uso de CPU supera el 85% durante más d
 1. Vamos a Alerting y creamos la nueva alerta con la opcion "New Alert".
 2. Definimos la métrica a monitorear con esta consulta en PromQL:
 
-~~~
-100 - (avg(rate(node_cpu_seconds_total{mode="idle"}[5m])) * 100) > 85
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">100 - (avg(rate(node_cpu_seconds_total{mode="idle"}[5m])) * 100) > 85</code>
+</pre>
+</div>
 
 3. Establecemos la condición If above 85 for 5m.
 4. Configuramos la acción (correo, stack, telegram, etc...). Grafana permite enviar alertas a traves de diferentes plataformas.
