@@ -92,7 +92,7 @@ sudo mysql -u root -p
 Dentro del prompt de mariadb, añadiremos los siguientes códigos:
 
 
-```bash
+```sql
 CREATE DATABASE zabbix CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;
 CREATE USER sergioib@localhost IDENTIFIED BY 'contraseña';
 GRANT ALL PRIVILEGES ON zabbix.* TO sergioib@localhost;
