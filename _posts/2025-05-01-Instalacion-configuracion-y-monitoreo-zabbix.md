@@ -91,13 +91,17 @@ sudo mysql -u root -p
 
 Dentro del prompt de mariadb, añadiremos los siguientes códigos:
 
-```sql
+<div class="highlight">
+<pre class="chroma">
+<code class="language-sql" data-lang="sql">
 CREATE DATABASE zabbix CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;
 CREATE USER sergioib@localhost IDENTIFIED BY 'contraseña';
 GRANT ALL PRIVILEGES ON zabbix.* TO sergioib@localhost;
 FLUSH PRIVILEGES;
 EXIT;
-```
+</code>
+</pre>
+</div>
 
 * Con la primera linea lo que haremos sera crear una base de datos llamada zabbix, a parte de eso con "CHARACTER SET utf8mb4": Especificamos que se usará el conjunto de caracteres UTF-8 de 4 bytes, compatible con emojis y otros símbolos especiales. Es el más recomendado hoy en día y con "COLLATE utf8mb4_bin" Define la forma en que se comparan y ordenan los datos. utf8mb4_bin hace que las comparaciones sean sensibles a mayúsculas/minúsculas y a acentos (comparación binaria).
 
