@@ -20,33 +20,41 @@ Para este post se han usado los siguientes elementos para realizar instalación,
 
 Lo primero que haremos al arrancar nuestro servidor Debian sera actualizar el sistema en el caso de que no lo este.
 
-~~~
-sudo apt update && sudo apt upgrade -y
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">sudo apt update && sudo apt upgrade -y</code>
+</pre>
+</div>
 
 Una vez se tenga actualizado el sistema lo primero que haremos sera instalar LAMP en nuestra maquina (Apache, Mariadb y Php), inicialmente lo que necesitaremos sera solo mariadb, pero como mas adelante necesitaremos también Apache y php evitaremos problemas a la hora de usar Zabbix.
 
 **Instalación de Apache**
 
-~~~
-sudo apt install apache2 -y
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">sudo apt install apache2 -y</code>
+</pre>
+</div>
 
 Apache lo usara Zabbix para incluir una interfaz web que necesita un servidor web.
 
 **Instalación de Mariadb**
 
-~~~
-sudo apt install mariadb-server mariadb-client -y
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">sudo apt install mariadb-server mariadb-client -y</code>
+</pre>
+</div>
 
 Zabbix almacena todos sus datos (eventos, hosts, métricas, configuración, etc.) en una base de datos.
 
 **Aseguramos Mariadb**
 
-~~~
-sudo mysql_secure_installation
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">sudo mysql_secure_installation</code>
+</pre>
+</div>
 
 A la hora de asegurar mariadb tendremos que indicar las siguientes opciones:
 
@@ -58,9 +66,11 @@ A la hora de asegurar mariadb tendremos que indicar las siguientes opciones:
 
 **Instalación de PHP y extensiones necesarias**
 
-~~~
-sudo apt install php php-mysql php-bcmath php-mbstring php-gd php-xml php-ldap php-json php-zip php-snmp php-curl libapache2-mod-php -y
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">sudo apt install php php-mysql php-bcmath php-mbstring php-gd php-xml php-ldap php-json php-zip php-snmp php-curl libapache2-mod-php -y</code>
+</pre>
+</div>
 
 La interfaz web de Zabbix está hecha en PHP, por lo que se necesita tenerlo instalado con ciertas extensiones.
 
@@ -68,26 +78,33 @@ La interfaz web de Zabbix está hecha en PHP, por lo que se necesita tenerlo ins
 
 A la hora de instalar Zabbix en nuestro sistema lo primero sera añadir el repositorio oficial de Zabbix.
 
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
 wget https://repo.zabbix.com/zabbix/6.0/debian/pool/main/z/zabbix-release/zabbix-release_6.0-5+debian12_all.deb
 sudo dpkg -i zabbix-release_6.0-5+debian12_all.deb
 sudo apt update
-~~~
+</code>
+</pre>
+</div>
 
 *Nota: Es posible que dependiendo de la distribución del sistema operativo que se este usando o de la version escogida de Zabbix de error al instalar el paquete con dpkg, en caso de error ejecutar el comando "sudo apt --fix-broken install -y" para reparar las dependencias que falten* 
 
-
 Una vez hayamos añadido el repositorio y hayamos descargado e instalado el paquete Zabbix, pasamos a instalar servidor, frontend, agente y base de datos.
 
-~~~
-sudo apt install zabbix-server-mysql zabbix-frontend-php zabbix-apache-conf zabbix-sql-scripts zabbix-agent -y
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">sudo apt install zabbix-server-mysql zabbix-frontend-php zabbix-apache-conf zabbix-sql-scripts zabbix-agent -y</code>
+</pre>
+</div>
 
 Después crearemos la base de datos de zabbix en mariadb previamente instalada:
 
-~~~
-sudo mysql -u root -p
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">sudo mysql -u root -p</code>
+</pre>
+</div>
 
 Dentro del prompt de mariadb, añadiremos los siguientes códigos:
 
@@ -113,9 +130,11 @@ EXIT;
 
 Cuando ya tengamos la base de datos creada, ya podremos importar el esquema de la base de datos
 
-~~~
-zcat /usr/share/zabbix-sql-scripts/mysql/server.sql.gz | mysql -u sergioib -p zabbix
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">zcat /usr/share/zabbix-sql-scripts/mysql/server.sql.gz | mysql -u sergioib -p zabbix</code>
+</pre>
+</div>
 
 Introducimos la contraseña especificada anteriormente para completar la importación y en cuanto a la instalación de zabbix ya estaría todo listo.
 
@@ -123,18 +142,25 @@ Introducimos la contraseña especificada anteriormente para completar la importa
 
 Para la configuración empezamos abriendo el fichero zabbix-server.conf para editarlo
 
-~~~
-sudo nano /etc/zabbix/zabbix_server.conf
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">sudo nano /etc/zabbix/zabbix_server.conf</code>
+</pre>
+</div>
 
 En este fichero tendremos que buscar la linea en la que se indique el parámetro DBpassword y primero descomentar la linea y después sustituir la password por defecto por la que hayamos puesto en pasos anteriores para la base de datos mariadb
 
 Después de eso reiniciamos y habilitamos el servicio
 
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
 sudo systemctl restart zabbix-server zabbix-agent apache2
 sudo systemctl enable zabbix-server zabbix-agent apache2
-~~~
+</code>
+</pre>
+</div>
+
 Ya con todo configurado y habilitado podemos acceder al frontend web y empezar a usar zabbix.
 
 ## **Frontend web** ##
@@ -173,10 +199,14 @@ En la pantalla que tendremos para rellenar los datos de configuración del inici
 
 Para poner a prueba el trigger instalaremos el comando "stress" en nuestra maquina servidor. El comando stress lo que hará sera lanzar procesos que consumirán los recursos que se le vayan indicando como parámetro, en este caso la CPU.
 
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
 sudo apt install stress
 stress --cpu 2 --timeout 60
-~~~
+</code>
+</pre>
+</div>
 
 * --cpu 2: lanza procesos que hacen cálculos intensivos (usa 2 núcleos).
 * --timeout 60: ejecuta la carga durante el tiempo establecido (en segundos) y después se detiene.
