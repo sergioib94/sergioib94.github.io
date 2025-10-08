@@ -128,3 +128,18 @@ kramdown:
       line_numbers: false
     block:
       line_numbers: false
+
+# Giscus - comentarios
+
+comments:
+  active: "giscus"
+  giscus:
+    repo: "sergioib94/sergioib94.github.io"
+    repo_id: "R_kgDOLaMInA"        # ← Debes obtener esto
+    category: "Comentarios"
+    category_id: "DIC_kwDOLaMInM4CwJCA" # ← Debes obtener esto
+    mapping: "pathname"
+    reactions_enabled: "1"
+    emit_metadata: "0"
+    input_position: "bottom"
+    lang: "es"
