@@ -66,3 +66,73 @@ search: true
 # PAGINACIÓN
 paginate: 5
 paginate_path: /page:num/
+
+# ============ MINIMAL MISTAKES SKIN ============
+minimal_mistakes_skin: "default"  # o "air", "aqua", "contrast", "dark", "dirt", "neon", "mint"
+
+# ============ SITE CONFIGURATION ============
+site:
+  owner: "Sergio Ibáñez"
+  author: "Sergio Ibáñez"
+  email: "tu-email@gmail.com"
+  description: "Blog personal sobre desarrollo web y tecnología"
+  keywords: "blog, desarrollo, web, tecnología, programación"
+  logo: "/assets/images/avatar.jpg"
+  repository: "sergioib94/sergioib94.github.io"
+  search: true
+  comments: true
+
+# ============ SITE BUILD SETTINGS ============
+output: true
+permalink: /:categories/:title/
+paginate: 5
+paginate_path: /page:num/
+timezone: Europe/Madrid
+
+# ============ COLLECTIONS ============
+collections:
+  posts:
+    output: true
+    permalink: /:categories/:title/
+
+# ============ DEFAULT FRONT MATTER ============
+defaults:
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: single
+      author: "Sergio Ibáñez"
+      share: true
+      comments: true
+      read_time: true
+      related: true
+      classes: "wide"
+      
+  - scope:
+      path: "_pages"
+      type: pages
+    values:
+      layout: single
+      author: "Sergio Ibáñez"
+      share: false
+      comments: false
+
+# ============ HEADER LINKS ============
+navigation:
+  main:
+    - title: "Posts"
+      url: /posts/
+    - title: "Categorías"
+      url: /categories/
+    - title: "Etiquetas"
+      url: /tags/
+    - title: "Sobre Mí"
+      url: /about/
+
+# ============ FOOTER LINKS ============
+footer:
+  links:
+    - label: "GitHub"
+      icon: "fab fa-fw fa-github"
+      url: "https://github.com/sergioib94"
