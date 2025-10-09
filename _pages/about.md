@@ -1,9 +1,7 @@
 ---
-layout: single
-title: About
+title: "Sobre Mí"
 permalink: /about/
-icon: fas fa-user
-order: 1
+layout: single
 ---
 
 # ¡Hola, soy Sergio! 👋
