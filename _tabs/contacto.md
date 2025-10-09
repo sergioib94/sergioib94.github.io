@@ -1,5 +1,5 @@
 ---
-layout: single
+layout: page
 title: Contacto
 icon: fas fa-envelope
 order: 5

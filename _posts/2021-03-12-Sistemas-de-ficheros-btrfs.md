@@ -1,5 +1,5 @@
 ---
-layout: single
+layout: post
 title: "Sistemas de ficheros Btrfs"
 date: 2021-03-12T17:50:31+01:00
 categories: [Sistemas]

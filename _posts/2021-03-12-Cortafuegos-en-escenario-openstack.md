@@ -1,5 +1,5 @@
 ---
-layout: single
+layout: post
 title: "Cortafuegos en escenario Openstack"
 date: 2021-03-12T17:53:20+01:00
 categories: [Seguridad]
