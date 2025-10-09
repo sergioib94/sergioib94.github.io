@@ -1,5 +1,5 @@
 ---
-layout: single
+layout: post
 title: "Instalacion y configuracion básica OpenLDAP"
 date: 2021-03-12T14:11:19+01:00
 categories: [Sistemas]

@@ -1,5 +1,5 @@
 ---
-layout: single
+layout: post
 title: "Servidor DHCP Linux"
 date: 2021-03-11T09:33:55+01:00
 categories: [Servicios]

@@ -1,16 +1,14 @@
 source "https://rubygems.org"
 
-gem "jekyll", "~> 4.3.0"
-gem "minimal-mistakes-jekyll"
-gem "jekyll-include-cache", group: :jekyll_plugins
-gem "jekyll-paginate"
-gem "jekyll-sitemap"
-gem "jekyll-feed"
-gem "jekyll-seo-tag"
+gem "jekyll-theme-chirpy", "~> 7.3"
+gem "rouge"
+gem "kramdown"
+#gem "jekyll-archives"
+#gem "sassc"
 
-group :jekyll_plugins do
-  gem "jekyll-include-cache"
+# Windows
+platforms :mingw, :x64_mingw, :mswin, :jruby do
+  gem "tzinfo"
+  gem "tzinfo-data"
+  gem "wdm", "~> 0.2.0", :platforms => [:mingw, :x64_mingw, :mswin]
 end
-
-# Windows support
-gem "wdm", "~> 0.1.1", :platforms => [:mingw, :x64_mingw, :mswin]

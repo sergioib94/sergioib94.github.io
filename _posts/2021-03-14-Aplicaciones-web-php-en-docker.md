@@ -1,5 +1,5 @@
 ---
-layout: single
+layout: post
 title: "Aplicaciones web PHP en Docker"
 date: 2021-03-14T13:26:35+01:00
 categories: [Aplicaciones Web]

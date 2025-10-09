@@ -1,5 +1,5 @@
 ---
-layout: single
+layout: post
 title: "Introducción a las Bases De Datos (Oracle)"
 date: 2021-09-07T11:33:23+02:00
 categories: [Base-de-Datos, Apuntes]

@@ -1,60 +1,116 @@
 title: "Blog técnico Sergio Ibáñez"
-url: "https://sergioib94.github.io"
-baseurl: ""
+tagline: "Administrador de sistemas | Técnico de soporte IT | Monitorización"
 description: "Blog personal sobre administración de sistemas, Linux, DevOps, monitorización y proyectos técnicos."
-
-# TEMA
-remote_theme: mmistakes/minimal-mistakes@4.24.0
-
-# CONFIGURACIÓN ESENCIAL
-permalink: /:categories/:title/
+url: "https://sergioib94.github.io"
+baseurl: ""   # MUY IMPORTANTE
+lang: es
 timezone: Europe/Madrid
 
-plugins:
-  - jekyll-paginate
-  - jekyll-sitemap
-  - jekyll-feed
-  - jekyll-include-cache
+#Tema
 
-# PAGINACIÓN
+theme: jekyll-theme-chirpy
+remote_theme: cotes2020/jekyll-theme-chirpy@v7.2.2 #problemas con la version 7.3 en categorias y tags
+
+# MODO OSCURO 
+
+theme_mode: 
+- dark 
+
+# SOCIAL 
+
+social: 
+name: Sergio Ibanez 
+email: sergioib309@gmail.com
+links: 
+- https://github.com/sergioib94
+- https://www.linkedin.com/in/sergio-ibañez-nuñez/
+
+# COMENTARIOS 
+
+comments: 
+active: "" 
+
+# PAGINACION 
+
 paginate: 5
-paginate_path: "/page:num/"
 
-# AUTOR
-author:
-  name: "Sergio Ibáñez"
-  bio: "Administrador de sistemas apasionado por Linux, DevOps y monitorización"
-  links:
-    - label: "GitHub"
-      icon: "fab fa-github"
-      url: "https://github.com/sergioib94"
+# Menú principal
+menu:
+  tabs: true
 
-# DEFAULTS CORREGIDOS
+# LAYOUTS POR DEFECTO
 defaults:
   - scope:
       path: ""
       type: posts
     values:
       layout: post
-      author_profile: true
-      read_time: true
-
+      
   - scope:
-      path: "_pages"
+      path: ""
+      type: pages  
+    values:
+      layout: page
+
+# ============ NAVEGACIÓN ============
+
+tabs:
+  home:
+    title: Home
+    url: /
+    order: 0
+    
+  about:
+    title: Sobre Mí
+    url: /about/
+    order: 1
+    
+  #categories:
+   # title: Categorías  
+   # url: /categories/
+   # order: 2
+    
+  #tags:
+    #title: Etiquetas
+    #url: /tags/
+    #order: 3
+    
+  archives:
+    title: Archivos
+    url: /archives/
+    order: 4
+    
+  contact:
+    title: Contacto
+    url: /contact/
+    order: 5
+
+# NAVEGACIÓN SUPERIOR
+
+header_pages:
+  - about.md
+  - categories.md
+  - tags.md
+  - archives.md
+  - contact.md
+
+# CONFIGURACIÓN PARA TABS/COLLECTIONS
+
+collections:
+  tabs:
+    output: true
+    permalink: /:name/
+
+defaults:
+  - scope:
+      path: "_tabs"
       type: pages
     values:
       layout: page
 
-# NAVEGACIÓN
-navigation:
-  main:
-    - title: "Inicio"
-      url: /
-    - title: "Posts"
-      url: /posts/
-    - title: "Categorías"
-      url: /categories/
-    - title: "Etiquetas"
-      url: /tags/
-    - title: "Sobre Mí"
-      url: /about/
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: post
+      toc: true

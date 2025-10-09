@@ -1,5 +1,5 @@
 ---
-layout: single
+layout: post
 title: "Configuracion cliente VPN con certificado x509"
 date: 2021-03-11T16:19:25+01:00
 categories: [Cloud]

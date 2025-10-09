@@ -1,5 +1,5 @@
 ---
-layout: single
+layout: post
 title: "Actualizacion de Centos7 a Centos8"
 date: 2021-03-12T12:52:53+01:00
 categories: [Sistemas]
