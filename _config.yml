@@ -35,4 +35,8 @@ collections:
     permalink: /:name/
 
 #plugins:
-#  - jekyll-theme-chirpy
+plugins:
+  - jekyll-include-cache
+  - jekyll-paginate
+  - jekyll-feed
+  - jekyll-seo-tag
