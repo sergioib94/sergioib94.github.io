@@ -1,36 +1,43 @@
-# ============ CONFIGURACIÓN BÁSICA ============
 title: "Blog técnico Sergio Ibáñez"
-name: "Sergio Ibáñez"
+email: "tu-email@gmail.com"
 description: "Blog personal sobre administración de sistemas, Linux, DevOps, monitorización y proyectos técnicos."
+baseurl: ""
 url: "https://sergioib94.github.io"
 repository: "sergioib94/sergioib94.github.io"
-baseurl: ""
-lang: es
-timezone: Europe/Madrid
 
-# ============ TEMA ============
+# TEMA
 remote_theme: mmistakes/minimal-mistakes@4.24.0
 
-# ============ CONFIGURACIÓN MINIMAL MISTAKES ============
+# CONFIGURACIÓN BÁSICA
+permalink: /:categories/:title/
+paginate: 5
+paginate_path: /page:num/
+timezone: Europe/Madrid
+
+# PLUGINS
+plugins:
+  - jekyll-paginate
+  - jekyll-sitemap
+  - jekyll-feed
+  - jekyll-seo-tag
+  - jekyll-include-cache
+
+# MINIMAL MISTAKES
 minimal_mistakes_skin: "default"
 search: true
-search_full_content: true
 
-# ============ AUTOR ============
+# AUTOR
 author:
   name: "Sergio Ibáñez"
-  avatar: "/assets/images/bio-photo.jpg"  # Cambia esta ruta
+  avatar: "/assets/images/bio-photo.jpg"
   bio: "Administrador de sistemas apasionado por Linux, DevOps y monitorización"
   location: "España"
   links:
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
       url: "https://github.com/sergioib94"
-    - label: "Email"
-      icon: "fas fa-fw fa-envelope"
-      url: "mailto:tu-email@gmail.com"
 
-# ============ NAVEGACIÓN ============
+# DEFAULTS - CORREGIDOS
 defaults:
   - scope:
       path: ""
@@ -42,7 +49,6 @@ defaults:
       comments: true
       share: true
       related: true
-      classes: "wide"
 
   - scope:
       path: "_pages"
@@ -51,7 +57,7 @@ defaults:
       layout: single
       author_profile: true
 
-# ============ PÁGINAS ============
+# NAVEGACIÓN
 navigation:
   main:
     - title: "Inicio"
@@ -64,30 +70,3 @@ navigation:
       url: /tags/
     - title: "Sobre Mí"
       url: /about/
-
-# ============ COMENTARIOS ============
-comments:
-  provider: "giscus"
-  giscus:
-    repo: "sergioib94/sergioib94.github.io"
-    repo_id: "R_kgDOLaMInA"
-    category: "Comentarios"
-    category_id: "DIC_kwDOLaMInM4CwJCA"
-    mapping: "pathname"
-    reactions_enabled: "1"
-    theme: "preferred_color_scheme"
-
-# ============ PAGINACIÓN ============
-paginate: 5
-paginate_path: /page:num/
-
-# ============ CONSTRUCCIÓN DEL SITIO ============
-permalink: /:categories/:title/
-timezone: Europe/Madrid
-
-plugins:
-  - jekyll-paginate
-  - jekyll-sitemap
-  - jekyll-gist
-  - jekyll-feed
-  - jemoji
