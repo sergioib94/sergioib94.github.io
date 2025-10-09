@@ -2,6 +2,7 @@ title: "Blog técnico Sergio Ibáñez"
 name: "Sergio Ibáñez"
 description: "Blog personal sobre administración de sistemas, Linux, DevOps, monitorización y proyectos técnicos."
 url: "https://sergioib94.github.io"
+repository: "sergioib94/sergioib94.github.io"
 baseurl: ""   # MUY IMPORTANTE
 lang: es
 timezone: Europe/Madrid
