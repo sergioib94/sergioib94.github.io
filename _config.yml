@@ -6,7 +6,9 @@ lang: es
 timezone: Europe/Madrid
 
 # TEMA
-remote_theme: cotes2020/jekyll-theme-chirpy
+
+theme: jekyll-theme-chirpy
+#remote_theme: cotes2020/jekyll-theme-chirpy
 
 # MODO OSCURO
 theme_mode: dark
@@ -31,3 +33,6 @@ collections:
   tabs:
     output: true
     permalink: /:name/
+
+#plugins:
+#  - jekyll-theme-chirpy
