@@ -1,5 +1,5 @@
 ---
-layout: post
+layout: single
 title: "Vpn Site to Site"
 date: 2021-03-12T19:00:38+01:00
 categories: [Seguridad]

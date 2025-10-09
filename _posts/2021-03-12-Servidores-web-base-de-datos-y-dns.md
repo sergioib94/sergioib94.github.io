@@ -1,5 +1,5 @@
 ---
-layout: post
+layout: single
 title: "Servidores Web, base de Datos y DNS en Openstack"
 date: 2021-03-12T14:18:01+01:00
 categories: [Servicios]

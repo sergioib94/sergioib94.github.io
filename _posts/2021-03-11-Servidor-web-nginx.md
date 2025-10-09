@@ -1,5 +1,5 @@
 ---
-layout: post
+layout: single
 title: "Servidor Web Nginx"
 date: 2021-03-11T16:43:41+01:00
 categories: [Servicios]

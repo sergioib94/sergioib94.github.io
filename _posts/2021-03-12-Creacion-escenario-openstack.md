@@ -1,5 +1,5 @@
 ---
-layout: post
+layout: single
 title: "Creacion de escenario Openstack"
 date: 2021-03-12T11:43:35+01:00
 categories: [Cloud]

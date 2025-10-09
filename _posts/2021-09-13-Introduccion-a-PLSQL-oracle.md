@@ -1,5 +1,5 @@
 ---
-layout: post
+layout: single
 title: "Introducción a PLSQL (Oracle)"
 date: 2021-09-13T12:36:20+02:00
 categories: [Base-de-Datos, Apuntes]
