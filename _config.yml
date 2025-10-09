@@ -8,7 +8,7 @@ timezone: Europe/Madrid
 
 #Tema
 
-theme: jekyll-theme-chirpy
+#theme: jekyll-theme-chirpy
 remote_theme: cotes2020/jekyll-theme-chirpy@v7.2.2 #problemas con la version 7.3 en categorias y tags
 
 # MODO OSCURO 
