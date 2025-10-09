@@ -1,145 +1,67 @@
 title: "Blog técnico Sergio Ibáñez"
-tagline: "Administrador de sistemas | Técnico de soporte IT | Monitorización"
+name: "Sergio Ibáñez"
 description: "Blog personal sobre administración de sistemas, Linux, DevOps, monitorización y proyectos técnicos."
 url: "https://sergioib94.github.io"
 baseurl: ""   # MUY IMPORTANTE
 lang: es
 timezone: Europe/Madrid
 
-#Tema
+# TEMA
+remote_theme: mmistakes/minimal-mistakes@4.24.0
 
-theme: jekyll-theme-chirpy
-remote_theme: cotes2020/jekyll-theme-chirpy@v7.2.2 #problemas con la version 7.3 en categorias y tags
-
-# MODO OSCURO 
-
-theme_mode: 
-- dark 
-
-# SOCIAL 
-
-social: 
-name: Sergio Ibanez 
-email: sergioib309@gmail.com
-links: 
-- https://github.com/sergioib94
-- https://www.linkedin.com/in/sergio-ibañez-nuñez/
-
-# COMENTARIOS 
-
-#comments: 
-#active: "" 
-
-# PAGINACION 
-
-paginate: 5
-
-# Menú principal
-menu:
-  tabs: true
-
-# LAYOUTS POR DEFECTO
+# ENLACES Y NAVEGACIÓN
 defaults:
   - scope:
       path: ""
       type: posts
     values:
-      layout: post
-      
-  - scope:
-      path: ""
-      type: pages  
-    values:
-      layout: page
+      layout: single
+      author_profile: true
+      read_time: true
+      comments: true
+      share: true
+      related: true
 
-# ============ NAVEGACIÓN ============
+# PÁGINAS EN HEADER
+navigation:
+  main:
+    - title: "Posts"
+      url: /posts/
+    - title: "Categorías"
+      url: /categories/
+    - title: "Etiquetas" 
+      url: /tags/
+    - title: "Sobre Mí"
+      url: /about/
 
-tabs:
-  home:
-    title: Home
-    url: /
-    order: 0
-    
-  about:
-    title: Sobre Mí
-    url: /about/
-    order: 1
-    
-  #categories:
-   # title: Categorías  
-   # url: /categories/
-   # order: 2
-    
-  #tags:
-    #title: Etiquetas
-    #url: /tags/
-    #order: 3
-    
-  archives:
-    title: Archivos
-    url: /archives/
-    order: 4
-    
-  contact:
-    title: Contacto
-    url: /contact/
-    order: 5
+# AUTOR
+author:
+  name: "Sergio Ibáñez"
+  avatar: "/assets/images/avatar.jpg"
+  bio: "Desarrollador web apasionado por la tecnología"
+  links:
+    - label: "GitHub"
+      icon: "fab fa-github"
+      url: "https://github.com/sergioib94"
+    - label: "Email"
+      icon: "fas fa-envelope"
+      url: "mailto:tu-email@gmail.com"
 
-# NAVEGACIÓN SUPERIOR
-
-header_pages:
-  - about.md
-  - categories.md
-  - tags.md
-  - archives.md
-  - contact.md
-
-# CONFIGURACIÓN PARA TABS/COLLECTIONS
-
-collections:
-  tabs:
-    output: true
-    permalink: /:name/
-
-defaults:
-  - scope:
-      path: "_tabs"
-      type: pages
-    values:
-      layout: page
-
-  - scope:
-      path: ""
-      type: posts
-    values:
-      layout: post
-      toc: true
-
-# markdown
-
-markdown: kramdown
-highlighter: rouge
-kramdown:
-  input: GFM
-  syntax_highlighter: rouge
-  syntax_highlighter_opts:
-    css_class: 'highlight'
-    span:
-      line_numbers: false
-    block:
-      line_numbers: false
-
-# Giscus - comentarios
-
+# COMENTARIOS
 comments:
-  active: "giscus"
+  provider: "giscus"
   giscus:
     repo: "sergioib94/sergioib94.github.io"
-    repo_id: "R_kgDOLaMInA"        # ← Debes obtener esto
+    repo_id: "R_kgDOLaMInA"
     category: "Comentarios"
-    category_id: "DIC_kwDOLaMInM4CwJCA" # ← Debes obtener esto
+    category_id: "DIC_kwDOLaMInM4CwJCA"
     mapping: "pathname"
     reactions_enabled: "1"
-    emit_metadata: "0"
-    input_position: "bottom"
-    lang: "es"
+    theme: "preferred_color_scheme"
+
+# BÚSQUEDA
+search: true
+
+# PAGINACIÓN
+paginate: 5
+paginate_path: /page:num/
