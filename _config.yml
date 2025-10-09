@@ -1,43 +1,36 @@
+# CONFIGURACIÓN BÁSICA
 title: "Blog técnico Sergio Ibáñez"
-email: "tu-email@gmail.com"
-description: "Blog personal sobre administración de sistemas, Linux, DevOps, monitorización y proyectos técnicos."
-baseurl: ""
 url: "https://sergioib94.github.io"
-repository: "sergioib94/sergioib94.github.io"
+baseurl: ""
+description: "Blog personal sobre administración de sistemas, Linux, DevOps, monitorización y proyectos técnicos."
 
 # TEMA
 remote_theme: mmistakes/minimal-mistakes@4.24.0
 
-# CONFIGURACIÓN BÁSICA
+# CONFIGURACIÓN ESENCIAL
 permalink: /:categories/:title/
-paginate: 5
-paginate_path: /page:num/
 timezone: Europe/Madrid
 
-# PLUGINS
 plugins:
   - jekyll-paginate
   - jekyll-sitemap
   - jekyll-feed
-  - jekyll-seo-tag
   - jekyll-include-cache
 
-# MINIMAL MISTAKES
-minimal_mistakes_skin: "default"
-search: true
+# PAGINACIÓN
+paginate: 5
+paginate_path: "/page:num/"
 
 # AUTOR
 author:
   name: "Sergio Ibáñez"
-  avatar: "/assets/images/bio-photo.jpg"
   bio: "Administrador de sistemas apasionado por Linux, DevOps y monitorización"
-  location: "España"
   links:
     - label: "GitHub"
-      icon: "fab fa-fw fa-github"
+      icon: "fab fa-github"
       url: "https://github.com/sergioib94"
 
-# DEFAULTS - CORREGIDOS
+# DEFAULTS SIMPLIFICADOS
 defaults:
   - scope:
       path: ""
@@ -46,27 +39,9 @@ defaults:
       layout: single
       author_profile: true
       read_time: true
-      comments: true
-      share: true
-      related: true
 
   - scope:
       path: "_pages"
       type: pages
     values:
       layout: single
-      author_profile: true
-
-# NAVEGACIÓN
-navigation:
-  main:
-    - title: "Inicio"
-      url: /
-    - title: "Posts"
-      url: /posts/
-    - title: "Categorías"
-      url: /categories/
-    - title: "Etiquetas"
-      url: /tags/
-    - title: "Sobre Mí"
-      url: /about/
