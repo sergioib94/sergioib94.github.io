@@ -1,14 +1,15 @@
+# CONFIGURACIÓN BÁSICA CHIRPY
 title: "Blog técnico Sergio Ibáñez"
 tagline: "Administrador de sistemas | Técnico de soporte IT | Monitorización"
 description: "Blog personal sobre administración de sistemas, Linux, DevOps, monitorización y proyectos técnicos."
 url: "https://sergioib94.github.io"
-baseurl: ""   # MUY IMPORTANTE
+baseurl: ""
 lang: es
 timezone: Europe/Madrid
 
 #Tema
 
-#theme: jekyll-theme-chirpy
+theme: jekyll-theme-chirpy
 remote_theme: cotes2020/jekyll-theme-chirpy@v7.2.2 #problemas con la version 7.3 en categorias y tags
 
 # MODO OSCURO 
@@ -45,7 +46,7 @@ defaults:
       type: posts
     values:
       layout: post
-      
+
   - scope:
       path: ""
       type: pages  
@@ -59,27 +60,27 @@ tabs:
     title: Home
     url: /
     order: 0
-    
+
   about:
     title: Sobre Mí
     url: /about/
     order: 1
-    
+
   #categories:
    # title: Categorías  
    # url: /categories/
    # order: 2
-    
+
   #tags:
     #title: Etiquetas
     #url: /tags/
     #order: 3
-    
+
   archives:
     title: Archivos
     url: /archives/
     order: 4
-    
+
   contact:
     title: Contacto
     url: /contact/
