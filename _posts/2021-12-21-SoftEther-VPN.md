@@ -86,20 +86,29 @@ En este escenario contamos con un server publico remoto y un cliente creado con 
 
 Lo primero que hacemos en la máquina es actualizarla:
 
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
 apt update
 apt upgrade
-~~~
+</code>
+</pre>
+</div>
 
 Al igual que con el servidor, instalamos lynx e instalamos SoftEther Client:
 
-~~~
-root@Cliente-debian:/home/vagrant# lynx http://www.softether-download.com/files/softether/
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash"> root@Cliente-debian:/home/vagrant# lynx http://www.softether-download.com/files/softether/
+ </code>
+</pre>
+</div>
 
 Desempaquetamos Softether-client:
 
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
 root@Cliente-debian:/home/vagrant# tar xzvf softether-vpnclient-v4.34-9745-rtm-2020.04.05-linux-x64-64bit.tar.gz 
 vpnclient/
 vpnclient/Makefile
@@ -123,17 +132,23 @@ vpnclient/lib/libssl.a
 vpnclient/lib/libz.a
 vpnclient/lib/License.txt
 vpnclient/hamcore.se2
-~~~
+</code>
+</pre>
+</div>
 
 Instalamos los paquetes necesarios:
 
-~~~
-apt install build-essential -y
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash"> apt install build-essential -y </code>
+</pre>
+</div>
 
 Al igual que con el server, compilamos el programa para que pueda ser usado:
 
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
 root@Cliente-debian:/home/vagrant# cd vpnclient/
 root@Cliente-debian:/home/vagrant/vpnclient# make
 --------------------------------------------------------------------
@@ -263,22 +278,30 @@ This HTML5 page is obviously under construction, and your HTML5 development cont
 --------------------------------------------------------------------
 
 make[1]: Leaving directory '/home/vagrant/vpnclient'
-~~~
+</code>
+</pre>
+</div>
 
 Cambiamos la ubicación de vpnclient, en mi caso a /usr/local para mayor seguridad, aunque este paso no es realmente necesario y cambiamos los permisos a vpnclient y a vpncmd para que puedan ser ejecutados.
 
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
 root@Cliente-debian:/home/vagrant/vpnclient# cd ..
 root@Cliente-debian:/home/vagrant# mv vpnclient /usr/local/
 root@Cliente-debian:/home/vagrant# cd /usr/local/vpnclient/
 root@Cliente-debian:/usr/local/vpnclient# chmod 600 *
 root@Cliente-debian:/usr/local/vpnclient# chmod 700 vpnclient
 root@Cliente-debian:/usr/local/vpnclient# chmod 700 vpncmd
-~~~
+</code>
+</pre>
+</div>
 
 Una vez podamos ejecutar vpnclient y vpncmd, pasamos a iniciar el cliente iniciar nuestra primera conexión remota.
 
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
 root@Cliente-debian:/usr/local/vpnclient# ./vpnclient start
 The SoftEther VPN Client service has been started.
 root@Cliente-debian:/usr/local/vpnclient# ./vpncmd
@@ -328,7 +351,9 @@ VPN Server Hostname         |219.100.37.165:443 (Direct TCP/IP Connection)
 Virtual Hub                 |vpngate
 Virtual Network Adapter Name|prueba
 ----------------------------+---------------------------------------------
-~~~
+</code>
+</pre>
+</div>
 
 Para esta conexión remota hemos usado dos comandos, por un lado el comando NicCreate con el que creamos un adaptador de red virtual el cual se usará para conectarse al hub del servidor remoto y por otro lado usaremos también el comando AccountCreate para crear dicha configuración de conexión con el servidor. 
 
@@ -338,7 +363,9 @@ Este servidor remoto cuenta con un usuario (vpn) con autentificación anonima po
 
 Por último establecemos la conexión y comprobamos que realmente estamos conectados al servidor.
 
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
 VPN Client>accountpasswordset conexion_japon
 AccountPasswordSet command - Set User Authentication Type of VPN Connection Setting to Password Authentication
 Please enter the password. To cancel press the Ctrl+D key.
@@ -368,11 +395,15 @@ Connection Started at                   |2021-11-06 (Sat) 14:29:47
 First Session has been Established since|-
 Number of Established Sessions          |0 Times
 The command completed successfully.
-~~~
+</code>
+</pre>
+</div>
 
 Comprobacion de VPN en servidor remoto (Japon):
 
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
 VPN Client>accountlist
 AccountList command - Get List of VPN Connection Settings
 Item                        |Value
@@ -416,7 +447,9 @@ PING 219.100.37.165 (219.100.37.165) 56(84) bytes of data.
 --- 219.100.37.165 ping statistics ---
 4 packets transmitted, 4 received, 0% packet loss, time 6ms
 rtt min/avg/max/mdev = 265.728/273.468/288.916/9.097 ms
-~~~
+</code>
+</pre>
+</div>
 
 ### Caso 1: Acceso Remoto (Windows) ###
 
@@ -461,29 +494,41 @@ Comprobación
 
 Lo primero que haremos en nuestro servidor sera actualizarlo:
 
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
 root@server-vpn:/home/vagrant# apt update
 root@server-vpn:/home/vagrant# apt upgrade
-~~~
+</code>
+</pre>
+</div>
 
 Instalamos los paquetes necesarios para poder compilar softether y asi hacer uso del server:
 
-~~~
-root@server-vpn:/home/vagrant# apt install build-essential
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash"> root@server-vpn:/home/vagrant# apt install build-essential </code>
+</pre>
+</div>
 
 Una vez actualizado, pasamos a descargar softether vpn server, para hacerlo mediante comandos podemos hacer uso de los comandos lynx, wget o curl, en mi caso he usado el comando lynx. Cuando estemos en la página tendremos que elegir la versión de softether a instalar, en mi caso la versión de linux, indicamos que se descargará el server.
 
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
 root@server-vpn:/home/vagrant# apt install lynx
 root@server-vpn:/home/vagrant# lynx http://www.softether-download.com/files/softether/
-~~~
+</code>
+</pre>
+</div>
 
 Una vez descargado pasamos a extraerlo usando tar:
 
 Cuando tengamos el fichero descargado, primero lo descomprimimos y despues entramos en el directorio vpnserver que se nos crea y compilamos los ficheros de forma que softether pueda ser usado:
 
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
 root@server-vpn:/home/vagrant# tar xzvf softether-vpnserver-v4.34-9745-rtm-2020.04.05-linux-x64-64bit.tar.gz
 vpnserver/
 vpnserver/Makefile
@@ -672,24 +717,32 @@ This HTML5 page is obviously under construction, and your HTML5 development cont
 --------------------------------------------------------------------
 
 make[1]: Leaving directory '/home/vagrant/vpnserver'
-~~~
+</code>
+</pre>
+</div>
 
 A la hora de compilar softether hay que tener en cuenta dos cosas, la primera que tenemos que responder a las preguntas que se nos muestran con la opcion 1 para aceptar los terminos de licencia, la segunda que a la hora de checkear la compilacion, debe tener aprobadas todas las configuraciones, sino el programa no se compilara y no podra usarse.
 
 Ahora podemos ejecutar nuestro servidor ejecutando ./vpnserver start, pero en su lugar configuraremos softether como un daemon:
 
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
 root@server-vpn:/home/vagrant/vpnserver# cd ..
 root@server-vpn:/home/vagrant# mv vpnserver /usr/local
 root@server-vpn:/home/vagrant# cd /usr/local/vpnserver/
 root@server-vpn:/usr/local/vpnserver# sudo chmod 600 *
 root@server-vpn:/usr/local/vpnserver# sudo chmod 700 vpnserver
 root@server-vpn:/usr/local/vpnserver# sudo chmod 700 vpncmd
-~~~
+</code>
+</pre>
+</div>
 
 Creamos el servicio systemd para softether creando el servicio vpnserver en /lib/systemd/system/ con el siguiente contenido:
 
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
 [Unit]
 Description=SoftEther VPN Server
 After=network.target
@@ -701,9 +754,13 @@ ExecStop=/usr/local/vpnserver/vpnserver stop
 
 [Install]
 WantedBy=multi-user.target
-~~~
+</code>
+</pre>
+</div>
 
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
 root@server-vpn:/usr/local/vpnserver# systemctl status vpnserver
 ● vpnserver.service - SoftEther VPN Server
    Loaded: loaded (/lib/systemd/system/vpnserver.service; disabled; vendor preset: enabled)
@@ -726,13 +783,17 @@ Nov 28 10:42:35 server-vpn vpnserver[8395]: https://10.0.2.15/
 Nov 28 10:42:35 server-vpn vpnserver[8395]: Note: IP address may vary. Specify your server's IP address.
 Nov 28 10:42:35 server-vpn vpnserver[8395]: A TLS certificate warning will appear because the server uses self signed certificate by default. That is natural. Continue with 
 Nov 28 10:42:35 server-vpn systemd[1]: Started SoftEther VPN Server.
-~~~
+</code>
+</pre>
+</div>
 
 Podemos ver que el checkeo a salido bien ya que ha pasado sin problemas las comprobaciones que se han hecho, por lo que nuestro servidor softethernet ya esta listo para configurarse y usarse.
 
 La primera configuracion que haremos en nuestro server sera configurar una contraseña de admin, para ello usaremos vpncmd:
 
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
 root@server-vpn:/usr/local/vpnserver# ./vpncmd
 vpncmd command - SoftEther VPN Command Line Management Utility
 SoftEther VPN Command Line Management Utility (vpncmd command)
@@ -786,7 +847,9 @@ Confirm input: ************
 
 
 The command completed successfully.
-~~~
+</code>
+</pre>
+</div>
 
 Por otro lado, empezaremos a configurar un puente local para que los clientes en la misma red puedan conectarse sin problemas. Este puente local se puede hacer de dos formas, la primera es usando la función de SecureNAT y la segunda seria configurar un puente local haciendo uso de la interfaz tap:
 
@@ -812,15 +875,21 @@ Una empresa con oficinas en dos ciudades necesita que los empleados accedan a la
 
 En el caso de querer configurar SecureNAT, es tan sencillo como ejecutar el siguiente comando:
 
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
 VPN Server/VPN1>SecureNatEnable
 SecureNatEnable command - Enable the Virtual NAT and DHCP Server Function (SecureNat Function)
 The command completed successfully.
-~~~
+</code>
+</pre>
+</div>
 
 En el caso de querer usar la interfaz tap, tendriamos que hacer lo siguiente:
 
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
 VPN Server>BridgeCreate /DEVICE:"soft" /TAP:yes Empresa
 BridgeCreate command - Create Local Bridge Connection
 While in the condition that occurs immediately after a new bridge connection is made when bridging to a physical network adapter, depending on the type of network adapter, there are cases where it will not be possible to communicate using TCP/IP to the network adapter using a bridge connection from a computer on the virtual network. 
@@ -841,13 +910,17 @@ If the Promiscuous Mode (MAC Address Spoofing) is administratively disabled, the
 For details please refer the documents of your VM. If it is a shared-VM and administrated by other person, please request the administrator to permit the use of the Promiscuous (MAC Address Spoofing) Mode to your VM.
 
 The command completed successfully.
-~~~
+</code>
+</pre>
+</div>
 
 Esta creación de puente local es posible que muestre un error de privilegios insuficientes, es necesario asegurarse de que el controlador de red usado este configurado en modo promiscuo.
 
 Ahora una vez creado el puente local, crearemos los usuarios necesarios que tendran acceso a el, dichos usuarios pueden tener distintos metodos de autentificación (contraseña, certificado, RADIUS, NTLM y otros) metiendolos en un grupo.
 
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
 VPN Server/Empresa>UserCreate sergio
 UserCreate command - Create User 
 Assigned Group Name: 
@@ -887,11 +960,15 @@ Confirm input: **********
 
 
 The command completed successfully.
-~~~
+</code>
+</pre>
+</div>
 
 Ahora configuramos L2TP/IPSec:
 
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
 VPN Server/Empresa>IPsecEnable
 IPsecEnable command - Enable or Disable IPsec VPN Server Function
 Enable L2TP over IPsec Server Function (yes / no): yes
@@ -905,12 +982,16 @@ Pre Shared Key for IPsec (Recommended: 9 letters at maximum): softether
 Default Virtual HUB in a case of omitting the HUB on the Username: Empresa
 
 The command completed successfully.
-~~~
+</code>
+</pre>
+</div>
 
 Generamos un certificado para que los clientes puedan acceder al servidor a traves de un certificado:
 
-~~~
-VPN Server/Empresa>ServerCertRegenerate
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
+PN Server/Empresa>ServerCertRegenerate
 ServerCertRegenerate command - Generate New Self-Signed Certificate with Specified CN (Common Name) and Register on VPN Server
 Value of Common Name (CN): server-vpn
 
@@ -924,44 +1005,64 @@ The command completed successfully.
 VPN Server/Empresa>ServerCertGet ~/cert.cer
 ServerCertGet command - Get SSL Certificate of VPN Server
 The command completed successfully.
-~~~
+</code>
+</pre>
+</div>
 
 Habilitamos la función sstp:
 
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
 VPN Server/Empresa>SstpEnable yes
 SstpEnable command - Enable / Disable Microsoft SSTP VPN Clone Server Function
 The command completed successfully.
-~~~
+</code>
+</pre>
+</div>
 
 Habilitamos openvpn:
 
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
 VPN Server/Empresa>OpenVpnEnable yes /PORTS:1194
 OpenVpnEnable command - Enable / Disable OpenVPN Clone Server Function
 The command completed successfully.
-~~~
+</code>
+</pre>
+</div>
 
 Creamos una configuración openvpn por si se da el caso de que los clientes tengan openvpn:
 
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
 VPN Server/Empresa>OpenVpnMakeConfig ~/openvpn_config.zip
 OpenVpnMakeConfig command - Generate a Sample Setting File for OpenVPN Client
 The sample setting file was saved as "~/openvpn_config.zip". You can unzip this file to extract setting files.
 The command completed successfully.
-~~~
+</code>
+</pre>
+</div>
 
 Habilitamos tanto icmp como dns (En caso de haber creado la interfaz tap, con SecureNAT no es necesario):
 
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
 VPN Server/Empresa>VpnOverIcmpDnsEnable /ICMP:yes /DNS:yes
 VpnOverIcmpDnsEnable command - Enable / Disable the VPN over ICMP / VPN over DNS Server Function
 The command completed successfully.
-~~~
+</code>
+</pre>
+</div>
 
 Configuramos dns y dhcp
 
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
 root@server-vpn:/usr/local/vpnserver# service vpnserver stop
 root@server-vpn:/usr/local/vpnserver# echo interface=tap_soft >> /etc/dnsmasq.conf
 root@server-vpn:/usr/local/vpnserver# echo dhcp-range=tap_soft,192.168.1.50,192.168.1.200,12h >> /etc/dnsmasq.conf
@@ -969,11 +1070,15 @@ root@server-vpn:/usr/local/vpnserver# echo dhcp-option=tap_soft,3,192.168.1.1 >>
 root@server-vpn:/usr/local/vpnserver# echo port=0 >> /etc/dnsmasq.conf
 root@server-vpn:/usr/local/vpnserver# echo dhcp-option=option:dns-server,8.8.8.8 >> /etc/dnsmasq.conf
 root@server-vpn:/usr/local/vpnserver# echo net.ipv4.ip_forward = 1 >> /etc/sysctl.d/ipv4_forwarding.conf
-~~~
+</code>
+</pre>
+</div>
 
 Aplicamos los cambios:
 
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
 root@server-vpn:/usr/local/vpnserver# sysctl -n -e --system
 * Applying /etc/sysctl.d/10-console-messages.conf ...
 4 4 1 7
@@ -1004,32 +1109,46 @@ root@server-vpn:/usr/local/vpnserver# sysctl -n -e --system
 * Applying /etc/sysctl.d/ipv4_forwarding.conf ...
 1
 * Applying /etc/sysctl.conf ...
-~~~
+</code>
+</pre>
+</div>
 
 #### En el caso del cliente ####
 
 Actualizamos el cliente:
 
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
 root@cliente-vpn:/home/vagrant# apt update
 root@cliente-vpn:/home/vagrant# apt upgrade
-~~~
+</code>
+</pre>
+</div>
 
 Instalamos softether con lynx:
 
-~~~
-root@cliente-vpn:/home/vagrant# lynx http://www.softether-download.com/files/softether/
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash"> root@cliente-vpn:/home/vagrant# lynx http://www.softether-download.com/files/softether/
+ </code>
+</pre>
+</div>
 
 Instalamos los paquetes necesarios:
 
-~~~
-root@cliente-vpn:/home/vagrant# apt install build-essential
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash"> root@cliente-vpn:/home/vagrant# apt install build-essential
+ </code>
+</pre>
+</div>
 
 Descomprimimos el fichero:
 
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
 root@cliente-vpn:/home/vagrant# tar xzvf softether-vpnclient-v4.34-9745-rtm-2020.04.05-linux-x64-64bit.tar.gz
 vpnclient/
 vpnclient/Makefile
@@ -1053,11 +1172,15 @@ vpnclient/lib/libssl.a
 vpnclient/lib/libz.a
 vpnclient/lib/License.txt
 vpnclient/hamcore.se2
-~~~
+</code>
+</pre>
+</div>
 
 Compilamos el fichero:
 
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
 root@cliente-vpn:/home/vagrant# cd vpnclient/
 root@cliente-vpn:/home/vagrant/vpnclient# make
 --------------------------------------------------------------------
@@ -1187,27 +1310,38 @@ This HTML5 page is obviously under construction, and your HTML5 development cont
 --------------------------------------------------------------------
 
 make[1]: Leaving directory '/home/vagrant/vpnclient'
-~~~
+</code>
+</pre>
+</div>
 
 Movemos el fichero a /usr/local y modificamos los permisos:
 
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
 root@cliente-vpn:/usr/local/vpnclient# chmod 600 *
 root@cliente-vpn:/usr/local/vpnclient# chmod 700 vpnclient
 root@cliente-vpn:/usr/local/vpnclient# chmod 700 vpncmd
-~~~
+</code>
+</pre>
+</div>
 
 Iniciamos el cliente:
 
-~~~
-root@cliente-vpn:/usr/local/vpnclient# ./vpnclient start
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash"> root@cliente-vpn:/usr/local/vpnclient# ./vpnclient start
+</code>
+</pre>
+</div>
 
 #### Configuración del cliente ####
 
 Creamos un adaptador virtual:
 
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
 VPN Client>NicCreate R1    
 NicCreate command - Create New Virtual Network Adapter
 The command completed successfully.
@@ -1235,11 +1369,15 @@ Confirm input: **********
 Specify standard or radius: standard
 
 The command completed successfully.
-~~~
+</code>
+</pre>
+</div>
 
 Conectamos el adaptador y comprobamos que se ha establecido una conexión con el servidor:
 
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
 VPN Client>accountconnect Local
 AccountConnect command - Start Connection to VPN Server using VPN Connection Setting
 The command completed successfully.
@@ -1286,11 +1424,15 @@ Incoming Unicast Total Size               |860 bytes
 Incoming Broadcast Packets                |0 packets
 Incoming Broadcast Total Size             |0 bytes
 The command completed successfully.
-~~~
+</code>
+</pre>
+</div>
 
 A la hora de hacer dhclient comprobamos como el servidor nos da una ip:
 
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
 root@cliente-vpn:/usr/local/vpnclient# ip a
 1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1
     link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
@@ -1342,7 +1484,9 @@ root@cliente-vpn:/usr/local/vpnclient# ip a
        valid_lft forever preferred_lft forever
     inet6 fe80::5ce3:d0ff:fefa:69b9/64 scope link 
        valid_lft forever preferred_lft forever
-~~~
+</code>
+</pre>
+</div>
 
 Vemos que nos da la ip 192.168.30.10, esto se debe a que securenat por defecto da ips en el rango 30.1 (esto puede modificarse).
 
@@ -1352,7 +1496,9 @@ Si en nuestro servidor hacemos un dhclient al igual que en el cliente de la inte
 
 Antes de nada accedemos por ssh al cliente2 y comprobamos que no puede acceso a las maquinas de la red1:
 
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
 vagrant@cliente2-vpn:~$ ping 192.168.1.100
 PING 192.168.1.100 (192.168.1.100) 56(84) bytes of data.
 From 192.168.1.102 icmp_seq=1 Destination Host Unreachable
@@ -1364,7 +1510,9 @@ PING 192.168.1.150 (192.168.1.150) 56(84) bytes of data.
 From 192.168.1.102 icmp_seq=1 Destination Host Unreachable
 From 192.168.1.102 icmp_seq=2 Destination Host Unreachable
 From 192.168.1.102 icmp_seq=3 Destination Host Unreachable
-~~~
+</code>
+</pre>
+</div>
 
 Como podemos ver, no tiene conexion ni con el servidor ni cn el cliente, a si que empezaremos a configurar el puente.
 
@@ -1376,21 +1524,29 @@ Importante, el puente local es el primero que debe hacerse, una vez establecido,
 
 Al igual que con las otras maquinas empezamos actualizando el sistema:
 
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
 root@puente-vpn:/home/vagrant# apt update
 root@puente-vpn:/home/vagrant# apt upgrade
-~~~
+</code>
+</pre>
+</div>
 
 Instalamos linx y los paquetes necesarios para el uso de softether:
 
-~~~
-
-root@puente-vpn:/home/vagrant# apt install build-essential
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash"> root@puente-vpn:/home/vagrant# apt install build-essential
+ </code>
+</pre>
+</div>
 
 Descomprimimos softether:
 
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
 root@puente-vpn:/home/vagrant# tar xzvf softether-vpnbridge-v4.34-9745-rtm-2020.04.05-linux-x64-64bit.tar.gz
 vpnbridge/
 vpnbridge/Makefile
@@ -1580,11 +1736,15 @@ This HTML5 page is obviously under construction, and your HTML5 development cont
 --------------------------------------------------------------------
 
 make[1]: Leaving directory '/home/vagrant/vpnbridge'
-~~~
+</code>
+</pre>
+</div>
 
 Movemos el directorio y cambiamos los permisos como en los demás:
 
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
 root@puente-vpn:/home/vagrant/vpnbridge# cd ..
 root@puente-vpn:/home/vagrant# mv vpnbridge/ /usr/local/
 root@puente-vpn:/home/vagrant# cd /usr/local/vpnbridge/
@@ -1592,38 +1752,55 @@ root@puente-vpn:/usr/local/vpnbridge# chmod 600 *
 root@puente-vpn:/usr/local/vpnbridge# chmod 700 vpnbridge 
 root@puente-vpn:/usr/local/vpnbridge# chmod 700 vpncmd 
 root@puente-vpn:/usr/local/vpnbridge# 
-~~~
+</code>
+</pre>
+</div>
 
 Cuando tengamos el puente instalado, lo primero sera crear una conexión de puente local entre algún cliente y el puente y por último se creará la conexión del puente al servidor. Para dicha conexión primero en el lado del servidor creamos un nuevo Hub al que se conectara el puente a traves de una conexión en cascada.
 
 #### Configuración del Cliente2 ####
 
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
 root@cliente2-vpn:/home/vagrant# apt update
 root@cliente2-vpn:/home/vagrant# apt upgrade
-~~~
+</code>
+</pre>
+</div>
 
 Instalamos softether:
 
-~~~
-root@cliente2-vpn:/home/vagrant# lynx http://www.softether-download.com/files/softether/
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash"> root@cliente2-vpn:/home/vagrant# lynx http://www.softether-download.com/files/softether/
+ </code>
+</pre>
+</div>
 
 Instalamos los programas necesarios:
 
-~~~
-root@cliente2-vpn:/home/vagrant# apt install build-essential
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash"> root@cliente2-vpn:/home/vagrant# apt install build-essential
+ </code>
+</pre>
+</div>
 
 Descomprimimos softether:
 
-~~~
-root@cliente2-vpn:/home/vagrant# tar xzvf softether-vpnclient-v4.34-9745-rtm-2020.04.05-linux-x64-64bit.tar.gz
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash"> root@cliente2-vpn:/home/vagrant# tar xzvf softether-vpnclient-v4.34-9745-rtm-2020.04.05-linux-x64-64bit.tar.gz
+ </code>
+</pre>
+</div>
 
 Compilamos softether:
 
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
 root@cliente2-vpn:/home/vagrant# cd vpnclient/
 root@cliente2-vpn:/home/vagrant/vpnclient# make
 --------------------------------------------------------------------
@@ -1753,22 +1930,30 @@ This HTML5 page is obviously under construction, and your HTML5 development cont
 --------------------------------------------------------------------
 
 make[1]: Leaving directory '/home/vagrant/vpnclient'
-~~~
+</code>
+</pre>
+</div>
 
 Movemos el directorio y modificamos los permisos para poder usarse:
 
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
 root@cliente2-vpn:/home/vagrant/vpnclient# cd ..
 root@cliente2-vpn:/home/vagrant# mv vpnclient/ /usr/local/
 root@cliente2-vpn:/home/vagrant# cd /usr/local/vpnclient/
 root@cliente2-vpn:/usr/local/vpnclient# chmod 600 *
 root@cliente2-vpn:/usr/local/vpnclient# chmod 700 vpnclient
 root@cliente2-vpn:/usr/local/vpnclient# chmod 700 vpncmd
-~~~
+</code>
+</pre>
+</div>
 
 Creamos el adaptador virtual y lo conectamos al puente:
 
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
 VPN Client>NicCreate R2 
 NicCreate command - Create New Virtual Network Adapter
 The command completed successfully.
@@ -1784,11 +1969,15 @@ Connecting User Name: invitado
 Used Virtual Network Adapter Name: R2
 
 The command completed successfully.
-~~~
+</code>
+</pre>
+</div>
 
 Le ponemos contraseña de usuario:
 
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
 VPN Client>AccountPasswordSet Puente
 AccountPasswordSet command - Set User Authentication Type of VPN Connection Setting to Password Authentication
 Please enter the password. To cancel press the Ctrl+D key.
@@ -1800,12 +1989,15 @@ Confirm input: **********
 Specify standard or radius: standard
 
 The command completed successfully.
-
-~~~
+</code>
+</pre>
+</div>
 
 #### Configuración para el puente ####
 
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
 root@puente-vpn:/home/vagrant# ip a
 1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1
     link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
@@ -1831,11 +2023,15 @@ root@puente-vpn:/home/vagrant# ip a
        valid_lft forever preferred_lft forever
     inet6 fe80::a00:27ff:fe7e:4a25/64 scope link 
        valid_lft forever preferred_lft forever
-~~~
+</code>
+</pre>
+</div>
 
 Arrancamos el servicio y comprobamos el puente:
 
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
 root@puente-vpn:/home/vagrant# ./vpnbridge start
 bash: ./vpnbridge: No such file or directory
 root@puente-vpn:/home/vagrant# cd /usr/local/vpnbridge/
@@ -1899,13 +2095,17 @@ Last Communication|2021-12-04 11:57:03
 Transfer Bytes    |8,067,782,709
 Transfer Packets  |152,211,372
 The command completed successfully.
-~~~
+</code>
+</pre>
+</div>
 
 Al contrario que con el servidor Softether, el puente solo puede tener un único hub bastante limitado ya que tampoco permite la creacion de usuarios.
 
 Creamos la conexión en cascada con el quipo servidor:
 
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
 VPN Server/BRIDGE>cascadecreate R1     
 CascadeCreate command - Create New Cascade Connection
 Destination VPN Server Host Name and Port Number: 10.10.10.10:443
@@ -1926,11 +2126,15 @@ Confirm input: ******
 Specify standard or radius: standard
 
 The command completed successfully.
-~~~
+</code>
+</pre>
+</div>
 
 Comprobamos que se ha creado correctamente:
 
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
 VPN Server/BRIDGE>cascadelist              
 CascadeList command - Get List of Cascade Connections
 Item                  |Value
@@ -1956,19 +2160,29 @@ Established at        |2021-12-04 (Sat) 15:56:53
 Destination VPN Server|10.10.10.10
 Virtual Hub           |
 The command completed successfully.
-~~~
+</code>
+</pre>
+</div>
 
 Ahora crearemos la interfaz que recibirá la ip del servidor, para ello empezamos instalando bridge-utils
 
-~~~
-apt install bridge-utils
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash"> apt install bridge-utils
+</code>
+</pre>
+</div>
 
-~~~
-root@puente-vpn:/usr/local/vpnbridge# brctl addbr br0
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash"> root@puente-vpn:/usr/local/vpnbridge# brctl addbr br0
+ </code>
+</pre>
+</div>
 
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
 VPN Server>bridgecreate BRIDGE /DEVICE:enp0s9 /TAP:yes
 BridgeCreate command - Create Local Bridge Connection
 While in the condition that occurs immediately after a new bridge connection is made when bridging to a physical network adapter, depending on the type of network adapter, there are cases where it will not be possible to communicate using TCP/IP to the network adapter using a bridge connection from a computer on the virtual network. 
@@ -1997,17 +2211,25 @@ Number|Virtual Hub Name|Network Adapter or Tap Device Name|Status
 1     |Local           |172.22.10.20:443                  |Offline
 2     |BRIDGE          |enp0s9                            |Operating
 3     |BRIDGE          |enp0s9                            |Operating
-~~~
+</code>
+</pre>
+</div>
 
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
 root@puente-vpn:/usr/local/vpnbridge# brctl addif br0 tap_enp0s9
 root@puente-vpn:/usr/local/vpnbridge# brctl addif br0 enp0s8
 root@puente-vpn:/usr/local/vpnbridge# ip link set br0 up
-~~~
+</code>
+</pre>
+</div>
 
 Hacemos dhclient y comprobamos como el puente recibe ip del servidor:
 
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
 root@puente-vpn:/usr/local/vpnbridge# ip a
 1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1
     link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
@@ -2089,7 +2311,9 @@ PING 192.168.30.12 (192.168.30.12) 56(84) bytes of data.
 --- 192.168.30.12 ping statistics ---
 2 packets transmitted, 2 received, 0% packet loss, time 1012ms
 rtt min/avg/max/mdev = 1.358/1.368/1.379/0.038 ms
-~~~
+</code>
+</pre>
+</div>
 
 Podemos ver que el puente puede hacerle ping al cliente de la red1 sin problemas.
 

@@ -12,5 +12,3 @@ Si quieres ponerte en contacto conmigo, aquí tienes varias formas:
 - 💻 **GitHub:** [Repositorio personal](https://github.com/sergioib94)  
 
 ---
-
-👉 También puedes dejar comentarios en los artículos del blog si quieres dar feedback o preguntar sobre algún tema técnico.
