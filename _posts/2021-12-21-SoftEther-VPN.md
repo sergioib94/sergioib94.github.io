@@ -2168,15 +2168,13 @@ Ahora crearemos la interfaz que recibirá la ip del servidor, para ello empezamo
 
 <div class="highlight">
 <pre class="chroma">
-<code class="language-bash" data-lang="bash"> apt install bridge-utils
-</code>
+<code class="language-bash" data-lang="bash"> apt install bridge-utils</code>
 </pre>
 </div>
 
 <div class="highlight">
 <pre class="chroma">
-<code class="language-bash" data-lang="bash"> root@puente-vpn:/usr/local/vpnbridge# brctl addbr br0
- </code>
+<code class="language-bash" data-lang="bash"> root@puente-vpn:/usr/local/vpnbridge# brctl addbr br0</code>
 </pre>
 </div>
 
