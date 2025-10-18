@@ -171,7 +171,7 @@ mariadb                    latest              70e69b4a7bda        7 months ago 
 joomla                     latest              6014b57fda53        7 months ago        458MB
 php                        7.4-apache          83db90327db8        7 months ago        414MB
 debian                     latest              5890f8ba95f6        7 months ago        114MB
-php                        7.4.3-apache        d753d5b380a1        7 months ago       414MB
+php                        7.4.3-apache        d753d5b380a1        7 months ago        414MB
 </code>
 </pre>
 </div>
