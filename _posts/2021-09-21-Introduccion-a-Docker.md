@@ -1,4 +1,3 @@
-
 ---
 title: "Introducción a Docker"
 date: 2021-09-21T13:14:06+02:00
