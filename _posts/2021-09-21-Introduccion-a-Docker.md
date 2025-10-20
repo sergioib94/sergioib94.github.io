@@ -50,28 +50,39 @@ Aunque tanto los contenedores como las máquinas virtuales permiten la ejecució
 
 1. Empezamos actualizando la paqueteria:
 
-~~~
-sudo apt-get update
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash"> sudo apt-get update </code>
+</pre>
+</div>
 
 2. Instalamos los siguientes paquetes para el uso de docker:
 
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
 sudo apt-get install \
     apt-transport-https \
     ca-certificates \
     curl \
     gnupg \
     lsb-release
-~~~
+</code>
+</pre>
+</div>
 
 3. Añadimos la clave gpg a nuestro repositorio (en este caso repositorios de debian):
 
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
 curl -fsSL https://download.docker.com/linux/debian/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
-~~~
+</code>
+</pre>
+</div>
 
 4. Configuramos el repositorio estable de docker:
+
 
 ~~~
 echo \
@@ -81,56 +92,86 @@ echo \
 
 5. Instalamos Docker:
 
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
 sudo apt-get update
 sudo apt-get install docker-ce docker-ce-cli containerd.io
-~~~
+</code>
+</pre>
+</div>
 
 Si lo que queremos es usar docker sin sudo, ejecutaremos el siguiente comando:
 
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
 sudo usermod -aG docker $USER
-~~~
+</code>
+</pre>
+</div>
 
 ### **Comandos utiles de docker** ###
 
 * Ejecutar un contenedor a partir de una imagen:
 
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
 docker run "nombre de la imagen"
-~~~
+</code>
+</pre>
+</div>
 
 Podemos obtener varias imágenes de docker en la sigiente pagina [Dockerhub](https://hub.docker.com/). En el caso de que una imagen tenga varias versiones podemos ejecutar la version deseada de la siguiente forma:
 
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
 docker run "nombre de la imagen":"version"
-~~~
+</code>
+</pre>
+</div>
 
 En el caso de no indicar la version, por defecto se ejecutara la ultima version que exista de la imagen.
 
 * Ejecutar un contenedor en background o segundo plano:
 
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
 docker run -d "nombre de la imagen"
-~~~
+</code>
+</pre>
+</div>
 
 * Descargar imágenes docker:
 
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
 docker pull "nombre de la imagen"
-~~~
+</code>
+</pre>
+</div>
 
 Aunque este comando no es del todo necesario ya que si la imagen que queremos ejecutar no la tenemos, al ejecutar docker run se descarga de forma automatica siempre y cuando exista la imagen que queremos. Este comando se usa sobre todo en el caso de querer descargar imágenes sin que se ejecuten automticamente.
 
 * Comprobar las imágenes que tenemos en nuestra maquina:
 
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
 docker images
-~~~
+</code>
+</pre>
+</div>
 
 Ejemplo:
 
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
 sergioib@debian-sergio:~$ docker images
 REPOSITORY                 TAG                 IMAGE ID            CREATED             SIZE
 sergioib94/drupal          v1                  ffabd2bb2653        6 months ago        334MB
@@ -143,8 +184,10 @@ mariadb                    latest              70e69b4a7bda        7 months ago 
 joomla                     latest              6014b57fda53        7 months ago        458MB
 php                        7.4-apache          83db90327db8        7 months ago        414MB
 debian                     latest              5890f8ba95f6        7 months ago        114MB
-php                        7.4.3-apache        d753d5b380a1        7 months ago       414MB
-~~~
+php                        7.4.3-apache        d753d5b380a1        7 months ago        414MB
+</code>
+</pre>
+</div>
 
 En mi caso estas son las imágenes que tengo en mi equipo, algunas usadas en otras practicas y ejemplos y otras descargadas y modificadas por mi.
 
@@ -152,13 +195,19 @@ Cada imagen cuenta con una ID unica que podremos usar posteriormente para elimin
 
 * Mostrar contenedores que se estan ejecutando:
 
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
 docker ps
-~~~
+</code>
+</pre>
+</div>
 
 A este comando le podemos añadir la opción -a si lo que queremos es mostrar todos los contenedores que en algun momento se han ejecutado.
 
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
 sergioib@debian-sergio:~$ docker ps
 CONTAINER ID        IMAGE                         COMMAND                  CREATED             STATUS                          PORTS                     NAMES
 83deaf076a51        joomla                        "/entrypoint.sh apac…"   6 months ago        Up 2 hours                      0.0.0.0:8080->80/tcp      deploy_joomla_1
@@ -175,61 +224,93 @@ CONTAINER ID        IMAGE                         COMMAND                  CREAT
 b18afffe8d15        sergioib94/drupal:v1          "/usr/sbin/apache2ct…"   6 months ago        Up 2 hours                     0.0.0.0:8083->80/tcp      drupal
 631dc24356c6        5890f8ba95f6                  "/bin/sh -c 'apt-get…"   6 months ago        Exited (100) 6 months ago                                mystifying_visvesvaraya
 28dc5d493419        sergioib94/bookmedik-php:v1   "docker-php-entrypoi…"   6 months ago        Up 2 hours                     0.0.0.0:8081->80/tcp      bookmedik-php
-~~~
+</code>
+</pre>
+</div>
 
 * Reiniciar un contenedor:
 
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
 docker start "ID del contenedor"
-~~~
+</code>
+</pre>
+</div>
 
 * Mostrar logs de un contenedor:
 
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
 docker logs "ID del contenedor" o bien docker logs "nombre del contenedor"
-~~~
+</code>
+</pre>
+</div>
 
 * Ejecutar comandos dentro de un contenedor que se este ejecutando:
 
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
 docker exec "ID del contenedor"
-~~~
+</code>
+</pre>
+</div>
 
 Con este comando podemos usar las opciones -i para crear una sesion interactiva y -t emulara una terminal. Por ejemplo:
 
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
 sergioib@debian-sergio:~$ docker exec -it 83deaf076a51 sh
 # ls
 LICENSE.txt  administrator  cache  components	      htaccess.txt  includes   language  libraries  modules  robots.txt  tmp
 README.txt   bin	    cli    configuration.php  images	    index.php  layouts	 media	    plugins  templates	 web.config.txt
 # 
-~~~
+</code>
+</pre>
+</div>
 
 En este caso por ejemplo abrimos una terminal sh para poder ejecutar comandos en el contenedor que en este caso es un contenedor joomla y probamos la ejecucion de ls.
 
 * Parar uno o varios contenedores:
 
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
 docker stop "ID del contenedor"
-~~~
+</code>
+</pre>
+</div>
 
 En el caso de querer parar varios contenedores simplemente se ponen las ID de los contenedores separadas por espacios una tras otra.
 
 * Conectarse al contenedor:
 
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
 docker attach "ID contenedor"
-~~~
+</code>
+</pre>
+</div>
 
 * Mostrar las caracteristicas del contenedor:
 
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
 docker inspect "ID del conetedor"
-~~~
+</code>
+</pre>
+</div>
 
 Ejemplo:
 
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
 sergioib@debian-sergio:~$ docker inspect b18afffe8d15
 [
     {
@@ -471,7 +552,9 @@ sergioib@debian-sergio:~$ docker inspect b18afffe8d15
         }
     }
 ]
-~~~
+</code>
+</pre>
+</div>
 
 En este caso vemos la informacion relacionada con un contenedor que aloja Drupal. Aqui podemos encontrar varia informacion como:
 
@@ -486,52 +569,84 @@ En este caso vemos la informacion relacionada con un contenedor que aloja Drupal
 
 * Destruir o "matar" un contenedor:
 
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
 docker kill "ID controlador"
-~~~
+</code>
+</pre>
+</div>
 
 * Pausar/reanudar un contenedor:
 
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
 docker pause "ID controlador" / docker unpause "ID controlador"
-~~~
+</code>
+</pre>
+</div>
 
 * Ver o establecer un puerto para un contenedor:
 
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
 docker port "numero de puerto" "ID contenedor"
-~~~
+</code>
+</pre>
+</div>
 
 A la hora de establecer el puerto de un contenedor tambien podemos hacerlo usando la opcion -p:
 
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
 docker -p "nuemro de puerto" "ID contenedor"
-~~~
+</code>
+</pre>
+</div>
 
 * Renombrar un contenedor:
 
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
 docker renamo "ID contenedor"
-~~~
+</code>
+</pre>
+</div>
 
 * Eliminar todos los contenedores:
 
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
 docker rm -f $(docker ps -a -q)
-~~~
+</code>
+</pre>
+</div>
 
 * Comprobar la version de docker:
 
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
 docker --version
-~~~
+</code>
+</pre>
+</div>
 
 Ejemplo:
 
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
 sergioib@debian-sergio:~$ docker --version
 Docker version 18.09.1, build 4c52b90
-~~~
+</code>
+</pre>
+</div>
 
 En mi caso la version esta un poco desactualizada ya que actualmente si no me equivoco la version actual es la 20.10.
 
@@ -551,17 +666,25 @@ En el caso de que queramos añadir nuestra imagen personalizada en docker hub ej
 
 2. Una vez logueados ejecutamos docker push subiendo nuestra imagen a docker hub.
 
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
 sergioib@debian-sergio:~$ docker ps
 CONTAINER ID        IMAGE                         COMMAND                  CREATED             STATUS                          PORTS                     NAMES
 b18afffe8d15        sergioib94/drupal:v1          "/usr/sbin/apache2ct…"   6 months ago        Up 3 hours                      0.0.0.0:8083->80/tcp      drupal
-~~~
+</code>
+</pre>
+</div>
 
 En mi caso por ejemplo cuento con una imagen modificada por mi de un contenedor que cuenta con un drupal, en este caso si quiero subir este drupal mio a docker hub tendria que loguarme con docker login y una vez logueado subir la imagen con docker push:
 
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
 docker push sergioib94/drupal:v1
-~~~
+</code>
+</pre>
+</div>
 
 De esta forma cualquier usuario de docker hub puede descargarse nuestra imagen y trabajar con ella ejecutando un docker pull.
 
@@ -587,7 +710,9 @@ La estructura de los dockerfile será la siguiente:
 
 Ejemplo:
 
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
 # Imágen base de PHP con docker
 FROM php:7.4-apache
 
@@ -616,7 +741,9 @@ RUN chmod +x /usr/local/bin/script.sh
 
 # Comando que ejecutará el contenedor
 CMD ["script.sh"]
-~~~
+</code>
+</pre>
+</div>
 
 En este ejemplo usamos una imagen base de php version 7.4 con apache. Se han creado tres variables, mariadb_user, mariadb_pass y mariadb_host de forma que el mysql que tendremos en nuestro contenedor reciva las varioables a traves del script indicado al final del dockerfile.
 
@@ -630,12 +757,16 @@ añdimos s nuestro contenedor el script indicado usando **ADD** en la ubicacion 
 
 El contenido de nuestro script.sh será el siguiente:
 
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
 #!/bin/bash
 sed -i "s/$this->user=\"root\";/$this->user=\"$MARIADB_USER\";/g" /var/www/html/core/controller/Database.php
 sed -i "s/$this->pass=\"\";/$this->pass=\"$MARIADB_PASS\";/g" /var/www/html/core/controller/Database.php
 sed -i "s/$this->host=\"localhost\";/$this->host=\"$MARIADB_HOST\";/g" /var/www/html/core/controller/Database.php
-~~~
+</code>
+</pre>
+</div>
 
 Después para construir el contenedor, ejecutamos docker build -t "nombre de la imagen"
 
@@ -645,43 +776,67 @@ A los contenedores que creemos, tenemos la posibilidad de añadirlos a una red h
 
 * Conectar/desconectar una red de un contenedor:
 
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
 docker network connect/disconnect "ID red"
-~~~
+</code>
+</pre>
+</div>
 
 * Crear una nueva red:
 
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
 docker network create
-~~~
+</code>
+</pre>
+</div>
 
 * Mostrar informacion de una red:
 
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
 docker network inspect "ID red"
-~~~
+</code>
+</pre>
+</div>
 
 * Mostrar todas las redes docker 
 
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
 docker network ls
-~~~
+</code>
+</pre>
+</div>
 
 * Eliminar red:
 
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
 docker network rm
-~~~
+</code>
+</pre>
+</div>
 
 Por defecto al instalar docker se crean automaticamente tres redes, bridge, none y host:
 
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
 sergioib@debian-sergio:~$ docker network ls
 NETWORK ID          NAME                DRIVER              SCOPE
 1857a84cc7c7        bridge              bridge              local
 daeb4ba11558        host                host                local
 98f5e7fa91c2        none                null                local
-~~~
+</code>
+</pre>
+</div>
 
 * Red bridge: Es la red a la que se conectan los contenedores por defecto (con direccionamiento 172.17.0.0/16). Esta red corresponde a la interfaz docker0 en nuestra maquina fisica, esta interfaz hace de puerta de enlace de los contenedores.
 
@@ -710,37 +865,59 @@ Para gestionar los volumenes docker podemos ejecutar los siguientes comandos:
 
 * Creacion de volumenes:
 
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
 docker volume create "nombre del volumen"
-~~~
+</code>
+</pre>
+</div>
 
 * Eliminacion de volumenes:
 
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
 docker volume rm "nombre del volumen"
-~~~
+</code>
+</pre>
+</div>
 
 * Mostrar volumenes que tenemos creados:
 
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
 docker volume ls
-~~~
+</code>
+</pre>
+</div>
 
 * Eliminacion de volumenes que no se estan usando:
 
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
 docker volume prune
-~~~
+</code>
+</pre>
+</div>
 
 * Mostrar detalles sobre los volumenes:
 
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
 docker volume inspect "nombre del volumen"
-~~~
+</code>
+</pre>
+</div>
 
 Como ejemplo se va a crear un contenedor con una imagen base de debian haciendo uso de la opción -v para así indicar la ubicación de nuestro volumen creado.
 
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
 #Creamos primero un volumen que usaremos de prueba.
 
 sergioib@debian-sergio:~$ docker volume create prueba
@@ -756,7 +933,9 @@ sergioib@debian-sergio:~$ docker run -d --name debian-prueba -v prueba:/usr/shar
 sergioib@debian-sergio:~$ docker ps -a
 CONTAINER ID        IMAGE                         COMMAND                  CREATED              STATUS                          PORTS                     NAMES                          prueba-mdb
 905c1a3bac1b        debian                        "bash"                   3 minutes ago        UP 3 minutes ago                                  debian-prueba
-~~~
+</code>
+</pre>
+</div>
 
 #### **Bind mounts** ####
 
@@ -770,7 +949,9 @@ Docker-Compose es una herramienta soluciona el problema de tener que repetir cad
 
 Para hacer uso de docker compose, lo primero será instalarlo:
 
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
 # Añadimos la clave GPG
 curl -fsSL https://download.docker.com/linux/debian/gpg | sudo apt-key add -
 
@@ -779,7 +960,9 @@ sudo apt-cache policy docker-compose
 
 # Lo instalamos
 sudo apt-get install docker-compose
-~~~
+</code>
+</pre>
+</div>
 
 Ejemplo de uso:
 
@@ -789,7 +972,9 @@ Para ello crearemos una carpeta deply donde guardaremos nuestro docker compose, 
 
 Nuestro fichero docker compose será el siguiente:
 
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
 version: "3.1"
 
 services:
@@ -813,7 +998,9 @@ services:
       - 8083:80
     volumes:
       - /home/sergio/Escritorio/Informatica/Github/docker-bookmedik/Tarea4/vol-app:/var/log/apache2
-~~~
+</code>
+</pre>
+</div>
 
 En este ejemplo estamos creando dos contenedores, uno al que llamamos db que alojara la base de datos de mariadb y otro contenedor en el que se desplegará drupal.
 
@@ -823,7 +1010,9 @@ Por otro lado al contenedor de drupal solo será necesario indicar la imagen que
 
 Desplegamos el docker compose ejecutando el siguiente comando en el directorio donde este el fichero:
 
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
 sergioib@debian-sergio:~/Escritorio/Informatica/Github/docker-bookmedik/Tarea4/deploy$ docker-compose up -d
 Creating servidor_mysql_drupal ... done
 Creating drupal                ... done
@@ -833,7 +1022,9 @@ CONTAINER ID        IMAGE                         COMMAND                  CREAT
 205d30bcee2f        mariadb                       "docker-entrypoint.s…"   10 minutes ago      Up About a minute   3306/tcp                  servidor_mysql_drupal
 b18afffe8d15        sergioib94/drupal:v1          "/usr/sbin/apache2ct…"   7 months ago        Up About a minute   0.0.0.0:8083->80/tcp      drupal
                     0.0.0.0:8083->80/tc
-~~~
+</code>
+</pre>
+</div>
 
 Una vez desplegado, comenzaremos con la instalación y comprobaremos que funciona correctamente, para ello en nuestro navegador accedemos al puerto indicado anteriormente, es decir a localhost:8083.
 
@@ -889,9 +1080,13 @@ Podemos ver que en windows podemos trabajar tanto por linea de comandos como por
 
 Vamos a la configuración de windows:
 
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
 Inicio > Configuración > Aplicaciones > Características Opcionales
-~~~
+</code>
+</pre>
+</div>
 
 Marcamos "Hyper-V" y damos click en "Aceptar" para reiniciar Windows.
 
