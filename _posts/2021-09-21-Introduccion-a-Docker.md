@@ -169,26 +169,6 @@ docker images
 
 Ejemplo:
 
-<div class="highlight">
-<pre class="chroma">
-<code class="language-bash" data-lang="bash">
-sergioib@debian-sergio:~$ docker images
-REPOSITORY                 TAG                 IMAGE ID            CREATED             SIZE
-sergioib94/drupal          v1                  ffabd2bb2653        6 months ago        334MB
-sergioib94/bookmedik-php   v1                  5b857f8a175a        6 months ago        436MB
-mysql                      5.6                 0abf1c71efa3        6 months ago        303MB
-sergioib94/bookmedik2      v1                  5dd61ff34e91        6 months ago        435MB
-sergioib94/bookmedik       v1                  3d1d3ed847f8        6 months ago        249MB
-sergioib94/bookmedik       <none>              df7505c5a0ba        6 months ago        251MB
-mariadb                    latest              70e69b4a7bda        7 months ago        401MB
-joomla                     latest              6014b57fda53        7 months ago        458MB
-php                        7.4-apache          83db90327db8        7 months ago        414MB
-debian                     latest              5890f8ba95f6        7 months ago        114MB
-php                        7.4.3-apache        d753d5b380a1        7 months ago        414MB
-</code>
-</pre>
-</div>
-
 ~~~
 sergioib@debian-sergio:~$ docker images
 REPOSITORY                 TAG                 IMAGE ID            CREATED             SIZE
