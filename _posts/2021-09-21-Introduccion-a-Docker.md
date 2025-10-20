@@ -169,7 +169,9 @@ docker images
 
 Ejemplo:
 
-~~~
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
 sergioib@debian-sergio:~$ docker images
 REPOSITORY                 TAG                 IMAGE ID            CREATED             SIZE
 sergioib94/drupal          v1                  ffabd2bb2653        6 months ago        334MB
@@ -183,7 +185,9 @@ joomla                     latest              6014b57fda53        7 months ago 
 php                        7.4-apache          83db90327db8        7 months ago        414MB
 debian                     latest              5890f8ba95f6        7 months ago        114MB
 php                        7.4.3-apache        d753d5b380a1        7 months ago        414MB
-~~~
+</code>
+</pre>
+</div>
 
 En mi caso estas son las imágenes que tengo en mi equipo, algunas usadas en otras practicas y ejemplos y otras descargadas y modificadas por mi.
 
