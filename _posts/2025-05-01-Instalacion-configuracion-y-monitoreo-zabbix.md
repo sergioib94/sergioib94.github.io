@@ -138,19 +138,19 @@ Para acceder al frontend de zabbix abrimos un navegador y realizamos una búsque
 
 La primera vez que accedamos a zabbix tendremos que indicar una serie de configuraciones previas, por ejemplo el tema del idioma, por defecto zabbix solo trae instalados los paquetes de español e ingles (al menos en mi caso) por lo que para otros idiomas se tendrá que descargar el paquete de idiomas a parte.
 
-![inicio en zabbix](/images/Zabbix/zabbix1.PNG)
+![inicio en zabbix](/assets/images/Zabbix/zabbix1.PNG)
 
 En la siguiente pantalla se realizara una comprobación de los requisitos previos para el uso de zabbix, en este caso como al inicio del post se instalaron tanto apache como php no debería haber ningún problema, en caso de que falte algún paquete en concreto seria solo cuestión de instalarlo, el caso es que todo tiene que estar "OK".
 
-![requisitos previos](/images/Zabbix/zbbix_requisitos.PNG)
+![requisitos previos](/assets/images/Zabbix/zbbix_requisitos.PNG)
 
 Después introducimos la información de la base de datos que hemos configurado en mariadb
 
-![BBDD](/images/Zabbix/zabbix_bbdd.PNG)
+![BBDD](/assets/images/Zabbix/zabbix_bbdd.PNG)
 
 Por ultimo le pondremos nombre a nuestro servidor zabbix y con esto completaremos la instalación para poder acceder. El acceso lo realizaremos con el usuario por defecto "Admin" y la contraseña "zabbix".
 
-![zabbix server](/images/Zabbix/zabbix_server.PNG)
+![zabbix server](/assets/images/Zabbix/zabbix_server.PNG)
 
 Una vez que tienes tu entorno Zabbix completamente funcional, puedes comenzar a realizar prácticas para familiarizarte con sus principales funcionalidades. Aquí tienes una serie de ejercicios recomendados:
 
@@ -164,7 +164,7 @@ En este caso podemos crear un trigger que nos alerte cuando un parámetro (%CPU,
 
 En la pantalla que tendremos para rellenar los datos de configuración del iniciándolos campos mas importantes a rellenar serian: Nombre (dado que es obligatorio), la gravedad ya sera util para clasificar como de grave sera el problema de nuestra maquina y la expresión (evalúa el valor de un ítem (métrica) y si se cumple una condición, dispara una alerta). Para este caso en concreto en el que la alerta aparecerá cuando la CPU supere el 80%, la configuración quedaría de la siguiente forma:
 
-![Trigger CPU](/images/Zabbix/trigger_CPU.PNG)
+![Trigger CPU](/assets/images/Zabbix/trigger_CPU.PNG)
 
 Para poner a prueba el trigger instalaremos el comando "stress" en nuestra maquina servidor. El comando stress lo que hará sera lanzar procesos que consumirán los recursos que se le vayan indicando como parámetro, en este caso la CPU.
 
@@ -178,7 +178,7 @@ stress --cpu 2 --timeout 60
 
 Una vez ejecutado el comando stress, volveremos al frontend de Zabbix y para comprobar si realmente funciona el trigger abrimos la opción Monitorización → Problemas. Si el trigger esta funcionando correctamente nos debería aparecer algo como esto:
 
-![Prueba CPU](/images/Zabbix/prueba_trigguer_CPU.PNG)
+![Prueba CPU](/assets/images/Zabbix/prueba_trigguer_CPU.PNG)
 
 *Nota: los datos que llegan del servidor tardar unos segundos en actualizarse en el frontend por lo que es posible que aunque el comando funcione, no aparezca el trigger inmediatamente*
 
