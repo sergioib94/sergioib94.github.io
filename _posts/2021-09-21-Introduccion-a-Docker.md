@@ -4,7 +4,7 @@ title: "Introducción a Docker"
 date: 2021-09-21T13:14:06+02:00
 categories: [Aplicaciones Web, Apuntes]
 excerpt: "Docker nos permite de forma sencilla crear contenedores ligeros y fáciles de mover donde ejecutar nuestras aplicaciones software sobre cualquier máquina con Docker instalado, independientemente del sistema operativo que la máquina tenga, facilitando así también los despliegues."
-card_image: /assets/assets/images/cards/docker-bg.jpg
+card_image: /assets/images/cards/docker-bg.jpg
 ---
 
 ### **¿Qué es Docker?** ###
