@@ -29,7 +29,7 @@ paginate_path: "/page:num/"
 author:
   name: "Sergio Ibáñez Núñez"
   avatar: "/assets/images/avatar.png"
-  bio: "Administrador de sistemas | Técnico de soporte IT | Monitorización"
+  bio: "Administrador de sistemas - Técnico de soporte IT - Monitorización"
   #location: "España"
   #links:
     #- label: "GitHub"
