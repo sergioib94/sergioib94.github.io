@@ -3,6 +3,7 @@ title: "Monitorización de servidores con Grafana"
 date: 2024-04-11T13:14:06+02:00
 categories: [Sistemas, Monitorización]
 excerpt: "Aprende a instalar, configurar y personalizar Grafana para la monitorización avanzada de servidores. Descubre cómo integrar Prometheus, crear dashboards interactivos y configurar alertas para una gestión eficiente de tu infraestructura."
+card_image: /assets/images/cards/grafana-bg.png
 ---
 
 ### **Requisitos previos** ###

@@ -3,6 +3,7 @@ title: "Instalación, configuración y monitorización usando Zabbix"
 date: 2025-05-01T13:19:00+02:00
 categories: [Sistemas, Monitorización]
 excerpt: "Este post describe paso a paso cómo instalar y configurar Zabbix 6.0 LTS en una máquina virtual con Debian 12. Está pensado para crear un entorno de prácticas de monitorización que incluya carga simulada, agentes remotos, monitorización de logs, SNMP y dashboards personalizados."
+card_image: /assets/images/cards/zabbix-bg.png
 ---
 
 ## **¿Que es Zabbix?** ##
