@@ -1,0 +1,719 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.27.3 by Michael Rose
+  Copyright 2013-2025 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="es-ES" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Cifrado Asimetrico GPG Y Openssl - Blog de Sergio Ibáñez</title>
+<meta name="description" content="En el siguiente post a traves de una serie de tareas se ira indicando como realizar un cifrado asimetrico haciendo uso de GPG y openssl.">
+
+
+  <meta name="author" content="Sergio Ibáñez Núñez">
+  
+  <meta property="article:author" content="Sergio Ibáñez Núñez">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="es_ES">
+<meta property="og:site_name" content="Blog de Sergio Ibáñez">
+<meta property="og:title" content="Cifrado Asimetrico GPG Y Openssl">
+<meta property="og:url" content="http://localhost:4000/_posts/2021-03-11-Cifrado-asimetrico-gpg-y-openssl.html">
+
+
+  <meta property="og:description" content="En el siguiente post a traves de una serie de tareas se ira indicando como realizar un cifrado asimetrico haciendo uso de GPG y openssl.">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2021-03-11T09:15:13+01:00">
+
+
+
+
+
+
+<link rel="canonical" href="http://localhost:4000/_posts/2021-03-11-Cifrado-asimetrico-gpg-y-openssl.html">
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Blog de Sergio Ibáñez Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single" dir="ltr">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          Blog de Sergio Ibáñez
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a
+                href="/"
+                
+                
+              >Inicio</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/posts/"
+                
+                
+              >Posts</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/categories/"
+                
+                
+              >Categorías</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/tags/"
+                
+                
+              >Etiquetas</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/search/"
+                
+                
+              >Buscar</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/about/"
+                
+                
+              >Sobre mí</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="http://localhost:4000/">
+        <img src="/assets/images/avatar.png" alt="Sergio Ibáñez Núñez" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="http://localhost:4000/" itemprop="url">Sergio Ibáñez Núñez</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>Técnico IT y entusiasta de la automatización</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Cifrado Asimetrico GPG Y Openssl">
+    <meta itemprop="description" content="En el siguiente post a traves de una serie de tareas se ira indicando como realizar un cifrado asimetrico haciendo uso de GPG y openssl.">
+    <meta itemprop="datePublished" content="2021-03-11T09:15:13+01:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">
+            <a href="http://localhost:4000/_posts/2021-03-11-Cifrado-asimetrico-gpg-y-openssl.html" itemprop="url">Cifrado Asimetrico GPG Y Openssl
+</a>
+          </h1>
+          
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <h3 id="tarea-1-generación-de-claves"><strong>Tarea 1: Generación de claves</strong></h3>
+
+<ul>
+  <li>Genera un par de claves (pública y privada). ¿En que directorio se guarda las claves de un usuario?</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gpg --gen-key
+</code></pre></div></div>
+
+<p>Se nos piden algunos datos como nombre y apellidos, correo y contraseña y una vez introducida la información, se ve que la clave se nos crea en un directorio oculto .gnupg</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>      gpg: clave CFCF1D130D5A52C5 marcada como de confianza absoluta
+      gpg: creado el directorio '/home/sergioib/.gnupg/openpgp-revocs.d'
+      gpg: certificado de revocación guardado como '/home/sergioib/.gnupg/openpgp-revocs.d/547D6FBDF49CD2340F1D5DB6CFCF1D130D5A52C5.rev'
+      claves pública y secreta creadas y firmadas.
+      pub   rsa3072 2020-10-06 [SC] [caduca: 2022-10-06]
+            547D6FBDF49CD2340F1D5DB6CFCF1D130D5A52C5
+      uid                      sergio ibañez &lt;sergio_hd_sony@hotmail.com&gt;
+      sub   rsa3072 2020-10-06 [E] [caduca: 2022-10-06]
+</code></pre></div></div>
+
+<ul>
+  <li>Lista las claves públicas que tienes en tu almacén de claves. Explica los distintos datos que nos muestra. ¿Cómo deberías haber generado las claves para indicar, por ejemplo, que tenga un 1 mes de validez?</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sergioib@debian:~$ gpg --list-key
+gpg: comprobando base de datos de confianza
+gpg: marginals needed: 3  completes needed: 1  trust model: pgp
+gpg: nivel: 0  validez:   1  firmada:   0  confianza: 0-, 0q, 0n, 0m, 0f, 1u
+gpg: siguiente comprobación de base de datos de confianza el: 2022-10-06
+/home/sergioib/.gnupg/pubring.kbx
+---------------------------------
+pub   rsa3072 2020-10-06 [SC] [caduca: 2022-10-06]
+      547D6FBDF49CD2340F1D5DB6CFCF1D130D5A52C5
+uid        [  absoluta ] sergio ibañez &lt;sergio_hd_sony@hotmail.com&gt;
+sub   rsa3072 2020-10-06 [E] [caduca: 2022-10-06]
+</code></pre></div></div>
+
+<p>Para que las claves durasen un mes se tendría que crear la clave ejecutando el comando gpg –full-generate-key indicando el tipo de clave deseada y la duración:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gpg (GnuPG) 2.2.12; Copyright (C) 2018 Free Software Foundation, Inc.
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+
+Por favor seleccione tipo de clave deseado:
+   (1) RSA y RSA (por defecto)
+   (2) DSA y ElGamal
+   (3) DSA (sólo firmar)
+   (4) RSA (sólo firmar)
+Su elección: 1
+las claves RSA pueden tener entre 1024 y 4096 bits de longitud.
+¿De qué tamaño quiere la clave? (3072) 4096
+El tamaño requerido es de 4096 bits
+Por favor, especifique el período de validez de la clave.
+         0 = la clave nunca caduca
+      &lt;n&gt;  = la clave caduca en n días
+      &lt;n&gt;w = la clave caduca en n semanas
+      &lt;n&gt;m = la clave caduca en n meses
+      &lt;n&gt;y = la clave caduca en n años
+¿Validez de la clave (0)? 1m
+La clave caduca lun 09 nov 2020 09:53:39 CET
+¿Es correcto? (s/n) s
+
+GnuPG debe construir un ID de usuario para identificar su clave.
+
+Nombre y apellidos: sergio iabañez
+Dirección de correo electrónico: sergio_hd_sony@hotmail.com
+Comentario: 
+Está usando el juego de caracteres 'utf-8'.
+Ha seleccionado este ID de usuario:
+    "sergio iabañez &lt;sergio_hd_sony@hotmail.com&gt;"
+
+¿Cambia (N)ombre, (C)omentario, (D)irección o (V)ale/(S)alir? v
+Es necesario generar muchos bytes aleatorios. Es una buena idea realizar
+alguna otra tarea (trabajar en otra ventana/consola, mover el ratón, usar
+la red y los discos) durante la generación de números primos. Esto da al
+generador de números aleatorios mayor oportunidad de recoger suficiente
+entropía.
+Es necesario generar muchos bytes aleatorios. Es una buena idea realizar
+alguna otra tarea (trabajar en otra ventana/consola, mover el ratón, usar
+la red y los discos) durante la generación de números primos. Esto da al
+generador de números aleatorios mayor oportunidad de recoger suficiente
+entropía.
+gpg: clave D370C4C1866F1A64 marcada como de confianza absoluta
+gpg: certificado de revocación guardado como '/home/sergioib/.gnupg/openpgp-revocs.d/AE3976FA2F04BE111FC7FDFDD370C4C1866F1A64.rev'
+claves pública y secreta creadas y firmadas.
+
+pub   rsa4096 2020-10-11 [SC] [caduca: 2020-11-10]
+      AE3976FA2F04BE111FC7FDFDD370C4C1866F1A64
+uid                      sergio iabañez &lt;sergio_hd_sony@hotmail.com&gt;
+sub   rsa4096 2020-10-11 [E] [caduca: 2020-11-10]
+</code></pre></div></div>
+
+<ul>
+  <li>Lista las claves privadas de tu almacén de claves.</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sergioib@debian:~$ gpg --list-secret-keys
+gpg: comprobando base de datos de confianza
+gpg: marginals needed: 3  completes needed: 1  trust model: pgp
+gpg: nivel: 0  validez:   3  firmada:   0  confianza: 0-, 0q, 0n, 0m, 0f, 3u
+gpg: siguiente comprobación de base de datos de confianza el: 2020-11-10
+/home/sergioib/.gnupg/pubring.kbx
+---------------------------------
+sec   rsa3072 2020-10-06 [SC] [caduca: 2022-10-06]
+      547D6FBDF49CD2340F1D5DB6CFCF1D130D5A52C5
+uid        [  absoluta ] sergio ibañez &lt;sergio_hd_sony@hotmail.com&gt;
+ssb   rsa3072 2020-10-06 [E] [caduca: 2022-10-06]
+
+sec   rsa4096 2020-10-11 [SC] [caduca: 2020-11-10]
+      AE3976FA2F04BE111FC7FDFDD370C4C1866F1A64
+uid        [  absoluta ] sergio iabañez &lt;sergio_hd_sony@hotmail.com&gt;
+ssb   rsa4096 2020-10-11 [E] [caduca: 2020-11-10]
+</code></pre></div></div>
+
+<h3 id="tarea-2-importar--exportar-clave-pública"><strong>Tarea 2: Importar / exportar clave pública</strong></h3>
+
+<ul>
+  <li>Exporta tu clave pública en formato ASCII y guardalo en un archivo nombre_apellido.asc y envíalo al compañero con el que vas a hacer esta práctica.</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sergioib@debian:~$ gpg --export -a sergio ibañez &gt; sergio_ibañez.asc
+</code></pre></div></div>
+
+<ul>
+  <li>Importa las claves públicas recibidas de vuestro compañero.</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sergioib@debian:~$ gpg --import /home/sergioib/Descargas/Juan_Antonio_Reifs.asc 
+gpg: clave 4263921B50A28F3C: clave pública "Juan Antonio Reifs &lt;initiategnat9@gmail.com&gt;" importada
+gpg: Cantidad total procesada: 1
+gpg:              importadas: 1
+</code></pre></div></div>
+
+<ul>
+  <li>Comprueba que las claves se han incluido correctamente en vuestro keyring.</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ssergioib@debian:~$ gpg --list-keys
+/home/sergioib/.gnupg/pubring.kbx
+---------------------------------
+pub   rsa3072 2020-10-06 [SC] [caduca: 2022-10-06]
+      547D6FBDF49CD2340F1D5DB6CFCF1D130D5A52C5
+uid        [  absoluta ] sergio ibañez &lt;sergio_hd_sony@hotmail.com&gt;
+sub   rsa3072 2020-10-06 [E] [caduca: 2022-10-06]
+
+sec   rsa4096 2020-10-11 [SC] [caduca: 2020-11-10]
+      AE3976FA2F04BE111FC7FDFDD370C4C1866F1A64
+uid        [  absoluta ] sergio iabañez &lt;sergio_hd_sony@hotmail.com&gt;
+ssb   rsa4096 2020-10-11 [E] [caduca: 2020-11-10]
+
+pub   rsa3072 2020-10-07 [SC] [caduca: 2022-10-07]
+      5E5C8311F16A66DDEA19682B4263921B50A28F3C
+uid        [desconocida] Juan Antonio Reifs &lt;initiategnat9@gmail.com&gt;
+sub   rsa3072 2020-10-07 [E] [caduca: 2022-10-07]
+</code></pre></div></div>
+
+<h3 id="tarea-3-cifrado-asimétrico-con-claves-públicas"><strong>Tarea 3: Cifrado asimétrico con claves públicas</strong></h3>
+
+<ul>
+  <li>Cifraremos un archivo cualquiera y lo remitiremos por email a uno de nuestros compañeros que nos proporcionó su clave pública.</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sergioib@debian:~$ gpg -e -u "sergio ibañez" -r "Juan Antonio Reifs" ficheroprueba 
+gpg: 30EF1E1A3CD0955C: No hay seguridad de que esta clave pertenezca realmente
+al usuario que se nombra
+
+sub  rsa3072/30EF1E1A3CD0955C 2020-10-07 Juan Antonio Reifs &lt;initiategnat9@gmail.com&gt;
+ Huella clave primaria: 51FB 86E1 DD5E D7C4 B50D  AC37 DBD6 9ECD 888B D164
+      Huella de subclave: EFE3 F3FA EDC7 04AB 1B15  BB58 30EF 1E1A 3CD0 955C
+
+No es seguro que la clave pertenezca a la persona que se nombra en el
+identificador de usuario. Si *realmente* sabe lo que está haciendo,
+puede contestar sí a la siguiente pregunta.
+
+¿Usar esta clave de todas formas? (s/N) s
+</code></pre></div></div>
+
+<ul>
+  <li>Nuestro compañero, a su vez, nos remitirá un archivo cifrado para que nosotros lo descifremos.</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sergioib@debian:~$ ls -l Descargas/ | grep .gpg
+-rw-r--r-- 1 sergioib sergioib        505 oct  7 18:23 texto_cifrado.gpg
+</code></pre></div></div>
+
+<ul>
+  <li>Tanto nosotros como nuestro compañero comprobaremos que hemos podido descifrar los mensajes recibidos respectivamente.</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sergioib@debian:~$ gpg -d texto_cifrado.gpg
+gpg: cifrado con clave de 3072 bits RSA, ID 1D736BA23965AD7C, creada el 2020-10-06
+      "sergio ibañez &lt;sergio_hd_sony@hotmail.com&gt;"
+Esto es un mensaje de prueba
+</code></pre></div></div>
+
+<ul>
+  <li>Por último, enviaremos el documento cifrado a alguien que no estaba en la lista de destinatarios y comprobaremos que este usuario no podrá descifrar este archivo.</li>
+</ul>
+
+<p>En este caso mi compañero (Manuel Lora) me mando un “fichero” o en este caso un paquete cifrado para que intentase descifrarlo, pero al no tener yo su clave publica, se ve que no es posible y da error.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sergioib@debian:~$ gpg -d atom-amd64.deb.gpg
+gpg: cifrado con clave RSA, ID 85F2ABD7882FE7F6
+gpg: descifrado fallido: No secret key
+</code></pre></div></div>
+
+<ul>
+  <li>Para terminar, indica los comandos necesarios para borrar las claves públicas y privadas que posees.</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sergioib@debian:~$ gpg --delete-key Juan Antonio Reifs
+gpg (GnuPG) 2.2.12; Copyright (C) 2018 Free Software Foundation, Inc.
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+
+
+pub  rsa3072/DBD69ECD888BD164 2020-10-07 Juan Antonio Reifs &lt;initiategnat9@gmail.com&gt;
+
+¿Eliminar esta clave del anillo? (s/N) s
+
+pub  rsa4096/A909D4476EB509BD 2020-10-07 Juan Antonio Reifs ("Esta clave caduca el mes que viene") &lt;initiategnat9@gmail.com&gt;
+
+¿Eliminar esta clave del anillo? (s/N) s
+gpg: clave "Reifs" no encontrada: Not found
+gpg: Reifs: delete key failed: Not found
+</code></pre></div></div>
+
+<h3 id="tarea-4-exportar-clave-a-un-servidor-público-de-claves-pgp"><strong>Tarea 4: Exportar clave a un servidor público de claves PGP</strong></h3>
+
+<ul>
+  <li>Genera la clave de revocación de tu clave pública para utilizarla en caso de que haya problemas.</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sergioib@debian:~$ gpg --gen-revoke "sergio ibañez"
+
+sec rsa3072/CFCF1D130D5A52C5 2020-10-06 sergio ibañez &lt;sergio_hd_sony@hotmail.com&gt;
+
+¿Crear un certificado de revocación para esta clave? (s/N) s
+Por favor elija una razón para la revocación:
+  0 = No se dio ninguna razón
+  1 = La clave ha sido comprometida
+  2 = La clave ha sido reemplazada
+  3 = La clave ya no está en uso
+  Q = Cancelar
+(Probablemente quería seleccionar 1 aquí)
+¿Su decisión? 0
+Introduzca una descripción opcional; acábela con una línea vacía:
+&gt; 
+Razón para la revocación: No se dio ninguna razón
+(No se dió descripción)
+¿Es correcto? (s/N) s
+se fuerza salida con armadura ASCII.
+-----BEGIN PGP PUBLIC KEY BLOCK-----
+Comment: This is a revocation certificate
+
+iQG2BCABCgAgFiEEVH1vvfSc0jQPHV22z88dEw1aUsUFAl9+64wCHQAACgkQz88d
+Ew1aUsU10wv6A/Qlgxu0/BUeunkM2aDgDpeKkqruIUt3Eq6EoX77efu1tmSxb6+w
+2Ry5lhBJrL3024xe3Zl1V6Bg2DOgFiCLNdo/7UPhxdHTOyoLnf6qcQ0Bnww1m3ZL
+YAaI2b7F4Z/20mid4toBiSuuKKdoS3BuIsQsosZRxOfhO2Evh/KDeWxrXme4Rfxz
+JSJRd5CsdMsnR/16+SJzWD4HKGF6t/2hpjxuv/weciqIR2PTC+d2kBfH7Z+da391
+ZGakyR7Cp50AIRHrGSGwqlxDTZKrO9Y1nszivlnkn6mIJ5sWmDoIRQNeCZBE4q7c
+ue2CNaAGKlxpoT7vrY7owU4/1E1pTBMUr6iAAFLGefgMxOGUDxJ3x4OrI5oWF87k
+OE4rCU8spXC22w/TS630bQVOIwFP7E77mUfcyL7riQJ+Tc7En35Jtgd/f88iRWzx
+9amJlhDKq4+QrrVwfPhp1siynUDRaybBzyQRBm0pZT9sqx1QHNYj+G9vNRBYk4vH
+mJxiOAPtqpDv
+=9kmu
+-----END PGP PUBLIC KEY BLOCK-----
+Certificado de revocación creado.
+
+Por favor consérvelo en un medio que pueda esconder; si alguien consigue
+acceso a este certificado puede usarlo para inutilizar su clave.
+Es inteligente imprimir este certificado y guardarlo en otro lugar, por
+si acaso su medio resulta imposible de leer. Pero precaución: ¡el sistema
+de impresión de su máquina podría almacenar los datos y hacerlos accesibles
+a otras personas!
+</code></pre></div></div>
+
+<ul>
+  <li>Exporta tu clave pública al servidor pgp.rediris.es</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sergioib@debian:~$ gpg --keyserver pgp.rediris.es --send-key 547D6FBDF49CD2340F1D5DB6CFCF1D130D5A52C5
+gpg: enviando clave CFCF1D130D5A52C5 a hkp://pgp.rediris.es
+</code></pre></div></div>
+
+<ul>
+  <li>Borra la clave pública de alguno de tus compañeros de clase e impórtala ahora del servidor público de rediris.</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gpg --delete-key Juan Antonio Reifs
+</code></pre></div></div>
+
+<p>Una vez borrada tendremos que importarla pero para ello sera necesario ir a pgp.rediris.es y buscarla ya que para importarla en nuestro equipo tendremos que saber la ID de la clave, en el caso de mi compañero es D1DFA955. Una vez que sabemos su ID la importamos de la siguiente forma:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sergioib@debian:~$ gpg --keyserver pgp.rediris.es --recv-key D1DFA955
+gpg: clave B07FA892D1DFA955: clave pública "Juan Antonio Reifs &lt;initiategnat9@gmail.com&gt;" importada
+gpg: Cantidad total procesada: 1
+gpg:               importadas: 1
+</code></pre></div></div>
+
+<h3 id="tarea-5-cifrado-asimétrico-con-openssl"><strong>Tarea 5: Cifrado asimétrico con openssl</strong></h3>
+
+<ul>
+  <li>Genera un par de claves (pública y privada).</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sergioib@debian:~$ openssl genrsa -out clave.pem 4096
+Generating RSA private key, 4096 bit long modulus (2 primes)
+..............................................................................................................................................................................................................................++++
+.............................................................++++
+e is 65537 (0x010001))
+</code></pre></div></div>
+
+<p>Al igual que gpg con openssl genrsa crearemos el par de clave, para poder enviar la clave publica extraeremos la clave publica del fichero de la siguiente forma.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sergioib@debian:~$ openssl rsa -in clave.pem -out clve.pub.pem
+writing RSA key
+</code></pre></div></div>
+
+<ul>
+  <li>Utilizando la clave pública cifra un fichero de texto y envíalo a tu compañero.</li>
+</ul>
+
+<p>Lo primero sera crear un fichero para encriptar, en este caso openssl.txt y usando la clave publica extraída anteriormente ciframos el fichero como fichero.enc.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sergioib@debian:~$ openssl rsautl -encrypt -in openssl.txt -out fichero.enc -inkey clve.pub.pem
+</code></pre></div></div>
+
+<p>Si se intenta leer el fichero encriptado vemos que no se puede.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sergioib@debian:~$ cat fichero.enc 
+,���	_�F�,�Y�ۖ/B�|^&amp;C��ys�Qbp�0���DfZ��#��Yo
+                                             _���U}s��
+                                                      ���〗�)d���
+��R#�/�Z=�7�Ha�r��K�Q:�Vҧ܆	!��k�9H��
+                                         ��I�ɩ��oQLR�����F���shbg5�&gt;��O�L/�kҬ�xQ��*����C#P:��)�^��誻��k�/gګ��cdAX��&lt;iu|����s��&gt;/��$�������LMl�Y澇v��k�RN����S��9kYgB��5��s�����+ί���Scө��ƌ:��^&lt;�0։���AY�3��hKG�50E�ܺ4h�
+   �w'yUm
+?+D�C��G�&amp;3d������$��+�4W��z]:-�i$�ȭ$��ʘ�F�:�[�l0�-�k��ɛ#6$�V���o���*�8����O��@��s�)�����~@�Z��%�Щwǒ	�"��	��-��8Ϥ�M
+</code></pre></div></div>
+
+<ul>
+  <li>Tu compañero te ha mandado un fichero cifrado, muestra el proceso para el descifrado.</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>openssl rsautl -decrypt -inkey clve.pub.pem -in fichero.enc -out desen.txt
+</code></pre></div></div>
+
+<p>En este caso a la hora de descifrarlo, el compañero usa la clave publica nuestra que debe tener y extrae el contenido del fichero cifrado en un nuevo fichero.txt en el que el mensaje ya puede leerse.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sergioib@debian:~$ cat desen.txt
+se ha podido descifrar
+</code></pre></div></div>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/categories/#seguridad" class="page__taxonomy-item p-category" rel="tag">Seguridad</a>
+    
+    </span>
+  </p>
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2021-03-11T09:15:13+01:00">March 11, 2021</time></p>
+
+      </footer>
+
+      
+
+      
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+
+      
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">&copy; 2025 <a href="http://localhost:4000">Blog de Sergio Ibáñez</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

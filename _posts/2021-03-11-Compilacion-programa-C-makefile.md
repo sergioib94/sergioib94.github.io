@@ -1,5 +1,4 @@
 ---
-layout: post
 title: "Compilacion programa C con Makefile"
 date: 2021-03-11T16:10:39+01:00
 categories: [Sistemas]

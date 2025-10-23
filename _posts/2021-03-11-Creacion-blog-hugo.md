@@ -1,5 +1,4 @@
 ---
-layout: post
 title: "Creacion blog Hugo"
 date: 2021-03-11T08:07:44+01:00
 categories: [Aplicaciones Web]

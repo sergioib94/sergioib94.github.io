@@ -1,5 +1,4 @@
 ---
-layout: post
 title: "Rendimiento de servidor Web con Varnish"
 date: 2021-03-12T18:53:19+01:00
 categories: [Servicios]

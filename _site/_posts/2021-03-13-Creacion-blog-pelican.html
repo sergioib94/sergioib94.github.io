@@ -1,0 +1,479 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.27.3 by Michael Rose
+  Copyright 2013-2025 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="es-ES" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Creacion blog Pelican - Blog de Sergio Ibáñez</title>
+<meta name="description" content="En este post se indicara como realizar la instalacion y configuracion de pelican para crear un blog.">
+
+
+  <meta name="author" content="Sergio Ibáñez Núñez">
+  
+  <meta property="article:author" content="Sergio Ibáñez Núñez">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="es_ES">
+<meta property="og:site_name" content="Blog de Sergio Ibáñez">
+<meta property="og:title" content="Creacion blog Pelican">
+<meta property="og:url" content="http://localhost:4000/_posts/2021-03-13-Creacion-blog-pelican.html">
+
+
+  <meta property="og:description" content="En este post se indicara como realizar la instalacion y configuracion de pelican para crear un blog.">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2021-03-13T22:18:18+01:00">
+
+
+
+
+
+
+<link rel="canonical" href="http://localhost:4000/_posts/2021-03-13-Creacion-blog-pelican.html">
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Blog de Sergio Ibáñez Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single" dir="ltr">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          Blog de Sergio Ibáñez
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a
+                href="/"
+                
+                
+              >Inicio</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/posts/"
+                
+                
+              >Posts</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/categories/"
+                
+                
+              >Categorías</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/tags/"
+                
+                
+              >Etiquetas</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/search/"
+                
+                
+              >Buscar</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/about/"
+                
+                
+              >Sobre mí</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="http://localhost:4000/">
+        <img src="/assets/images/avatar.png" alt="Sergio Ibáñez Núñez" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="http://localhost:4000/" itemprop="url">Sergio Ibáñez Núñez</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>Técnico IT y entusiasta de la automatización</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Creacion blog Pelican">
+    <meta itemprop="description" content="En este post se indicara como realizar la instalacion y configuracion de pelican para crear un blog.">
+    <meta itemprop="datePublished" content="2021-03-13T22:18:18+01:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">
+            <a href="http://localhost:4000/_posts/2021-03-13-Creacion-blog-pelican.html" itemprop="url">Creacion blog Pelican
+</a>
+          </h1>
+          
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <h3 id="instalacion-de-pelican"><strong>Instalacion de Pelican</strong></h3>
+
+<p>Para poder instalar este gestor de paginas web, ejecutamos apt install pelican y una vez instalado ejecutamos apt install markdown, que es el idioma en el que se escribirán los artículos del blog. Una vez instalados pelican y markdown en nuestro entorno de desarrollo (nuestra máquina) estará listo para usarse.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>apt install pelican
+apt install markdown
+</code></pre></div></div>
+
+<h3 id="configuracion-de-un-sitio-web"><strong>Configuracion de un sitio web</strong></h3>
+
+<p>Para comenzar la configuracion de nuestro sitio web, lo primero sera ejecutar el comando pelican-quickstart donde empezaran a salir preguntas sobre la configuracion que deberan responderse:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>* Where do you want to create your new web site? [.] /home/sergioib/Pelican/Proyecto2
+
+Indicamos donde se van a generar los los archivos una vez que nuestro sitio web se genere.
+
+* What will be the title of this web site? primer proyecto
+
+Le damos un nombre a nuestro sitio web. El nombre en principio no importa demasiado ya que mas adelante, al igual que otros parametros podra modificarse en pelicanconfig.py
+
+* Who will be the author of this web site? Sergio Ibañez
+
+Indicamos el nombre del autor del sitio, es decir de la persona que crea el sitio, no es lo mismo que el autor de los artículos ya que un autor puede tener varios autores.
+
+* What will be the default language of this web site? [es] es
+
+Indicamos el idioma por defecto de nuestro sitio web en formato ISO-639-1, en mi caso "es" de español.
+
+* Do you want to specify a URL prefix? e.g., https://example.com   (Y/n) y
+
+Indicamos si queremos generar una URL como prefijo de nuestra web
+
+* What is your URL prefix? (see above example; no trailing slash) http://www.proyecto2.com
+
+En el caso de haber indicado en la opcion anterior que si, indicamos la URL que tendra nuestro sitio.
+
+* Do you want to enable article pagination? (Y/n) y
+
+Habilitamos la paginación de artículos (esto solo es necesario si se van ha crear varios articulos)
+
+* How many articles per page do you want? [10] 10
+
+Si la opcion anterior la hemos habilitado, indicamos el numero de articulos que apareceran por pagina
+
+* What is your time zone? [Europe/Paris] Europe/Madrid
+
+Indicamos la zona horaria
+
+* Do you want to generate a tasks.py/Makefile to automate generation and publishing? (Y/n) y
+</code></pre></div></div>
+
+<p>Indicamos si queremos que se generen un archivo markfile y un tasks.py. Esta opcion es muy util habilitarla ya que mas adelante es la opcion que nos permitira automatizar las tareas de creacion y administracion de nuestro sitio.</p>
+
+<p>Por ultimo dependiendo de donde vayamos a subir nuestra pagina para desplegarla posteriormente se indicara o no alguna de las siguientes opciones:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>* Do you want to upload your website using FTP? (y/N) n
+
+Si deseamos subir nuestro sitio web usando FTP
+
++ Do you want to upload your website using SSH? (y/N) n
+
+Si deseamos subir nuestro sitio web usando SSH
+
+* Do you want to upload your website using Dropbox? (y/N) n
+
+Si deseamos subir nuestro sitio web usando dropbox
+
+* Do you want to upload your website using S3? (y/N) n
+
+Si deseamos subirlo usando S3
+
+* Do you want to upload your website using Rackspace Cloud Files? (y/N) n
+
+Si deseamos subirlo usando Rockspace Cloud Files
+
+* Do you want to upload your website using GitHub Pages? (y/N) y
+
+Si deseamos subirlo usando Github
+
+* Is this your personal page (username.github.io)? (y/N) n
+</code></pre></div></div>
+
+<p>Por ultimo si elegios subir la pagina a github, nos preguntaran si username.github.io es nuestra pagina principal, en el caso de serlohabra que indicar yes.</p>
+
+<p>En mi caso elegi Github ya que mas adelante se usara Netlify que cogera el repositorio github de nuestro sitio web y lo desplegará.</p>
+
+<h3 id="configurando-el-generador-para-hacer-cambios"><strong>Configurando el generador para hacer cambios</strong></h3>
+
+<p>Hay varias configuracione que podemos hacer en el fichero pelicanconf.py y que os pueden ser utiles a la hora de configurar nuestro sitio, como pueden ser por ejemplo el cambio de nombre de nuestro sitio web o por ejemplo cambiar el tema que usara nuestro sitio.</p>
+
+<h3 id="cambiando-el-nombre-de-nuestro-sitio-web"><strong>Cambiando el nombre de nuestro sitio web</strong></h3>
+
+<p>Para ello simplemente en el fichero pelicanconf.py editamos la opcion SINTENAME.</p>
+
+<h3 id="cambio-de-tema"><strong>Cambio de tema</strong></h3>
+
+<p>lo primero sera conseguir un tema que nos guste, esto se podra hacer de dos formas:</p>
+
+<ul>
+  <li>Ejecutando el comando pelican-themes -i. Ej:</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pelican-themes -i https://github.com/arulrajnet/Attila.git
+</code></pre></div></div>
+
+<p>o bien clonando un repositorio github donde esta el tema.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git clone https://github.com/alexandrevicenzi/Flex.git
+</code></pre></div></div>
+
+<p>Una vez descargado el tema, se comprueba que lo tenemos instalado en pelican ejecutando pelican-theme -l. Cuando ya se tenga el tema, se configurarara el fichero pelicanconf.py, creamos un apartado llamado “Theme” indicandole la ruta donde tenemos almacenada el tema usado, por defecto, estos temas se almacenan en /usr/lib/python3/dist-packages/pelican/themes.</p>
+
+<p><img src="/images/blog-pelican/pelican_inicio.png" alt="inicio pelican" /></p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/categories/#aplicaciones-web" class="page__taxonomy-item p-category" rel="tag">Aplicaciones Web</a>
+    
+    </span>
+  </p>
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2021-03-13T22:18:18+01:00">March 13, 2021</time></p>
+
+      </footer>
+
+      
+
+      
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+
+      
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">&copy; 2025 <a href="http://localhost:4000">Blog de Sergio Ibáñez</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

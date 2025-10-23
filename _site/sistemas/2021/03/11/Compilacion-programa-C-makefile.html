@@ -1,0 +1,816 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.27.3 by Michael Rose
+  Copyright 2013-2025 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="es-ES" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Compilacion programa C con Makefile - Blog de Sergio Ibáñez</title>
+<meta name="description" content="En este post a modo de aprendizaje para aprender mas sobre debian y su paqueteria se va a proceder a la compilacion de un paquete escrito en C, en este caso el paquete less para posteriormente ser capaces de compilar nuestro sistema operativo.">
+
+
+  <meta name="author" content="Sergio Ibáñez Núñez">
+  
+  <meta property="article:author" content="Sergio Ibáñez Núñez">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="es_ES">
+<meta property="og:site_name" content="Blog de Sergio Ibáñez">
+<meta property="og:title" content="Compilacion programa C con Makefile">
+<meta property="og:url" content="http://localhost:4000/sistemas/2021/03/11/Compilacion-programa-C-makefile.html">
+
+
+  <meta property="og:description" content="En este post a modo de aprendizaje para aprender mas sobre debian y su paqueteria se va a proceder a la compilacion de un paquete escrito en C, en este caso el paquete less para posteriormente ser capaces de compilar nuestro sistema operativo.">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2021-03-11T16:10:39+01:00">
+
+
+
+
+
+
+<link rel="canonical" href="http://localhost:4000/sistemas/2021/03/11/Compilacion-programa-C-makefile.html">
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Blog de Sergio Ibáñez Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single wide" dir="ltr">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          Blog de Sergio Ibáñez
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a
+                href="/"
+                
+                
+              >Inicio</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/posts/"
+                
+                
+              >Posts</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/categories/"
+                
+                
+              >Categorías</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/tags/"
+                
+                
+              >Etiquetas</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/search/"
+                
+                
+              >Buscar</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/about/"
+                
+                
+              >Sobre mí</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Compilacion programa C con Makefile">
+    <meta itemprop="description" content="En este post a modo de aprendizaje para aprender mas sobre debian y su paqueteria se va a proceder a la compilacion de un paquete escrito en C, en este caso el paquete less para posteriormente ser capaces de compilar nuestro sistema operativo.">
+    <meta itemprop="datePublished" content="2021-03-11T16:10:39+01:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">
+            <a href="http://localhost:4000/sistemas/2021/03/11/Compilacion-programa-C-makefile.html" itemprop="url">Compilacion programa C con Makefile
+</a>
+          </h1>
+          
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2021-03-11T16:10:39+01:00">March 11, 2021</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          7 minute read
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <h2 id="introduccion"><strong>Introduccion</strong></h2>
+
+<p>En este post a modo de aprendizaje para aprender mas sobre debian y su paqueteria se va a proceder a la compilacion de un paquete escrito en C, en este caso el paquete less para posteriormente ser capaces de compilar nuestro sistema operativo.</p>
+
+<h3 id="compilacion-paquete-less"><strong>Compilacion paquete less</strong></h3>
+
+<p>Para dicha compilacion empezaremos ejecutando el siguiente comando para tener el código fuente del paquete que vamos a compilar que en este caso a modo de prueba se compilara el paquete less.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>apt source less
+</code></pre></div></div>
+
+<p>Una vez que se tengamos el código en nuestra maquina, lo siguiente sera descomprimirlo ejecutando el comando tar.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>tar xvzf less_487.orig.tar.gz
+</code></pre></div></div>
+
+<p>Dentro del directorio less ejecutamos ./configure para comprobar si el paquete esta bien configurado para el sistema. Salida de ejecución  de ./configure:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vagrant@compilacion:~/less$ ./configure 
+checking for gcc... gcc
+checking whether the C compiler works... yes
+checking for C compiler default output file name... a.out
+checking for suffix of executables... 
+checking whether we are cross compiling... no
+checking for suffix of object files... o
+checking whether we are using the GNU C compiler... yes
+checking whether gcc accepts -g... yes
+checking for gcc option to accept ISO C89... none needed
+checking for library containing strerror... none required
+checking how to run the C preprocessor... gcc -E
+checking for grep that handles long lines and -e... /usr/bin/grep
+checking for egrep... /usr/bin/grep -E
+checking whether gcc needs -traditional... no
+checking for a BSD-compatible install... /usr/bin/install -c
+checking for special C compiler options needed for large files... no
+checking for _FILE_OFFSET_BITS value needed for large files... no
+checking for tgoto in -ltinfo... no
+checking for initscr in -lxcurses... no
+checking for initscr in -lncursesw... no
+checking for initscr in -lncurses... no
+checking for initscr in -lcurses... no
+checking for tgetent in -ltermcap... no
+checking for tgetent in -ltermlib... no
+checking for library containing regcmp... no
+checking for working terminal libraries... Cannot find terminal libraries - configure failed
+</code></pre></div></div>
+
+<p>./configure nos da un error ya que faltan librerías que deben ser instaladas para que el paquete pueda compilarse. Instalamos la librería necesaria en el sistema, que en este caso es libtinfo-dev.. Una vez instala la libreria la salida de ./configure sera la siguiente:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vagrant@compilacion:~/less$ ./configure 
+checking for gcc... gcc
+checking whether the C compiler works... yes
+checking for C compiler default output file name... a.out
+checking for suffix of executables... 
+checking whether we are cross compiling... no
+checking for suffix of object files... o
+checking whether we are using the GNU C compiler... yes
+checking whether gcc accepts -g... yes
+checking for gcc option to accept ISO C89... none needed
+checking for library containing strerror... none required
+checking how to run the C preprocessor... gcc -E
+checking for grep that handles long lines and -e... /usr/bin/grep
+checking for egrep... /usr/bin/grep -E
+checking whether gcc needs -traditional... no
+checking for a BSD-compatible install... /usr/bin/install -c
+checking for special C compiler options needed for large files... no
+checking for _FILE_OFFSET_BITS value needed for large files... no
+checking for tgoto in -ltinfo... yes
+checking for initscr in -lxcurses... no
+checking for initscr in -lncursesw... yes
+checking for initscr in -lncurses... yes
+checking for initscr in -lcurses... yes
+checking for tgetent in -ltermcap... yes
+checking for tgetent in -ltermlib... no
+checking for library containing regcmp... no
+checking for working terminal libraries... using -ltinfo
+checking for ANSI C header files... yes
+checking for sys/types.h... yes
+checking for sys/stat.h... yes
+checking for stdlib.h... yes
+checking for string.h... yes
+checking for memory.h... yes
+checking for strings.h... yes
+checking for inttypes.h... yes
+checking for stdint.h... yes
+checking for unistd.h... yes
+checking ctype.h usability... yes
+checking ctype.h presence... yes
+checking for ctype.h... yes
+checking errno.h usability... yes
+checking errno.h presence... yes
+checking for errno.h... yes
+checking fcntl.h usability... yes
+checking fcntl.h presence... yes
+checking for fcntl.h... yes
+checking limits.h usability... yes
+checking limits.h presence... yes
+checking for limits.h... yes
+checking stdio.h usability... yes
+checking stdio.h presence... yes
+checking for stdio.h... yes
+checking for stdlib.h... (cached) yes
+checking for string.h... (cached) yes
+checking termcap.h usability... yes
+checking termcap.h presence... yes
+checking for termcap.h... yes
+checking termio.h usability... yes
+checking termio.h presence... yes
+checking for termio.h... yes
+checking termios.h usability... yes
+checking termios.h presence... yes
+checking for termios.h... yes
+checking time.h usability... yes
+checking time.h presence... yes
+checking for time.h... yes
+checking for unistd.h... (cached) yes
+checking values.h usability... yes
+checking values.h presence... yes
+checking for values.h... yes
+checking sys/ioctl.h usability... yes
+checking sys/ioctl.h presence... yes
+checking for sys/ioctl.h... yes
+checking sys/stream.h usability... no
+checking sys/stream.h presence... no
+checking for sys/stream.h... no
+checking wctype.h usability... yes
+checking wctype.h presence... yes
+checking for wctype.h... yes
+checking whether stat file-mode macros are broken... no
+checking for an ANSI C-conforming const... yes
+checking for off_t... yes
+checking for size_t... yes
+checking whether time.h and sys/time.h may both be included... yes
+checking for off_t... (cached) yes
+checking for void... yes
+checking for const... yes
+checking for time_t... yes
+checking for st_ino in struct stat... yes
+checking return type of signal handlers... void
+checking for fsync... yes
+checking for popen... yes
+checking for _setjmp... yes
+checking for sigprocmask... yes
+checking for sigsetmask... yes
+checking for snprintf... yes
+checking for stat... yes
+checking for system... yes
+checking for fchmod... yes
+checking for memcpy... yes
+checking for strchr... yes
+checking for strstr... yes
+checking for tcgetattr... yes
+checking for fileno... yes
+checking for strerror... yes
+checking for sys_errlist... yes
+checking for sigset_t... yes
+checking for sigemptyset... yes
+checking for errno... yes - in errno.h
+checking for locale... yes
+checking for ctype functions... yes
+checking for wctype functions... yes
+checking termcap for ospeed... yes - in termcap.h
+checking for floating point... yes
+checking for POSIX regcomp... yes
+regular expression library:  posix
+configure: creating ./config.status
+config.status: creating Makefile
+config.status: creating defines.h
+</code></pre></div></div>
+
+<p>Ya configurado el paquete, se podrá ejecutar make primero y después make install. Con make comenzamos la compilación:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vagrant@compilacion:~/less$ make
+test ! -f stamp-h || CONFIG_FILES= CONFIG_HEADERS=defines.h ./config.status
+touch stamp-h
+gcc -I. -c -DBINDIR=\"/usr/local/bin\" -DSYSDIR=\"/usr/local/etc\"  -g -O2 main.c
+gcc -I. -c -DBINDIR=\"/usr/local/bin\" -DSYSDIR=\"/usr/local/etc\"  -g -O2 screen.c
+gcc -I. -c -DBINDIR=\"/usr/local/bin\" -DSYSDIR=\"/usr/local/etc\"  -g -O2 brac.c
+gcc -I. -c -DBINDIR=\"/usr/local/bin\" -DSYSDIR=\"/usr/local/etc\"  -g -O2 ch.c
+gcc -I. -c -DBINDIR=\"/usr/local/bin\" -DSYSDIR=\"/usr/local/etc\"  -g -O2 charset.c
+gcc -I. -c -DBINDIR=\"/usr/local/bin\" -DSYSDIR=\"/usr/local/etc\"  -g -O2 cmdbuf.c
+gcc -I. -c -DBINDIR=\"/usr/local/bin\" -DSYSDIR=\"/usr/local/etc\"  -g -O2 command.c
+gcc -I. -c -DBINDIR=\"/usr/local/bin\" -DSYSDIR=\"/usr/local/etc\"  -g -O2 cvt.c
+gcc -I. -c -DBINDIR=\"/usr/local/bin\" -DSYSDIR=\"/usr/local/etc\"  -g -O2 decode.c
+gcc -I. -c -DBINDIR=\"/usr/local/bin\" -DSYSDIR=\"/usr/local/etc\"  -g -O2 edit.c
+gcc -I. -c -DBINDIR=\"/usr/local/bin\" -DSYSDIR=\"/usr/local/etc\"  -g -O2 filename.c
+gcc -I. -c -DBINDIR=\"/usr/local/bin\" -DSYSDIR=\"/usr/local/etc\"  -g -O2 forwback.c
+gcc -I. -c -DBINDIR=\"/usr/local/bin\" -DSYSDIR=\"/usr/local/etc\"  -g -O2 help.c
+gcc -I. -c -DBINDIR=\"/usr/local/bin\" -DSYSDIR=\"/usr/local/etc\"  -g -O2 ifile.c
+gcc -I. -c -DBINDIR=\"/usr/local/bin\" -DSYSDIR=\"/usr/local/etc\"  -g -O2 input.c
+gcc -I. -c -DBINDIR=\"/usr/local/bin\" -DSYSDIR=\"/usr/local/etc\"  -g -O2 jump.c
+gcc -I. -c -DBINDIR=\"/usr/local/bin\" -DSYSDIR=\"/usr/local/etc\"  -g -O2 line.c
+gcc -I. -c -DBINDIR=\"/usr/local/bin\" -DSYSDIR=\"/usr/local/etc\"  -g -O2 linenum.c
+gcc -I. -c -DBINDIR=\"/usr/local/bin\" -DSYSDIR=\"/usr/local/etc\"  -g -O2 lsystem.c
+gcc -I. -c -DBINDIR=\"/usr/local/bin\" -DSYSDIR=\"/usr/local/etc\"  -g -O2 mark.c
+gcc -I. -c -DBINDIR=\"/usr/local/bin\" -DSYSDIR=\"/usr/local/etc\"  -g -O2 optfunc.c
+gcc -I. -c -DBINDIR=\"/usr/local/bin\" -DSYSDIR=\"/usr/local/etc\"  -g -O2 option.c
+gcc -I. -c -DBINDIR=\"/usr/local/bin\" -DSYSDIR=\"/usr/local/etc\"  -g -O2 opttbl.c
+gcc -I. -c -DBINDIR=\"/usr/local/bin\" -DSYSDIR=\"/usr/local/etc\"  -g -O2 os.c
+gcc -I. -c -DBINDIR=\"/usr/local/bin\" -DSYSDIR=\"/usr/local/etc\"  -g -O2 output.c
+gcc -I. -c -DBINDIR=\"/usr/local/bin\" -DSYSDIR=\"/usr/local/etc\"  -g -O2 pattern.c
+gcc -I. -c -DBINDIR=\"/usr/local/bin\" -DSYSDIR=\"/usr/local/etc\"  -g -O2 position.c
+gcc -I. -c -DBINDIR=\"/usr/local/bin\" -DSYSDIR=\"/usr/local/etc\"  -g -O2 prompt.c
+gcc -I. -c -DBINDIR=\"/usr/local/bin\" -DSYSDIR=\"/usr/local/etc\"  -g -O2 search.c
+gcc -I. -c -DBINDIR=\"/usr/local/bin\" -DSYSDIR=\"/usr/local/etc\"  -g -O2 signal.c
+gcc -I. -c -DBINDIR=\"/usr/local/bin\" -DSYSDIR=\"/usr/local/etc\"  -g -O2 tags.c
+gcc -I. -c -DBINDIR=\"/usr/local/bin\" -DSYSDIR=\"/usr/local/etc\"  -g -O2 ttyin.c
+gcc -I. -c -DBINDIR=\"/usr/local/bin\" -DSYSDIR=\"/usr/local/etc\"  -g -O2 version.c
+gcc  -o less main.o screen.o brac.o ch.o charset.o cmdbuf.o command.o cvt.o decode.o edit.o filename.o forwback.o help.o ifile.o input.o jump.o line.o linenum.o lsystem.o mark.o optfunc.o option.o opttbl.o os.o output.o pattern.o position.o prompt.o search.o signal.o tags.o ttyin.o version.o   -ltinfo
+gcc -I. -c -DBINDIR=\"/usr/local/bin\" -DSYSDIR=\"/usr/local/etc\"  -g -O2 lesskey.c
+gcc  -o lesskey lesskey.o version.o
+gcc -I. -c -DBINDIR=\"/usr/local/bin\" -DSYSDIR=\"/usr/local/etc\"  -g -O2 lessecho.c
+gcc  -o lessecho lessecho.o version.o
+</code></pre></div></div>
+
+<p>Ejecutamos make install para instalar el paquete, por defecto make install instala los paquetes relacionados con el paquete en /usr/local/bin, mientras que lo relacionados con el manual, lo instala en /usr/local/share/man.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vagrant@compilacion:~/less$ sudo make install
+./mkinstalldirs /usr/local/bin /usr/local/share/man/man1
+/usr/bin/install -c less /usr/local/bin/less
+/usr/bin/install -c lesskey /usr/local/bin/lesskey
+/usr/bin/install -c lessecho /usr/local/bin/lessecho
+/usr/bin/install -c -m 644 ./less.nro /usr/local/share/man/man1/less.1
+/usr/bin/install -c -m 644 ./lesskey.nro /usr/local/share/man/man1/lesskey.1
+/usr/bin/install -c -m 644 ./lessecho.nro /usr/local/share/man/man1/lessecho.1
+</code></pre></div></div>
+
+<h3 id="desinstalación"><strong>Desinstalación</strong></h3>
+
+<p>El paquete compilado lo podemos desinstalar del sistema con varios métodos:</p>
+
+<ul>
+  <li>Ejecutando el comando make uninstall -&gt; deshace los instalado con make install, pero en este caso less no cuenta con ningún fichero uninstall para deshacer la instalación.</li>
+  <li>Ejecutando el make clean -&gt; elimina ficheros binarios además de ficheros objetos creados en la compilación.</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vagrant@compilacion:~/less$ make clean
+rm -f *.o core less lesskey lessecho
+</code></pre></div></div>
+
+<ul>
+  <li>Ejecutando make distclean -&gt;  además de eliminar ficheros binarios y objetos como el comando clean, también elimina los ficheros de configuración.</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vagrant@compilacion:~/less$ make distclean
+rm -f *.o core less lesskey lessecho
+rm -f Makefile config.status config.log config.cache defines.h stamp-h
+</code></pre></div></div>
+
+<p>Una vez probada la compilacion de un paquete, podremos ser capaces de compilar nuestro sistema operativo sin provocar errores.</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/categories/#sistemas" class="page__taxonomy-item p-category" rel="tag">Sistemas</a>
+    
+    </span>
+  </p>
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2021-03-11T16:10:39+01:00">March 11, 2021</time></p>
+
+      </footer>
+
+      <section class="page__share">
+  <h4 class="page__share-title">Share on</h4>
+
+  <a href="https://x.com/intent/tweet?text=Compilacion+programa+C+con+Makefile%20http%3A%2F%2Flocalhost%3A4000%2Fsistemas%2F2021%2F03%2F11%2FCompilacion-programa-C-makefile.html" class="btn btn--x" aria-label="Share on X" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on X">
+    <i class="fab fa-fw fa-x-twitter" aria-hidden="true"></i><span> X</span>
+  </a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fsistemas%2F2021%2F03%2F11%2FCompilacion-programa-C-makefile.html" class="btn btn--facebook" aria-label="Share on Facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook">
+    <i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span>
+  </a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http://localhost:4000/sistemas/2021/03/11/Compilacion-programa-C-makefile.html" class="btn btn--linkedin" aria-label="Share on LinkedIn" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn">
+    <i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span>
+  </a>
+
+  <a href="https://bsky.app/intent/compose?text=Compilacion+programa+C+con+Makefile%20http%3A%2F%2Flocalhost%3A4000%2Fsistemas%2F2021%2F03%2F11%2FCompilacion-programa-C-makefile.html" class="btn btn--bluesky" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Bluesky">
+    <i class="fab fa-fw fa-bluesky" aria-hidden="true"></i><span> Bluesky</span>
+  </a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/seguridad/2021/03/11/Integridad-firmas-autentificacion.html" class="pagination--pager" title="Integridad, firmas y autentificacion">Previous</a>
+    
+    
+      <a href="/servicios/2021/03/11/Control-de-acceso-autentificacion-autorizacion.html" class="pagination--pager" title="Control de acceso, autentificacion y autorizacion">Next</a>
+    
+  </nav>
+
+
+    </div>
+
+    
+      
+        <p>
+          Comments are configured with provider: <strong>giscus</strong>,
+          but are disabled in non-production environments.
+        </p>
+      
+    
+  </article>
+
+  
+  
+    
+<div class="page__related">
+  
+  <h2 class="page__related-title">You May Also Enjoy</h2>
+  <div class="grid__wrapper">
+    
+      
+      
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/sistemas/monitorizaci%C3%B3n/2025/05/01/Instalacion-configuracion-y-monitoreo-zabbix.html" rel="permalink">Instalación, configuración y monitorización usando Zabbix
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2025-05-01T13:19:00+02:00">May 1, 2025</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          7 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Este post describe paso a paso cómo instalar y configurar Zabbix 6.0 LTS en una máquina virtual con Debian 12. Está pensado para crear un entorno de práctica...</p>
+  </article>
+</div>
+
+    
+      
+      
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/sistemas/monitorizaci%C3%B3n/2024/04/11/Monitorizaci%C3%B3n-de-servidores-con-grafana.html" rel="permalink">Monitorización de servidores con Grafana
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2024-04-11T13:14:06+02:00">April 11, 2024</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          10 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Aprende a instalar, configurar y personalizar Grafana para la monitorización avanzada de servidores. Descubre cómo integrar Prometheus, crear dashboards inte...</p>
+  </article>
+</div>
+
+    
+      
+      
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/seguridad/2021/12/21/SoftEther-VPN.html" rel="permalink">Introducción SoftEther VPN
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2021-12-21T13:44:30+01:00">December 21, 2021</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          64 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">SoftEther VPN es uno de los software VPN multiprotocolo más potentes y rápidos del mundo en la actualidad. Funciona en sistemas Windows, Solaris, Mac, FreeBS...</p>
+  </article>
+</div>
+
+    
+      
+      
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/aplicaciones%20web/apuntes/2021/09/21/Introduccion-a-Docker.html" rel="permalink">Introducción a Docker
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2021-09-21T13:14:06+02:00">September 21, 2021</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          19 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Docker nos permite de forma sencilla crear contenedores ligeros y fáciles de mover donde ejecutar nuestras aplicaciones software sobre cualquier máquina con ...</p>
+  </article>
+</div>
+
+    
+  </div>
+</div>
+
+  
+  
+</div>
+
+      
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">&copy; 2025 <a href="http://localhost:4000">Blog de Sergio Ibáñez</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+    <script>
+  'use strict';
+
+  (function () {
+    var commentContainer = document.querySelector('#giscus-comments');
+
+    if (!commentContainer) {
+      return;
+    }
+
+    var script = document.createElement('script');
+
+    script.setAttribute('src', 'https://giscus.app/client.js');
+    script.setAttribute('data-repo', '');
+    script.setAttribute('data-repo-id', '');
+    script.setAttribute('data-category', '');
+    script.setAttribute('data-category-id', '');
+    script.setAttribute('data-mapping', 'pathname');
+    script.setAttribute('data-strict', '0');
+    script.setAttribute('data-reactions-enabled', '1');
+    script.setAttribute('data-emit-metadata', '0');
+    script.setAttribute('data-input-position', 'top');
+    script.setAttribute('data-theme', 'preferred_color_scheme');
+    script.setAttribute('data-lang',  'es');
+    
+    script.setAttribute('crossorigin', 'anonymous');
+
+    script.setAttribute('async', '');
+
+    commentContainer.appendChild(script);
+  })();
+</script>
+
+  
+
+
+
+
+  </body>
+</html>

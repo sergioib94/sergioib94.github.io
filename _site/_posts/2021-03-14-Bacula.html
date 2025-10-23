@@ -1,0 +1,774 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.27.3 by Michael Rose
+  Copyright 2013-2025 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="es-ES" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Bacula - Blog de Sergio Ibáñez</title>
+<meta name="description" content="Bacula es un sistema de copias de seguridad que funciona como cliente y servidor. Este sistema de copias de seguridad va a ser instalado en una de las maquinas virtuales de nuestro escenario openstack que hemos creado en posts anteriores, mas concretamente como bacula necesita de una base de datos mariadb, se usara nuestra maquina Sancho (servidor de base de datos del escenario openstack) como servidor de copias de seguridad y las demas maquinas haran de clientes.">
+
+
+  <meta name="author" content="Sergio Ibáñez Núñez">
+  
+  <meta property="article:author" content="Sergio Ibáñez Núñez">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="es_ES">
+<meta property="og:site_name" content="Blog de Sergio Ibáñez">
+<meta property="og:title" content="Bacula">
+<meta property="og:url" content="http://localhost:4000/_posts/2021-03-14-Bacula.html">
+
+
+  <meta property="og:description" content="Bacula es un sistema de copias de seguridad que funciona como cliente y servidor. Este sistema de copias de seguridad va a ser instalado en una de las maquinas virtuales de nuestro escenario openstack que hemos creado en posts anteriores, mas concretamente como bacula necesita de una base de datos mariadb, se usara nuestra maquina Sancho (servidor de base de datos del escenario openstack) como servidor de copias de seguridad y las demas maquinas haran de clientes.">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2021-03-14T12:08:28+01:00">
+
+
+
+
+
+
+<link rel="canonical" href="http://localhost:4000/_posts/2021-03-14-Bacula.html">
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Blog de Sergio Ibáñez Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single" dir="ltr">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          Blog de Sergio Ibáñez
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a
+                href="/"
+                
+                
+              >Inicio</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/posts/"
+                
+                
+              >Posts</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/categories/"
+                
+                
+              >Categorías</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/tags/"
+                
+                
+              >Etiquetas</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/search/"
+                
+                
+              >Buscar</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/about/"
+                
+                
+              >Sobre mí</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="http://localhost:4000/">
+        <img src="/assets/images/avatar.png" alt="Sergio Ibáñez Núñez" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="http://localhost:4000/" itemprop="url">Sergio Ibáñez Núñez</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>Técnico IT y entusiasta de la automatización</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Bacula">
+    <meta itemprop="description" content="Bacula es un sistema de copias de seguridad que funciona como cliente y servidor. Este sistema de copias de seguridad va a ser instalado en una de las maquinas virtuales de nuestro escenario openstack que hemos creado en posts anteriores, mas concretamente como bacula necesita de una base de datos mariadb, se usara nuestra maquina Sancho (servidor de base de datos del escenario openstack) como servidor de copias de seguridad y las demas maquinas haran de clientes.">
+    <meta itemprop="datePublished" content="2021-03-14T12:08:28+01:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">
+            <a href="http://localhost:4000/_posts/2021-03-14-Bacula.html" itemprop="url">Bacula
+</a>
+          </h1>
+          
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <h3 id="introduccion"><strong>Introduccion</strong></h3>
+
+<p>Bacula es un sistema de copias de seguridad que funciona como cliente y servidor. Este sistema de copias de seguridad va a ser instalado en una de las maquinas virtuales de nuestro escenario openstack que hemos creado en posts anteriores, mas concretamente como bacula necesita de una base de datos mariadb, se usara nuestra maquina Sancho (servidor de base de datos del escenario openstack) como servidor de copias de seguridad y las demas maquinas haran de clientes.</p>
+
+<h3 id="instalación-en-el-servidor">Instalación en el servidor</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo apt install bacula bacula-client bacula-common-mysql bacula-director-mysql bacula-server
+
+Postfix-configuration → En este caso No configuration.
+Password para bacula → backup.
+</code></pre></div></div>
+
+<p>Configuracion del director (/etc/bacula/bacula-dir.conf):</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Director {                            # define myself
+  Name = sancho-dir
+  DIRport = 9101                # where we listen for UA connections
+  QueryFile = "/etc/bacula/scripts/query.sql"
+  WorkingDirectory = "/var/lib/bacula"
+  PidDirectory = "/run/bacula"
+  Maximum Concurrent Jobs = 20
+  Password = "backup"         # Console password
+  Messages = Daemon
+  DirAddress = 10.0.1.8		#tambien podemos poner localhost
+}
+</code></pre></div></div>
+
+<ul>
+  <li>Name → nombre del director.</li>
+  <li>DIRport → puerto por el que el director va a escuchar las peticiones de bacula.</li>
+  <li>QueryFile → ruta del directorio y el fichero usador por el director.</li>
+  <li>WorkingDirectory → ruta donde se colocan los ficheros estaticos.</li>
+  <li>PidDirectory → el directorio en el que el Director colocará los ficheros de id de los procesos.</li>
+  <li>Maximum concurrent jobs → numero máximo de trabajos que el director puede correr.</li>
+  <li>Password → contraseña de la consola backula.</li>
+  <li>Messages → especifica donde tiene que entregar el DIrector los mensajes que no están asociados con un trabajo especifico.</li>
+  <li>DirAddress → especifica los puertos y las direcciones IP donde escuchará el Director por conexiones Bacula mediante consola.</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>JobDefs {
+  Name = "Backups"
+  Type = Backup
+  Level = Incremental
+  Client = sancho-fd
+  FileSet = "Full Set"
+  Schedule = "semanal"
+  Storage = File
+  Messages = Standard
+  Pool = File
+  SpoolAttributes = yes
+  Priority = 10
+  Write Bootstrap = "/var/lib/bacula/%c.bsr"
+}
+
+#Jobs openstack
+
+Job {
+ Name = "Sancho"
+ JobDefs = "Backups"
+ Client = "sancho-fd"
+}
+
+Job {
+ Name = "Quijote"
+ JobDefs = "Backups"
+ Client = "quijote-fd"
+}
+
+Job {
+ Name = "Freston"
+ JobDefs = "Backups"
+ Client = "freston-fd"
+}
+
+Job {
+ Name = "Dulcinea"
+ JobDefs = "Backups"
+ Client = "dulcinea-fd"
+}
+
+# Restauracion openstack
+
+Job {
+ Name = "Restore-Sancho"
+ Type = Restore
+ Client=sancho-fd
+ FileSet="Full Set"
+ Storage = File
+ Pool = File
+ Messages = Standard
+}
+
+Job {
+ Name = "Restore-Quijote"
+ Type = Restore
+ Client=quijote-fd
+ FileSet="Full Set"
+ Storage = File
+ Pool = File
+ Messages = Standard
+}
+
+Job {
+ Name = "Restore-Freston"
+ Type = Restore
+ Client=freston-fd
+ FileSet="Full Set"
+ Storage = File
+ Pool = File
+ Messages = Standard
+}
+
+Job {
+ Name = "Restore-Dulcinea"
+ Type = Restore
+ Client=dulcinea-fd
+ FileSet="Full Set"
+ Storage = File
+ Pool = File
+ Messages = Standard
+}
+
+#Ficheros de backup
+
+FileSet {
+ Name = "Full Set"
+ Include {
+ Options {
+ signature = MD5
+ compression = GZIP
+ }
+ File = /home
+ File = /etc
+ File = /var
+ }
+ Exclude {
+ File = /var/lib/bacula
+ File = /nonexistant/path/to/file/archive/dir
+ File = /proc
+ File = /var/cache
+ File = /var/tmp
+ File = /tmp
+ File = /sys
+ File = /.journal
+ File = /.fsck
+ }
+}
+
+#ciclo backup semanal
+
+Schedule {
+ Name = semanal
+ Run = Level=Full sun at 23:59
+ Run = Level=Incremental mon-sat at 23:59
+}
+
+#clientes bacula
+
+Client {
+ Name = sancho-fd
+ Address = 10.0.1.8
+ FDPort = 9102
+ Catalog = MyCatalog
+ Password = "bacula" # password for FileDaemon
+ File Retention = 60 days # 60 days
+ Job Retention = 6 months # six months
+ AutoPrune = yes # Prune expired Jobs/Files
+}
+
+Client {
+ Name = quijote-fd
+ Address = 10.0.2.5
+ FDPort = 9102
+ Catalog = MyCatalog
+ Password = "bacula" # password for FileDaemon 2
+ File Retention = 60 days # 60 days
+ Job Retention = 6 months # six months
+ AutoPrune = yes # Prune expired Jobs/Files
+}
+
+Client {
+ Name = freston-fd
+ Address = 10.0.1.3
+ FDPort = 9102
+ Catalog = MyCatalog
+ Password = "bacula" # password for FileDaemon 2
+ File Retention = 60 days # 60 days
+ Job Retention = 6 months # six months
+ AutoPrune = yes # Prune expired Jobs/Files
+}
+
+Client {
+ Name = dulcinea-fd
+ Address = 10.0.1.5
+ FDPort = 9102
+ Catalog = MyCatalog
+ Password = "bacula" # password for FileDaemon 2
+ File Retention = 60 days # 60 days
+ Job Retention = 6 months # six months
+ AutoPrune = yes # Prune expired Jobs/Files
+}
+
+#Almacenamiento
+
+Storage {
+ Name = File
+# Do not use "localhost" here
+ Address = 10.0.1.8 # N.B. Use a fully qualified name here
+ SDPort = 9103
+ Password = "bacula"
+ Device = FileChgr1
+ Media Type = File
+ Maximum Concurrent Jobs = 10 # run up to 10 jobs a the same time
+}
+
+#acceso a base de datos
+
+Catalog {
+  Name = MyCatalog
+  dbname = "bacula"; DB Address = "localhost"; dbuser = "bacula"; dbpassword = "bacula"
+}
+
+#pool
+
+Pool {
+ Name = File
+ Pool Type = Backup
+ Recycle = yes # Bacula can automatically recycle Volumes
+ AutoPrune = yes # Prune expired volumes
+ Volume Retention = 365 days # one year
+ Maximum Volume Bytes = 50G # Limit Volume size to something reasonable
+ Maximum Volumes = 100 # Limit number of Volumes in Pool
+ Label Format = "Remoto" # Auto label
+}
+
+Modificación bacula-sd (/etc/bacula/bacula-sd.conf):
+
+Storage {                             # definition of myself
+  Name = sancho-sd
+  SDPort = 9103                  # Director's port
+  WorkingDirectory = "/var/lib/bacula"
+  Pid Directory = "/run/bacula"
+  Plugin Directory = "/usr/lib/bacula"
+  Maximum Concurrent Jobs = 20
+  SDAddress = 10.0.1.8
+}
+
+Director {
+  Name = sancho-dir
+  Password = "backup"
+}
+
+Director {
+  Name = sancho-mon
+  Password = "backup"
+  Monitor = yes
+}
+
+Autochanger {
+  Name = FileChgr1
+  Device = FileStorage
+  Changer Command = ""
+  Changer Device = /dev/null
+}
+
+Device {
+  Name = FileStorage
+  Media Type = File
+  Archive Device = /backup
+  LabelMedia = yes;                   # lets Bacula label unlabeled media
+  Random Access = Yes;
+  AutomaticMount = yes;               # when device opened, read it
+  RemovableMedia = no;
+  AlwaysOpen = no;
+  Maximum Concurrent Jobs = 7
+}
+</code></pre></div></div>
+
+<p>Configuración de consola (/etc/bacula/bconsole.conf):</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Director {
+  Name = sancho-dir
+  DIRport = 9101
+  address = 10.0.1.8
+  Password = "backup"
+}
+</code></pre></div></div>
+
+<h3 id="configuracion-de-los-clientes">Configuracion de los clientes</h3>
+
+<p>Configuración de clientes (/etc/bacula/bacula-fd.conf):</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo apt install bacula-client
+</code></pre></div></div>
+
+<p>Sancho:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Director {
+  Name = sancho-dir
+  Password = "backup"
+}
+
+Director {
+  Name = sancho-mon
+  Password = "backup"
+  Monitor = yes
+}
+
+FileDaemon {                          # this is me
+  Name = sancho-fd
+  FDport = 9102                  # where we listen for the director
+  WorkingDirectory = /var/lib/bacula
+  Pid Directory = /run/bacula
+  Maximum Concurrent Jobs = 20
+  Plugin Directory = /usr/lib/bacula
+  FDAddress = 10.0.1.8
+}
+
+Messages {
+  Name = Standard
+  director = sancho-dir = all, !skipped, !restored
+}
+</code></pre></div></div>
+
+<p>Freston:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Director {
+  Name = sancho-dir
+  Password = "backup"
+}
+
+Director {
+  Name = sancho-mon
+  Password = "backup"
+  Monitor = yes
+}
+
+FileDaemon {                          # this is me
+  Name = freston-fd
+  FDport = 9102                  # where we listen for the director
+  WorkingDirectory = /var/lib/bacula
+  Pid Directory = /run/bacula
+  Maximum Concurrent Jobs = 20
+  Plugin Directory = /usr/lib/bacula
+  FDAddress = 10.0.1.3
+}
+
+Messages {
+  Name = Standard
+  director = sancho-dir = all, !skipped, !restored
+}
+</code></pre></div></div>
+
+<p>Dulcinea:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Director {
+  Name = sancho-dir
+  Password = "backup"
+}
+
+Director {
+  Name = sancho-mon
+  Password = "backup"
+  Monitor = yes
+}
+
+FileDaemon {                          # this is me
+  Name = dulcinea-fd
+  FDport = 9102                  # where we listen for the director
+  WorkingDirectory = /var/lib/bacula
+  Pid Directory = /run/bacula
+  Maximum Concurrent Jobs = 20
+  Plugin Directory = /usr/lib/bacula
+  FDAddress = 10.0.1.5
+}
+
+Messages {
+  Name = Standard
+  director = sancho-dir = all, !skipped, !restored
+}
+</code></pre></div></div>
+
+<p>Quijote:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Director {
+  Name = sancho-dir
+  Password = "backup"
+}
+
+Director {
+  Name = sancho-mon
+  Password = "backup"
+  Monitor = yes
+}
+
+FileDaemon {                          # this is me
+  Name = quijote-fd
+  FDport = 9102                  # where we listen for the director
+  WorkingDirectory = /var/lib/bacula
+  Pid Directory = /run/bacula
+  Maximum Concurrent Jobs = 20
+  Plugin Directory = /usr/lib/bacula
+  FDAddress = 10.0.2.4
+}
+
+Messages {
+  Name = Standard
+  director = sancho-dir = all, !skipped, !restored
+}
+</code></pre></div></div>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/categories/#sistemas" class="page__taxonomy-item p-category" rel="tag">Sistemas</a>
+    
+    </span>
+  </p>
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2021-03-14T12:08:28+01:00">March 14, 2021</time></p>
+
+      </footer>
+
+      
+
+      
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+
+      
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">&copy; 2025 <a href="http://localhost:4000">Blog de Sergio Ibáñez</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

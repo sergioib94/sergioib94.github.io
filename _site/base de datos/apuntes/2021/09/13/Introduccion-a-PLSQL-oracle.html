@@ -1,0 +1,993 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.27.3 by Michael Rose
+  Copyright 2013-2025 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="es-ES" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Introducción a PLSQL (Oracle) - Blog de Sergio Ibáñez</title>
+<meta name="description" content="En este post se comentarán aspectos basicos a tener en cuenta de PLSQL para trabajar con ello en oracle.">
+
+
+  <meta name="author" content="Sergio Ibáñez Núñez">
+  
+  <meta property="article:author" content="Sergio Ibáñez Núñez">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="es_ES">
+<meta property="og:site_name" content="Blog de Sergio Ibáñez">
+<meta property="og:title" content="Introducción a PLSQL (Oracle)">
+<meta property="og:url" content="http://localhost:4000/base%20de%20datos/apuntes/2021/09/13/Introduccion-a-PLSQL-oracle.html">
+
+
+  <meta property="og:description" content="En este post se comentarán aspectos basicos a tener en cuenta de PLSQL para trabajar con ello en oracle.">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2021-09-13T12:36:20+02:00">
+
+
+
+
+
+
+<link rel="canonical" href="http://localhost:4000/base%20de%20datos/apuntes/2021/09/13/Introduccion-a-PLSQL-oracle.html">
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Blog de Sergio Ibáñez Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single wide" dir="ltr">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          Blog de Sergio Ibáñez
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a
+                href="/"
+                
+                
+              >Inicio</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/posts/"
+                
+                
+              >Posts</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/categories/"
+                
+                
+              >Categorías</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/tags/"
+                
+                
+              >Etiquetas</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/search/"
+                
+                
+              >Buscar</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/about/"
+                
+                
+              >Sobre mí</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Introducción a PLSQL (Oracle)">
+    <meta itemprop="description" content="En este post se comentarán aspectos basicos a tener en cuenta de PLSQL para trabajar con ello en oracle.">
+    <meta itemprop="datePublished" content="2021-09-13T12:36:20+02:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">
+            <a href="http://localhost:4000/base%20de%20datos/apuntes/2021/09/13/Introduccion-a-PLSQL-oracle.html" itemprop="url">Introducción a PLSQL (Oracle)
+</a>
+          </h1>
+          
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2021-09-13T12:36:20+02:00">September 13, 2021</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          8 minute read
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <h3 id="introducción-de-plsq"><strong>Introducción de PLSQ</strong></h3>
+
+<ul>
+  <li><strong>¿Que es?</strong></li>
+</ul>
+
+<p>PL/SQL (Procedural Language/Structured Query Language) es un lenguaje de programación procedimental desarrollado por Oracle como una extensión de SQL. Permite combinar las capacidades de consulta de datos de SQL con estructuras de programación avanzadas como variables, bucles, condiciones, procedimientos, funciones y cursores.</p>
+
+<ul>
+  <li><strong>¿Para que sirve?</strong></li>
+</ul>
+
+<p>PL/SQL se utiliza principalmente en bases de datos Oracle para escribir bloques de código que pueden ser ejecutados directamente dentro del servidor de la base de datos. Sus aplicaciones incluyen:</p>
+
+<ol>
+  <li>
+    <p>Automatización de procesos dentro de la base de datos: Permite crear procedimientos almacenados y funciones para realizar cálculos o validaciones sin depender de una aplicación externa.</p>
+  </li>
+  <li>
+    <p>Manejo eficiente de transacciones: PL/SQL permite ejecutar múltiples sentencias SQL en un solo bloque, asegurando que todas se ejecuten correctamente o ninguna en caso de error.</p>
+  </li>
+  <li>
+    <p>Optimización del rendimiento: Como el código se ejecuta directamente en la base de datos, se minimiza el tráfico de red entre la aplicación y el servidor, lo que mejora el rendimiento.</p>
+  </li>
+  <li>
+    <p>Seguridad y control de acceso: Se pueden definir procedimientos con privilegios específicos para restringir el acceso a datos sensibles sin exponer directamente las tablas.</p>
+  </li>
+  <li>
+    <p>Automatización de eventos con triggers: Los triggers en PL/SQL permiten ejecutar código automáticamente cuando ocurre un evento en la base de datos, como insertar o eliminar registros.</p>
+  </li>
+  <li>
+    <p>Integración con aplicaciones empresariales: PL/SQL es ampliamente utilizado en sistemas de gestión empresarial (ERP, CRM, etc.) que requieren lógica de negocio dentro de la base de datos.</p>
+  </li>
+</ol>
+
+<ul>
+  <li>
+    <p><strong>Características</strong></p>
+
+    <ul>
+      <li>
+        <p>Es una extensión de SQL con características de lenguaje de programación.</p>
+      </li>
+      <li>
+        <p>Se ejecuta en el lado del servidor y los procedimientos y funciones se almacenan en la BD.</p>
+      </li>
+      <li>
+        <p>Las sentencias SQL de consulta y manipulación de datos pueden ser incluidas en unidades procedurales de código, pero no pueden usarse instrucciones DDL ni DCL.</p>
+      </li>
+      <li>
+        <p>No tiene instrucciones de entrada por teclado o salida por pantalla. Truco para mostrar por pantalla -&gt; Usando la instrucción para depurar programas.</p>
+      </li>
+      <li>
+        <p>Incluye los tipos de datos y operadores de SQL.</p>
+      </li>
+      <li>
+        <p>Los programas se pueden compilar desde SQL*Plus (comando /) o usar SQL Developer u otros IDEs.</p>
+      </li>
+      <li>
+        <p>Los comentarios comienzan por “–” o se colocan entre “/<em>” y “</em>/”.</p>
+      </li>
+      <li>
+        <p>Trae unas librerías con funciones predefinidas, se llaman paquetes.</p>
+      </li>
+      <li>
+        <p>Para ejecutar los procedimientos almacenados desde SQL*Plus se usa el comando exec.</p>
+      </li>
+      <li>
+        <p>Es solo es propietario de Oracle, en mariadb(SQL/PSM) y Postgres(PG/SQL). Mariadb no es necesario aprenderlo.</p>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="estructura-de-un-bloque"><strong>Estructura de un bloque</strong></h3>
+
+<p>Tienen 3 partes:</p>
+
+<ul>
+  <li><strong>Declare (opcional)</strong> → cuando se declaran cosas: variables, cursores (guardar resultado de una select), excepciones (posibles errores a lo largo del programa) definidas por el usuario.</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	v_usuario 	VARCHAR2(10); 
+	v_fecha 	DATE;
+</code></pre></div></div>
+
+<ul>
+  <li><strong>Begin (obligatorio)</strong> → sentencias SQL sentencias de control PL/SQL (while, for, case, if…).</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	SELECT user_id, fecha 
+	INTO v_usuario, v_fecha 
+	FROM tabla;
+</code></pre></div></div>
+
+<ul>
+  <li><strong>Exception (opcional)</strong> → acciones a realizar cuando se producen errores.</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	WHEN nombre_excepcion then
+</code></pre></div></div>
+
+<ul>
+  <li><strong>End; (obligatorio)</strong> → para cerrar el programa una vez hecho.</li>
+</ul>
+
+<h3 id="tipos-de-bloques-de-código"><strong>Tipos de bloques de código</strong></h3>
+
+<ul>
+  <li>
+    <p><strong>Bloques anónimos:</strong> No se almacenan en la BD. Se ejecutan tras escribirlos (para hacer pruebas).</p>
+  </li>
+  <li>
+    <p><strong>Procedimientos:</strong> Se almacenan en la BD y son invocados. Pueden recibir y devolver múltiples parámetros.</p>
+  </li>
+  <li>
+    <p><strong>Funciones:</strong> Se almacenan en el BD y son invocados. Pueden recibir parámetros y devuelven un valor “en su nombre”. Solo devuelven un parámetro.</p>
+  </li>
+  <li>
+    <p><strong>Triggers:</strong> Se almacenan en la BD y se ejecutan automáticamente cuando ocurre algún evento.</p>
+  </li>
+</ul>
+
+<h3 id="operaciones-básicas"><strong>Operaciones básicas</strong></h3>
+
+<ul>
+  <li><strong>Declaración de variables (nombre tipo)</strong></li>
+</ul>
+
+<p>Oracle recomienda que el nombre de las variables empiece por v y el de los procedimientos por para distinguir estos procesos de algunos nombres como de tablas por ejemplo.</p>
+
+<p>Además de variables, pueden declararse constantes. Las constantes pueden ser útiles por ejemplo en un programa que calcule áreas geométricas y tenga que utilizar un valor constante como puede ser el valor de pi, en lugar de repetir varias veces el valor de pi se declara como constante para poder usarse varias veces dicha constante para asi mejorar la legibilidad del código.</p>
+
+<p>A la hora de definir una variable podemos usar dos atributos: %type y %rowtype:</p>
+
+<ul>
+  <li>Type sirve para declarar una variable basándonos en otras declaradas previamente o en una columna de la base de datos, es decir, declárame esta variable como esta otra que ya existe.</li>
+</ul>
+
+<p>Por lo que antes de %type se puede poner tanto un nombre de tabla como un nombre de columna de una base de datos o el nombre de una variable definida previamente de forma que se copiara para la nueva variable el nuevo dato del dato anterior.</p>
+
+<ul>
+  <li>Rowtype para tipos de datos compuestos, un tipo de dato compuesto es cuando necesitas guardar varios datos en una variable, es decir, a esto se le llama una variable registro o compuesta, es una variable que esta divididas en distintas casillas con las distintas informaciones.</li>
+</ul>
+
+<p><strong>Asignación de valores a variables → variable := expresión</strong></p>
+
+<p>Ejemplos:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>v_fecha := ‘31-oct-2003’
+v_apellido := ‘lopez’
+</code></pre></div></div>
+
+<p>Se puede asignar un valor desde una consulta de la siguiente forma:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>select sal * 0.10 into v_comision
+from emp
+where empno =7082;
+</code></pre></div></div>
+
+<p>De esta forma estaremos guardando el 10% del salario en la variable comisión del empleado 7082. Hay que hacerlo con cuidado porque si devuelve varios valores no se podra guardar en una unica variable number, para ello usaremos los cursores, si devuelve solo uno si se podra guardar en la variable.</p>
+
+<ul>
+  <li><strong>Mostrar por pantalla una variable</strong></li>
+</ul>
+
+<p>Para ello usamos el paquete dbms_output, nosotros usaremos la función put_line (solo puede recibir un parámetro). Este método se creo para poder depurar el código, pero lo usaremos para mostrar por pantalla. Ejemplo de uso:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>begin
+dbms_output.put_line (‘Mi 1º bloque pl/sql diseñado por ’ || user || ‘el dia ’ || sysdate ||);
+end;
+</code></pre></div></div>
+
+<table>
+  <tbody>
+    <tr>
+      <td>Como put_line solo muestra una cosa, en el caso de tener que mostrar más de una deberemos usar el  operador de concatenación(</td>
+      <td> </td>
+      <td>) como en el ejemplo de arriba.</td>
+    </tr>
+  </tbody>
+</table>
+
+<ul>
+  <li><strong>Recuperar datos de una BD con select</strong></li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>select lista columnas
+into {v_nombre[…]… | nombre_registro}
+from nombre_tabla
+where condicion
+</code></pre></div></div>
+
+<ul>
+  <li><strong>Inserción de datos</strong></li>
+</ul>
+
+<p>Por ejemplo: añadir información sobre un nuevo empleado en la tabla emp.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Begin
+
+insert into emp(empno, ename, job, deptno)
+values(empno_sequence.nextval, ‘HARDING’,’CLERK’,10):
+
+end;
+</code></pre></div></div>
+
+<ul>
+  <li><strong>Actualizar datos</strong></li>
+</ul>
+
+<p>Por ejemplo: aumenta el salario de todos los empleados de la tabla emp que son analistas.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Declare
+	v_incre_sal	emp.sal%type := 2000;
+Begin
+	update emp
+	set sal = sal + v_incre_sal
+	where job = ‘ANALYST’;
+End;
+</code></pre></div></div>
+
+<ul>
+  <li><strong>Borrar datos</strong></li>
+</ul>
+
+<p>Por ejemplo: suprimir los empleados que trabajan en el dpto 10.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Declare
+	v_deptno	dept.deptno%type;
+Begin
+	delete from emp
+	where deptno = v_deptno;
+End;
+</code></pre></div></div>
+
+<h3 id="estructuras-de-control"><strong>Estructuras de control</strong></h3>
+
+<ul>
+  <li><strong>Sentencia if</strong></li>
+</ul>
+
+<p>Sintaxis:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>if condicion then
+	instrucciones;
+[elsif condicion then
+	instrucciones];
+[else
+	instrucciones];
+end if;
+</code></pre></div></div>
+
+<p>Se pueden tener if anidados como en python.</p>
+
+<ul>
+  <li><strong>Sentencia case</strong></li>
+</ul>
+
+<p>Sintaxis</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>case [expresion]
+when [condicion|valor] then
+	instrucciones;
+when [condicion|valor] then
+	instrucciones;
+….
+else
+	instrucciones que se ejecuta si no se simple ninguna condición anterior
+end case;
+</code></pre></div></div>
+
+<p>También es posible usar case con una variable como ejemplo de un menú. Por ejemplo:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>case tipo
+when 1 then
+	procesar_pedido_local;
+when 2 then
+	procesar_pedido_domicilio;
+when 3 then
+	procesar_pedido_extranjero
+else
+	procesar_pedido_normal;
+end case;
+</code></pre></div></div>
+
+<ul>
+  <li><strong>Sentencia for</strong></li>
+</ul>
+
+<p>Se usa cuando se sabe las vueltas que dara el bucle. Si no se sabe el numero de vueltas, se usara while.</p>
+
+<p>Sintaxis</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>for indice in [reverse] valor_inicial...valor_final loop
+	instruciones;
+….
+end loop;
+</code></pre></div></div>
+
+<p>El índice se declara de manera implícita, en el momento que se sale del bucle for la variable índice ya no existe.</p>
+
+<p>En mitad del bucle no se debe cambiar el valor de indice.</p>
+
+<p>Ejemplo: inserta las 10 primeras filas del pedido 601.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Declare
+v_id	prueba.id%type := 601;
+Begin
+….
+for i in 1 .. 10 loop
+	insert into prueba(id, contador)
+	values (v_id, i);
+end loop;
+…
+end;
+</code></pre></div></div>
+
+<ul>
+  <li><strong>Sentencia while</strong></li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>while condicion loop
+	instrucciones;
+…
+end loop;
+</code></pre></div></div>
+
+<h3 id="funciones-y-procedimientos"><strong>Funciones y Procedimientos</strong></h3>
+
+<ul>
+  <li>
+    <p>Para ver errores de compilacion → show err</p>
+  </li>
+  <li>
+    <p>Para ejecutar programa → exec nombre del programa (parametros)</p>
+  </li>
+  <li>
+    <p>Para mostrar por pantalla → set serveroutput on (solo sirve hasta que se cierre la sesion)</p>
+  </li>
+  <li>
+    <p>Para crear un procedimiento siempre utilizamos create or replace para empezar, si no existe lo crea y si ya existe lo reemplaza por el nuevo valor.</p>
+  </li>
+</ul>
+
+<p>Si el trozo de codigo debe devolver una sola cosa, se usa una funcion, si no tiene porque devolver nada, se usara un procedimiento.</p>
+
+<p>Ejemplo: procedimiento que muestre el nombre del empleado 7082</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>create or replace procedure MostrarNom7082
+is
+	v_nombre	emp.ename%type;
+begin
+	select ename input v_nombre
+	from emp
+	where emptno = 7082
+	dbms_output.put_line(v_nombre)
+end MostrarNom7082;
+</code></pre></div></div>
+
+<p><strong>¿Cuando usar funciones o procedimientos?</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th><strong>Tipo</strong></th>
+      <th><strong>Descripción</strong></th>
+      <th><strong>Devuelve un valor?</strong></th>
+      <th><strong>Ejemplo de uso</strong></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Procedimiento</strong></td>
+      <td>Bloque de código que ejecuta una acción específica.</td>
+      <td>No</td>
+      <td><code class="language-plaintext highlighter-rouge">EXEC InsertarEmpleado(123, 'Juan')</code></td>
+    </tr>
+    <tr>
+      <td><strong>Función</strong></td>
+      <td>Bloque de código que devuelve un valor.</td>
+      <td>Sí</td>
+      <td><code class="language-plaintext highlighter-rouge">SELECT ObtenerSalario(123) FROM dual;</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<ul>
+  <li><strong>Programación modular</strong></li>
+</ul>
+
+<p>La programación modular es dividir un programa grande, en varios trozos más pequeños de forma cada trozo resuelva una parte del problema (cada trozo preferiblemente debe ser de 12 lineas) de forma que se vea fácilmente el funcionamiento del programa.</p>
+
+<p>La programación modular usa parámetros, los parámetros pueden ser de entrada o salida. De entrada, a un código llega un parámetro de entrada</p>
+
+<ul>
+  <li>bloques anónimos</li>
+  <li>procedimientos</li>
+  <li>funciones</li>
+  <li>triggers</li>
+</ul>
+
+<h3 id="cursores"><strong>Cursores</strong></h3>
+
+<p>PL/SQL utiliza cursores para gestionar las instrucciones select. Un cursor es un conjunto de registros devueltos por una instrucción select. Hay dos tipos de cursores, los cursores implícitos y los explícitos.</p>
+
+<ul>
+  <li>
+    <p><strong>Cursores implícitos</strong> → se utiliza para operaciones select into. Se usa cuando la consulta devuelve un único registro.</p>
+  </li>
+  <li>
+    <p><strong>Cursores explícitos</strong> → se utilizan cuando la consulta devuelve un conjunto de registros, aunque también pueden ser usados para consultas que devuelven un único registro ya que de esta forma forma la consulta es más rápida.</p>
+  </li>
+</ul>
+
+<p>Los cursores explícitos se declaran como cualquier otra variable de pl/sql, sin embargo los cursores implícitos no son necesario declararlos. Ej:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>declare
+ 	cursor c_paises is
+ 	SELECT CO_PAIS, DESCRIPCION
+ 	FROM PAISES;
+begin
+	/* Sentencias del bloque ...*/
+end;
+</code></pre></div></div>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/categories/#apuntes" class="page__taxonomy-item p-category" rel="tag">Apuntes</a><span class="sep">, </span>
+    
+      <a href="/categories/#base-de-datos" class="page__taxonomy-item p-category" rel="tag">Base de Datos</a>
+    
+    </span>
+  </p>
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2021-09-13T12:36:20+02:00">September 13, 2021</time></p>
+
+      </footer>
+
+      <section class="page__share">
+  <h4 class="page__share-title">Share on</h4>
+
+  <a href="https://x.com/intent/tweet?text=Introducci%C3%B3n+a+PLSQL+%28Oracle%29%20http%3A%2F%2Flocalhost%3A4000%2Fbase%2520de%2520datos%2Fapuntes%2F2021%2F09%2F13%2FIntroduccion-a-PLSQL-oracle.html" class="btn btn--x" aria-label="Share on X" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on X">
+    <i class="fab fa-fw fa-x-twitter" aria-hidden="true"></i><span> X</span>
+  </a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fbase%2520de%2520datos%2Fapuntes%2F2021%2F09%2F13%2FIntroduccion-a-PLSQL-oracle.html" class="btn btn--facebook" aria-label="Share on Facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook">
+    <i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span>
+  </a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http://localhost:4000/base%20de%20datos/apuntes/2021/09/13/Introduccion-a-PLSQL-oracle.html" class="btn btn--linkedin" aria-label="Share on LinkedIn" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn">
+    <i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span>
+  </a>
+
+  <a href="https://bsky.app/intent/compose?text=Introducci%C3%B3n+a+PLSQL+%28Oracle%29%20http%3A%2F%2Flocalhost%3A4000%2Fbase%2520de%2520datos%2Fapuntes%2F2021%2F09%2F13%2FIntroduccion-a-PLSQL-oracle.html" class="btn btn--bluesky" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Bluesky">
+    <i class="fab fa-fw fa-bluesky" aria-hidden="true"></i><span> Bluesky</span>
+  </a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/base%20de%20datos/apuntes/2021/09/07/Introduccion-a-las-bases-de-datos-Oracle.html" class="pagination--pager" title="Introducción a las Bases De Datos (Oracle)">Previous</a>
+    
+    
+      <a href="/aplicaciones%20web/apuntes/2021/09/21/Introduccion-a-Docker.html" class="pagination--pager" title="Introducción a Docker">Next</a>
+    
+  </nav>
+
+
+    </div>
+
+    
+      
+        <p>
+          Comments are configured with provider: <strong>giscus</strong>,
+          but are disabled in non-production environments.
+        </p>
+      
+    
+  </article>
+
+  
+  
+    
+<div class="page__related">
+  
+  <h2 class="page__related-title">You May Also Enjoy</h2>
+  <div class="grid__wrapper">
+    
+      
+      
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/sistemas/monitorizaci%C3%B3n/2025/05/01/Instalacion-configuracion-y-monitoreo-zabbix.html" rel="permalink">Instalación, configuración y monitorización usando Zabbix
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2025-05-01T13:19:00+02:00">May 1, 2025</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          7 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Este post describe paso a paso cómo instalar y configurar Zabbix 6.0 LTS en una máquina virtual con Debian 12. Está pensado para crear un entorno de práctica...</p>
+  </article>
+</div>
+
+    
+      
+      
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/sistemas/monitorizaci%C3%B3n/2024/04/11/Monitorizaci%C3%B3n-de-servidores-con-grafana.html" rel="permalink">Monitorización de servidores con Grafana
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2024-04-11T13:14:06+02:00">April 11, 2024</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          10 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Aprende a instalar, configurar y personalizar Grafana para la monitorización avanzada de servidores. Descubre cómo integrar Prometheus, crear dashboards inte...</p>
+  </article>
+</div>
+
+    
+      
+      
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/seguridad/2021/12/21/SoftEther-VPN.html" rel="permalink">Introducción SoftEther VPN
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2021-12-21T13:44:30+01:00">December 21, 2021</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          64 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">SoftEther VPN es uno de los software VPN multiprotocolo más potentes y rápidos del mundo en la actualidad. Funciona en sistemas Windows, Solaris, Mac, FreeBS...</p>
+  </article>
+</div>
+
+    
+      
+      
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/aplicaciones%20web/apuntes/2021/09/21/Introduccion-a-Docker.html" rel="permalink">Introducción a Docker
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2021-09-21T13:14:06+02:00">September 21, 2021</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          19 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Docker nos permite de forma sencilla crear contenedores ligeros y fáciles de mover donde ejecutar nuestras aplicaciones software sobre cualquier máquina con ...</p>
+  </article>
+</div>
+
+    
+  </div>
+</div>
+
+  
+  
+</div>
+
+      
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">&copy; 2025 <a href="http://localhost:4000">Blog de Sergio Ibáñez</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+    <script>
+  'use strict';
+
+  (function () {
+    var commentContainer = document.querySelector('#giscus-comments');
+
+    if (!commentContainer) {
+      return;
+    }
+
+    var script = document.createElement('script');
+
+    script.setAttribute('src', 'https://giscus.app/client.js');
+    script.setAttribute('data-repo', '');
+    script.setAttribute('data-repo-id', '');
+    script.setAttribute('data-category', '');
+    script.setAttribute('data-category-id', '');
+    script.setAttribute('data-mapping', 'pathname');
+    script.setAttribute('data-strict', '0');
+    script.setAttribute('data-reactions-enabled', '1');
+    script.setAttribute('data-emit-metadata', '0');
+    script.setAttribute('data-input-position', 'top');
+    script.setAttribute('data-theme', 'preferred_color_scheme');
+    script.setAttribute('data-lang',  'es');
+    
+    script.setAttribute('crossorigin', 'anonymous');
+
+    script.setAttribute('async', '');
+
+    commentContainer.appendChild(script);
+  })();
+</script>
+
+  
+
+
+
+
+  </body>
+</html>

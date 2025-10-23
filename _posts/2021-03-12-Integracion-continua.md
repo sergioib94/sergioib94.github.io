@@ -1,5 +1,4 @@
 ---
-layout: post
 title: "Introduccion a la Integracion Continua"
 date: 2021-03-12T18:12:40+01:00
 categories: [Aplicaciones Web]

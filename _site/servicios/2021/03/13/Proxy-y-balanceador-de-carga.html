@@ -1,0 +1,783 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.27.3 by Michael Rose
+  Copyright 2013-2025 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="es-ES" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Proxy y balanceador de carga - Blog de Sergio Ibáñez</title>
+<meta name="description" content="En este posts se explicara el uso y configuracion de un balanceador de carga usando para ello una maquina virtual de un escenario virtual creado en posts anteriores.">
+
+
+  <meta name="author" content="Sergio Ibáñez Núñez">
+  
+  <meta property="article:author" content="Sergio Ibáñez Núñez">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="es_ES">
+<meta property="og:site_name" content="Blog de Sergio Ibáñez">
+<meta property="og:title" content="Proxy y balanceador de carga">
+<meta property="og:url" content="http://localhost:4000/servicios/2021/03/13/Proxy-y-balanceador-de-carga.html">
+
+
+  <meta property="og:description" content="En este posts se explicara el uso y configuracion de un balanceador de carga usando para ello una maquina virtual de un escenario virtual creado en posts anteriores.">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2021-03-13T12:44:43+01:00">
+
+
+
+
+
+
+<link rel="canonical" href="http://localhost:4000/servicios/2021/03/13/Proxy-y-balanceador-de-carga.html">
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Blog de Sergio Ibáñez Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single wide" dir="ltr">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          Blog de Sergio Ibáñez
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a
+                href="/"
+                
+                
+              >Inicio</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/posts/"
+                
+                
+              >Posts</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/categories/"
+                
+                
+              >Categorías</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/tags/"
+                
+                
+              >Etiquetas</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/search/"
+                
+                
+              >Buscar</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/about/"
+                
+                
+              >Sobre mí</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Proxy y balanceador de carga">
+    <meta itemprop="description" content="En este posts se explicara el uso y configuracion de un balanceador de carga usando para ello una maquina virtual de un escenario virtual creado en posts anteriores.">
+    <meta itemprop="datePublished" content="2021-03-13T12:44:43+01:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">
+            <a href="http://localhost:4000/servicios/2021/03/13/Proxy-y-balanceador-de-carga.html" itemprop="url">Proxy y balanceador de carga
+</a>
+          </h1>
+          
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2021-03-13T12:44:43+01:00">March 13, 2021</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          6 minute read
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <h3 id="balanceador-de-carga"><strong>Balanceador de carga</strong></h3>
+
+<p>En la maquina de nuestro escenario llamada balanceador, instalamos haproxy:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>apt install haproxy
+</code></pre></div></div>
+
+<p>Configuramos haproxy (/etc/haproxy/haproxy.cfg) de la siguiente forma:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>global
+    daemon
+    maxconn 256
+    user    haproxy
+    group   haproxy
+    log     127.0.0.1       local0
+    log     127.0.0.1       local1  notice     
+defaults
+    mode    http
+    log     global
+    timeout connect 5000ms
+    timeout client  50000ms
+    timeout server  50000ms        
+listen granja_cda 
+    bind 172.22.5.31:80 #aquí pon la dirección ip del balanceador
+    mode http
+    stats enable
+    stats auth  cda:cda
+    balance roundrobin
+    server uno 10.10.10.11:80 maxconn 128
+    server dos 10.10.10.22:80 maxconn 128
+</code></pre></div></div>
+
+<p>Una vez configurado, tendremos que iniciar el servicio, pero antes para ello tendremos que añadir la siguiente linea al fichero /etc/default/haproxy de forma que haproxy pueda arrancar desde el script de inicio.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ENABLED=1
+</code></pre></div></div>
+
+<p>Balanceador en funcionamiento:</p>
+
+<p><img src="/images/proxy-balanceador/apache1.png" alt="apache1" /></p>
+
+<p><img src="/images/proxy-balanceador/apache2.png" alt="apache2" /></p>
+
+<p>Tarea 2: Entrega una captura de pantalla donde se vea la página web de estadísticas de haproxy (abrir en un navegador web la URL http://172.22.x.x/haproxy?stats, pedirá un usuario y un password, ambos cda).</p>
+
+<p><img src="/images/proxy-balanceador/tarea2_balanceador.png" alt="estadisticas haproxy" /></p>
+
+<p>Tarea 3: Desde uno de los servidores (apache1 ó apache2), verificar los logs del servidor Apache. En todos los casos debería figurar como única dirección IP cliente la IP interna de la máquina balanceador 10.10.10.1. ¿Por qué?</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root@apache1:/home/vagrant# cat /var/log/apache2/access.log 
+10.10.10.1 - - [23/Feb/2021:09:25:15 +0000] "GET / HTTP/1.1" 200 436 "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.182 Safari/537.36"
+10.10.10.1 - - [23/Feb/2021:09:32:23 +0000] "GET / HTTP/1.1" 200 436 "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.182 Safari/537.36"
+10.10.10.1 - - [23/Feb/2021:09:32:25 +0000] "GET / HTTP/1.1" 200 436 "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.182 Safari/537.36"
+10.10.10.1 - - [23/Feb/2021:09:32:27 +0000] "GET / HTTP/1.1" 200 436 "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.182 Safari/537.36"
+10.10.10.1 - - [23/Feb/2021:09:32:28 +0000] "GET / HTTP/1.1" 200 436 "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.182 Safari/537.36"
+10.10.10.1 - - [23/Feb/2021:09:32:30 +0000] "GET / HTTP/1.1" 200 436 "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.182 Safari/537.36"
+</code></pre></div></div>
+
+<p>Como podemos ver, siempre se nos muestra la ip interna de la maquina balanceadora ya que es la que se encarga de preguntar a los servidores web y también el que manda la respuesta al cliente.</p>
+
+<h3 id="configurar-la-persistencia-de-conexiones-web-sticky-sessions">Configurar la persistencia de conexiones web (sticky sessions)</h3>
+
+<p>Configuramos para empezar el fichero /etc/haproxy/haproxy.cfg añadiéndole las siguientes lineas</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    cookie PHPSESSID prefix                               
+    server uno 10.10.10.11:80 cookie EL_UNO maxconn 128   
+    server dos 10.10.10.22:80 cookie EL_DOS maxconn 128
+</code></pre></div></div>
+
+<p>Tarea 4: Verificar la estructura y valores de las cookies PHPSESSID intercambiadas. En la primera respuesta HTTP (inicio de sesión), se establece su valor con un parámetro HTTP SetCookie en la cabecera de la respuesta. Las sucesivas peticiones del cliente incluyen el valor de esa cookie (parámetro HTTP Cookie en la cabecera de las peticiones.</p>
+
+<p><img src="/images/proxy-balanceador/coockie1.png" alt="coockie1" /></p>
+
+<p><img src="/images/proxy-balanceador/coockie2.png" alt="coockie2" /></p>
+
+<p><img src="/images/proxy-balanceador/cabecera_cookie.png" alt="cabecera cookie" /></p>
+
+<h3 id="proxy">Proxy</h3>
+
+<p>Tarea 1: Instala squid en la máquina squid y configúralo para que permita conexiones desde la red donde este tu ordenador.</p>
+
+<p>Instalamos haciendo apt install squid3</p>
+
+<p>Configuracion (/etc/squid/squid.conf):</p>
+
+<p>tenemos que comprobar que la linea http_port este descomentada y tenga el puerto por defecto 3128.</p>
+
+<p>También creamos una acl por ejemplo llamada en este caso redlocal y modificamos la linea http_access allow localhost de forma que permitamos las conexiones desde nuestra red.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>acl redlocal src 192.168.200.0/24
+
+http_access allow redlocal
+</code></pre></div></div>
+
+<p><img src="/images/proxy-balanceador/acceso_proxy.png" alt="acceso proxy" /></p>
+
+<p>Tarea 2: Prueba que tu ordenador está navegando a través del proxy (HTTP/HTTPS) configurando el proxy de dos maneras diferentes:</p>
+
+<ul>
+  <li>Directamente indicándolo en el navegador.</li>
+</ul>
+
+<p>Una vez configuradas estas lineas, en nuestra maquina cliente configuraremos en nuestra maquina el proxy en un navegador firefox.</p>
+
+<p>Para configurar el acceso a proxy en firefox:</p>
+
+<p>Menú → Preferencias → General → Configuración de red → Configuración</p>
+
+<p><img src="/images/proxy-balanceador/configuracion_proxy.png" alt="configuracion proxy" /></p>
+
+<p>Configuramos el proxy de la siguiente forma y accedemos a alguna pagina mientras vemos los logs de nuestro proxy para comprobar su correcto funcionamiento.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Cat /var/log/squid/access.log
+
+1614097489.287   8227 192.168.200.1 TCP_TUNNEL/200 26299 CONNECT www.josedomingo.org:443 - HIER_DIRECT/37.187.119.60 -
+1614097489.294   5112 192.168.200.1 TCP_TUNNEL/200 4046 CONNECT www.josedomingo.org:443 - HIER_DIRECT/37.187.119.60 -
+1614097489.294   5120 192.168.200.1 TCP_TUNNEL/200 20014 CONNECT www.josedomingo.org:443 - HIER_DIRECT/37.187.119.60 -
+1614097489.296   5120 192.168.200.1 TCP_TUNNEL/200 20421 CONNECT www.josedomingo.org:443 - HIER_DIRECT/37.187.119.60 -
+1614097489.309   5116 192.168.200.1 TCP_TUNNEL/200 18348 CONNECT www.josedomingo.org:443 - HIER_DIRECT/37.187.119.60 -
+1614097489.396   5215 192.168.200.1 TCP_TUNNEL/200 8312 CONNECT plataforma.josedomingo.org:443 - HIER_DIRECT/37.187.119.60 -
+1614097489.478   5294 192.168.200.1 TCP_TUNNEL/200 239366 CONNECT www.josedomingo.org:443 - HIER_DIRECT/37.187.119.60 -
+</code></pre></div></div>
+
+<ul>
+  <li>Configurando el proxy del sistema en el entorno gráfico (tienes que indicar en el navegador que vas a hacer uso del proxy del sistema).</li>
+</ul>
+
+<p>Muestra el contenido del fichero ´/var/log/squid/access.log` para comprobar que está funcionando el proxy.</p>
+
+<p>Tarea 3: Configura squid para que pueda ser utilizado desde el cliente interno. En el cliente interno configura el proxy desde la línea de comandos (con una variable de entorno). Fíjate que no hemos puesto ninguna regla SNAT y podemos navegar (protocolo HTTP), pero no podemos hacer ping o utilizar otro servicio.</p>
+
+<p>Para que nuestro cliente use el proxy, volvemos a modificar el fichero /etc/squid/squid.conf, añadiendo esta vez las siguientes lineas:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>acl redinterna src 10.0.0.0/24
+
+http_access allow redinterna
+</code></pre></div></div>
+
+<p>En este caso como el cliente no tiene entorno gráfico, instalamos el paquete w3m por ejemplo para comprobar el funcionamiento del proxy.</p>
+
+<p>Configuramos las variables de entorno:</p>
+
+<p>Como ejemplo, en el cliente accedemos por w3m a la moodle mientras en la maquina proxy comprobamos el log.</p>
+
+<p><img src="/images/proxy-balanceador/acceso_w3m.png" alt="acceso w3m" /></p>
+
+<p>Log:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1614098739.005    240 10.0.0.11 TCP_MISS/301 479 GET http://dit.gonzalonazareno.org/ - HIER_DIRECT/80.59.1.152 text/html
+1614098739.249    241 10.0.0.11 TCP_TUNNEL_ABORTED/200 4242 CONNECT dit.gonzalonazareno.org:443 - HIER_DIRECT/80.59.1.152 -
+1614098739.493    241 10.0.0.11 TCP_TUNNEL/200 4243 CONNECT dit.gonzalonazareno.org:443 - HIER_DIRECT/80.59.1.152 -
+1614098739.975    480 10.0.0.11 TCP_TUNNEL/200 16764 CONNECT dit.gonzalonazareno.org:443 - HIER_DIRECT/80.59.1.152 -
+1614098784.423     45 10.0.0.11 TCP_MISS/301 485 GET http://dit.gonzalonazareno.org/moodle - HIER_DIRECT/80.59.1.152 text/html
+1614098784.661    234 10.0.0.11 TCP_TUNNEL/200 4241 CONNECT dit.gonzalonazareno.org:443 - HIER_DIRECT/80.59.1.152 -
+1614098787.455   2790 10.0.0.11 TCP_TUNNEL/200 57844 CONNECT dit.gonzalonazareno.org:443 - HIER_DIRECT/80.59.1.152 -
+</code></pre></div></div>
+
+<p>Tarea 4: Con squid podemos filtrar el acceso por url o dominios, realiza las configuraciones necesarias para implementar un filtro que funcione como lista negra (todo el acceso es permitido menos las url o dominios que indiquemos en un fichero.)</p>
+
+<p>Crearemos una lista negra poniendo un fichero con los dominios “prohibidos” para nuestros usuarios, este fichero debe estar en /etc/squid/.</p>
+
+<p>Fichero blacklist:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>www.twitter.es
+www.instagram.es
+www.marca.es
+</code></pre></div></div>
+
+<p>Una vez tengamos el fichero, añadimos una nueva acl y un http_access al fichero /etc/squid/squid.conf:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>acl bloqueo url_regex ”/etc/squid/blacklist”
+http_access deny bloqueo
+</code></pre></div></div>
+
+<p>log:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1614100108.079    176 10.0.0.11 TCP_DENIED/403 3908 GET http://www.twitter.es/ - HIER_NONE/- text/html
+1614100259.716      0 10.0.0.11 TCP_DENIED/403 3914 GET http://www.instagram.es/ - HIER_NONE/- text/html
+1614100278.343      0 10.0.0.11 TCP_DENIED/403 3902 GET http://www.marca.es/ - HIER_NONE/- text/html
+1614100625.023    264 10.0.0.11 TCP_MISS/301 641 GET http://www.josedomingo.org/ - HIER_DIRECT/37.187.119.60 text/html
+1614100625.198    172 10.0.0.11 TCP_TUNNEL/200 4238 CONNECT www.josedomingo.org:443 - HIER_DIRECT/37.187.119.60 -
+1614100625.342    140 10.0.0.11 TCP_TUNNEL/200 10130 CONNECT www.josedomingo.org:443 - HIER_DIRECT/37.187.119.60 -
+</code></pre></div></div>
+
+<p>Como vemos los 3 son bloqueados, sin embargo www.josedomingo.org no.</p>
+
+<p>Tarea 5: Realiza las configuraciones necesarias para implementar un filtro que funcione como lista blanca (todo el acceso es denegado menos las url o dominios que indiquemos en un fichero.)</p>
+
+<p>La lista blanca se hace de forma parecida a la lista negra, en este caso creamos un fichero a los que se podrá acceder, indicamos este fichero en la acl y esta vez ponemos 2 http_access, uno con la opcion allow “nombre de la regla acl” y otra deny all, de forma que las paginas del fichero son permitidas, y el resto todas bloqueadas.</p>
+
+<p>Fichero whitelist:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dit.gonzalonazareno.es
+www.josedomingo.org
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>acl seguro /etc/squid/whitelist
+http_access allow seguro
+http_access deny all
+</code></pre></div></div>
+
+<p>Comprobamos el log:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1614101137.290    380 10.0.0.11 TCP_MISS/301 479 GET http://dit.gonzalonazareno.org/ - HIER_DIRECT/80.59.1.152 text/html
+1614101137.537    241 10.0.0.11 TCP_TUNNEL_ABORTED/200 4242 CONNECT dit.gonzalonazareno.org:443 - HIER_DIRECT/80.59.1.152 -
+1614101137.774    236 10.0.0.11 TCP_TUNNEL_ABORTED/200 4243 CONNECT dit.gonzalonazareno.org:443 - HIER_DIRECT/80.59.1.152 -
+1614101138.415    639 10.0.0.11 TCP_TUNNEL/200 16764 CONNECT dit.gonzalonazareno.org:443 - HIER_DIRECT/80.59.1.152 -
+1614101141.482     44 10.0.0.11 TCP_MISS/301 485 GET http://dit.gonzalonazareno.org/moodle - HIER_DIRECT/80.59.1.152 text/html
+1614101141.884    400 10.0.0.11 TCP_TUNNEL_ABORTED/200 4241 CONNECT dit.gonzalonazareno.org:443 - HIER_DIRECT/80.59.1.152 -
+1614101144.121   2234 10.0.0.11 TCP_TUNNEL/200 57844 CONNECT dit.gonzalonazareno.org:443 - HIER_DIRECT/80.59.1.152 -
+1614101161.543    370 10.0.0.11 TCP_MISS/301 641 GET http://www.josedomingo.org/ - HIER_DIRECT/37.187.119.60 text/html
+1614101161.685    139 10.0.0.11 TCP_TUNNEL/200 4238 CONNECT www.josedomingo.org:443 - HIER_DIRECT/37.187.119.60 -
+1614101161.830    137 10.0.0.11 TCP_TUNNEL/200 10130 CONNECT www.josedomingo.org:443 - HIER_DIRECT/37.187.119.60 -
+1614101181.478      0 10.0.0.11 TCP_DENIED/403 3902 GET http://www.hola.com/ - HIER_NONE/- text/html
+1614101204.068      0 10.0.0.11 TCP_DENIED/403 3914 GET http://www.dockerhub.es/ - HIER_NONE/- text/html
+1614101216.040      0 10.0.0.11 TCP_DENIED/403 3905 GET http://www.github.es/ - HIER_NONE/- text/html
+</code></pre></div></div>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/categories/#servicios" class="page__taxonomy-item p-category" rel="tag">Servicios</a>
+    
+    </span>
+  </p>
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2021-03-13T12:44:43+01:00">March 13, 2021</time></p>
+
+      </footer>
+
+      <section class="page__share">
+  <h4 class="page__share-title">Share on</h4>
+
+  <a href="https://x.com/intent/tweet?text=Proxy+y+balanceador+de+carga%20http%3A%2F%2Flocalhost%3A4000%2Fservicios%2F2021%2F03%2F13%2FProxy-y-balanceador-de-carga.html" class="btn btn--x" aria-label="Share on X" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on X">
+    <i class="fab fa-fw fa-x-twitter" aria-hidden="true"></i><span> X</span>
+  </a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fservicios%2F2021%2F03%2F13%2FProxy-y-balanceador-de-carga.html" class="btn btn--facebook" aria-label="Share on Facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook">
+    <i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span>
+  </a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http://localhost:4000/servicios/2021/03/13/Proxy-y-balanceador-de-carga.html" class="btn btn--linkedin" aria-label="Share on LinkedIn" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn">
+    <i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span>
+  </a>
+
+  <a href="https://bsky.app/intent/compose?text=Proxy+y+balanceador+de+carga%20http%3A%2F%2Flocalhost%3A4000%2Fservicios%2F2021%2F03%2F13%2FProxy-y-balanceador-de-carga.html" class="btn btn--bluesky" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Bluesky">
+    <i class="fab fa-fw fa-bluesky" aria-hidden="true"></i><span> Bluesky</span>
+  </a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/cloud/2021/03/13/Kubernetes-lets-chat.html" class="pagination--pager" title="Kubernetes Letschat">Previous</a>
+    
+    
+      <a href="/cloud/2021/03/13/Instalacion-openstack-kolla-ansible.html" class="pagination--pager" title="Instalacion Openstack con Kolla Ansible">Next</a>
+    
+  </nav>
+
+
+    </div>
+
+    
+      
+        <p>
+          Comments are configured with provider: <strong>giscus</strong>,
+          but are disabled in non-production environments.
+        </p>
+      
+    
+  </article>
+
+  
+  
+    
+<div class="page__related">
+  
+  <h2 class="page__related-title">You May Also Enjoy</h2>
+  <div class="grid__wrapper">
+    
+      
+      
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/sistemas/monitorizaci%C3%B3n/2025/05/01/Instalacion-configuracion-y-monitoreo-zabbix.html" rel="permalink">Instalación, configuración y monitorización usando Zabbix
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2025-05-01T13:19:00+02:00">May 1, 2025</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          7 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Este post describe paso a paso cómo instalar y configurar Zabbix 6.0 LTS en una máquina virtual con Debian 12. Está pensado para crear un entorno de práctica...</p>
+  </article>
+</div>
+
+    
+      
+      
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/sistemas/monitorizaci%C3%B3n/2024/04/11/Monitorizaci%C3%B3n-de-servidores-con-grafana.html" rel="permalink">Monitorización de servidores con Grafana
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2024-04-11T13:14:06+02:00">April 11, 2024</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          10 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Aprende a instalar, configurar y personalizar Grafana para la monitorización avanzada de servidores. Descubre cómo integrar Prometheus, crear dashboards inte...</p>
+  </article>
+</div>
+
+    
+      
+      
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/seguridad/2021/12/21/SoftEther-VPN.html" rel="permalink">Introducción SoftEther VPN
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2021-12-21T13:44:30+01:00">December 21, 2021</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          64 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">SoftEther VPN es uno de los software VPN multiprotocolo más potentes y rápidos del mundo en la actualidad. Funciona en sistemas Windows, Solaris, Mac, FreeBS...</p>
+  </article>
+</div>
+
+    
+      
+      
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/aplicaciones%20web/apuntes/2021/09/21/Introduccion-a-Docker.html" rel="permalink">Introducción a Docker
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2021-09-21T13:14:06+02:00">September 21, 2021</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          19 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Docker nos permite de forma sencilla crear contenedores ligeros y fáciles de mover donde ejecutar nuestras aplicaciones software sobre cualquier máquina con ...</p>
+  </article>
+</div>
+
+    
+  </div>
+</div>
+
+  
+  
+</div>
+
+      
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">&copy; 2025 <a href="http://localhost:4000">Blog de Sergio Ibáñez</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+    <script>
+  'use strict';
+
+  (function () {
+    var commentContainer = document.querySelector('#giscus-comments');
+
+    if (!commentContainer) {
+      return;
+    }
+
+    var script = document.createElement('script');
+
+    script.setAttribute('src', 'https://giscus.app/client.js');
+    script.setAttribute('data-repo', '');
+    script.setAttribute('data-repo-id', '');
+    script.setAttribute('data-category', '');
+    script.setAttribute('data-category-id', '');
+    script.setAttribute('data-mapping', 'pathname');
+    script.setAttribute('data-strict', '0');
+    script.setAttribute('data-reactions-enabled', '1');
+    script.setAttribute('data-emit-metadata', '0');
+    script.setAttribute('data-input-position', 'top');
+    script.setAttribute('data-theme', 'preferred_color_scheme');
+    script.setAttribute('data-lang',  'es');
+    
+    script.setAttribute('crossorigin', 'anonymous');
+
+    script.setAttribute('async', '');
+
+    commentContainer.appendChild(script);
+  })();
+</script>
+
+  
+
+
+
+
+  </body>
+</html>

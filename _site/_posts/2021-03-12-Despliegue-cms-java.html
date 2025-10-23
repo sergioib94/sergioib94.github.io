@@ -1,0 +1,618 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.27.3 by Michael Rose
+  Copyright 2013-2025 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="es-ES" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Despliegue CMS Java - Blog de Sergio Ibáñez</title>
+<meta name="description" content="En este post, se va a desplegar una aplicacion cms java, en este caso Guacamole. Guacamole es una aplicacion que permite acceder a uno o más escritorios desde cualquier lugar de forma remota, sin tener que instalar un cliente, especialmente cuando no es posible instalar un cliente.">
+
+
+  <meta name="author" content="Sergio Ibáñez Núñez">
+  
+  <meta property="article:author" content="Sergio Ibáñez Núñez">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="es_ES">
+<meta property="og:site_name" content="Blog de Sergio Ibáñez">
+<meta property="og:title" content="Despliegue CMS Java">
+<meta property="og:url" content="http://localhost:4000/_posts/2021-03-12-Despliegue-cms-java.html">
+
+
+  <meta property="og:description" content="En este post, se va a desplegar una aplicacion cms java, en este caso Guacamole. Guacamole es una aplicacion que permite acceder a uno o más escritorios desde cualquier lugar de forma remota, sin tener que instalar un cliente, especialmente cuando no es posible instalar un cliente.">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2021-03-12T13:49:27+01:00">
+
+
+
+
+
+
+<link rel="canonical" href="http://localhost:4000/_posts/2021-03-12-Despliegue-cms-java.html">
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Blog de Sergio Ibáñez Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single" dir="ltr">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          Blog de Sergio Ibáñez
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a
+                href="/"
+                
+                
+              >Inicio</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/posts/"
+                
+                
+              >Posts</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/categories/"
+                
+                
+              >Categorías</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/tags/"
+                
+                
+              >Etiquetas</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/search/"
+                
+                
+              >Buscar</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/about/"
+                
+                
+              >Sobre mí</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="http://localhost:4000/">
+        <img src="/assets/images/avatar.png" alt="Sergio Ibáñez Núñez" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="http://localhost:4000/" itemprop="url">Sergio Ibáñez Núñez</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>Técnico IT y entusiasta de la automatización</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Despliegue CMS Java">
+    <meta itemprop="description" content="En este post, se va a desplegar una aplicacion cms java, en este caso Guacamole.Guacamole es una aplicacion que permite acceder a uno o más escritorios desde cualquier lugar de forma remota, sin tener que instalar un cliente, especialmente cuando no es posible instalar un cliente.">
+    <meta itemprop="datePublished" content="2021-03-12T13:49:27+01:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">
+            <a href="http://localhost:4000/_posts/2021-03-12-Despliegue-cms-java.html" itemprop="url">Despliegue CMS Java
+</a>
+          </h1>
+          
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <h3 id="introduccion"><strong>Introduccion</strong></h3>
+
+<p>En este post, se va a desplegar una aplicacion cms java, en este caso Guacamole.</p>
+
+<p>Guacamole es una aplicacion que permite acceder a uno o más escritorios desde cualquier lugar de forma remota, sin tener que instalar un cliente, especialmente cuando no es posible instalar un cliente. Al configurar un servidor Guacamole, puede proporcionar acceso a cualquier otra maquina en la red desde prácticamente cualquier otra maquina en Internet, en cualquier parte del mundo. Incluso se pueden utilizar teléfonos móviles o tablets, sin tener que instalar nada. La presencia de un proxy o firewall corporativo no impide el uso de Guacamole.</p>
+
+<h3 id="instalacion"><strong>Instalacion</strong></h3>
+
+<p>Comenzamos instalando tomcat:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo apt install tomcat9
+</code></pre></div></div>
+
+<p>Después de la instalación de tomcat, pasamos a instalar el servidor guacamole haciendo uso de wget:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo wget http://archive.apache.org/dist/guacamole/1.2.0/source/guacamole-server-1.2.0.tar.gz
+</code></pre></div></div>
+
+<p>Una vez tengamos guacamole-server en la maquina, lo descomprimimos y accedemos al directorio. Dentro del directorio ejecutaremos ./configure –with-init-dir=/etc/init.d. .configure, preparará la compilación de forma que guacamole pueda ser instalado. Instalamos guacamole ejecutando los siguientes comandos:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>make
+sudo make install
+sudo ldconfig
+</code></pre></div></div>
+
+<p>Ahora pasamos a instalar guacamole client en el mismo servidor, al igual que con guacamole server lo hacemos usando wget, pero esta vez usando el fichero .war.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo wget http://archive.apache.org/dist/guacamole/1.2.0/binary/guacamole-1.2.0.war
+</code></pre></div></div>
+
+<p>Después copiamos ese fichero .war descargado en la siguiente ruta /var/lib/tomcat9/webapps/ y ya tendremos guacamole instalado en nuestro equipo. En estos momentos solo nos quedara configurarlo.</p>
+
+<p>La configuración de guacamole se hará de la siguiente forma:</p>
+
+<p>Creamos en la ruta /usr/share/tomcat9/ un directorio llamado .guacamole en el que mas adelante crearemos un enlace simbólico por el que tomcat cogerá la configuración creada en el fichero guacamole.properties.</p>
+
+<p>Se crea el fichero guacamole.properties en /etc/guacamole/ con el siguiente contenido:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>guacd-hostname: localhost
+guacd-port: 4822
+user-mapping: /etc/guacamole/user-mapping.xml
+auth-provider: net.sourceforge.guacamole.net.basic.BasicFileAuthenticationProvider
+basic-user-mapping: /etc/guacamole/user-mapping.xml
+</code></pre></div></div>
+
+<p>Creamos el enlace simbólico apuntando al directorio .guacamole creado anteriormente.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo ln -s /etc/guacamole/guacamole.properties /usr/share/tomcat9/.guacamole/
+</code></pre></div></div>
+
+<p>Se configuran tanto los usuarios con autoridad para acceder en la aplicación de guacamole y también las conexiones que tendrá creando el fichero user-mapping.xml en /etc/guacamole y configurándolo de la siguiente forma:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;user-mapping&gt;
+        &lt;authorize 
+         username="usuario" 
+         password="usuario"&gt;
+                &lt;connection name="Real"&gt;
+                        &lt;protocol&gt;ssh&lt;/protocol&gt;
+                        &lt;param name="hostname"&gt;192.168.1.74&lt;/param&gt;
+                        &lt;param name="port"&gt;22&lt;/param&gt;
+                        &lt;param name="username"&gt;sergioib&lt;/param&gt;
+                &lt;/connection&gt;
+                &lt;connection name="Vagrant"&gt;
+                        &lt;protocol&gt;ssh&lt;/protocol&gt;
+                        &lt;param name="hostname"&gt;192.168.1.81&lt;/param&gt;
+                        &lt;param name="port"&gt;22&lt;/param&gt;
+                        &lt;param name="username"&gt;sergio&lt;/param&gt;
+                &lt;/connection&gt;
+        &lt;/authorize&gt;
+&lt;/user-mapping&gt;
+</code></pre></div></div>
+
+<p>En este caso el usuario con autoridad para acceder a la aplicación de guacamole sera usuario con una contraseña usuario y podrá establecer 2 conexiones, una a mi maquina real y otra creada en vagrant. En este caso al no contar aun con una base de datos, los usuarios que se creen entraran logueados como usuarios normales, ya que para crear un usuarios administrador es necesario que haya una base de datos creada.</p>
+
+<p>Se le asigna a tomcat permisos sobre el fichero user-mapping:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo chmod 600 /etc/guacamole/user-mapping.xml 
+sudo chown tomcat:tomcat /etc/guacamole/user-mapping.xml
+</code></pre></div></div>
+
+<ul>
+  <li>¿Has necesitado instalar alguna librería?¿Has necesitado instalar un conector de una base de datos?</li>
+</ul>
+
+<p>Si, para poder instalar de forma correcta guacamole son necesarias varias librerias:</p>
+
+<p>Librerias obligatorias:</p>
+
+<p>libcairo2-dev libjpeg-dev libpng-dev libossp-uuid-dev libtool</p>
+
+<p>Dependiendo del uso que se le vaya a dar a guacamole hay otras librerias que son opcionales:</p>
+
+<p>libavutil-dev libswscale-dev libpango1.0-dev libssh2-1-dev libtelnet-dev libvncserver-dev libpulse-dev libssl-dev libvorbis-dev libwebp-dev</p>
+
+<p>Comprobamos que guacamole realmente esta funcionando</p>
+
+<p><img src="/images/guacamole/Guacamole-server.png" alt="Guacamole server" /></p>
+
+<ul>
+  <li>Una vez instalado guacamole, realizaremos la configuración necesaria en apache2 y tomcat (utilizando el protocolo AJP) para que la aplicación sea servida por el servidor web.</li>
+</ul>
+
+<p>El protocolo AJP no funciona en guacamole, por lo que en su lugar se creará y configurará un proxy inverso con apache.</p>
+
+<p>Empezamos instalando apache2 en nuestro servidor</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo apt install apache2
+</code></pre></div></div>
+
+<p>Para configurar nuestro proxy inverso tenemos que configurar varias lineas en /var/lib/tomcat9/conf/server.xml</p>
+
+<p>Lo primero sera descomentar las siguientes lineas, en caso de que estén comentadas:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;Connector port="8080" protocol="HTTP/1.1"
+               connectionTimeout="20000"
+               URIEncoding="UTF-8"
+               redirectPort="8443" /&gt;
+</code></pre></div></div>
+
+<p>Ademas de estas lineas, tendremos que añadir las siguientes al final del fichero, en el apartado host:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;Valve className="org.apache.catalina.valves.RemoteIpValve"
+               internalProxies="127.0.0.1"
+               remoteIpHeader="x-forwarded-for"
+               remoteIpProxiesHeader="x-forwarded-by"
+               protocolHeader="x-forwarded-proto" /&gt;
+</code></pre></div></div>
+
+<p>Después de configurar el fichero server.xml, habilitamos los módulos necesarios de apache2 para configurar mas adelante nuestro proxy, estos módulos serán mod_proxy y mod_proxy_http.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo a2enmod proxy
+sudo a2enmod proxy_http
+</code></pre></div></div>
+
+<p>Ahora pasamos a configurar nuestro fichero de configuración en apache, en este caso como fichero de configuración se ha usado el fichero por defecto 000.default.conf, añadiendo en el las siguientes lineas.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;VirtualHost *:80&gt;
+
+        ServerAdmin webmaster@localhost
+        DocumentRoot /var/www/html
+        ServerName guacamole.sergio.org
+
+        ErrorLog ${APACHE_LOG_DIR}/error.log
+        CustomLog ${APACHE_LOG_DIR}/access.log combined
+
+        ProxyPreserveHost On
+        ProxyRequests Off
+        ProxyPass / http://127.0.0.1:8080/guacamole/
+        ProxyPassReverse / http://127.0.0.1:8080/guacamole/
+&lt;/VirtualHost&gt;
+</code></pre></div></div>
+
+<p>Reiniciamos el servicio de apache para que los cambios se guarden y añadimos el ServerName al /etc/hosts de la maquina real para comprobar que realmente funciona.</p>
+
+<ul>
+  <li>Comprobamos que la aplicación esta funcionando servida por apache2.</li>
+</ul>
+
+<p>Ponemos en el navegador el nombre que le hemos dado en apache a la aplicacion, en mi caso guacamole.sergio.org y comprobamos que se nos abre la aplicación de guacamole.</p>
+
+<p><img src="/images/guacamole/guacamole_inicio.png" alt="guacamole inicio" /></p>
+
+<p>Accedemos a través del usuario y contraseña configurados anterior mente en el fichero user-mapping.xml.</p>
+
+<p><img src="/images/guacamole/guacamole.png" alt="guacamole" /></p>
+
+<p>En la parte inferior se nos muestran las dos conexiones configuradas anteriormente, una a mi maquina real, y otra a una maquina vagrant, comprobamos que realmente guacamole funciona conectándonos como ejemplo a la maquina real.</p>
+
+<p><img src="/images/guacamole/conexion_guacamole.png" alt="conexion guacamole" /></p>
+
+<p>Comprobamos que funciona la aplicación perfectamente.</p>
+
+<h3 id="autentificación-a-través-de-base-de-datos"><strong>Autentificación a través de base de datos</strong></h3>
+
+<p>Instalamos en este caso la base de datos postgresql</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo apt install postgresql
+</code></pre></div></div>
+
+<p>Para poder hacer uso de este tipo de autentificación sera necesario descargar 2 ficheros:</p>
+
+<p>El primero guacamole-auth-jdbc:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>wget http://archive.apache.org/dist/guacamole/1.2.0/binary/guacamole-auth-jdbc-1.2.0.tar.gz
+</code></pre></div></div>
+
+<p>Extraemos el contenido del paquete y creamos en /etc/guacamole/ un directorio /extensions donde a continuación se tendrá que poner el fichero .jar que esta en guacamole-auth-jdbc-1.2.0/postgresql/</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>tar -xvf guacamole-auth-jdbc-1.2.0.tar.gz 
+root@Guacd:~# mv guacamole-auth-jdbc-1.2.0/postgresql/guacamole-auth-jdbc-postgresql-1.2.0.jar /etc/guacamole/extensions/
+</code></pre></div></div>
+
+<p>Nos descargamos también el conector postgres necesario para que guacamole use la base de datos.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>wget https://jdbc.postgresql.org/download/postgresql-42.2.18.jar
+</code></pre></div></div>
+
+<p>Creamos un directorio /lib en /etc/guacamole/ donde pondremos el fichero postgres.jar instalado anteriormente</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mv postgresql-42.2.18.jar /etc/guacamole/lib/
+</code></pre></div></div>
+
+<p>Una vez hecho esto, se podrá empezar a crear la base de datos metiéndonos como usuario postgres (por defecto no trae contraseña, por lo que hay que ponérsela)</p>
+
+<p>Ya logueados como usuario postgres, creamos la base de datos</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>createdb guacamole_db
+</code></pre></div></div>
+
+<p>Creamos las tablas y el usuario administrador de guacamole cargando el esquema por defecto en la base de datos creada</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>postgres@Guacd:/home/vagrant/guacamole-auth-jdbc-1.2.0/postgresql$ cat schema/*.sql | psql -d guacamole_db -f -
+</code></pre></div></div>
+
+<p>Entramos en la base de datos para crear un usuario y asignarle algunos permisos sobre la base de datos creada.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>postgres@Guacd:~$ psql -d guacamole_db
+psql (11.9 (Debian 11.9-0+deb10u1))
+Type "help" for help.
+
+guacamole_db=# CREATE USER sergio WITH PASSWORD 'uaurio01';
+CREATE ROLE
+guacamole_db=# GRANT SELECT,INSERT,UPDATE,DELETE ON ALL TABLES IN SCHEMA public TO sergio;
+GRANT
+guacamole_db=# GRANT SELECT,USAGE ON ALL SEQUENCES IN SCHEMA public TO sergio;
+GRANT
+</code></pre></div></div>
+
+<p>De esta forma el usuario sergio tendrá permisos para hacer select, inserts, updates, deletes sobre todas las tablas del esquema cargado anteriormente. Para poder autentificarnos mediante la base de datos, tendremos que modificar nuestro fichero guacamole.properties añadiendo las siguientes lineas:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>postgresql-hostname: localhost
+postgresql-port: 5432
+postgresql-database: guacamole_db
+postgresql-username: sergio
+postgresql-password: uaurio01
+</code></pre></div></div>
+
+<p>De esta forma contaremos con un usuario a parte del administrador para acceder a nuestro guacamole. Ahora probamos a crear una conexión remota accediendo como administrador.</p>
+
+<p><img src="/images/guacamole/admin.png" alt="admin" /></p>
+
+<p>Una vez que hemos accedido como admin, en el apartado de configuración, vamos a conexiones y una vez ahí probamos a crear la conexión que hemos hecho anteriormente con el usuario normal a nuestra maquina.</p>
+
+<p><img src="/images/guacamole/creacion_conexion.png" alt="creacion conexion" /></p>
+
+<p>Los parámetros a configurar son los mismos que se configuran en user-pammipn.xml, al guardar esta conexion, volvemos al inicio y podremos acceder sin problemas a la maquina.</p>
+
+<p><img src="/images/guacamole/conexion_autentificada.png" alt="conexion autentificada" /></p>
+
+<p>Probamos tambien a conectarnos a alguna de las maquinas del escenario openstack con el que contamos, en este caso nos conectamos a Dulcinea.</p>
+
+<p><img src="/images/guacamole/conexion_dulcinea.png" alt="conexion Dulcinea" /></p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/categories/#aplicaciones-web" class="page__taxonomy-item p-category" rel="tag">Aplicaciones Web</a>
+    
+    </span>
+  </p>
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2021-03-12T13:49:27+01:00">March 12, 2021</time></p>
+
+      </footer>
+
+      
+
+      
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+
+      
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">&copy; 2025 <a href="http://localhost:4000">Blog de Sergio Ibáñez</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

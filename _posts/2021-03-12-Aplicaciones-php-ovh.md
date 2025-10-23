@@ -1,5 +1,4 @@
 ---
-layout: post
 title: "Aplicaciones PHP en OVH"
 date: 2021-03-12T10:37:20+01:00
 categories: [Aplicaciones Web]

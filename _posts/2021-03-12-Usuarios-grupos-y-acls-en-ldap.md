@@ -1,5 +1,4 @@
 ---
-layout: post
 title: "Usuarios, grupos y ACLs en Ldap"
 date: 2021-03-12T14:14:51+01:00
 categories: [Sistemas]

@@ -1,0 +1,459 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.27.3 by Michael Rose
+  Copyright 2013-2025 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="es-ES" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Instalacion y configuracion básica OpenLDAP - Blog de Sergio Ibáñez</title>
+<meta name="description" content="Haciendo uso de una de las maquinas virtuales creada y configurada en el post modificaciones del excenario openstack, se instalara y configurara un servidor ldap.">
+
+
+  <meta name="author" content="Sergio Ibáñez Núñez">
+  
+  <meta property="article:author" content="Sergio Ibáñez Núñez">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="es_ES">
+<meta property="og:site_name" content="Blog de Sergio Ibáñez">
+<meta property="og:title" content="Instalacion y configuracion básica OpenLDAP">
+<meta property="og:url" content="http://localhost:4000/_posts/2021-03-12-Instalacion-y-configuracion-openldap.html">
+
+
+  <meta property="og:description" content="Haciendo uso de una de las maquinas virtuales creada y configurada en el post modificaciones del excenario openstack, se instalara y configurara un servidor ldap.">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2021-03-12T14:11:19+01:00">
+
+
+
+
+
+
+<link rel="canonical" href="http://localhost:4000/_posts/2021-03-12-Instalacion-y-configuracion-openldap.html">
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Blog de Sergio Ibáñez Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single" dir="ltr">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          Blog de Sergio Ibáñez
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a
+                href="/"
+                
+                
+              >Inicio</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/posts/"
+                
+                
+              >Posts</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/categories/"
+                
+                
+              >Categorías</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/tags/"
+                
+                
+              >Etiquetas</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/search/"
+                
+                
+              >Buscar</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/about/"
+                
+                
+              >Sobre mí</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="http://localhost:4000/">
+        <img src="/assets/images/avatar.png" alt="Sergio Ibáñez Núñez" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="http://localhost:4000/" itemprop="url">Sergio Ibáñez Núñez</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>Técnico IT y entusiasta de la automatización</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Instalacion y configuracion básica OpenLDAP">
+    <meta itemprop="description" content="Haciendo uso de una de las maquinas virtuales creada y configurada en el post modificaciones del excenario openstack, se instalara y configurara un servidor ldap.">
+    <meta itemprop="datePublished" content="2021-03-12T14:11:19+01:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">
+            <a href="http://localhost:4000/_posts/2021-03-12-Instalacion-y-configuracion-openldap.html" itemprop="url">Instalacion y configuracion básica OpenLDAP
+</a>
+          </h1>
+          
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <h3 id="introducción"><strong>Introducción</strong></h3>
+
+<p>En la maquina Freston de Openstack creada y configurada en la practica “modificaciones del escenario openstack”, se hara una instalacion y configuracion basica de un servidor Ldap utilizando como base el nombre DNS asignado.</p>
+
+<p><strong>¿Que es LDAP?</strong></p>
+
+<p>Se trata de un conjunto de protocolos de licencia abierta que son utilizados para acceder a la información que está almacenada de forma centralizada en una red. Este protocolo se utiliza a nivel de aplicación para acceder a los servicios de directorio remoto.</p>
+
+<p>Un directorio remoto es un conjunto de objetos que están organizados de forma jerárquica, tales como nombre claves direcciones, etc. Estos objetos estarán disponibles por una serie de cliente conectados mediante una red, normalmente interna o LAN, y proporcionarán las identidades y permisos para esos usuarios que los utilicen.</p>
+
+<h3 id="instalación-ldap"><strong>Instalación Ldap</strong></h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo apt install slapd
+</code></pre></div></div>
+
+<p>Por defecto nuestro DN (nombre de dominio) será dc=gonzalonazareno,dc=org por lo que se cambiara la configuración básica de slapd de forma que coja como dn el nombre completo de nuestro servidor, que en mi caso es freston-sergio.gonzalonazareno.org, este cambio lo hacemos ejecutando:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo dpkg-reconfigure -plow slapd
+</code></pre></div></div>
+
+<p>Indicando primero cual sera el nuevo nombre de dominio que usara ldap y después cambiando el nombre de la organización a IES Gonzalo Nazareno.</p>
+
+<p>Crearemos dos unidades organizativas, una para personas y otra para grupos</p>
+
+<p>Para crear estas unidades, necesitamos un fichero.ldif por lo que creamos uno en el directorio home, en este caso llamado ou.ldif con el siguiente contenido:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dn: ou=People,dc=freston-sergio,dc=gonzalonazareno,dc=org
+ou: People
+objectClass: organizationalUnit
+
+dn: ou=Group,dc=freston-sergio,dc=gonzalonazareno,dc=org
+ou: Group
+objectClass: organizationalUnit
+</code></pre></div></div>
+
+<p>Una vez creado el fichero con la configuración necesaria, lo añadimos a nuestro árbol ldap ejecutando el ldapadd.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ldapadd -x -D "cn=admin,dc=freston-sergio,dc=gonzalonazareno,dc=org" -W -f ou.ldif
+</code></pre></div></div>
+
+<p>Nuestro servidor ldap quedara de la siguiente forma:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>debian@freston:~$ sudo slapcat
+dn: dc=freston-sergio,dc=gonzalonazareno,dc=org
+objectClass: top
+objectClass: dcObject
+objectClass: organization
+o: IES Gonzalo Nazareno
+dc: freston-sergio
+structuralObjectClass: organization
+entryUUID: a394a590-d284-103a-9869-af259156f1d8
+creatorsName: cn=admin,dc=freston-sergio,dc=gonzalonazareno,dc=org
+createTimestamp: 20201214181924Z
+entryCSN: 20201214181924.616104Z#000000#000#000000
+modifiersName: cn=admin,dc=freston-sergio,dc=gonzalonazareno,dc=org
+modifyTimestamp: 20201214181924Z
+
+dn: cn=admin,dc=freston-sergio,dc=gonzalonazareno,dc=org
+objectClass: simpleSecurityObject
+objectClass: organizationalRole
+cn: admin
+description: LDAP administrator
+userPassword:: e1NTSEF9Mm4zR1hIZnB5TklMOTJseExobGZvcjFwdG5BNVpWVjY=
+structuralObjectClass: organizationalRole
+entryUUID: a39b1fa6-d284-103a-986a-af259156f1d8
+creatorsName: cn=admin,dc=freston-sergio,dc=gonzalonazareno,dc=org
+createTimestamp: 20201214181924Z
+entryCSN: 20201214181924.658632Z#000000#000#000000
+modifiersName: cn=admin,dc=freston-sergio,dc=gonzalonazareno,dc=org
+modifyTimestamp: 20201214181924Z
+
+dn: ou=People,dc=freston-sergio,dc=gonzalonazareno,dc=org
+ou: People
+objectClass: organizationalUnit
+structuralObjectClass: organizationalUnit
+entryUUID: 9bd8b4a4-d289-103a-9037-499b5284f496
+creatorsName: cn=admin,dc=freston-sergio,dc=gonzalonazareno,dc=org
+createTimestamp: 20201214185459Z
+entryCSN: 20201214185459.124066Z#000000#000#000000
+modifiersName: cn=admin,dc=freston-sergio,dc=gonzalonazareno,dc=org
+modifyTimestamp: 20201214185459Z
+
+dn: ou=Group,dc=freston-sergio,dc=gonzalonazareno,dc=org
+ou: Group
+objectClass: organizationalUnit
+structuralObjectClass: organizationalUnit
+entryUUID: 9bdf0b42-d289-103a-9038-499b5284f496
+creatorsName: cn=admin,dc=freston-sergio,dc=gonzalonazareno,dc=org
+createTimestamp: 20201214185459Z
+entryCSN: 20201214185459.165633Z#000000#000#000000
+modifiersName: cn=admin,dc=freston-sergio,dc=gonzalonazareno,dc=org
+modifyTimestamp: 20201214185459Z
+</code></pre></div></div>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/categories/#sistemas" class="page__taxonomy-item p-category" rel="tag">Sistemas</a>
+    
+    </span>
+  </p>
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2021-03-12T14:11:19+01:00">March 12, 2021</time></p>
+
+      </footer>
+
+      
+
+      
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+
+      
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">&copy; 2025 <a href="http://localhost:4000">Blog de Sergio Ibáñez</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

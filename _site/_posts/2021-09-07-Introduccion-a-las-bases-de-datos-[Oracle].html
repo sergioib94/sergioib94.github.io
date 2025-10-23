@@ -1,0 +1,738 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.27.3 by Michael Rose
+  Copyright 2013-2025 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="es-ES" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Introducción a las Bases De Datos (Oracle) - Blog de Sergio Ibáñez</title>
+<meta name="description" content="En este post se comentarán y explicarán de la forma mas clara posible los conceptos basicos para poder trabajar con BBDD Oracle.">
+
+
+  <meta name="author" content="Sergio Ibáñez Núñez">
+  
+  <meta property="article:author" content="Sergio Ibáñez Núñez">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="es_ES">
+<meta property="og:site_name" content="Blog de Sergio Ibáñez">
+<meta property="og:title" content="Introducción a las Bases De Datos (Oracle)">
+<meta property="og:url" content="http://localhost:4000/_posts/2021-09-07-Introduccion-a-las-bases-de-datos-%5BOracle%5D.html">
+
+
+  <meta property="og:description" content="En este post se comentarán y explicarán de la forma mas clara posible los conceptos basicos para poder trabajar con BBDD Oracle.">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2021-09-07T11:33:23+02:00">
+
+
+
+
+
+
+<link rel="canonical" href="http://localhost:4000/_posts/2021-09-07-Introduccion-a-las-bases-de-datos-%5BOracle%5D.html">
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Blog de Sergio Ibáñez Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single" dir="ltr">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          Blog de Sergio Ibáñez
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a
+                href="/"
+                
+                
+              >Inicio</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/posts/"
+                
+                
+              >Posts</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/categories/"
+                
+                
+              >Categorías</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/tags/"
+                
+                
+              >Etiquetas</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/search/"
+                
+                
+              >Buscar</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/about/"
+                
+                
+              >Sobre mí</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="http://localhost:4000/">
+        <img src="/assets/images/avatar.png" alt="Sergio Ibáñez Núñez" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="http://localhost:4000/" itemprop="url">Sergio Ibáñez Núñez</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>Técnico IT y entusiasta de la automatización</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Introducción a las Bases De Datos (Oracle)">
+    <meta itemprop="description" content="En este post se comentarán y explicarán de la forma mas clara posible los conceptos basicos para poder trabajar con BBDD Oracle.">
+    <meta itemprop="datePublished" content="2021-09-07T11:33:23+02:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">
+            <a href="http://localhost:4000/_posts/2021-09-07-Introduccion-a-las-bases-de-datos-%5BOracle%5D.html" itemprop="url">Introducción a las Bases De Datos (Oracle)
+</a>
+          </h1>
+          
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <h3 id="introducción">**Introducción</h3>
+
+<p>Las bases de datos son una parte fundamental en el almacenamiento y gestión de información en el mundo digital. Oracle Database es uno de los sistemas de gestión de bases de datos más utilizados en entornos empresariales debido a su potencia, escalabilidad y seguridad.</p>
+
+<p>Este post proporciona una introducción clara y estructurada a los conceptos básicos necesarios para trabajar con bases de datos en Oracle. Aprenderás sobre los tipos de sentencias SQL (DDL, DML, DCL), los modelos de bases de datos, los roles y permisos, los tipos de datos, las funciones más comunes y cómo administrar tablas y restricciones.</p>
+
+<p>Si estás comenzando con Oracle o quieres repasar los fundamentos, esta guía te ayudará a comprender cómo interactuar con la base de datos y ejecutar consultas eficientes.</p>
+
+<h3 id="tipos-de-sentencias-en-oracle"><strong>Tipos de sentencias en oracle</strong></h3>
+
+<ul>
+  <li>
+    <p>DDL → Nos permitirá crear,modificar o eliminar los objetos de la base de datos. Las instrucciones serian Create, Alter (modificar), Drop (eliminar objetos).</p>
+  </li>
+  <li>
+    <p>DML → Permite manipular los datos. Esto se hace con las siguientes instrucciones: Insert, Update, Delete (elimina datos) y Select.</p>
+  </li>
+  <li>
+    <p>DCL → Tiene las siguientes instrucciones: Commit (guardar), Rollback (deshacer hasta el ultimo commit), grant (para dar permisos a un usuario) y revoke (quitar permisos a un usuario).</p>
+  </li>
+</ul>
+
+<p>SQL es un lenguaje navegacional, no hay que decirle los pasos a dar, sino decirle el objetivo final y sql da los pasos hasta el final.</p>
+
+<h3 id="modelo-ansisparc"><strong>Modelo ansi/sparc</strong></h3>
+
+<ul>
+  <li>
+    <p>Nivel físico de la base de datos (administradores)→ discos donde nosotros guardamos la información de la base de datos.</p>
+  </li>
+  <li>
+    <p>Nivel conceptual (programadores)→ la base de datos es un conjunto de tablas, no debería importar como estén repartidas las tablas en los distintos discos.</p>
+  </li>
+  <li>
+    <p>Nivel Externo → tenemos distintos usuarios, cada usuario tiene una lista de la base de datos, por lo que un usuario solo vera las tablas que necesita.</p>
+  </li>
+</ul>
+
+<p>Esquema de usuario es el conjunto de objetos que tiene un usuario.</p>
+
+<p>Diccionario de datos es la base de datos con información de mi base de datos (usuarios que hay, que tablas hay, su contenido…).</p>
+
+<h3 id="tipos-de-roles"><strong>Tipos de Roles</strong></h3>
+
+<ul>
+  <li>Rol connect → te permite conectarte a una base de datos, crear tablas…empezar a trabajar.</li>
+  <li>Rol Resource → te permite crear funciones, procedimientos, etc.</li>
+  <li>Rol DBA → te permite asignar a un usuario permisos de administrados (no sera necesario con sys y system).</li>
+</ul>
+
+<h3 id="tipos-de-datos-en-oracle"><strong>Tipos de datos en Oracle</strong></h3>
+
+<ul>
+  <li>varchar2 (tamaño) → cadenas de longitud variable.</li>
+  <li>Char (tamaño) → cadena de longitud fija.</li>
+  <li>Number (precision, escala) → precision(numero entero), escala(los decimales que tendra). Ej:number(4,1): maximo numero 999,9.</li>
+  <li>long → cadenas con logitud variable</li>
+  <li>date → fechas y horas.</li>
+  <li>RAW(tamaño) → cadenas de bytes (para imagenes por ejemplo).</li>
+  <li>long raw → graficos,sonidos.</li>
+  <li>rowid → cadena hexadecimal, direccion de fila en tabla.</li>
+  <li>Clob, nclob, blob → objetos binarios de mas de 2 Gb.</li>
+</ul>
+
+<h3 id="operadores-de-oracle"><strong>Operadores de Oracle</strong></h3>
+
+<ul>
+  <li>Aritméticos → + - * /</li>
+  <li>Comparación → = &gt; &lt; &gt;= &lt;= &lt;&gt; !=</li>
+  <li>Logicos → AND, OR, NOT.</li>
+  <li>
+    <p>Comparación de cadenas con comodines→ like (% → sustituye cualquier cadena y _ sustituye los caracteres individuales).</p>
+  </li>
+  <li>
+    <p>REGEXP_LIKE (nombre,’ expresión regular’) → compara el primer parámetro con la 	expresión regular, si esta bien devolverá un True. Es mas lento que like.</p>
+  </li>
+  <li>
+    <p>La pertenencia a un conjunto → in. Ej: nombre in (‘pepe’,’juan’,’ana’) si nombre pertenece a pepe,juan o ana devolvera un True. Se puede usar con NOT.</p>
+  </li>
+  <li>La pertenencia a un rango → between(con los extremos incluidos). Ej: edad between 16 and 65.</li>
+</ul>
+
+<h3 id="funciones-en-oracle"><strong>Funciones en Oracle</strong></h3>
+
+<p>Trozo de código que ha hecho alguien y que puede usarse,debes saber su nombre, que se va a mandar y que se va a devolver. A los valores de una funcion se les llama parametros, y devuelven un resultado.</p>
+
+<ul>
+  <li>
+    <p><strong>Aritmeticas:</strong></p>
+
+    <ul>
+      <li>abs → devuelve el valor absoluto.</li>
+      <li>Ceil → redondea hacia arriba.</li>
+      <li>Floor → redondea hacia abajo.</li>
+      <li>Mod → resto de la division entera.</li>
+      <li>Nvl(valor,expresion) → sustituye valor nulo por otro valor. Por ejemplo para sustituir una columna vacia por 0. se usa solo con numeros enteros (en multiplicaciones se sustituye por 1).</li>
+      <li>power → calcula la potencia de un numero.</li>
+      <li>Round → redondea numeros con los decimales que se le indiquen. Ej round(76’345,2) → 76’34. se puede usar con numeros negativos. Ej: round(17698’43,-2) → 176’9843.</li>
+      <li>sign → indica el signo del valor (1 si es positivo, -1 si en negatvo).</li>
+      <li>Sqtr → devuelve la raiz cuadrada.</li>
+      <li>trunc → trunca los numeros.</li>
+      <li>Variance → devuelve varianza de un conjunto de valores.</li>
+    </ul>
+
+    <p>Para probar expresiones → select abs (-15) from dual (tabla por defecto para probar expresiones y funciones); .</p>
+
+    <ul>
+      <li>AVG → calcula la media ignorando los nulos.</li>
+      <li>Max → devuelve el maximo.</li>
+      <li>Min → devuelve el minimo.</li>
+      <li>Sum → obtiene la suma de los valores.</li>
+      <li>Count → cuenta las filas de una tabla. O bien los valores no nulos de una tabla.</li>
+    </ul>
+  </li>
+  <li>Alter user scott account unlock → desbloquea un usuario oracle.</li>
+  <li>
+    <p>Alter user scott identified by tiger → cambiar contraseña de usuarios.</p>
+  </li>
+  <li>
+    <p><strong>Funciones de cadenas</strong></p>
+
+    <ul>
+      <li>chr(n) → devuelve el carácter ascii de un numero.</li>
+      <li>
+        <table>
+          <tbody>
+            <tr>
+              <td>Concat (cad1,cad2) → concatena 2 cadenas. Hay un operador que concatena las cadenas (</td>
+              <td> </td>
+              <td>),se suele usar el operador.</td>
+            </tr>
+          </tbody>
+        </table>
+      </li>
+      <li>Lower (cad) → devuelve la cadena en minúsculas.</li>
+      <li>Upper (cad) → devuelve la cadena en mayúscula.</li>
+      <li>Initcap → convierte cadena en titulo(iniciales de las palabras en mayusculas).</li>
+      <li>Lpad → añade caracteres a la izquierda de la cadena hasta cierta longitud.</li>
+      <li>Rpad → añade caracteres a la derecha de la cadena hasta cierta longitud.
+  Se suelen usar en listados, para que quede bien.</li>
+      <li>Ltrim → suprime un conjunto de elementos a la izquierda.</li>
+      <li>Rtrim → suprime un conjunto de elementos a la derecha.</li>
+      <li>Replace → sustituye un carácter o caracteres con 0 o mas caracteres.</li>
+      <li>Substr → obtiene parte de una cadena.</li>
+      <li>Ascii → se le manda un ascii y se devuelve el carácter.</li>
+      <li>Instr → permite ver en que posición esta una subcadena en una cadena.</li>
+      <li>Length → devuelve el numero de caracteres de la cadena.</li>
+    </ul>
+  </li>
+</ul>
+
+<p>Ejemplo convertir ‘Ruiz Padilla, Raul’ → ‘Raul Ruiz Padilla’ (se pueden usar concat, substr, instr)</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>select instr(‘Ruiz Padilla, Raul’,’,’) from dual; → cojemos la coma
+substr (‘Ruiz Padilla, Raul’,instr(‘Ruiz Padilla, Raul’,’,’) + 2) → extraemos el nombre
+substr (‘Ruiz Padilla, Raul’, 1, instr(‘Ruiz Padilla, Raul’,’,’) - 1) → extraemos los apellidos
+
+select substr (‘Ruiz Padilla, Raul’,instr(‘Ruiz Padilla, Raul’,’,’) + 2), ‘  ‘ || substr (‘Ruiz Padilla, Raul’, 1, instr(‘Ruiz Padilla, Raul’,’,’) - 1) from dual;
+</code></pre></div></div>
+
+<ul>
+  <li>
+    <p><strong>Funciones de fechas</strong></p>
+
+    <ul>
+      <li>Sysdate → devuelve la fecha del sistema</li>
+      <li>Add_months → devuelve la fecha incrementada en n meses.</li>
+      <li>months between → meses que hay entre dos fechas. Tambien se puede hacer con la funcion interval.</li>
+      <li>Last day → devuelve ultimo dia del mes de la fecha introducida.</li>
+      <li>Next day → devuelve el primer dia de la semana indicando por una fecha.</li>
+    </ul>
+
+    <p>Se pueden hacer operaciones aritmeticas logicas (sumar y restar dias) con las fechas.</p>
+  </li>
+  <li>
+    <p><strong>Funciones de conversión</strong></p>
+
+    <ul>
+      <li>to_char → transforma una fecha o number en una cadena</li>
+      <li>to_date → transforma un number o char en date</li>
+      <li>to_number → transforma la cadena de caracteres en number</li>
+    </ul>
+  </li>
+  <li>
+    <p><strong>Función sobrecargada</strong> → una funcion que puede recibir parámetros diferentes y dependiendo de los tipos de parámetros, la función funcionan de forma distinta.</p>
+
+    <ul>
+      <li>Hiredate → fecha de contratacion.</li>
+      <li>Mon → mes abreviado(diciembre → dic)</li>
+      <li>ddd → dia (4 diciembre → dia 338)</li>
+      <li>horas → HH</li>
+      <li>minutos → MI</li>
+      <li>
+        <p>segundos → SS</p>
+      </li>
+      <li>nls date format → variable de entorno que muestra la fecha por defecto</li>
+      <li>alter session set nls date format → cambiar configuracion de esa sesion una variable de entorno por defecto.</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="tablas"><strong>Tablas</strong></h3>
+
+<ul>
+  <li>Mostrar tablas de un usuario → select * from cat;</li>
+  <li>Mostrar columnas de las tablas → desc “nombre de la tabla”</li>
+</ul>
+
+<p>Los tipos number se usan en dos casos: si usamos operaciones aritmeticas o si es importante que se ordenen los numeros de forma alfabetica es decir (10,11,8,9,…)</p>
+
+<ul>
+  <li>Crear tabla → create table “nombre de la tabla”</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(
+columna	tipo(),
+);
+</code></pre></div></div>
+
+<ul>
+  <li>
+    <p>Eliminar tabla → drop table “nombre de la tabla”</p>
+  </li>
+  <li>user_tables → sinónimo de cat (para saber que tablas tiene un usuario)</li>
+  <li>all_tables → todas las tablas en las que tiene permiso un usuario</li>
+  <li>dba_tables(admin) → ves todas las tablas, de quienes son, etc.</li>
+</ul>
+
+<p>Integridad de datos → que los datos tengan valores lógicos.
+Integridad referencial → impide que en una tabla se introduzca un valor que no tenga su correspondencia en la tabla.</p>
+
+<p>A las restricciones hay que darles un nombre, no pueden existir dos restricciones con el mismo nombre.</p>
+
+<h3 id="restricciones"><strong>Restricciones</strong></h3>
+
+<ul>
+  <li>
+    <p>Clave primaria (a nivel de tabla) → constraint “nombre de la restricción” primary key(“columna”)</p>
+  </li>
+  <li>
+    <p>Claves primarias compuestas:
+  ◦ No pueden definirse a nivel de columna, pero sí a nivel de tabla..
+  ◦ Constraint “nombre de la restriccion” Primary Key (clave1,clave2)</p>
+  </li>
+  <li>
+    <p>Claves ajenas → se pueden poner tantas como sea necesario siempre que existan en la otra tabla.
+  ◦ Nivel de columna → constraint “nombre de la restricción” references (tabla)</p>
+  </li>
+  <li>
+    <p>Añadir una clave primaria que se haya olvidado meter</p>
+  </li>
+  <li>alter table (tabla)</li>
+  <li>
+    <p>add constraint “nombre de restriccion” primary key (clave/tabla)</p>
+
+    <p>◦ Nivel de tabla → constraint “nombre de restriccion”	foreign key (clave) references (tabla)</p>
+
+    <p>En el caso de claves compuestas es recomendable poner el nombre de los campos de la tabla despues de poner el nombre.</p>
+  </li>
+  <li>
+    <p>On delete cascade → cada vez que se borre una clave, borra los atributos para asegurarse no tener datos sueltos, ej: si borro un alumno, se borraran todas las notas del alumno.</p>
+  </li>
+  <li>
+    <p><strong>Obligatoriedad</strong> → la columna no puede estar en blanco.</p>
+
+    <ul>
+      <li>A nivel de columna → Constraint “nombre de restriccion” not null</li>
+      <li>A nivel de tabla → Constraint “nombre de restriccion” check(nombre is not null)</li>
+      <li>
+        <p>check → comprueba que se cumple una restriccion obligaroria siempre. Ej:</p>
+
+        <p>El precio debe estar entre 10 y 1200 → constraint “nombre” check(precio between 10 and 1200)</p>
+
+        <p>El código de un producto debe tener 6 caracteres → constraint “nombre” check(length(codigo)=6)</p>
+
+        <p>El tipo de producto debe ser micro,memoria o disco → constraint “nombre” check(tipo in (‘micro’,’memoria’,’disco’)</p>
+
+        <p>El codigo de producto debe tener dos letras y cuatro números → constraint “nombre” check(regexp_like(codigo,’^[A-Za-z]{2}[0-9]{4}$’))</p>
+
+        <p>El nombre esta en mayuscula → constraint “nombre” check(nombre=upper(nombre))</p>
+
+        <p>Primera letra del nombre en mayuscula → constraint “nombre” check(substr(nombre,1,1) between ‘A’ and ‘Z’</p>
+
+        <p>Productos se hacen en 2019 → constraint “nombre” check(to_char(fechacreacion, ‘YYYY’)=’2019’)</p>
+
+        <p>Productos se crean en primavera→constraint “nombre” check(to_char(fechacreacion,’MM/DD’) between ‘04/21’ and ‘06/20’)</p>
+      </li>
+      <li>
+        <p>Triger → programa que va comprobando si se van dando varias restricciones, se usa cuando se quieren validar restricciones complejas que dependen unas condiciones de otras. El check solo valida restricciones simples.</p>
+      </li>
+      <li>Meter datos en una tabla → insert into “nombre de tabla”
+                           values(filas)
+        <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  insert into “nombre de tabla” (campos)
+  values(filas)
+</code></pre></div>        </div>
+      </li>
+      <li>
+        <p>Los campos que no esten especificados se quedan en blanco.</p>
+      </li>
+      <li>
+        <p>default → pone un valor por defecto, no llevan nombre. incompatible con not null. (No puede ponerse a nivel de tabla, sino a nivel de columna)</p>
+      </li>
+      <li>Unicidad 
+  ◦ Unique→ columna que se sabe que no se deba repetir (una clave candidata), ej: telefono.</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="consultas-al-diccionario-de-datos"><strong>Consultas al diccionario de datos</strong></h3>
+
+<p>Oracle almacena la información de las restricciones en el diccionario de datos. En ocasiones se necesitara saber de que va una restriccion por lo que se hacen consultas al diccionario de datos.</p>
+
+<ul>
+  <li>Para ver la información de una tabla → select * from “nombre de la tabla”;</li>
+  <li>Para saber todas las restricciones → select * from users_constraints;</li>
+  <li>Para saber restricciones de una tabla concreta → select * from users_constraints where table_name=”nombre de la tabla”;</li>
+</ul>
+
+<p>constraint_name, constraint_type(c → check, p → primary key, r → foreing key, u → unique), search condition → para que muestre el nombre,tipo y condicion de la restriccion.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>* Users_constraints → restricciones que el usuario a creado
+* All constraints → todas las restricciones que existen para un usuario(tus tablas y las que tienes permisos)
+
+* Dba_constraints → todas las restricciones de todos las tablas
+</code></pre></div></div>
+
+<h3 id="alter-table"><strong>Alter table</strong></h3>
+
+<ul>
+  <li>ALTER TABLE nombre_tabla</li>
+</ul>
+
+<p><strong>ADD (columna)</strong> → añade columnas en una tabla. 
+    * Si la tabla esta rellena no se puede añadir una columna vacia y ponerla como not null, se tendría que rellenar la columna previamente. Ej: ALTER TABLE empleados ADD COLUMN telefono VARCHAR2(15);</p>
+
+<p><strong>[MODIFY (colum [….])]</strong> → modifica columnas. Ejemplo: ALTER TABLE empleados MODIFY COLUMN nombre VARCHAR2(50);. En este caso haciendo uso del ejemplo anterior, estariamos cambiando el valor anterior de varchar 15 a varchar 50.</p>
+
+<p><strong>[DROP COLUMN (colum…..)]</strong> → borra columnas
+    * no permite borrar claves primarias refereciadas a claves ajenas
+    * no borra ultimas columnas de las tablas
+    Ej: ALTER TABLE empleados DROP COLUMN direccion;</p>
+
+<p><strong>[ADD CONSTRAINT restricción]</strong> → añade restricciones
+    * Solo pueden añadirse y borrarse primary key, foreing keys, check, unique y not null. Ej: ALTER TABLE empleados ADD CONSTRAINT pk_empleados PRIMARY KEY (id_empleado);</p>
+
+<p><strong>[DROP CONSTRAINT restricción]</strong> → elimina restricciones
+    * cada usuario puede borrar sus propias tablas
+    * cascade constraint, elimina las restricciones de integridad referencial que remitan a la clave primaria de una tabla borrada.
+    * El dba o usuarios con privilegos drop any table, pueden eliminar cualquier tabla</p>
+
+<p><strong>[DISABLE CONSTRAINT restricción]</strong> → desactiva una restriccion
+<strong>[ENABLE CONSTRAINT restriccion]</strong> → activa una restriccion</p>
+
+<p>Se activan y desactivan cuando se importa información desde otra base de datos que cuenta con las mismas restricciones, para evitar comprobar restricciones que ya se saben que están bien.</p>
+
+<p>Se puede ver el estado de las restricciones usando Status.</p>
+
+<ul>
+  <li>
+    <p>Truncate table → elimina las filas de la tabla y además libera el espacio asociado, es decir, que la tabla sigue existiendo y el espacio se libera, solo elimina los datos, la tabla sigue existiendo en el diccionario de datos. El truncate no se puede deshacer.</p>
+  </li>
+  <li>
+    <p>Purge recyclebin; → elimina el contenido de la papelera de reciclaje de la base de datos.</p>
+  </li>
+</ul>
+
+<p>Insertar valor nulo en tabla</p>
+
+<p>insert into nombre de tabla (columnas que se van a rellenar)
+values</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/categories/#apuntes" class="page__taxonomy-item p-category" rel="tag">Apuntes</a><span class="sep">, </span>
+    
+      <a href="/categories/#base-de-datos" class="page__taxonomy-item p-category" rel="tag">Base de Datos</a>
+    
+    </span>
+  </p>
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2021-09-07T11:33:23+02:00">September 7, 2021</time></p>
+
+      </footer>
+
+      
+
+      
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+
+      
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">&copy; 2025 <a href="http://localhost:4000">Blog de Sergio Ibáñez</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

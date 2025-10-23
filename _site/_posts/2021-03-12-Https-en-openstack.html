@@ -1,0 +1,488 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.27.3 by Michael Rose
+  Copyright 2013-2025 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="es-ES" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>HTTPS en Openstack - Blog de Sergio Ibáñez</title>
+<meta name="description" content="Haciendo uso de un escenario virtual creado en openstack en practicas anteriores, se configurara en una maquina donde hay instalado un servidor web, configuraremos de forma adecuada el protocolo https en el servidor.">
+
+
+  <meta name="author" content="Sergio Ibáñez Núñez">
+  
+  <meta property="article:author" content="Sergio Ibáñez Núñez">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="es_ES">
+<meta property="og:site_name" content="Blog de Sergio Ibáñez">
+<meta property="og:title" content="HTTPS en Openstack">
+<meta property="og:url" content="http://localhost:4000/_posts/2021-03-12-Https-en-openstack.html">
+
+
+  <meta property="og:description" content="Haciendo uso de un escenario virtual creado en openstack en practicas anteriores, se configurara en una maquina donde hay instalado un servidor web, configuraremos de forma adecuada el protocolo https en el servidor.">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2021-03-12T15:52:50+01:00">
+
+
+
+
+
+
+<link rel="canonical" href="http://localhost:4000/_posts/2021-03-12-Https-en-openstack.html">
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Blog de Sergio Ibáñez Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single" dir="ltr">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          Blog de Sergio Ibáñez
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a
+                href="/"
+                
+                
+              >Inicio</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/posts/"
+                
+                
+              >Posts</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/categories/"
+                
+                
+              >Categorías</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/tags/"
+                
+                
+              >Etiquetas</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/search/"
+                
+                
+              >Buscar</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/about/"
+                
+                
+              >Sobre mí</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="http://localhost:4000/">
+        <img src="/assets/images/avatar.png" alt="Sergio Ibáñez Núñez" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="http://localhost:4000/" itemprop="url">Sergio Ibáñez Núñez</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>Técnico IT y entusiasta de la automatización</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="HTTPS en Openstack">
+    <meta itemprop="description" content="Haciendo uso de un escenario virtual creado en openstack en practicas anteriores, se configurara en una maquina donde hay instalado un servidor web, configuraremos de forma adecuada el protocolo https en el servidor.">
+    <meta itemprop="datePublished" content="2021-03-12T15:52:50+01:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">
+            <a href="http://localhost:4000/_posts/2021-03-12-Https-en-openstack.html" itemprop="url">HTTPS en Openstack
+</a>
+          </h1>
+          
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <h3 id="introducción"><strong>Introducción</strong></h3>
+
+<p>El siguiente paso en nuestro escenario opensatack sera configurar de forma adecuada el protocolo HTTPS en nuestro servidor web para nuestra aplicaciones web. Para ello vamos a emitir un certificado wildcard en la AC Gonzalo Nazareno utilizando para la petición la utilidad “gestiona”.</p>
+
+<h3 id="instalamos-openssl-para-crear-nuestro-certificado"><strong>Instalamos openssl para crear nuestro certificado</strong></h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo apt install openssl
+</code></pre></div></div>
+
+<p>Se crea la clave</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>openssl genrsa 4096 &gt; /etc/ssl/private/sergio.ibanez.key
+</code></pre></div></div>
+
+<p>Se crea el fichero csr</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>openssl req -new -key /etc/ssl/private/sergio.ibanez.key -out /root/sergio.ibanez.csr
+
+C=ES
+ST=Sevilla
+L=Dos Hermanas
+O=IES Gonzalo Nazareno
+OU=Informatica
+CN = *.sergio.gonzalonazareno.org
+</code></pre></div></div>
+
+<p>C → Country Name, en este caso como el dominio esta en España ponemos ES.
+ST → Estado/Provincia
+L → Localidad/Ciudad
+O → Nombre de la organización
+OU → Nombre de la unidad organizativa a la que se le pide el certificado.
+CN → Nombre del dominio para el que se hará el certificado, en este caso usamos * para que dicho certificado pueda usarse en cualquier maquina con el dominio sergio.gonzalonazareno.org.</p>
+
+<p>Debemos hacer una redirección para forzar el protocolo https (en centos).</p>
+
+<p>Para hacer la redirección sera necesario instalar el modulo ssl y reiniciamos httpd para habilitarlo:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[centos@quijote ~]$ sudo dnf -y install mod_ssl
+</code></pre></div></div>
+
+<p>Activamos el puerto 443 en centos:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[centos@quijote ~]$ sudo firewall-cmd --zone=public --permanent --add-service=https
+success
+[centos@quijote ~]$ sudo firewall-cmd --reload
+success
+</code></pre></div></div>
+
+<p>Movemos los certificados a /etc/pki/tls/certs y la clave a /etc/pki/tls/private y una vez movidos, modificamos el fichero /etc/httpd/conf.d/ssl.conf modificando las siguientes lineas dejandolas de la siguiente forma:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>SSLEngine on
+SSLCertificateFile /etc/pki/tls/certs/sergio.ibanez.crt   
+SSLCertificateKeyFile /etc/pki/tls/private/sergio.ibanez.key
+</code></pre></div></div>
+
+<p>Recargamos httpd:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo systemctl reload httpd
+</code></pre></div></div>
+
+<p>Para que funcionen los ficheros pki, ejecutamos el siguiente comando de forma que se permitirá la restauración de los ficheros en selinux:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>restorecon -RvF /etc/pki
+</code></pre></div></div>
+
+<p>Se añaden las siguientes lineas en el fichero nuevo una vez puestos los certificados en sus respectivos sitios.</p>
+
+<p>Fichero inicio_https.conf:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;VirtualHost *:443&gt; 
+	ServerName www.sergio.gonzalonazareno.org
+	DocumentRoot /var/www/sergio
+
+	ErrorLog /var/www/sergio/log/error.log
+    	CustomLog /var/www/sergio/log/requests.log combined
+
+    	SSLEngine on
+    	SSLCertificateFile /etc/pki/tls/certs/sergio.ibanez.crt
+    	SSLCertificateKeyFile /etc/pki/tls/private/sergio.ibanez.key
+&lt;/VirtualHost&gt;
+</code></pre></div></div>
+
+<p>Fichero inicio.conf:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;VirtualHost *:80&gt;
+	ServerName www.sergio.gonzalonazareno.org
+	DocumentRoot /var/www/html
+
+        Redirect 301 / https://www.sergio.gonzalonazareno.org
+
+        ErrorLog /var/www/sergio/log/error.log
+        CustomLog /var/www/sergio/log/requests.log combined
+&lt;/VirtualHost&gt;
+</code></pre></div></div>
+
+<p>Creamos los enlaces simbólicos:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo ln -s /etc/httpd/sites-available/inicio.conf /etc/httpd/sites-enabled/
+sudo ln -s /etc/httpd/sites-available/inicio_https.conf /etc/httpd/sites-enabled/
+</code></pre></div></div>
+
+<p>Hay que indicarle a selinux que debe permitir a apache para que pueda acceder al directorio que contiene la clave y el certificado que hemos creado.</p>
+
+<p>Configuraremos una regla DNAT en el cortafuego de la maquina Dulcinea para abrir el puerto 443 y el 80 haciendo uso de iptable.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>iptables -t nat -A PREROUTING -i eth0 -p tcp --dport 80 -j DNAT --to 10.0.2.5
+iptables -t nat -A PREROUTING -i eth0 -p tcp --dport 443 -j DNAT --to 10.0.2.5
+</code></pre></div></div>
+
+<ul>
+  <li>Instalamos el certificado del AC Gonzalo Nazareno en tu navegador para comprobar que se pueda verificar tu certificado.</li>
+</ul>
+
+<p>Instalamos el certificado en nuestro navegador, por ejemplo en Mozilla Firefox, para ello entramos en Preferencias -&gt; Privacidad &amp; Seguridad -&gt; Certificados -&gt; Ver certificados -&gt; Importar.</p>
+
+<p><img src="/images/https-openstack/certificado.png" alt="certificado" /></p>
+
+<p>Probamos a acceder al fichero info.php que tenemos ya en nuestro servidor web:</p>
+
+<p><img src="/images/https-openstack/prueba_https.png" alt="prueba https" /></p>
+
+<p>Como se ve en la imagen, nos aparece el candado, aunque nos sale como sitio seguro, esto puede deberse a que a la hora de crear el fichero csr, el dato OU esta mal y por lo tanto no queda validado correctamente (se puso informatica cuando debe ser informática).</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/categories/#seguridad" class="page__taxonomy-item p-category" rel="tag">Seguridad</a>
+    
+    </span>
+  </p>
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2021-03-12T15:52:50+01:00">March 12, 2021</time></p>
+
+      </footer>
+
+      
+
+      
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+
+      
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">&copy; 2025 <a href="http://localhost:4000">Blog de Sergio Ibáñez</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

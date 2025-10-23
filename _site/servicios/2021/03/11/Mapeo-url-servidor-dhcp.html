@@ -1,0 +1,723 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.27.3 by Michael Rose
+  Copyright 2013-2025 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="es-ES" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Mapeo URL Virtualhost - Blog de Sergio Ibáñez</title>
+<meta name="description" content="En el siguiente post se creara un nuevo host virtual en vagrant y se realizara una configuracion para mapear urls.">
+
+
+  <meta name="author" content="Sergio Ibáñez Núñez">
+  
+  <meta property="article:author" content="Sergio Ibáñez Núñez">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="es_ES">
+<meta property="og:site_name" content="Blog de Sergio Ibáñez">
+<meta property="og:title" content="Mapeo URL Virtualhost">
+<meta property="og:url" content="http://localhost:4000/servicios/2021/03/11/Mapeo-url-servidor-dhcp.html">
+
+
+  <meta property="og:description" content="En el siguiente post se creara un nuevo host virtual en vagrant y se realizara una configuracion para mapear urls.">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2021-03-11T09:54:31+01:00">
+
+
+
+
+
+
+<link rel="canonical" href="http://localhost:4000/servicios/2021/03/11/Mapeo-url-servidor-dhcp.html">
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Blog de Sergio Ibáñez Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single wide" dir="ltr">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          Blog de Sergio Ibáñez
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a
+                href="/"
+                
+                
+              >Inicio</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/posts/"
+                
+                
+              >Posts</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/categories/"
+                
+                
+              >Categorías</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/tags/"
+                
+                
+              >Etiquetas</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/search/"
+                
+                
+              >Buscar</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/about/"
+                
+                
+              >Sobre mí</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Mapeo URL Virtualhost">
+    <meta itemprop="description" content="En el siguiente post se creara un nuevo host virtual en vagrant y se realizara una configuracion para mapear urls.">
+    <meta itemprop="datePublished" content="2021-03-11T09:54:31+01:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">
+            <a href="http://localhost:4000/servicios/2021/03/11/Mapeo-url-servidor-dhcp.html" itemprop="url">Mapeo URL Virtualhost
+</a>
+          </h1>
+          
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2021-03-11T09:54:31+01:00">March 11, 2021</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          4 minute read
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <ul>
+  <li>Crea un nuevo host virtual que es accedido con el nombre www.mapeo.com, cuyo DocumentRoot sea /srv/mapeo.</li>
+</ul>
+
+<p>Creación del fichero .conf</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vagrant@nodo1:/etc/apache2/sites-available$ sudo cp 000-default.conf mapeo.conf
+</code></pre></div></div>
+
+<p>Modificaciones en mapeo.conf</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;VirtualHost *:80&gt;
+        ServerAdmin webmaster@localhost
+        DocumentRoot /srv/mapeo
+        ServerName www.mapeo.com
+        ErrorLog ${APACHE_LOG_DIR}/error.log
+        CustomLog ${APACHE_LOG_DIR}/access.log combined
+&lt;/VirtualHost&gt;
+</code></pre></div></div>
+
+<p>Creamos el directorio en srv</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vagrant@nodo1:/srv$ sudo mkdir -p mapeo/principal
+vagrant@nodo1:/srv$ chown -R www-data:www-data mapeo/ 
+</code></pre></div></div>
+
+<p>Configuración apache2</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;Directory /srv/&gt;
+        Options Indexes FollowSymLinks
+        AllowOverride None
+        Require all granted
+&lt;/Directory&gt;
+</code></pre></div></div>
+
+<p>Creación del enlace simbólico</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vagrant@nodo1:/srv/mapeo$ sudo a2ensite mapeo.conf
+</code></pre></div></div>
+
+<ul>
+  <li>Tarea 1: Cuando se entre a la dirección www.mapeo.com se redireccionará automáticamente a www.mapeo.com/principal, donde se mostrará el mensaje de bienvenida.</li>
+</ul>
+
+<p>Para hacer la redirección lo primero será crear el directorio principal en /srv/mapeo y dentro del directorio principal un pequeño index.html con el mensaje de bienvenida. Una vez hecho esto en el fichero mapeo.conf se tendrá que añadir la siguiente linea para que la redirección funcione.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>RedirectMatch 301 ^/$ http://www.mapeo.com/principal/ 
+</code></pre></div></div>
+
+<p>Con la linea anterior se indicara una redirección permanente (301) a la ruta /principal.</p>
+
+<p><img src="/images/mapeo-url/principal.png" alt="pagina principal" /></p>
+
+<ul>
+  <li>Tarea 2: En el directorio principal no se permite ver la lista de los ficheros, no se permite que se siga los enlaces simbólicos y no se permite negociación de contenido. Muestra al profesor el funcionamiento. ¿Qué configuración tienes que poner?</li>
+</ul>
+
+<p>Options: Determina para que sirven las siguientes opciones de funcionamiento:</p>
+
+<p>All → Todas las opciones salvo multiviews
+FollowSymLinks → Se pueden seguir los enlaces simbólicos.
+Indexes → En el caso de acceder a un directorio y no encontrar un index.html, se mostrara la lista de ficheros del directorio.
+MultiViews → Dependiendo del usuario que acceda al sitio web, se muestra un contenido u otro, como por ejemplo el idioma.
+SymLinksOwnerMatch → Se pueden seguir los enlaces simbólicos siempre y cuando el destino y el enlace simbólico sean del mismo propietario.
+ExecCGI → Permite usar script CGI.</p>
+
+<p>Determina como funciona si delante de las opciones pongo el signo + o -.</p>
+
+<p>En el caso de usar “+” activamos la opcion y en el caso de usar “-”, la desactivamos. En este caso como se pide que en el directorio principal no se vea lista de ficheros, ni enlaces simbólicos ni negociación de contenido, la configuración seria la siguiente:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;Directory /srv/mapeo/principal&gt;
+	Options -Indexes -FollowSymLinks -Multiviews
+	AllowOverride All
+	Require all granted
+&lt;/Directory&gt;
+</code></pre></div></div>
+
+<ul>
+  <li>Tarea 3: Si accedes a la página www.mapeo.com/principal/documentos se visualizarán los documentos que hay en /home/usuario/doc. Por lo tanto se permitirá el listado de fichero y el seguimiento de enlaces simbólicos siempre que el propietario del enlace y del fichero al que apunta sean el mismo usuario. Explica bien y pon una prueba de funcionamiento donde se vea bien el seguimiento de los enlaces simbólicos.</li>
+</ul>
+
+<p>Para empezar en /home/vagrant, se creara un directorio con unos ficheros a los que se les a llamado prueba.txt. Después se configurara en el fichero mapeo.conf un alias añadiendo la siguiente linea:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Alias /principal/documentos /home/vagrant/doc
+</code></pre></div></div>
+
+<p>Luego en este mismo mapeo.conf o bien en apache2.conf se configurará el directory del directorio /doc de la siguiente forma:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Directory /home/vagrant/doc&gt;
+        Options Indexes SymLinksIfOwnerMatch
+        AllowOverride All
+        Require all granted
+&lt;/Directory&gt;
+</code></pre></div></div>
+
+<p>Por ultimo para comprobar que funciona se crearan los enlaces simbólicos en /srv/mapeo/principal/documentos apuntando a los ficheros creados previamente en /home/vagrant/doc</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vagrant@nodo1:/srv/mapeo/principal/documentos$ sudo ln -s /home/vagrant/doc/prueba1.txt
+vagrant@nodo1:/srv/mapeo/principal/documentos$ sudo chown -R www-data:www-data prueba1.txt 
+vagrant@nodo1:/srv/mapeo/principal/documentos$ sudo ln -s /home/vagrant/doc/prueba2.txt
+vagrant@nodo1:/srv/mapeo/principal/documentos$ sudo chown www-data:www-data prueba2.txt 
+</code></pre></div></div>
+
+<p>Con los comandos anteriores creamos los enlaces simbólicos y los cambiamos de propietario, de esta forma tanto el fichero1 como el enlace al fichero1 serán de www-data, mientras que el fichero2 sera de www-data y el enlace de root, quedando los ficheros de la siguiente forma:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vagrant@nodo1:~$ ls -l /srv/mapeo/principal/documentos/
+total 0
+lrwxrwxrwx 1 www-data www-data 29 Oct 22 10:06 prueba1.txt -&gt; /home/vagrant/doc/prueba1.txt
+lrwxrwxrwx 1 root     root     29 Oct 22 10:08 prueba2.txt -&gt; /home/vagrant/doc/prueba2.txt
+vagrant@nodo1:~$ ls -l /home/vagrant/doc/
+total 8
+-rw-r--r-- 1 www-data www-data 28 Oct 22 16:13 prueba1.txt
+-rw-r--r-- 1 www-data www-data 24 Oct 22 16:13 prueba2.txt
+</code></pre></div></div>
+
+<p>De esta forma al acceder a /documentos en un navegador se nos mostraran ambos ficheros, pero solo se podrá acceder al contenido del fichero1 ya que es el único de los dos cuyo propietario es el mismo tanto en fichero como en enlace.</p>
+
+<p>Pruebas de funcionamiento:</p>
+
+<p>fichero1:</p>
+
+<p><img src="/images/mapeo-url/fichero1.png" alt="primer fichero" /></p>
+
+<p>fichero2</p>
+
+<p><img src="/images/mapeo-url/forbiden.png" alt="forbiden" /></p>
+
+<p>En este caso el error 403 del fichero2 sale personalizado ya que es el ultimo ejercicio que hice, pero no se nos permite el acceso ya que los propietarios de fichero y enlace no son los mismos.</p>
+
+<ul>
+  <li>Tarea 4: En todo el host virtual se debe redefinir los mensajes de error de objeto no encontrado y no permitido. Para el ello se crearan dos ficheros html dentro del directorio error. Entrega las modificaciones necesarias en la configuración y una comprobación del buen funcionamiento.</li>
+</ul>
+
+<p>Para los mensajes de error personalizados empezamos creando un directorio errores con dos ficheros html con los errores que vamos a personalizar, en este caso el 404 y el 403, este directorio errores estará ubicado en /srv/mapeo.</p>
+
+<p>Una vez creados el directorio y los ficheros.html, se configuraran dos cosas en el fichero mapeo.conf:</p>
+
+<p>Primero, crear un alias para que resulte mas sencillo poner la ruta hacia los ficheros.html en lugar de poner la ruta completa</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Alias /error /srv/mapeo/errores
+</code></pre></div></div>
+
+<p>Segundo usar las lineas ErrorDocument de forma que que cuando salte un error, se muestre el mensaje personalizado que se ha creado anteriormente de la siguiente forma:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ErrorDocument 404 /error/404.html
+ErrorDocument 403 /error/403.html
+</code></pre></div></div>
+
+<p>Ejecutamos un systemctl reload apache2 como root y comprobamos que se muestren los mensajes.</p>
+
+<p>Error 404:</p>
+
+<p><img src="/images/mapeo-url/error_404.png" alt="error 404" /></p>
+
+<p>Error 403:</p>
+
+<p><img src="/images/mapeo-url/error_403.png" alt="error 403" /></p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/categories/#servicios" class="page__taxonomy-item p-category" rel="tag">Servicios</a>
+    
+    </span>
+  </p>
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2021-03-11T09:54:31+01:00">March 11, 2021</time></p>
+
+      </footer>
+
+      <section class="page__share">
+  <h4 class="page__share-title">Share on</h4>
+
+  <a href="https://x.com/intent/tweet?text=Mapeo+URL+Virtualhost%20http%3A%2F%2Flocalhost%3A4000%2Fservicios%2F2021%2F03%2F11%2FMapeo-url-servidor-dhcp.html" class="btn btn--x" aria-label="Share on X" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on X">
+    <i class="fab fa-fw fa-x-twitter" aria-hidden="true"></i><span> X</span>
+  </a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fservicios%2F2021%2F03%2F11%2FMapeo-url-servidor-dhcp.html" class="btn btn--facebook" aria-label="Share on Facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook">
+    <i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span>
+  </a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http://localhost:4000/servicios/2021/03/11/Mapeo-url-servidor-dhcp.html" class="btn btn--linkedin" aria-label="Share on LinkedIn" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn">
+    <i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span>
+  </a>
+
+  <a href="https://bsky.app/intent/compose?text=Mapeo+URL+Virtualhost%20http%3A%2F%2Flocalhost%3A4000%2Fservicios%2F2021%2F03%2F11%2FMapeo-url-servidor-dhcp.html" class="btn btn--bluesky" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Bluesky">
+    <i class="fab fa-fw fa-bluesky" aria-hidden="true"></i><span> Bluesky</span>
+  </a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/servicios/2021/03/11/Virtualhost-apache.html" class="pagination--pager" title="Virtualhost apache">Previous</a>
+    
+    
+      <a href="/aplicaciones%20web/2021/03/11/Despliegue-de-un-servidor-LAMP-local-y-configuraci%C3%B3n-de-CMS-PHP.html" class="pagination--pager" title="Despliegue de un servidor LAMP local y configuración de CMS PHP">Next</a>
+    
+  </nav>
+
+
+    </div>
+
+    
+      
+        <p>
+          Comments are configured with provider: <strong>giscus</strong>,
+          but are disabled in non-production environments.
+        </p>
+      
+    
+  </article>
+
+  
+  
+    
+<div class="page__related">
+  
+  <h2 class="page__related-title">You May Also Enjoy</h2>
+  <div class="grid__wrapper">
+    
+      
+      
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/sistemas/monitorizaci%C3%B3n/2025/05/01/Instalacion-configuracion-y-monitoreo-zabbix.html" rel="permalink">Instalación, configuración y monitorización usando Zabbix
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2025-05-01T13:19:00+02:00">May 1, 2025</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          7 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Este post describe paso a paso cómo instalar y configurar Zabbix 6.0 LTS en una máquina virtual con Debian 12. Está pensado para crear un entorno de práctica...</p>
+  </article>
+</div>
+
+    
+      
+      
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/sistemas/monitorizaci%C3%B3n/2024/04/11/Monitorizaci%C3%B3n-de-servidores-con-grafana.html" rel="permalink">Monitorización de servidores con Grafana
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2024-04-11T13:14:06+02:00">April 11, 2024</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          10 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Aprende a instalar, configurar y personalizar Grafana para la monitorización avanzada de servidores. Descubre cómo integrar Prometheus, crear dashboards inte...</p>
+  </article>
+</div>
+
+    
+      
+      
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/seguridad/2021/12/21/SoftEther-VPN.html" rel="permalink">Introducción SoftEther VPN
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2021-12-21T13:44:30+01:00">December 21, 2021</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          64 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">SoftEther VPN es uno de los software VPN multiprotocolo más potentes y rápidos del mundo en la actualidad. Funciona en sistemas Windows, Solaris, Mac, FreeBS...</p>
+  </article>
+</div>
+
+    
+      
+      
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/aplicaciones%20web/apuntes/2021/09/21/Introduccion-a-Docker.html" rel="permalink">Introducción a Docker
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2021-09-21T13:14:06+02:00">September 21, 2021</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          19 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Docker nos permite de forma sencilla crear contenedores ligeros y fáciles de mover donde ejecutar nuestras aplicaciones software sobre cualquier máquina con ...</p>
+  </article>
+</div>
+
+    
+  </div>
+</div>
+
+  
+  
+</div>
+
+      
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">&copy; 2025 <a href="http://localhost:4000">Blog de Sergio Ibáñez</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+    <script>
+  'use strict';
+
+  (function () {
+    var commentContainer = document.querySelector('#giscus-comments');
+
+    if (!commentContainer) {
+      return;
+    }
+
+    var script = document.createElement('script');
+
+    script.setAttribute('src', 'https://giscus.app/client.js');
+    script.setAttribute('data-repo', '');
+    script.setAttribute('data-repo-id', '');
+    script.setAttribute('data-category', '');
+    script.setAttribute('data-category-id', '');
+    script.setAttribute('data-mapping', 'pathname');
+    script.setAttribute('data-strict', '0');
+    script.setAttribute('data-reactions-enabled', '1');
+    script.setAttribute('data-emit-metadata', '0');
+    script.setAttribute('data-input-position', 'top');
+    script.setAttribute('data-theme', 'preferred_color_scheme');
+    script.setAttribute('data-lang',  'es');
+    
+    script.setAttribute('crossorigin', 'anonymous');
+
+    script.setAttribute('async', '');
+
+    commentContainer.appendChild(script);
+  })();
+</script>
+
+  
+
+
+
+
+  </body>
+</html>

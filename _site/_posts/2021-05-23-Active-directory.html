@@ -1,0 +1,805 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.27.3 by Michael Rose
+  Copyright 2013-2025 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="es-ES" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Active Directory - Blog de Sergio Ibáñez</title>
+<meta name="description" content="Active Directory es un servicio de directorio que almacena objetos de datos en su entorno de red local. El servicio registra datos en los usuarios, dispositivos, aplicaciones, grupos, y dispositivos en una estructura jerárquica.">
+
+
+  <meta name="author" content="Sergio Ibáñez Núñez">
+  
+  <meta property="article:author" content="Sergio Ibáñez Núñez">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="es_ES">
+<meta property="og:site_name" content="Blog de Sergio Ibáñez">
+<meta property="og:title" content="Active Directory">
+<meta property="og:url" content="http://localhost:4000/_posts/2021-05-23-Active-directory.html">
+
+
+  <meta property="og:description" content="Active Directory es un servicio de directorio que almacena objetos de datos en su entorno de red local. El servicio registra datos en los usuarios, dispositivos, aplicaciones, grupos, y dispositivos en una estructura jerárquica.">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2021-05-23T15:28:17+02:00">
+
+
+
+
+
+
+<link rel="canonical" href="http://localhost:4000/_posts/2021-05-23-Active-directory.html">
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Blog de Sergio Ibáñez Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single" dir="ltr">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          Blog de Sergio Ibáñez
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a
+                href="/"
+                
+                
+              >Inicio</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/posts/"
+                
+                
+              >Posts</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/categories/"
+                
+                
+              >Categorías</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/tags/"
+                
+                
+              >Etiquetas</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/search/"
+                
+                
+              >Buscar</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/about/"
+                
+                
+              >Sobre mí</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="http://localhost:4000/">
+        <img src="/assets/images/avatar.png" alt="Sergio Ibáñez Núñez" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="http://localhost:4000/" itemprop="url">Sergio Ibáñez Núñez</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>Técnico IT y entusiasta de la automatización</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Active Directory">
+    <meta itemprop="description" content="Active Directory es un servicio de directorio que almacena objetos de datos en su entorno de red local. El servicio registra datos en los usuarios, dispositivos, aplicaciones, grupos, y dispositivos en una estructura jerárquica.">
+    <meta itemprop="datePublished" content="2021-05-23T15:28:17+02:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">
+            <a href="http://localhost:4000/_posts/2021-05-23-Active-directory.html" itemprop="url">Active Directory
+</a>
+          </h1>
+          
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <h3 id="que-es"><strong>¿Que es?</strong></h3>
+
+<p>Active Directory es un servicio de directorio que almacena objetos de datos en su entorno de red local. El servicio registra datos en los usuarios, dispositivos, aplicaciones, grupos, y dispositivos en una estructura jerárquica.</p>
+
+<p>La estructura jerárquica de Active Directory facilita la localización y administración de los recursos de la red desde un único punto. En esencia, Active Directory actúa como un directorio telefónico para su red, por lo que puede buscar y administrar dispositivos fácilmente.</p>
+
+<p><strong>Bosque</strong></p>
+
+<p>Es el nivel más alto de organizacion en active directory. Un bosque es un grupo de dominios, cuando múltiples árboles se agrupan juntos se convierten en un bosque.</p>
+
+<p><strong>Árbol</strong></p>
+
+<p>El árbol es una entidad con un solo dominio o grupo de objetos seguido por dominios secundarios. Los distintos árboles en un bosque se conectan entre sí a través de relaciones de confianza, permitiendo compartir información entre dominios de manera automática (la confianza entre los distintos dominios se hara de forma automatica) que permite que los distintos dominios compartan la información.</p>
+
+<p><strong>Dominios</strong></p>
+
+<p>Un dominio de Active Directory es un contenedor lógico utilizado para administrar usuarios, grupos y computadoras entre otros objetos.</p>
+
+<p>Todos estos objetos son contenidos en una partición específica dentro de la base de datos de Active Directory (ADDS).</p>
+
+<p><strong>Unidad Organizativa</strong></p>
+
+<p>Las unidades organizativas (OU) son contenedores de Active Diretory dentro de un dominio con los que podemos agrupar para organizar multitud de objetos de active directory como pueden ser: usuarios de dominios, grupos de dominios, equipos e incluso otras unidades organizativas.</p>
+
+<p><img src="/images/Active-Directory/jerarquia.png" alt="jerarquia active directory" /></p>
+
+<table>
+  <thead>
+    <tr>
+      <th><strong>Elemento</strong></th>
+      <th><strong>Descripción</strong></th>
+      <th><strong>Ejemplo</strong></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Bosque</strong></td>
+      <td>Grupo de uno o más dominios que comparten un esquema y configuración.</td>
+      <td><code class="language-plaintext highlighter-rouge">Empresa.com</code> y <code class="language-plaintext highlighter-rouge">Filial.empresa.com</code> forman parte del mismo bosque.</td>
+    </tr>
+    <tr>
+      <td><strong>Árbol</strong></td>
+      <td>Conjunto de dominios organizados jerárquicamente dentro de un bosque.</td>
+      <td><code class="language-plaintext highlighter-rouge">ventas.empresa.com</code>, <code class="language-plaintext highlighter-rouge">soporte.empresa.com</code> son parte del mismo árbol.</td>
+    </tr>
+    <tr>
+      <td><strong>Dominio</strong></td>
+      <td>Contenedor lógico que administra objetos como usuarios y equipos.</td>
+      <td><code class="language-plaintext highlighter-rouge">dominio.local</code></td>
+    </tr>
+    <tr>
+      <td><strong>Unidad Organizativa (OU)</strong></td>
+      <td>Contenedor dentro de un dominio que agrupa objetos y facilita la gestión.</td>
+      <td><code class="language-plaintext highlighter-rouge">Usuarios</code>, <code class="language-plaintext highlighter-rouge">Equipos</code>, <code class="language-plaintext highlighter-rouge">Grupos</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="instalacion-en-windows-server-2016">Instalacion (En windows server 2016)</h3>
+
+<ol>
+  <li>Nos dirigimos al Administrador de Servidor o Server Manager y hacemos clic en Agregar roles o características.</li>
+</ol>
+
+<p><img src="/images/Active-Directory/ws-1.png" alt="agregar roles" /></p>
+
+<ol>
+  <li>En la ventana inicial hacemos clic en siguiente y elegimos la opción de la Instalación basada en roles.</li>
+</ol>
+
+<p><img src="/images/images/Active-Directory/ws-2.png" alt="" /></p>
+
+<ol>
+  <li>Hacemos clic en siguiente y elegimos el servidor donde queremos instalar nuestro rol de AD DS.</li>
+</ol>
+
+<p><img src="/images/Active-Directory/ws-3.png" alt="" /></p>
+
+<ol>
+  <li>Hacemos clic en siguiente y elegimos el rol solicitado (Servicios de dominio de Active Directory), agregamos las características.</li>
+</ol>
+
+<p><img src="/images/Active-Directory/ws-4.png" alt="" /></p>
+
+<ol>
+  <li>
+    <p>Hacemos clic en siguiente seleccionamos las características y clic en siguiente y se desplegarán las caracteristicas que se van a instalar.</p>
+  </li>
+  <li>
+    <p>Hacemos clic en siguiente y comenzamos con la instalacion.</p>
+  </li>
+</ol>
+
+<p><img src="/images/Active-Directory/ws-6.png" alt="" /></p>
+
+<ol>
+  <li>
+    <p>Una vez instalado nuestro rol de Active Directory reiniciamos el servidor para aplicar los cambios. Antes de iniciar nuestro asistente de AD DS debemos promover nuestro servidor a controlador de dominio.</p>
+  </li>
+  <li>
+    <p>Para promover el servidor a DC nos dirigimos a nuestro Administrador de Servidor y desplegamos el flag de información (la bandera) e indicamos la opcion “promover este servidor a controlador de dominio”.</p>
+  </li>
+</ol>
+
+<p>Hacemos clic en esta opción y se desplegará el asistente para configuración de servicios de dominio de Directorio Activo.</p>
+
+<p>Veremos que contamos con 3 opciones de configuración:</p>
+
+<ul>
+  <li>Agregar un controlador de dominio a un dominio existente:</li>
+  <li>Agregar un nuevo dominio a un bosque existente:</li>
+  <li>Agregar un nuevo bosque:</li>
+</ul>
+
+<p>En nuestro caso elegiremos la opción Agregar un nuevo bosque, elegiremos el nombre para nuestro domino y damos clic en Siguiente.</p>
+
+<p><img src="/images/Active-Directory/ws-8.png" alt="" /></p>
+
+<ol>
+  <li>Después que el sistema valide si el nombre de dominio es válido, se desplegarán las opciones del controlador de dominio, donde contamos con algunas opciones muy importantes que debemos tener en cuenta a nivel de funcionalidad de nuestro servidor.</li>
+</ol>
+
+<p>El nivel funcional que se indique debe ser siempre el más bajo de la red, es decir, en mi caso el servidor con Active Directory cuenta con windows server 2012 por lo que el nivel funcional tanto de dominio como de bosque, será de windows 2012, sin embargo si en nuestra red contamos con algun otro servidor con windows server 2008 por ejemplo, el nivel funcional se debe de establecer en windows server 2008.</p>
+
+<p><img src="/images/Active-Directory/ws-10.png" alt="" /></p>
+
+<ol>
+  <li>En la siguiente ventana tenemos las opciones de DNS.</li>
+</ol>
+
+<p><img src="/images/Active-Directory/ws-11.png" alt="" /></p>
+
+<ol>
+  <li>Hacemos clic en siguiente, y veremos el nombre de NETBIOS asignado por el sistema, nosotros decidimos si lo cambiamos o dejamos ése por defecto.</li>
+</ol>
+
+<p><img src="/images/Active-Directory/ws-12.png" alt="" /></p>
+
+<ol>
+  <li>Clic en Siguiente, se desplegará la ventana informativa de ubicación de la base de datos de AD DS.</li>
+</ol>
+
+<p><img src="/images/Active-Directory/ws-13.png" alt="" /></p>
+
+<ol>
+  <li>Clic en Siguiente, a continuación se desplegará una ventana informativa con el proceso a realizar, si notamos en la parte inferior podemos realizar este mismo procedimiento usando Powershell, Windows Server nos da la opción de ver y copiar el script.</li>
+</ol>
+
+<p><img src="/images/Active-Directory/ws-14.png" alt="" /></p>
+
+<ol>
+  <li>Hacemos clic en siguiente, y Windows Server realizará una validación para que todos los requisitos de instalación estén correctos y así poder comenzar la instalación.</li>
+</ol>
+
+<p><img src="/images/Active-Directory/ws-15.png" alt="" /></p>
+
+<ol>
+  <li>
+    <p>Hacemos clic en Instalar para iniciar el proceso de promover nuestro servidor a controlador de dominio.</p>
+  </li>
+  <li>
+    <p>El sistema se reiniciará para guardar la configuración y veremos en el panel del Administrador del Servidor que ya contamos con las opciones relacionadas al Directorio Activo.</p>
+  </li>
+</ol>
+
+<p>En caso de que necesitemos borrar un controlador de dominio de nuestra estructura de red, debemos seguir los siguientes pasos:</p>
+
+<ol>
+  <li>
+    <p>Entramos al menú Administrar y elegimos “Quitar roles y funciones”.</p>
+  </li>
+  <li>
+    <p>Se desplegará la ventana informativa, Hacemos clic en Siguiente</p>
+  </li>
+  <li>
+    <p>Seleccionamos el servidor donde tenemos instalado el rol de AD DS</p>
+  </li>
+  <li>
+    <p>En la ventana de Roles de servidor seleccionamos la opción Servicios de dominio de directorio activo (debe quedar desactivada), quitamos las características de AD DS.</p>
+  </li>
+  <li>
+    <p>Hacemos clic en siguiente, seleccionamos las características que deseemos eliminar y hacemos clic en siguiente, se mostrará un resumen de la tarea que estamos por ejecutar y hacemos clic en Quitar.</p>
+  </li>
+</ol>
+
+<h2 id="creación-y-administración-de-usuarios-y-equipos">Creación y administración de usuarios y equipos</h2>
+
+<p>Podemos crear un usuario a través de diferentes herramientas como lo son: Los asistentes de la consola de AD DS, el comando DSADD.EXE, PowerShell entre otros, en nuestro ejemplo usaremos el asistente de AD DS. Para ello vamos a realizar los siguientes pasos:</p>
+
+<ul>
+  <li>
+    <p>Ingresamos al administrador del servidor, elegimos en el menú Herramientas la opción “Centro de administración de Active Directory”.</p>
+  </li>
+  <li>
+    <p>Se desplegará la consola del centro de administración de AD.</p>
+  </li>
+  <li>
+    <p>Seleccionamos nuestro servidor en el panel lateral izquierdo podremos ver que se despliegan una serie de opciones, como por ejemplo, equipos, usuarios, sistema, dispositivos TPM entre otros.</p>
+  </li>
+  <li>
+    <p>En el panel lateral derecho, en la parte inferior veremos que se abren las opciones referentes al objeto Users.</p>
+  </li>
+</ul>
+
+<p>Allí podremos elegir lo que deseemos crear, usuarios, equipos, grupos, etc. Elegimos Usuario y podremos ver cómo cambia la estructura de creación comparada con versiones anteriores (a nivel de apariencia).</p>
+
+<p><img src="/images/Active-Directory/ad-3.png" alt="" /></p>
+
+<p>Una vez tengamos los cambios necesarios en el perfil del usuario damos clic en Aceptar para guardar dicha configuración.</p>
+
+<p><img src="/images/Active-Directory/ad-5.png" alt="" /></p>
+
+<p>Si deseamos crear nuestros usuarios o equipos a través de cmd, podemos ejecutar el comando DCA.MSC o dirigirnos al menú Herramientas y elegir la opción Usuarios y equipos de Active Directory.</p>
+
+<p>El mismo procedimiento realizamos para la creación de cualquier otro objeto en nuestro Directorio Activo, equipos, OUs, etc. Por ejemplo para la creación de un equipo nos dirigimos al menú inferior derecho del Centro de administración de Active Directory y elegimos Nuevo / Equipo.</p>
+
+<p>En la ventana desplegada ingresamos información del equipo, así mismo indicamos a que dominio se va a incluir dicho equipo y para guardar los cambios damos clic en Aceptar.</p>
+
+<p><img src="/images/Active-Directory/ad-4.png" alt="" /></p>
+
+<p>En el centro de administración de Active Directory podemos gestionar otras funciones de nuestro rol, en el panel lateral derecho podemos encontrar lo siguiente:</p>
+
+<ul>
+  <li>
+    <p>Cambiar el controlador de dominio: nos da la posibilidad de modificar nuestro DC.</p>
+  </li>
+  <li>
+    <p>Elevar el nivel funcional del bosque: nos permite elevar la funcionalidad del bosque de nuestro servidor.</p>
+  </li>
+  <li>
+    <p>Elevar el nivel funcional del dominio: da la posibilidad de elevar la funcionalidad de nuestro dominio.</p>
+  </li>
+  <li>
+    <p>Habilitar la papelera de reciclaje: permite recuperar objetos eliminados en AD</p>
+  </li>
+</ul>
+
+<h3 id="creación-y-administración-de-ous-unidades-organizacioneales"><strong>Creación y administración de OUs (unidades organizacioneales)</strong></h3>
+
+<p>Dentro de nuestro dominios podemos crear Unidades Organizacionales para tener un control más específico de los usuarios u objetos, así mismo podemos crear diferentes perfiles para cada OU.</p>
+
+<p>Para ello abrimos el Centro de administración de Active Directory desde el menú Herramientas y elegiremos del panel lateral derecho la opción Nuevo / Unidad Organizativa.</p>
+
+<p>Allí debemos especificar el nombre de la OU (en este caso usemos Pruebas) y podemos agregar comentarios y en la opción superior derecha Crear en: podemos definir en qué parte de nuestro Árbol vamos a crear dicha OU.</p>
+
+<p>Podríamos incluir Pruebas dentro de la OU:</p>
+
+<ul>
+  <li>Ingresamos los datos en la ventana del Centro de administración:</li>
+</ul>
+
+<p><img src="/images/Active-Directory/ad-6.png" alt="" /></p>
+
+<ul>
+  <li>Podremos ver que nuestra OU Pruebas ha sido creada correctamente dentro de nuestro árbol:</li>
+</ul>
+
+<p><img src="/images/Active-Directory/ad-7.png" alt="" /></p>
+
+<h2 id="tareas-active-directory"><strong>Tareas Active Directory</strong></h2>
+
+<ul>
+  <li>
+    <h4 id="crear-cuentas-de-usuario"><strong>Crear cuentas de usuario</strong></h4>
+  </li>
+</ul>
+
+<p>Esta vez crearemos un usuario de forma distinta al creado anteriormente. Esta vez entramos en el administrador del servidor y accedemos a las herramientas, pero esta vez no elegiremos la opcion de configuracion de administracion de active directory, sino que elegiremos la opcion de usuarios y equipos de active directory.</p>
+
+<p>Una vez estemos en la ventana de usuarios y equipos de active directory podremos crear un usuario haciendo clic derecho en cualquier lugar de la ventana y eligiendo la opción “nuevo” y despues la opcion de “usuario”. Por ejemplo en mi caso si quiero crear un usuario dentro de mi dominio de pruebas lo que haria seria hacer clic en el nombre de mi dominio para que al crear el usuario, se crease el usuario dentro del dominio. Ej:</p>
+
+<p><img src="/images/Active-Directory/usuario1.png" alt="" /></p>
+
+<p><img src="/images/Active-Directory/usuario2.png" alt="" /></p>
+
+<p>Cuando se nos abra la ventana para crearnos el usuarios e introduzcamos los datos, tendremos que ponerle una contraseña (la contraseña que se pone incialmente suele ser una contraseña temporal) aunque tendremos varias opciones de configuracion de la cuenta:</p>
+
+<p><img src="/images/Active-Directory/usuario3.png" alt="" /></p>
+
+<ul>
+  <li>
+    <p>La primera opción que encontramos es la que nos permite que el usuario cambie la contraseña por la que el quiera al loguearse ya que la contraseña con la que el admin creo su cuenta seria temporal y de un solo uso.</p>
+  </li>
+  <li>
+    <p>La segunda opción es para que el usuario no pueda cambiar la contraseña aunque esta expire, por lo que solo el admin tendra autoridad para cambiarla.</p>
+  </li>
+  <li>
+    <p>La tercera opción hace que las contraseñas no expiren.</p>
+  </li>
+  <li>
+    <p>La ultima opción que encontramos es para indicar que la cuenta del usuario esta deshabilitada, por ejemplo si estamos en una empresa y ese empleado a dejado el trabajo.</p>
+  </li>
+</ul>
+
+<p>Una vez creados los usuario lo siguiente será agregar dichos usuarios a los grupos apropiados en caso de que sea necesario.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th><strong>Opción</strong></th>
+      <th><strong>Descripción</strong></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>El usuario debe cambiar la contraseña al iniciar sesión</strong></td>
+      <td>Se usa para forzar el cambio en el primer inicio de sesión.</td>
+    </tr>
+    <tr>
+      <td><strong>El usuario no puede cambiar la contraseña</strong></td>
+      <td>Solo un administrador podrá modificarla.</td>
+    </tr>
+    <tr>
+      <td><strong>La contraseña nunca expira</strong></td>
+      <td>Se usa en cuentas de servicio o equipos sin usuarios.</td>
+    </tr>
+    <tr>
+      <td><strong>La cuenta está deshabilitada</strong></td>
+      <td>Se usa cuando un empleado deja la empresa.</td>
+    </tr>
+  </tbody>
+</table>
+
+<ul>
+  <li>
+    <h4 id="crear-grupos"><strong>Crear grupos</strong></h4>
+  </li>
+</ul>
+
+<p>Cuando un usuario inicia sesión en el dominio, Active Directory crea un token o una especie de identidad que indica automáticamente en que grupos está incluido este usuario; Un grupo puede crearse para fines distintos, por ejemplo, para acceder a ciertas rutas, para poder imprimir, para que le lleguen determinados correos etc.</p>
+
+<p>Hacemos clic en la raíz de nuestro dominio, en mi caso el dominio Practicas y haciendo clic derecho elegimos la opción “nuevo” y despues la opción “grupo”. Una vez que se nos abra la ventana para crear el grupo tendremos que asignarle un nombre así como elegir el ambito y el tipo de grupo que será. Ej:</p>
+
+<p><img src="/images/Active-Directory/grupos1.png" alt="" /></p>
+
+<p>Los ámbitos de grupos son los sigientes:</p>
+
+<ul>
+  <li><strong>Dominio Local</strong></li>
+</ul>
+
+<p>Es el grupo más restrictivo ya que solo será accesible por usuarios que esten en el mismo dominio.
+ </p>
+<ul>
+  <li><strong>Global</strong></li>
+</ul>
+
+<p>En este caso el grupo global permite que el grupo sea accesible por cuelaquier dominio siempre y cuando esten dentro del mismo bosque.</p>
+
+<ul>
+  <li><strong>Universal</strong></li>
+</ul>
+
+<p>Este es el tipo menos restrictivo ya que permite el acceso a cualquier dominio de cualquier bosque, es decir acceso a todo el mundo.</p>
+
+<p>Por otro lado tenemos dos tipos de grupos:</p>
+
+<ul>
+  <li>Distribución: Son creados básicamente para el envío de información a una o más personas.</li>
+  <li>Seguridad: Son creados para garantizar el acceso a los recursos de la organización (permitir/restringir acceso a archivos otorgandoles permisos a usuarios concretos).</li>
+</ul>
+
+<p>En este ejemplo para tener mejor organizados los grupos, he creado una Unidad Organizativa (OU), llamada grupo donde estan alojados varios grupos (como si fuese una empresa real):</p>
+
+<p><img src="/images/Active-Directory/grupos2.png" alt="" /></p>
+
+<p><img src="/images/Active-Directory/grupos3.png" alt="" /></p>
+
+<table>
+  <thead>
+    <tr>
+      <th><strong>Tipo de Grupo</strong></th>
+      <th><strong>Descripción</strong></th>
+      <th><strong>Ejemplo de uso</strong></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Grupo de Seguridad</strong></td>
+      <td>Se usa para asignar permisos de acceso a recursos.</td>
+      <td>Acceso a carpetas compartidas o permisos en aplicaciones.</td>
+    </tr>
+    <tr>
+      <td><strong>Grupo de Distribución</strong></td>
+      <td>Se usa para enviar correos electrónicos a múltiples usuarios.</td>
+      <td>Grupo de correo para empleados de un departamento.</td>
+    </tr>
+  </tbody>
+</table>
+
+<ul>
+  <li>
+    <h4 id="agregar-usuarios-a-grupos"><strong>Agregar usuarios a grupos</strong></h4>
+  </li>
+</ul>
+
+<p>Para ello hacemos clic en el usuario que se haya creado y abrimos las propiedades del usuario. Una vez se nos habra la ventana de propiedades, vamos a la pestaña “miembro de” y hacemos clic en agregar.</p>
+
+<p>Después de agregar tendremos que indicar a que grupo se agregara el usuario, por ejemplo si mi dominio se llama Pruebas y en la empresa será uno de los administradores, seria Admin (para ello debe existir previamente el grupo que especifiquemos sino obviamente no podremos agregar ningun usuario). Ej:</p>
+
+<p><img src="/images/Active-Directory/ug1.png" alt="" /></p>
+
+<ul>
+  <li>
+    <h4 id="restablecer-cuentas-de-usuario"><strong>Restablecer cuentas de usuario</strong></h4>
+  </li>
+</ul>
+
+<p>Esta opción es bastante util ya que a la gente se les suele olvidar a menudo la contraseña, al quedarse la centa bloqueada, el admin puede restablecer la contraseña por defecto para que así el usuario pueda volver a tener acceso con otra contraseña.</p>
+
+<p>En el caso de que la cuenta haya sido bloqueada por algun motivo y el suaurio no puede acceder a ella la solución seria bastante facil ya que lo unico que habria que hacer es abrir las propiedades de la cuenta de usuario y en la pestaña “cuenta/account” seleccionar la opción desbloquear cuenta.</p>
+
+<p>Por otro lado en el caso de que la cuenta no este bloqueada sino que se haya olvidado la contraseña y haya que restablecerla, se haria lo siguiente:</p>
+
+<ul>
+  <li>
+    <p>Comprobar primero que el usuario al que vamos a resyablecerle la contraseña es el usuario correcto ya que en entornos empresariales por ejemplo es probable encontrar a uno o varios empleados que se llamen igual (para ello podemos hacer uso de la busqueda de usuarios, contactos y grupos).</p>
+  </li>
+  <li>
+    <p>Cuando estemos sehuro del usuario al que restablecer la contraseña, lo que hacemos es hacer clic en el y elegir la opción de restablecer contraseña lo cual nos permitirá indicar una contraseña nueva con la opción de que el usuario deba cambiarla una vez logeado.</p>
+  </li>
+  <li>
+    <h4 id="eliminacion-de-cuenta-de-usuario"><strong>Eliminacion de cuenta de usuario</strong></h4>
+  </li>
+</ul>
+
+<p>Basicamente la eliminacion de una cuenta de usuario es batante simple ya que basta con hacer clic en el usuario y elegir la opcion de eliminar cuenta.</p>
+
+<ul>
+  <li>
+    <h4 id="configurar-ficheros-compartidos"><strong>Configurar ficheros compartidos</strong></h4>
+  </li>
+</ul>
+
+<p>Hacemos clic en la raíz de nuestro dominio, en mi caso el dominio Practicas y haciendo clic derecho elegimos la opción “nuevo” y despues la opción “objeto”.</p>
+
+<p>Empezamos poniendole un nombre a la carpeta compartida y luego pasamos a indicar la ruta de la carpeta a esta carpeta podemos añadirle los permisos necesarios para que solo un grupo del dominio pueda accedes a ella por ejemplo.</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/categories/#apuntes" class="page__taxonomy-item p-category" rel="tag">Apuntes</a><span class="sep">, </span>
+    
+      <a href="/categories/#sistemas" class="page__taxonomy-item p-category" rel="tag">Sistemas</a>
+    
+    </span>
+  </p>
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2021-05-23T15:28:17+02:00">May 23, 2021</time></p>
+
+      </footer>
+
+      
+
+      
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+
+      
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">&copy; 2025 <a href="http://localhost:4000">Blog de Sergio Ibáñez</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>
