@@ -1,6 +1,6 @@
 title: "Blog de Sergio Ibáñez"
 email: "tuemail@example.com"
-description: "Blog técnico sobre sistemas, DevOps y automatización"
+description: "Blog personal sobre administración de sistemas, Linux, DevOps, monitorización y proyectos técnicos."
 baseurl: "" 
 url: "https://sergioibanez.github.io"
 locale: "es-ES"
@@ -29,7 +29,7 @@ paginate_path: "/page:num/"
 author:
   name: "Sergio Ibáñez Núñez"
   avatar: "/assets/images/avatar.png"
-  bio: "Técnico IT y entusiasta de la automatización"
+  bio: "Administrador de sistemas | Técnico de soporte IT | Monitorización"
   #location: "España"
   #links:
     #- label: "GitHub"
