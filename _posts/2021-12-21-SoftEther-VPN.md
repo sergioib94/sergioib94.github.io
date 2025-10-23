@@ -3,6 +3,7 @@ title: "Introducción SoftEther VPN"
 date: 2021-12-21T13:44:30+01:00
 categories: [Seguridad]
 excerpt: "SoftEther VPN es uno de los software VPN multiprotocolo más potentes y rápidos del mundo en la actualidad. Funciona en sistemas Windows, Solaris, Mac, FreeBSD y algunas distribuciones de Linux. Además de ser de software libre, también es una alternativa muy buena a openvpn y a los servidores VPN de microsoft."
+card_image: /assets/images/cards/softether-bg.jpg
 ---
 
 ### **Introducción** ###
