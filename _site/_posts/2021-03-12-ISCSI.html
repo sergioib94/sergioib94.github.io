@@ -1,0 +1,645 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.27.3 by Michael Rose
+  Copyright 2013-2025 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="es-ES" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>ISCSI - Blog de Sergio Ibáñez</title>
+<meta name="description" content="ISCSI es un estándar que permite el uso del protocolo SCSI sobre redes TCP/IP. iSCSI es un protocolo de la capa de transporte definido en las especificaciones SCSI-3.">
+
+
+  <meta name="author" content="Sergio Ibáñez Núñez">
+  
+  <meta property="article:author" content="Sergio Ibáñez Núñez">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="es_ES">
+<meta property="og:site_name" content="Blog de Sergio Ibáñez">
+<meta property="og:title" content="ISCSI">
+<meta property="og:url" content="http://localhost:4000/_posts/2021-03-12-ISCSI.html">
+
+
+  <meta property="og:description" content="ISCSI es un estándar que permite el uso del protocolo SCSI sobre redes TCP/IP. iSCSI es un protocolo de la capa de transporte definido en las especificaciones SCSI-3.">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2021-03-12T18:44:37+01:00">
+
+
+
+
+
+
+<link rel="canonical" href="http://localhost:4000/_posts/2021-03-12-ISCSI.html">
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Blog de Sergio Ibáñez Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single" dir="ltr">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          Blog de Sergio Ibáñez
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a
+                href="/"
+                
+                
+              >Inicio</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/posts/"
+                
+                
+              >Posts</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/categories/"
+                
+                
+              >Categorías</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/tags/"
+                
+                
+              >Etiquetas</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/search/"
+                
+                
+              >Buscar</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/about/"
+                
+                
+              >Sobre mí</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="http://localhost:4000/">
+        <img src="/assets/images/avatar.png" alt="Sergio Ibáñez Núñez" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="http://localhost:4000/" itemprop="url">Sergio Ibáñez Núñez</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>Técnico IT y entusiasta de la automatización</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="ISCSI">
+    <meta itemprop="description" content="ISCSI es un estándar que permite el uso del protocolo SCSI sobre redes TCP/IP. iSCSI es un protocolo de la capa de transporte definido en las especificaciones SCSI-3.">
+    <meta itemprop="datePublished" content="2021-03-12T18:44:37+01:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">
+            <a href="http://localhost:4000/_posts/2021-03-12-ISCSI.html" itemprop="url">ISCSI
+</a>
+          </h1>
+          
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <h3 id="introducción"><strong>Introducción</strong></h3>
+
+<p>ISCSI es un estándar que permite el uso del protocolo SCSI sobre redes TCP/IP. iSCSI es un protocolo de la capa de transporte definido en las especificaciones SCSI-3.</p>
+
+<p>Para esta practica se han creado 3 maquinas virtuales, 2 debian 10, una cliente y otra servidor con 3 discos de 1Gb y una maquina windows 7.</p>
+
+<h3 id="instalación-y-configuración"><strong>Instalación y configuración</strong></h3>
+
+<p>En el servidor, empezamos instalando los paquetes tgt y lvm2.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>apt install tgt lvm2
+</code></pre></div></div>
+
+<p>Mientras en el cliente debian instalamos el paquete iscsi</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>apt install open-iscsi
+</code></pre></div></div>
+
+<p>Preparamos los discos para el uso de ISCSI LUN (en el server), usando lvm2 creamos los volúmenes físicos:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root@ISCSI:/home/vagrant# pvcreate /dev/sdb
+  Physical volume "/dev/sdb" successfully created.
+</code></pre></div></div>
+
+<p>Creamos el grupo de volúmenes:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root@ISCSI:/home/vagrant# vgcreate iscsi /dev/sdb
+  Volume group "iscsi" successfully created
+</code></pre></div></div>
+
+<p>Creamos el volumen logico:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root@ISCSI:/home/vagrant# lvcreate -L 950M -n vol-iscsi iscsi
+  Rounding up size to full physical extent 952.00 MiB
+  Logical volume "vol-iscsi" created.
+</code></pre></div></div>
+
+<p>Comprobamos que se haya creado correctamente con el comando lvs</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root@ISCSI:/home/vagrant# lvs
+  LV        VG    Attr       LSize   Pool Origin Data%  Meta%  Move Log Cpy%Sync Convert
+  vol-iscsi iscsi -wi-a----- 952.00m
+</code></pre></div></div>
+
+<p>Una vez creado el volumen lógico, pasemos a crear el LUN que sera el dispositivo al que el iniciador se conectara, para ello modificamos (/etc/tgt/targets.conf):</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;target iqn.2020-21.com:tgiscsi&gt;
+     backing-store /dev/iscsi/vol-iscsi
+&lt;/target&gt;
+</code></pre></div></div>
+
+<p>Reiniciamos el servivio tgt:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>systemctl restart tgt
+</code></pre></div></div>
+
+<p>Comprobamos que el target este bien creado:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root@ISCSI:/home/vagrant# tgtadm --mode target --op show
+Target 1: iqn.2020-21.com:tgiscsi
+    System information:
+        Driver: iscsi
+        State: ready
+    I_T nexus information:
+    LUN information:
+        LUN: 0
+            Type: controller
+            SCSI ID: IET     00010000
+            SCSI SN: beaf10
+            Size: 0 MB, Block size: 1
+            Online: Yes
+            Removable media: No
+            Prevent removal: No
+            Readonly: No
+            SWP: No
+            Thin-provisioning: No
+            Backing store type: null
+            Backing store path: None
+            Backing store flags: 
+        LUN: 1
+            Type: disk
+            SCSI ID: IET     00010001
+            SCSI SN: beaf11
+            Size: 998 MB, Block size: 512
+            Online: Yes
+            Removable media: No
+            Prevent removal: No
+            Readonly: No
+            SWP: No
+            Thin-provisioning: No
+            Backing store type: rdwr
+            Backing store path: /dev/iscsi/vol-iscsi
+            Backing store flags: 
+    Account information:
+    ACL information:
+        ALL
+</code></pre></div></div>
+
+<h3 id="configuración-de-cliente-debian"><strong>Configuración de cliente Debian</strong></h3>
+
+<p>Configuramos el fichero (/etc/iscsi/iscsid.conf):</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>iscsid.startup = automatic
+
+node.startup = automatic
+</code></pre></div></div>
+
+<p>Reiniciamos el servicio:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>systemctl restart open-iscsi.service
+</code></pre></div></div>
+
+<p>Comunicamos al cliente con el target:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root@cliente:/home/vagrant# iscsiadm -m discovery -t st -p 192.168.43.23
+192.168.43.23:3260,1 iqn.2020-21.com:tgiscsi
+</code></pre></div></div>
+
+<p>Buscamos los servcios disponibles dentro de la red:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>iscsiadm -m discovery -t sendtargets -p ip serrver
+</code></pre></div></div>
+
+<p>Hacemos un login al target que se nos ha mostrado anteriormente:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root@cliente:/home/vagrant# iscsiadm --m node --targetname "iqn.2020-21.com:tgiscsi" -p "192.168.43.23:3260" --login
+iscsiadm: default: 1 session requested, but 1 already present.
+iscsiadm: Could not log into all portals
+</code></pre></div></div>
+
+<p>Una vez hecho esto, le damos formato y lo montamos para comprobar que se pueda escribir en el:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mkfs.ext4 /dev/sdb
+
+mkdir /mnt/iscsi
+
+mount /dev/sdb1 /mnt/iscsi
+</code></pre></div></div>
+
+<p>Montamos el login de iscsi en el servidor para comprobar que el fichero creado por el cliente se haya creado correctamente:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mount /dev/iscsi/vol-iscsi iscsi/
+
+Comprobamos que el fichero creado por el cliente existe:
+
+root@ISCSI:/mnt# cat iscsi/fichero_iscsi.txt
+practica iscsi
+</code></pre></div></div>
+
+<p>Automontaje del volumen en el cliente:</p>
+
+<p>Creamos el automontaje en /etc/systemd/system/iscsi.mount con la siguiente configuración:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[Unit]
+Description=ISCSI
+
+[Mount]
+What=/dev/sdb
+Where=/mnt/iscsi
+Type=ext4
+Options=_netdev
+
+[Install]
+WantedBy=multi-user.target
+</code></pre></div></div>
+
+<p>Recargamos el demonio y habilitamos el automontaje:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>systemctl daemon-reload
+systemctl enable iscsi.mount
+</code></pre></div></div>
+
+<p>Reiniciamos y comprobamos si se automonta:</p>
+
+<h3 id="configuración-windows"><strong>Configuración Windows</strong></h3>
+
+<p>Para windows vamos a utilizar los dos volumenes que sobran, sdc y sdd, empezamos al igual que antes creando los volúmenes lógicos en el servidor:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root@ISCSI:/home/vagrant# pvcreate /dev/sdc
+  Physical volume "/dev/sdc" successfully created.
+root@ISCSI:/home/vagrant# vgcreate win1 /dev/sdc
+  Volume group "win1" successfully created
+root@ISCSI:/home/vagrant# lvcreate -L 950M -n vol-win1 win1
+  Rounding up size to full physical extent 952.00 MiB
+  Logical volume "vol-win1" created.
+</code></pre></div></div>
+
+<p>Repetimos lo mismo con el otro disco:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root@ISCSI:/home/vagrant# pvcreate /dev/sdd
+  Physical volume "/dev/sdd" successfully created.
+root@ISCSI:/home/vagrant# vgcreate win2 /dev/sdd
+  Volume group "win2" successfully created
+root@ISCSI:/home/vagrant# lvcreate -L 950M -n vol-win2 win2
+  Rounding up size to full physical extent 952.00 MiB
+  Logical volume "vol-win2" created.
+</code></pre></div></div>
+
+<p>Creamos los dos LUN en /etc/tgt/targets.conf modificando el fichero de la siguiente forma:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;target iqn.2020-02.com:tgwindows&gt;
+        backing-store /dev/win1/vol-win1
+        backing-store /dev/win2/vol-win2
+        incominguser sergioib 123456654321
+&lt;/target&gt;
+</code></pre></div></div>
+
+<p>En este caso para crear el LUN de windows tenemos que añadir una autentificacion CHAP que debe tener tanto un usuario como una contraseña de entre 12 y 15 caracteres.</p>
+
+<p>Reiniciamos el servicio igual que antes y comprobamos que se hayan creado:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root@ISCSI:/home/vagrant# tgtadm --mode target --op show
+Target 1: iqn.2020-02.com:tgwindows
+    System information:
+        Driver: iscsi
+        State: ready
+    I_T nexus information:
+    LUN information:
+        LUN: 0
+            Type: controller
+            SCSI ID: IET     00010000
+            SCSI SN: beaf10
+            Size: 0 MB, Block size: 1
+            Online: Yes
+            Removable media: No
+            Prevent removal: No
+            Readonly: No
+            SWP: No
+            Thin-provisioning: No
+            Backing store type: null
+            Backing store path: None
+            Backing store flags: 
+        LUN: 1
+            Type: disk
+            SCSI ID: IET     00010001
+            SCSI SN: beaf11
+            Size: 998 MB, Block size: 512
+            Online: Yes
+            Removable media: No
+            Prevent removal: No
+            Readonly: No
+            SWP: No
+            Thin-provisioning: No
+            Backing store type: rdwr
+            Backing store path: /dev/win1/vol-win1
+            Backing store flags: 
+        LUN: 2
+            Type: disk
+            SCSI ID: IET     00010002
+            SCSI SN: beaf12
+            Size: 998 MB, Block size: 512
+            Online: Yes
+            Removable media: No
+            Prevent removal: No
+            Readonly: No
+            SWP: No
+            Thin-provisioning: No
+            Backing store type: rdwr
+            Backing store path: /dev/win2/vol-win2
+            Backing store flags: 
+    Account information:
+        sergioib
+    ACL information:
+        ALL
+</code></pre></div></div>
+
+<h3 id="cliente-windows"><strong>Cliente windows</strong></h3>
+
+<p>Conectamos el iscsi al cliente windows:</p>
+
+<p>Panel de control &gt; herramientas administrativas &gt; iniciador iscsi &gt; propiedades &gt; detección &gt; detectar portal</p>
+
+<p>Ponemos la ip del servidor y nos deberán salir los targets creados anteriormente.</p>
+
+<p>Le damos a conectar y vamos a las opciones avanzadas y habilitamos el inicio de sesión por chap donde añadimos el usuario y contraseña creados anteriormente.</p>
+
+<p>Aceptamos y ya tendremos iscsi conectado a nuestra maquina windows1</p>
+
+<p><img src="/images/ISCSI/iscsi_windows.png" alt="iscsi" /></p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/categories/#cloud" class="page__taxonomy-item p-category" rel="tag">Cloud</a>
+    
+    </span>
+  </p>
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2021-03-12T18:44:37+01:00">March 12, 2021</time></p>
+
+      </footer>
+
+      
+
+      
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+
+      
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">&copy; 2025 <a href="http://localhost:4000">Blog de Sergio Ibáñez</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

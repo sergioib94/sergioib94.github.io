@@ -1,0 +1,558 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.27.3 by Michael Rose
+  Copyright 2013-2025 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="es-ES" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Instalación, configuración y monitorización usando Zabbix - Blog de Sergio Ibáñez</title>
+<meta name="description" content="Este post describe paso a paso cómo instalar y configurar Zabbix 6.0 LTS en una máquina virtual con Debian 12. Está pensado para crear un entorno de prácticas de monitorización que incluya carga simulada, agentes remotos, monitorización de logs, SNMP y dashboards personalizados.">
+
+
+  <meta name="author" content="Sergio Ibáñez Núñez">
+  
+  <meta property="article:author" content="Sergio Ibáñez Núñez">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="es_ES">
+<meta property="og:site_name" content="Blog de Sergio Ibáñez">
+<meta property="og:title" content="Instalación, configuración y monitorización usando Zabbix">
+<meta property="og:url" content="http://localhost:4000/_posts/2025-05-01-Instalacion-configuracion-y-monitoreo-zabbix.html">
+
+
+  <meta property="og:description" content="Este post describe paso a paso cómo instalar y configurar Zabbix 6.0 LTS en una máquina virtual con Debian 12. Está pensado para crear un entorno de prácticas de monitorización que incluya carga simulada, agentes remotos, monitorización de logs, SNMP y dashboards personalizados.">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2025-05-01T13:19:00+02:00">
+
+
+
+
+
+
+<link rel="canonical" href="http://localhost:4000/_posts/2025-05-01-Instalacion-configuracion-y-monitoreo-zabbix.html">
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Blog de Sergio Ibáñez Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single" dir="ltr">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          Blog de Sergio Ibáñez
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a
+                href="/"
+                
+                
+              >Inicio</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/posts/"
+                
+                
+              >Posts</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/categories/"
+                
+                
+              >Categorías</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/tags/"
+                
+                
+              >Etiquetas</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/search/"
+                
+                
+              >Buscar</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/about/"
+                
+                
+              >Sobre mí</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="http://localhost:4000/">
+        <img src="/assets/images/avatar.png" alt="Sergio Ibáñez Núñez" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="http://localhost:4000/" itemprop="url">Sergio Ibáñez Núñez</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>Técnico IT y entusiasta de la automatización</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Instalación, configuración y monitorización usando Zabbix">
+    <meta itemprop="description" content="Este post describe paso a paso cómo instalar y configurar Zabbix 6.0 LTS en una máquina virtual con Debian 12. Está pensado para crear un entorno de prácticas de monitorización que incluya carga simulada, agentes remotos, monitorización de logs, SNMP y dashboards personalizados.">
+    <meta itemprop="datePublished" content="2025-05-01T13:19:00+02:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">
+            <a href="http://localhost:4000/_posts/2025-05-01-Instalacion-configuracion-y-monitoreo-zabbix.html" itemprop="url">Instalación, configuración y monitorización usando Zabbix
+</a>
+          </h1>
+          
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <h2 id="que-es-zabbix"><strong>¿Que es Zabbix?</strong></h2>
+
+<p>Zabbix es una plataforma de monitorización de infraestructura de TI de código abierto que permite supervisar el estado y rendimiento de servidores, redes, aplicaciones, servicios y otros recursos tecnológicos en tiempo real.</p>
+
+<h2 id="requisitos-previos"><strong>Requisitos previos</strong></h2>
+
+<p>Para este post se han usado los siguientes elementos para realizar instalación, configuración y monitorización haciendo uso de Zabbix:</p>
+
+<ul>
+  <li>Maquina virtual con sistema operativo Debían 12 (Zabbix server)</li>
+  <li>Al menos 1 GB de RAM, 2 CPU y 10 GB de disco duro</li>
+  <li>Acceso a red y tener privilegios de superusuario (root)</li>
+</ul>
+
+<p>Lo primero que haremos al arrancar nuestro servidor Debian sera actualizar el sistema en el caso de que no lo este.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo apt update &amp;&amp; sudo apt upgrade -y
+</code></pre></div></div>
+
+<p>Una vez se tenga actualizado el sistema lo primero que haremos sera instalar LAMP en nuestra maquina (Apache, Mariadb y Php), inicialmente lo que necesitaremos sera solo mariadb, pero como mas adelante necesitaremos también Apache y php evitaremos problemas a la hora de usar Zabbix.</p>
+
+<p><strong>Instalación de Apache</strong></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo apt install apache2 -y
+</code></pre></div></div>
+
+<p>Apache lo usara Zabbix para incluir una interfaz web que necesita un servidor web.</p>
+
+<p><strong>Instalación de Mariadb</strong></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo apt install mariadb-server mariadb-client -y
+</code></pre></div></div>
+
+<p>Zabbix almacena todos sus datos (eventos, hosts, métricas, configuración, etc.) en una base de datos.</p>
+
+<p><strong>Aseguramos Mariadb</strong></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo mysql_secure_installation
+</code></pre></div></div>
+
+<p>A la hora de asegurar mariadb tendremos que indicar las siguientes opciones:</p>
+
+<ul>
+  <li>Set root password: si</li>
+  <li>Remove anonymous users: si</li>
+  <li>Disallow root login remotely: sí</li>
+  <li>Remove test database: sí</li>
+  <li>Reload privilege tables: sí</li>
+</ul>
+
+<p><strong>Instalación de PHP y extensiones necesarias</strong></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo apt install php php-mysql php-bcmath php-mbstring php-gd php-xml php-ldap php-json php-zip php-snmp php-curl libapache2-mod-php -y
+</code></pre></div></div>
+
+<p>La interfaz web de Zabbix está hecha en PHP, por lo que se necesita tenerlo instalado con ciertas extensiones.</p>
+
+<h2 id="instalación-de-zabbix"><strong>Instalación de Zabbix</strong></h2>
+
+<p>A la hora de instalar Zabbix en nuestro sistema lo primero sera añadir el repositorio oficial de Zabbix.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>wget https://repo.zabbix.com/zabbix/6.0/debian/pool/main/z/zabbix-release/zabbix-release_6.0-5+debian12_all.deb
+sudo dpkg -i zabbix-release_6.0-5+debian12_all.deb
+sudo apt update
+</code></pre></div></div>
+
+<p><em>Nota: Es posible que dependiendo de la distribución del sistema operativo que se este usando o de la version escogida de Zabbix de error al instalar el paquete con dpkg, en caso de error ejecutar el comando “sudo apt –fix-broken install -y” para reparar las dependencias que falten</em></p>
+
+<p>Una vez hayamos añadido el repositorio y hayamos descargado e instalado el paquete Zabbix, pasamos a instalar servidor, frontend, agente y base de datos.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo apt install zabbix-server-mysql zabbix-frontend-php zabbix-apache-conf zabbix-sql-scripts zabbix-agent -y
+</code></pre></div></div>
+
+<p>Después crearemos la base de datos de zabbix en mariadb previamente instalada:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo mysql -u root -p
+</code></pre></div></div>
+
+<p>Dentro del prompt de mariadb, añadiremos los siguientes códigos:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>CREATE DATABASE zabbix CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;
+CREATE USER sergioib@localhost IDENTIFIED BY 'contraseña';
+GRANT ALL PRIVILEGES ON zabbix.* TO sergioib@localhost;
+FLUSH PRIVILEGES;
+EXIT;
+</code></pre></div></div>
+
+<ul>
+  <li>
+    <p>Con la primera linea lo que haremos sera crear una base de datos llamada zabbix, a parte de eso con “CHARACTER SET utf8mb4”: Especificamos que se usará el conjunto de caracteres UTF-8 de 4 bytes, compatible con emojis y otros símbolos especiales. Es el más recomendado hoy en día y con “COLLATE utf8mb4_bin” Define la forma en que se comparan y ordenan los datos. utf8mb4_bin hace que las comparaciones sean sensibles a mayúsculas/minúsculas y a acentos (comparación binaria).</p>
+  </li>
+  <li>
+    <p>Con la segunda linea creamos un usuario de base de datos con el nombre que especifiquemos (en mi caso sergioib) que solo puede conectarse desde el servidor local (localhost), con una contraseña personalizada (indicándola donde pone ‘contraseña’).</p>
+  </li>
+  <li>
+    <p>Con la tercera linea concedemos todos los permisos (lectura, escritura, modificación, etc.) al usuario creado anteriormente sobre todas las tablas (*) dentro de la base de datos zabbix.</p>
+  </li>
+  <li>
+    <p>Por ultimo con la cuarta linea recargamos las tablas de privilegios de MariaDB para asegurarse de que los cambios (como la creación de usuarios o la asignación de permisos) se apliquen de inmediato.</p>
+  </li>
+</ul>
+
+<p>Cuando ya tengamos la base de datos creada, ya podremos importar el esquema de la base de datos</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>zcat /usr/share/zabbix-sql-scripts/mysql/server.sql.gz | mysql -u sergioib -p zabbix
+</code></pre></div></div>
+
+<p>Introducimos la contraseña especificada anteriormente para completar la importación y en cuanto a la instalación de zabbix ya estaría todo listo.</p>
+
+<h2 id="configuración-de-zabbix"><strong>Configuración de Zabbix</strong></h2>
+
+<p>Para la configuración empezamos abriendo el fichero zabbix-server.conf para editarlo</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo nano /etc/zabbix/zabbix_server.conf
+</code></pre></div></div>
+
+<p>En este fichero tendremos que buscar la linea en la que se indique el parámetro DBpassword y primero descomentar la linea y después sustituir la password por defecto por la que hayamos puesto en pasos anteriores para la base de datos mariadb</p>
+
+<p>Después de eso reiniciamos y habilitamos el servicio</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo systemctl restart zabbix-server zabbix-agent apache2
+sudo systemctl enable zabbix-server zabbix-agent apache2
+</code></pre></div></div>
+<p>Ya con todo configurado y habilitado podemos acceder al frontend web y empezar a usar zabbix.</p>
+
+<h2 id="frontend-web"><strong>Frontend web</strong></h2>
+
+<p>Para acceder al frontend de zabbix abrimos un navegador y realizamos una búsqueda indicando la ip de la maquina en la que se haya instalado zabbix, en mi caso seria “https://192.168.149.129/zabbix/”.</p>
+
+<p>La primera vez que accedamos a zabbix tendremos que indicar una serie de configuraciones previas, por ejemplo el tema del idioma, por defecto zabbix solo trae instalados los paquetes de español e ingles (al menos en mi caso) por lo que para otros idiomas se tendrá que descargar el paquete de idiomas a parte.</p>
+
+<p><img src="/images/Zabbix/zabbix1.PNG" alt="inicio en zabbix" /></p>
+
+<p>En la siguiente pantalla se realizara una comprobación de los requisitos previos para el uso de zabbix, en este caso como al inicio del post se instalaron tanto apache como php no debería haber ningún problema, en caso de que falte algún paquete en concreto seria solo cuestión de instalarlo, el caso es que todo tiene que estar “OK”.</p>
+
+<p><img src="/images/Zabbix/zbbix_requisitos.PNG" alt="requisitos previos" /></p>
+
+<p>Después introducimos la información de la base de datos que hemos configurado en mariadb</p>
+
+<p><img src="/images/Zabbix/zabbix_bbdd.PNG" alt="BBDD" /></p>
+
+<p>Por ultimo le pondremos nombre a nuestro servidor zabbix y con esto completaremos la instalación para poder acceder. El acceso lo realizaremos con el usuario por defecto “Admin” y la contraseña “zabbix”.</p>
+
+<p><img src="/images/Zabbix/zabbix_server.PNG" alt="zabbix server" /></p>
+
+<p>Una vez que tienes tu entorno Zabbix completamente funcional, puedes comenzar a realizar prácticas para familiarizarte con sus principales funcionalidades. Aquí tienes una serie de ejercicios recomendados:</p>
+
+<h2 id="ejemplos-de-practicas-de-monitorización-en-zabbix"><strong>Ejemplos de practicas de monitorización en zabbix</strong></h2>
+
+<p>Previamente para poder practicar la monitorización con zabbix en el frontend debemos configurar primero el equipo ya que cada métrica, trigger o gráfico debe estar vinculado a un host específico (físico, virtual o lógico). La creación del equipo es bastante simple, en el menu de opciones de la izquierda buscaremos la opción configuración → equipos.</p>
+
+<ol>
+  <li>Crear un trigger de alerta simple</li>
+</ol>
+
+<p>En este caso podemos crear un trigger que nos alerte cuando un parámetro (%CPU, uso de RAM, espacio en disco, etc…) de nuestro servidor sobrepase cierto valor. En este caso se creara un trigger que nos alerte cuando nuestro servidor supere el 80% de uso de CPU para ello en el frontend de zabbix buscaremos la opción configuración -&gt; Equipos -&gt; (host creado) -&gt; crear iniciador.</p>
+
+<p>En la pantalla que tendremos para rellenar los datos de configuración del iniciándolos campos mas importantes a rellenar serian: Nombre (dado que es obligatorio), la gravedad ya sera util para clasificar como de grave sera el problema de nuestra maquina y la expresión (evalúa el valor de un ítem (métrica) y si se cumple una condición, dispara una alerta). Para este caso en concreto en el que la alerta aparecerá cuando la CPU supere el 80%, la configuración quedaría de la siguiente forma:</p>
+
+<p><img src="/images/Zabbix/trigger_CPU.PNG" alt="Trigger CPU" /></p>
+
+<p>Para poner a prueba el trigger instalaremos el comando “stress” en nuestra maquina servidor. El comando stress lo que hará sera lanzar procesos que consumirán los recursos que se le vayan indicando como parámetro, en este caso la CPU.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo apt install stress
+stress --cpu 2 --timeout 60
+</code></pre></div></div>
+
+<ul>
+  <li>–cpu 2: lanza procesos que hacen cálculos intensivos (usa 2 núcleos).</li>
+  <li>–timeout 60: ejecuta la carga durante el tiempo establecido (en segundos) y después se detiene.</li>
+</ul>
+
+<p>Una vez ejecutado el comando stress, volveremos al frontend de Zabbix y para comprobar si realmente funciona el trigger abrimos la opción Monitorización → Problemas. Si el trigger esta funcionando correctamente nos debería aparecer algo como esto:</p>
+
+<p><img src="/images/Zabbix/prueba_trigguer_CPU.PNG" alt="Prueba CPU" /></p>
+
+<p><em>Nota: los datos que llegan del servidor tardar unos segundos en actualizarse en el frontend por lo que es posible que aunque el comando funcione, no aparezca el trigger inmediatamente</em></p>
+
+<ol>
+  <li>Configuración de notificaciones por email</li>
+</ol>
+
+<p>Este tipo de notificaciones pueden ser útiles si se combinan con triggers como el creado anteriormente, por ejemplo en el caso anterior, una vez que el uso de CPU sobrepasara o llegara al 80% mandaría una notificación al correo especificado para la alerta. Para configurar este tipo de alertas haremos lo siguiente:</p>
+
+<p>Ir a Administración → Medios → Tipos de medios donde añadir o editar Email.</p>
+
+<p>Ponemos los datos SMTP (puedes usar Gmail, Outlook, o un servidor propio)</p>
+
+<p>Luego ir a Administración → Usuarios y añadir el medio de contacto al usuario (correo, horario, severidad)</p>
+
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/categories/#monitorizaci%C3%B3n" class="page__taxonomy-item p-category" rel="tag">Monitorización</a><span class="sep">, </span>
+    
+      <a href="/categories/#sistemas" class="page__taxonomy-item p-category" rel="tag">Sistemas</a>
+    
+    </span>
+  </p>
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2025-05-01T13:19:00+02:00">May 1, 2025</time></p>
+
+      </footer>
+
+      
+
+      
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+
+      
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">&copy; 2025 <a href="http://localhost:4000">Blog de Sergio Ibáñez</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

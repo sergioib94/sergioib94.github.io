@@ -1,0 +1,1321 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.27.3 by Michael Rose
+  Copyright 2013-2025 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="es-ES" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Cortafuegos en escenario Openstack - Blog de Sergio Ibáñez</title>
+<meta name="description" content="En el siguiente post se va a configurar un cortafuegos que nos permita controlar el trafico de red en un nodo instalado en un escenario en openstack creado en practicas anteriores.">
+
+
+  <meta name="author" content="Sergio Ibáñez Núñez">
+  
+  <meta property="article:author" content="Sergio Ibáñez Núñez">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="es_ES">
+<meta property="og:site_name" content="Blog de Sergio Ibáñez">
+<meta property="og:title" content="Cortafuegos en escenario Openstack">
+<meta property="og:url" content="http://localhost:4000/seguridad/2021/03/12/Cortafuegos-en-escenario-openstack.html">
+
+
+  <meta property="og:description" content="En el siguiente post se va a configurar un cortafuegos que nos permita controlar el trafico de red en un nodo instalado en un escenario en openstack creado en practicas anteriores.">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2021-03-12T17:53:20+01:00">
+
+
+
+
+
+
+<link rel="canonical" href="http://localhost:4000/seguridad/2021/03/12/Cortafuegos-en-escenario-openstack.html">
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Blog de Sergio Ibáñez Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single wide" dir="ltr">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          Blog de Sergio Ibáñez
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a
+                href="/"
+                
+                
+              >Inicio</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/posts/"
+                
+                
+              >Posts</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/categories/"
+                
+                
+              >Categorías</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/tags/"
+                
+                
+              >Etiquetas</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/search/"
+                
+                
+              >Buscar</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/about/"
+                
+                
+              >Sobre mí</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Cortafuegos en escenario Openstack">
+    <meta itemprop="description" content="En el siguiente post se va a configurar un cortafuegos que nos permita controlar el trafico de red en un nodo instalado en un escenario en openstack creado en practicas anteriores.">
+    <meta itemprop="datePublished" content="2021-03-12T17:53:20+01:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">
+            <a href="http://localhost:4000/seguridad/2021/03/12/Cortafuegos-en-escenario-openstack.html" itemprop="url">Cortafuegos en escenario Openstack
+</a>
+          </h1>
+          
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2021-03-12T17:53:20+01:00">March 12, 2021</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          16 minute read
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <h3 id="introducción"><strong>Introducción</strong></h3>
+
+<p>Vamos a construir un cortafuegos en la maquina dulcinea de nuestro escenario en openstack que nos permita controlar el tráfico de nuestra red. El cortafuegos que vamos a construir debe funcionar tras un reinicio.</p>
+
+<p>En este caso la maquina dulcinea cuenta con 3 interfaces de red:</p>
+
+<ul>
+  <li>eth0: interfaz al exterior</li>
+  <li>eth1: interfaz de la red interna donde estan alojadas las maquinas freston(servidor ldap y de correos) y sancho (servidor base de datos y de copias de seguridad)</li>
+  <li>eth2: interfaz a red dmz donde esta la maquina quijote (servidor web)</li>
+</ul>
+
+<p>Política por defecto</p>
+
+<p>La política por defecto que vamos a configurar en nuestro cortafuegos será de tipo DROP.</p>
+
+<h3 id="configuraciones-de-reglas-nat"><strong>Configuraciones de reglas NAT</strong></h3>
+
+<ol>
+  <li>Configura de manera adecuada las reglas NAT para que todas las máquinas de nuestra red tenga acceso al exterior.</li>
+</ol>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>iptables -t nat -A POSTROUTING -s 10.0.1.0/24 -o eth0 -j MASQUERADE
+iptables -t nat -A POSTROUTING -s 10.0.2.0/24 -o eth0 -j MASQUERADE
+</code></pre></div></div>
+
+<ol>
+  <li>Configura de manera adecuada todas las reglas NAT necesarias para que los servicios expuestos al exterior sean accesibles.</li>
+</ol>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>iptables -t nat -A PREROUTING -i eth0 -p udp --dport 53 -j DNAT --to 10.0.1.3
+iptables -t nat -A PREROUTING -i eth0 -p tcp --dport 53 -j DNAT --to 10.0.1.3
+iptables -t nat -A PREROUTING -i eth0 -p tcp --dport 80 -j DNAT --to 10.0.2.5
+iptables -t nat -A PREROUTING -i eth0 -p tcp --dport 443 -j DNAT --to 10.0.2.5
+iptables -t nat -A PREROUTING -i eth0 -p tcp --dport 25 -j DNAT --to 10.0.1.3
+</code></pre></div></div>
+
+<h3 id="reglas-iptables"><strong>Reglas iptables</strong></h3>
+
+<p>Para cada configuración, hay que mostrar las reglas que se han configurado y una prueba de funcionamiento de la misma:</p>
+
+<h3 id="reglas-ping"><strong>Reglas ping</strong></h3>
+
+<ol>
+  <li>Todas las máquinas de las dos redes pueden hacer ping entre ellas.</li>
+</ol>
+
+<ul>
+  <li>Dulcinea → LAN</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	iptables -A OUTPUT -o eth1 -p icmp -m icmp --icmp-type echo-request -j ACCEPT
+	iptables -A INPUT -i eth1 -p icmp -m icmp --icmp-type echo-reply -j ACCEPT
+</code></pre></div></div>
+
+<ul>
+  <li>Dulcinea → DMZ</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	iptables -A OUTPUT -o eth2 -p icmp -m icmp --icmp-type echo-request -j ACCEPT
+	iptables -A INPUT -i eth2 -p icmp -m icmp --icmp-type echo-reply -j ACCEPT
+</code></pre></div></div>
+
+<ul>
+  <li>Prueba de funcionamiento:</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root@dulcinea:/home/debian# ping sancho
+PING sancho.sergio.gonzalonazareno.org (10.0.1.8) 56(84) bytes of data.
+64 bytes from sancho.sergio.gonzalonazareno.org (10.0.1.8): icmp_seq=1 ttl=64 time=1.31 ms
+64 bytes from sancho.sergio.gonzalonazareno.org (10.0.1.8): icmp_seq=2 ttl=64 time=0.604 ms
+64 bytes from sancho.sergio.gonzalonazareno.org (10.0.1.8): icmp_seq=3 ttl=64 time=0.677 ms
+64 bytes from sancho.sergio.gonzalonazareno.org (10.0.1.8): icmp_seq=4 ttl=64 time=0.783 ms
+64 bytes from sancho.sergio.gonzalonazareno.org (10.0.1.8): icmp_seq=5 ttl=64 time=0.633 ms
+^C
+--- sancho.sergio.gonzalonazareno.org ping statistics ---
+5 packets transmitted, 5 received, 0% packet loss, time 40ms
+rtt min/avg/max/mdev = 0.604/0.800/1.306/0.261 ms
+root@dulcinea:/home/debian# ping quijote
+PING quijote.sergio.gonzalonazareno.org (10.0.2.5) 56(84) bytes of data.
+64 bytes from quijote.sergio.gonzalonazareno.org (10.0.2.5): icmp_seq=1 ttl=64 time=1.17 ms
+64 bytes from quijote.sergio.gonzalonazareno.org (10.0.2.5): icmp_seq=2 ttl=64 time=0.603 ms
+64 bytes from quijote.sergio.gonzalonazareno.org (10.0.2.5): icmp_seq=3 ttl=64 time=0.530 ms
+64 bytes from quijote.sergio.gonzalonazareno.org (10.0.2.5): icmp_seq=4 ttl=64 time=0.453 ms
+64 bytes from quijote.sergio.gonzalonazareno.org (10.0.2.5): icmp_seq=5 ttl=64 time=0.562 ms
+^C
+--- quijote.sergio.gonzalonazareno.org ping statistics ---
+5 packets transmitted, 5 received, 0% packet loss, time 61ms
+rtt min/avg/max/mdev = 0.453/0.662/1.165/0.257 ms
+</code></pre></div></div>
+
+<ul>
+  <li>DMZ → LAN</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	iptables -A FORWARD -i eth2 -o eth1 -p icmp -m icmp --icmp-type echo-request -j ACCEPT
+	iptables -A FORWARD -i eth1 -o eth2 -p icmp -m icmp --icmp-type echo-reply -j ACCEPT
+</code></pre></div></div>
+
+<ul>
+  <li>Prueba de funcionamiento:</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	[centos@quijote ~]$ ping sancho
+PING sancho.sergio.gonzalonazareno.org (10.0.1.8) 56(84) bytes of data.
+64 bytes from sancho.sergio.gonzalonazareno.org (10.0.1.8): icmp_seq=1 ttl=63 time=1.83 ms
+64 bytes from sancho.sergio.gonzalonazareno.org (10.0.1.8): icmp_seq=2 ttl=63 time=1.38 ms
+64 bytes from sancho.sergio.gonzalonazareno.org (10.0.1.8): icmp_seq=3 ttl=63 time=1.68 ms
+^C
+--- sancho.sergio.gonzalonazareno.org ping statistics ---
+3 packets transmitted, 3 received, 0% packet loss, time 5ms
+rtt min/avg/max/mdev = 1.376/1.626/1.827/0.190 ms
+</code></pre></div></div>
+
+<ul>
+  <li>LAN → DMZ</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	iptables -A FORWARD -i eth1 -o eth2 -p icmp -m icmp --icmp-type echo-request -j ACCEPT
+	iptables -A FORWARD -i eth2 -o eth1 -p icmp -m icmp --icmp-type echo-reply -j ACCEPT
+</code></pre></div></div>
+
+<ul>
+  <li>Prueba de funcionaiento:</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	debian@freston:~$ ping quijote
+PING quijote.sergio.gonzalonazareno.org (10.0.2.5) 56(84) bytes of data.
+64 bytes from quijote.sergio.gonzalonazareno.org (10.0.2.5): icmp_seq=1 ttl=63 time=1.86 ms
+64 bytes from quijote.sergio.gonzalonazareno.org (10.0.2.5): icmp_seq=2 ttl=63 time=1.26 ms
+64 bytes from quijote.sergio.gonzalonazareno.org (10.0.2.5): icmp_seq=3 ttl=63 time=1.18 ms
+64 bytes from quijote.sergio.gonzalonazareno.org (10.0.2.5): icmp_seq=4 ttl=63 time=1.37 ms
+^C
+--- quijote.sergio.gonzalonazareno.org ping statistics ---
+4 packets transmitted, 4 received, 0% packet loss, time 8ms
+rtt min/avg/max/mdev = 1.183/1.416/1.859/0.265 ms
+</code></pre></div></div>
+
+<ol>
+  <li>Todas las máquinas pueden hacer ping a una máquina del exterior.</li>
+</ol>
+
+<ul>
+  <li>LAN → EXT</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	iptables -A FORWARD -i eth1 -o eth0 -p icmp -m icmp --icmp-type echo-request -j ACCEPT
+	iptables -A FORWARD -i eth0 -o eth1 -p icmp -m icmp --icmp-type echo-reply -j ACCEPT
+</code></pre></div></div>
+
+<ul>
+  <li>Prueba de funcionamiento:</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	debian@freston:~$ ping 8.8.8.8
+PING 8.8.8.8 (8.8.8.8) 56(84) bytes of data.
+64 bytes from 8.8.8.8: icmp_seq=1 ttl=111 time=44.6 ms
+64 bytes from 8.8.8.8: icmp_seq=2 ttl=111 time=42.9 ms
+64 bytes from 8.8.8.8: icmp_seq=3 ttl=111 time=43.1 ms
+64 bytes from 8.8.8.8: icmp_seq=4 ttl=111 time=44.2 ms
+^C
+--- 8.8.8.8 ping statistics ---
+4 packets transmitted, 4 received, 0% packet loss, time 8ms
+rtt min/avg/max/mdev = 42.922/43.716/44.595/0.715 ms
+</code></pre></div></div>
+
+<ul>
+  <li>DMZ → EXT</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>iptables -A FORWARD -i eth2 -o eth0 -p icmp -m icmp --icmp-type echo-request -j ACCEPT
+iptables -A FORWARD -i eth0 -o eth2 -p icmp -m icmp --icmp-type echo-reply -j ACCEPT
+</code></pre></div></div>
+
+<ul>
+  <li>Prueba de funcionamiento:</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	[centos@quijote ~]$ ping 8.8.8.8
+PING 8.8.8.8 (8.8.8.8) 56(84) bytes of data.
+64 bytes from 8.8.8.8: icmp_seq=1 ttl=111 time=63.10 ms
+64 bytes from 8.8.8.8: icmp_seq=2 ttl=111 time=43.0 ms
+64 bytes from 8.8.8.8: icmp_seq=3 ttl=111 time=142 ms
+64 bytes from 8.8.8.8: icmp_seq=4 ttl=111 time=42.9 ms
+^C
+--- 8.8.8.8 ping statistics ---
+4 packets transmitted, 4 received, 0% packet loss, time 7ms
+rtt min/avg/max/mdev = 42.864/73.079/142.492/40.984 ms
+</code></pre></div></div>
+
+<ol>
+  <li>Desde el exterior se puede hacer ping a dulcinea.</li>
+</ol>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>iptables -A OUTPUT -o eth0 -p icmp -m icmp --icmp-type echo-reply -j ACCEPT
+iptables -A INPUT -i eth0 -p icmp -m icmp --icmp-type echo-request -j ACCEPT
+</code></pre></div></div>
+
+<ul>
+  <li>Prueba de funcionamiento:</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sergioib@debian-sergio:~$ ping 172.22.200.151
+PING 172.22.200.151 (172.22.200.151) 56(84) bytes of data.
+64 bytes from 172.22.200.151: icmp_seq=1 ttl=61 time=180 ms
+64 bytes from 172.22.200.151: icmp_seq=2 ttl=61 time=102 ms
+64 bytes from 172.22.200.151: icmp_seq=3 ttl=61 time=126 ms
+64 bytes from 172.22.200.151: icmp_seq=4 ttl=61 time=116 ms
+64 bytes from 172.22.200.151: icmp_seq=5 ttl=61 time=97.8 ms
+64 bytes from 172.22.200.151: icmp_seq=6 ttl=61 time=94.3 ms
+</code></pre></div></div>
+
+<ol>
+  <li>A dulcinea se le puede hacer ping desde la DMZ, pero desde la LAN se le debe rechazar la conexión (REJECT).</li>
+</ol>
+
+<ul>
+  <li>DMZ → Dulcinea</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>iptables -A OUTPUT -o eth2 -p icmp -m icmp --icmp-type echo-reply -j ACCEPT
+iptables -A INPUT -i eth2 -p icmp -m icmp --icmp-type echo-request -j ACCEPT
+</code></pre></div></div>
+
+<ul>
+  <li>Prueba de funcionamiento:</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[centos@quijote ~]$ ping dulcinea
+PING dulcinea.sergio.gonzalonazareno.org (10.0.2.3) 56(84) bytes of data.
+64 bytes from dulcinea.sergio.gonzalonazareno.org (10.0.2.3): icmp_seq=1 ttl=64 time=0.608 ms
+64 bytes from dulcinea.sergio.gonzalonazareno.org (10.0.2.3): icmp_seq=2 ttl=64 time=0.721 ms
+64 bytes from dulcinea.sergio.gonzalonazareno.org (10.0.2.3): icmp_seq=3 ttl=64 time=0.676 ms
+64 bytes from dulcinea.sergio.gonzalonazareno.org (10.0.2.3): icmp_seq=4 ttl=64 time=0.730 ms
+^C
+--- dulcinea.sergio.gonzalonazareno.org ping statistics ---
+4 packets transmitted, 4 received, 0% packet loss, time 90ms
+rtt min/avg/max/mdev = 0.608/0.683/0.730/0.057 ms
+</code></pre></div></div>
+
+<ul>
+  <li>LAN → Dulcinea</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>iptables -A INPUT -i eth1 -p icmp -m icmp --icmp-type echo-request -j REJECT --reject-with icmp-port-unreachable
+iptables -A OUTPUT -o eth1 -p icmp -j ACCEPT
+</code></pre></div></div>
+
+<ul>
+  <li>Prueba de funcionamiento:</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>debian@freston:~$ ping 10.0.1.5
+PING 10.0.1.5 (10.0.1.5) 56(84) bytes of data.
+From 10.0.1.5 icmp_seq=1 Destination Port Unreachable
+From 10.0.1.5 icmp_seq=2 Destination Port Unreachable
+From 10.0.1.5 icmp_seq=3 Destination Port Unreachable
+^C
+--- 10.0.1.5 ping statistics ---
+3 packets transmitted, 0 received, +3 errors, 100% packet loss, time 4ms
+</code></pre></div></div>
+
+<h3 id="reglas-ssh"><strong>Reglas ssh</strong></h3>
+
+<ol>
+  <li>Podemos acceder por ssh a todas las máquinas.</li>
+</ol>
+
+<ul>
+  <li>DMZ → LAN</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	iptables -A FORWARD -i eth2 -o eth1 -p tcp --dport 22 -m state --state NEW,ESTABLISHED -j ACCEPT
+	iptables -A FORWARD -i eth1 -o eth2 -p tcp --sport 22 -m state --state ESTABLISHED -j ACCEPT
+</code></pre></div></div>
+
+<ul>
+  <li>LAN → DMZ</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	iptables -A FORWARD -i eth1 -o eth2 -p tcp --dport 22 -m state --state NEW,ESTABLISHED -j ACCEPT
+	iptables -A FORWARD -i eth2 -o eth1 -p tcp --sport 22 -m state --state ESTABLISHED -j ACCEPT
+</code></pre></div></div>
+
+<ul>
+  <li>Dulcinea → LAN</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	iptables -A OUTPUT -o eth1 -p tcp -m tcp --dport 22 -m state --state NEW,ESTABLISHED -j ACCEPT
+	iptables -A INPUT -i eth1 -p tcp -m tcp --sport 22 -m state --state ESTABLISHED -j ACCEPT
+</code></pre></div></div>
+
+<ul>
+  <li>Prueba de funcionamiento:</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root@dulcinea:/home/debian# ssh -i .ssh/2asir.pem ubuntu@sancho
+Welcome to Ubuntu 20.04.1 LTS (GNU/Linux 5.4.0-54-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+
+  System information as of Fri Jan 29 10:13:01 CET 2021
+
+  System load:  0.16              Processes:             109
+  Usage of /:   31.8% of 9.52GB   Users logged in:       0
+  Memory usage: 65%               IPv4 address for ens3: 10.0.1.8
+  Swap usage:   0%
+
+ * Introducing self-healing high availability clusters in MicroK8s.
+   Simple, hardened, Kubernetes for production, from RaspberryPi to DC.
+
+     https://microk8s.io/high-availability
+
+32 updates can be installed immediately.
+0 of these updates are security updates.
+To see these additional updates run: apt list --upgradable
+
+
+*** System restart required ***
+Last login: Fri Jan 29 08:29:29 2021 from 10.0.1.5
+ubuntu@sancho:~$
+</code></pre></div></div>
+
+<ul>
+  <li>Dulcinea → DMZ</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	iptables -A OUTPUT -o eth2 -p tcp -m tcp --dport 22 -m state --state NEW,ESTABLISHED -j ACCEPT
+	iptables -A INPUT -i eth2 -p tcp -m tcp --sport 22 -m state --state ESTABLISHED -j ACCEPT
+</code></pre></div></div>
+
+<ul>
+  <li>Prueba de funcionamiento:</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root@dulcinea:/home/debian# ssh -i .ssh/2asir.pem centos@quijote
+Last login: Tue Jan 26 14:20:42 2021 from 10.0.2.3
+[centos@quijote ~]$
+</code></pre></div></div>
+
+<ol>
+  <li>Todas las máquinas pueden hacer ssh a máquinas del exterior.</li>
+</ol>
+
+<ul>
+  <li>LAN → EXT</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	iptables -A FORWARD -i eth1 -o eth0 -p tcp --dport 22 -m state --state NEW,ESTABLISHED -j ACCEPT
+	iptables -A FORWARD -i eth0 -o eth1 -p tcp --dport 22 -m state --state ESTABLISHED -j ACCEPT
+</code></pre></div></div>
+
+<ul>
+  <li>DMZ → EXT</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	iptables -A FORWARD -i eth2 -o eth0 -p tcp --dport 22 -m state --state NEW,ESTABLISHED -j ACCEPT
+	iptables -A FORWARD -i eth0 -o eth2 -p tcp --dport 22 -m state --state ESTABLISHED -j ACCEPT
+</code></pre></div></div>
+
+<h3 id="reglas-dns"><strong>Reglas DNS</strong></h3>
+
+<ol>
+  <li>El único dns que pueden usar los equipos de las dos redes es freston, no pueden utilizar un DNS externo.</li>
+</ol>
+
+<ul>
+  <li>Freston → EXT</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	iptables -A FORWARD -s 10.0.1.3 -d 0.0.0.0/0 -p udp --dport 53 -m state --state NEW,ESTABLISHED -j ACCEPT
+	iptables -A FORWARD -s 0.0.0.0/0 -d 10.0.1.3 -p udp --sport 53 -m state --state ESTABLISHED -j ACCEPT
+</code></pre></div></div>
+
+<ul>
+  <li>DMZ → Freston</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	iptables -A FORWARD -s 10.0.2.0/24 -d 10.0.1.3 -p udp --dport 53 -m state --state NEW,ESTABLISHED -j ACCEPT
+  	iptables -A FORWARD -s 10.0.1.3 -d 10.0.2.0/24 -p udp --sport 53 -m state --state ESTABLISHED -j ACCEPT
+</code></pre></div></div>
+
+<ul>
+  <li>Prueba de funcionamiento:</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[centos@quijote ~]$ dig dulcinea.sergio.gonzalonazareno.org
+
+; &lt;&lt;&gt;&gt; DiG 9.11.20-RedHat-9.11.20-5.el8 &lt;&lt;&gt;&gt; dulcinea.sergio.gonzalonazareno.org
+;; global options: +cmd
+;; Got answer:
+;; -&gt;&gt;HEADER&lt;&lt;- opcode: QUERY, status: NOERROR, id: 8104
+;; flags: qr aa rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 1, ADDITIONAL: 2
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 4096
+; COOKIE: 223207db578b4d4d2daf835f6013ecc74e18914c1562b393 (good)
+;; QUESTION SECTION:
+;dulcinea.sergio.gonzalonazareno.org. IN	A
+
+;; ANSWER SECTION:
+dulcinea.sergio.gonzalonazareno.org. 604800 IN A 10.0.2.3
+
+;; AUTHORITY SECTION:
+sergio.gonzalonazareno.org. 604800 IN	NS	freston.sergio.gonzalonazareno.org.
+
+;; ADDITIONAL SECTION:
+freston.sergio.gonzalonazareno.org. 604800 IN A	10.0.1.3
+
+;; Query time: 1 msec
+;; SERVER: 10.0.1.3#53(10.0.1.3)
+;; WHEN: Fri Jan 29 12:08:55 CET 2021
+;; MSG SIZE  rcvd: 146
+</code></pre></div></div>
+
+<ol>
+  <li>Dulcinea puede usar cualquier servidor DNS.</li>
+</ol>
+
+<ul>
+  <li>Dulcinea → Freston</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	iptables -A OUTPUT -d 10.0.1.3 -p udp --sport 53 -m state --state NEW,ESTABLISHED -j ACCEPT
+	iptables -A INPUT -s 10.0.1.3 -d 10.0.1.5 -p udp --sport 53 -m state --state ESTABLISHED -j ACCEPT
+</code></pre></div></div>
+
+<ul>
+  <li>Dulcinea → Cualquier red</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	iptables -A OUTPUT -o eth0 -p udp --dport 53 -m state --state NEW,ESTABLISHED -j ACCEPT
+	iptables -A INPUT -i eth0 -p udp --sport 53 -m state --state ESTABLISHED -j ACCEPT
+</code></pre></div></div>
+
+<ol>
+  <li>Tenemos que permitir consultas dns desde el exterior a freston, para que, por ejemplo, papion-dns pueda preguntar.</li>
+</ol>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	iptables -A FORWARD -i eth0 -o eth1 -s 0.0.0.0/0 -d 10.0.1.3 -p udp --dport 53 -m state --state NEW,ESTABLISHED -j ACCEPT
+	iptables -A FORWARD -i eth1 -o eth0 -s 10.0.1.3 -p udp --sport 53 -m state --state ESTABLISHED -j ACCEPT
+</code></pre></div></div>
+
+<h3 id="reglas-base-de-datos"><strong>Reglas Base de datos</strong></h3>
+
+<ol>
+  <li>A la base de datos de sancho sólo pueden acceder las máquinas de la DMZ.</li>
+</ol>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	iptables -A FORWARD -i eth2 -o eth1 -p tcp --dport 3306 -m state --state NEW,ESTABLISHED -j ACCEPT 
+	iptables -A FORWARD -i eth1 -o eth2 -p tcp --sport 3306 -m state --state ESTABLISHED -j ACCEPT	
+</code></pre></div></div>
+
+<ul>
+  <li>Prueba de funcionamiento:</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[centos@quijote ~]$ mysql --host=sancho --protocol=tcp --port=3306 mysql -p
+Enter password: 
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 228
+Server version: 5.5.5-10.3.25-MariaDB-0ubuntu0.20.04.1 Ubuntu 20.04
+
+Copyright (c) 2000, 2020, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql&gt; 
+</code></pre></div></div>
+
+<h3 id="reglas-web"><strong>Reglas Web</strong></h3>
+
+<ol>
+  <li>Las páginas web de quijote (80, 443) pueden ser accedidas desde todas las máquinas de nuestra red y desde el exterior.</li>
+</ol>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	iptables -t nat -A PREROUTING -i eth0 -p tcp -m multiport --dports 80,443 -j DNAT --to 10.0.2.3
+</code></pre></div></div>
+
+<ul>
+  <li>DMZ ↔ EXT</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	iptables -A FORWARD -i eth2 -o eth0 -p tcp -m multiport --dports 80,443 -m state --state NEW,ESTABLISHED -j ACCEPT
+	iptables -A FORWARD -i eth0 -o eth2 -p tcp -m multiport --sports 80,443 -m state --state ESTABLISHED -j ACCEPT
+</code></pre></div></div>
+
+<p><img src="/images/cortafuegos/prueba_web_externa.png" alt="prueba web externa" /></p>
+
+<ul>
+  <li>LAN ↔ EXT</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	iptables -A FORWARD -i eth1 -o eth0 -p tcp -m multiport --dports 80,443 -m state --state NEW,ESTABLISHED -j ACCEPT
+	iptables -A FORWARD -i eth0 -o eth1 -p tcp -m multiport --sports 80,443 -m state --state ESTABLISHED -j ACCEPT
+</code></pre></div></div>
+
+<ul>
+  <li>Dulcinea → EXT</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	iptables -A OUTPUT -o eth0 -p tcp -m multiport --dports 80,443 -m state --state NEW,ESTABLISHED -j ACCEPT
+	iptables -A INPUT -i eth0 -p tcp -m multiport --sports 80,443 -m state --state ESTABLISHED -j ACCEPT
+</code></pre></div></div>
+
+<ul>
+  <li>LAN ↔ Quijote</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	iptables -A FORWARD -i eth1 -o eth2 -p tcp -m multiport --dports 80,443 -m state --state NEW,ESTABLISHED -j ACCEPT
+	iptables -A FORWARD -i eth2 -o eth1 -p tcp -m multiport --sports 80,443 -m state --state ESTABLISHED -j ACCEPT
+</code></pre></div></div>
+
+<ul>
+  <li>Quijote ↔ EXT</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	iptables -A FORWARD -i eth0 -o eth2 -p tcp -m multiport --dports 80,443 -m state --state NEW,ESTABLISHED -j ACCEPT
+	iptables -A FORWARD -i eth2 -o eth0 -p tcp -m multiport --sports 80,443 -m state --state ESTABLISHED -j ACCEPT
+</code></pre></div></div>
+
+<ul>
+  <li>Dulcinea → Quijote</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	iptables -A OUTPUT -o eth2 -p tcp -m multiport --dports 80,443 -m state --state NEW,ESTABLISHED -j ACCEPT
+	iptables -A INPUT -i eth2 -p tcp -m multiport --sports 80,443 -m state --state ESTABLISHED -j ACCEPT
+</code></pre></div></div>
+
+<p><strong>Más servicios</strong></p>
+
+<ol>
+  <li>Configura de manera adecuada el cortafuegos, para otros servicios que tengas instalado en tu red (ldap, correo, …)</li>
+</ol>
+
+<p><strong>envios desde dulcinea</strong></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>iptables -A OUTPUT -o eth1 -p tcp --dport 25 -m state --state NEW,ESTABLISHED -j ACCEPT
+iptables -A INPUT -i eth1 -p tcp --sport 25 -m state --state ESTABLISHED -j ACCEPT
+</code></pre></div></div>
+
+<ul>
+  <li>Prueba de funcionamiento:</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root@dulcinea:/home/debian# telnet 10.0.1.3 25
+Trying 10.0.1.3...
+Connected to 10.0.1.3.
+Escape character is '^]'.
+220 freston.sergio.gonzalonazareno.org ESMTP Postfix (Debian/GNU)
+quit
+Connection closed by foreign host.
+</code></pre></div></div>
+
+<p><strong>envios desde red interna</strong></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>iptables -A FORWARD -i eth0 -o eth1 -p tcp --dport 25 -m state --state NEW,ESTABLISHED -j ACCEPT
+iptables -A FORWARD -i eth1 -o eth0 -p tcp --sport 25 -m state --state ESTABLISHED -j ACCEPT
+</code></pre></div></div>
+
+<p><img src="/images/cortafuegos/prueba_correo_freston.png" alt="prueba de correo freston" /></p>
+
+<p><strong>envios desde dmz</strong></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>iptables -A FORWARD -i eth2 -o eth1 -p tcp --dport 25 -m state --state NEW,ESTABLISHED -j ACCEPT
+iptables -A FORWARD -i eth1 -o eth2 -p tcp --sport 25 -m state --state ESTABLISHED -j ACCEPT
+</code></pre></div></div>
+
+<p><strong>prueba de funcionamiento:</strong></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[centos@quijote ~]$ telnet 10.0.1.3 25
+Trying 10.0.1.3...
+Connected to 10.0.1.3.
+Escape character is '^]'.
+220 freston.sergio.gonzalonazareno.org ESMTP Postfix (Debian/GNU)
+quit
+221 2.0.0 Bye
+Connection closed by foreign host.
+</code></pre></div></div>
+
+<ul>
+  <li>DMZ → LAN</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>iptables -A FORWARD -i eth2 -o eth1 -p tcp -m multiport --dports 389,636 -m state --state NEW,ESTABLISHED -j ACCEPT
+iptables -A FORWARD -i eth1 -o eth2 -p tcp -m multiport --sports 389,636 -m state --state ESTABLISHED -j ACCEPT
+</code></pre></div></div>
+
+<p><strong>prueba de funcionamiento</strong></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[centos@quijote ~]$ telnet 10.0.1.3 636
+Trying 10.0.1.3...
+Connected to 10.0.1.3.
+Escape character is '^]'.
+quit
+Connection closed by foreign host.
+[centos@quijote ~]$ telnet 10.0.1.3 389
+Trying 10.0.1.3...
+Connected to 10.0.1.3.
+Escape character is '^]'.
+</code></pre></div></div>
+
+<ul>
+  <li>Dulcinea → LAN</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>iptables -A OUTPUT -o eth1 -p tcp -m multiport --dports 389,636 -m state --state NEW,ESTABLISHED -j ACCEPT
+iptables -A INPUT -i eth1 -p tcp -m multiport --sports 389,636 -m state --state ESTABLISHED -j ACCEPT
+</code></pre></div></div>
+
+<p><strong>prueba de funcionamiento</strong></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root@dulcinea:/home/debian# telnet 10.0.1.3 636
+Trying 10.0.1.3...
+Connected to 10.0.1.3.
+Escape character is '^]'.
+^CConnection closed by foreign host.
+root@dulcinea:/home/debian# telnet 10.0.1.3 389
+Trying 10.0.1.3...
+Connected to 10.0.1.3.
+Escape character is '^]'.
+^Cquit
+</code></pre></div></div>
+
+<h3 id="reglas-bacula"><strong>Reglas Bacula</strong></h3>
+
+<ul>
+  <li>LAN (Sancho) ↔ DMZ</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	iptables -A FORWARD -i eth2 -o eth1 -p tcp --dport 9101:9103 -m state --state NEW,ESTABLISHED -j ACCEPT
+	iptables -A FORWARD -i eth1 -o eth2 -p tcp --sport 9101:9103 -m state --state ESTABLISHED -j ACCEPT
+
+	iptables -A FORWARD -i eth1 -o eth2 -p tcp --dport 9101:9103 -m state --state NEW,ESTABLISHED -j ACCEPT
+	iptables -A FORWARD -i eth2 -o eth1 -p tcp --sport 9101:9103 -m state --state ESTABLISHED -j ACCEPT
+</code></pre></div></div>
+
+<ul>
+  <li>Prueba de funcionamiento:</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ubuntu@sancho:~$ sudo bconsole
+Connecting to Director 10.0.1.8:9101
+1000 OK: 103 sancho-dir Version: 9.4.2 (04 February 2019)
+Enter a period to cancel a command.
+*status
+Status available for:
+     1: Director
+     2: Storage
+     3: Client
+     4: Scheduled
+     5: Network
+     6: All
+Select daemon type for status (1-6): 3
+The defined Client resources are:
+     1: sancho-fd
+     2: quijote-fd
+     3: freston-fd
+     4: dulcinea-fd
+Select Client (File daemon) resource (1-4): 2
+Connecting to Client quijote-fd at 10.0.2.5:9102
+
+quijote-fd Version: 9.0.6 (20 November 2017) x86_64-redhat-linux-gnu redhat (Core)
+Daemon started 26-Jan-21 14:16. Jobs: run=3 running=0.
+ Heap: heap=4,096 smbytes=21,068 max_bytes=989,931 bufs=63 max_bufs=262
+ Sizes: boffset_t=8 size_t=8 debug=0 trace=0 mode=0,0 bwlimit=0kB/s
+
+Running Jobs:
+Director connected at: 29-Jan-21 18:38
+No Jobs running.
+====
+
+Terminated Jobs:
+ JobId  Level      Files    Bytes   Status   Finished        Name 
+===================================================================
+    11  Full      32,049    192.0 M  OK       27-Jan-21 00:00 Quijote
+    15  Incr          28    843.3 K  OK       27-Jan-21 23:59 Quijote
+    19  Incr          28    849.8 K  OK       28-Jan-21 23:59 Quijote
+====
+You have messages.
+</code></pre></div></div>
+
+<ul>
+  <li>LAN (Sancho) ↔ Dulcinea</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	iptables -A OUTPUT -d 10.0.1.8 -p tcp -m multiport --dports 9101:9103 -j ACCEPT
+	iptables -A INPUT -s 10.0.1.8 -p tcp -m multiport --sports 9101:9103 -j ACCEPT
+	iptables -A OUTPUT -d 10.0.1.8 -p tcp -m multiport --sports 9101:9103 -j ACCEPT
+	iptables -A INPUT -s 10.0.1.8 -p tcp -m multiport --dports 9101:9103 -j ACCEPT
+</code></pre></div></div>
+
+<ul>
+  <li>Prueba de funcionamiento:</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>*status
+Status available for:
+     1: Director
+     2: Storage
+     3: Client
+     4: Scheduled
+     5: Network
+     6: All
+Select daemon type for status (1-6): 3
+The defined Client resources are:
+     1: sancho-fd
+     2: quijote-fd
+     3: freston-fd
+     4: dulcinea-fd
+Select Client (File daemon) resource (1-4): 4
+Connecting to Client dulcinea-fd at 10.0.1.5:9102
+
+dulcinea-fd Version: 9.4.2 (04 February 2019)  x86_64-pc-linux-gnu debian 10.5
+Daemon started 29-Jan-21 09:21. Jobs: run=0 running=0.
+ Heap: heap=114,688 smbytes=23,206 max_bytes=23,223 bufs=73 max_bufs=73
+ Sizes: boffset_t=8 size_t=8 debug=0 trace=0 mode=0,0 bwlimit=0kB/s
+ Plugin: bpipe-fd.so 
+
+Running Jobs:
+Director connected at: 29-Jan-21 18:43
+No Jobs running.
+====
+
+Terminated Jobs:
+ JobId  Level    Files      Bytes   Status   Finished        Name 
+===================================================================
+     8  Full      2,878    22.95 M  OK       25-Jan-21 23:59 Dulcinea
+     9  Incr         45    709.9 K  OK       26-Jan-21 10:13 Dulcinea
+    13  Incr         11    60.87 K  OK       26-Jan-21 23:59 Dulcinea
+    17  Incr         45    736.3 K  OK       27-Jan-21 23:59 Dulcinea
+    21  Incr         45    752.3 K  OK       28-Jan-21 23:59 Dulcinea
+</code></pre></div></div>
+
+<ul>
+  <li>LAN → EXT</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>iptables -A FORWARD -i eth0 -o eth1 -p tcp --dport 9101:9103 -m state --state NEW,ESTABLISHED -j ACCEPT
+iptables -A FORWARD -i eth1 -o eth0 -p tcp --sport 9101:9103 -m state --state ESTABLISHED -j ACCEPT
+
+iptables -A FORWARD -i eth1 -o eth0 -p tcp --dport 9101:9103 -m state --state NEW,ESTABLISHED -j ACCEPT
+iptables -A FORWARD -i eth0 -o eth1 -p tcp --sport 9101:9103 -m state --state ESTABLISHED -j ACCEPT
+</code></pre></div></div>
+
+<p>Estas ultimas reglas no serian necesarias, son para el caso de hacer copias de seguridad de equipos externos como pueden ser la maquina real o el servidor virtual OVH.</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/categories/#seguridad" class="page__taxonomy-item p-category" rel="tag">Seguridad</a>
+    
+    </span>
+  </p>
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2021-03-12T17:53:20+01:00">March 12, 2021</time></p>
+
+      </footer>
+
+      <section class="page__share">
+  <h4 class="page__share-title">Share on</h4>
+
+  <a href="https://x.com/intent/tweet?text=Cortafuegos+en+escenario+Openstack%20http%3A%2F%2Flocalhost%3A4000%2Fseguridad%2F2021%2F03%2F12%2FCortafuegos-en-escenario-openstack.html" class="btn btn--x" aria-label="Share on X" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on X">
+    <i class="fab fa-fw fa-x-twitter" aria-hidden="true"></i><span> X</span>
+  </a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fseguridad%2F2021%2F03%2F12%2FCortafuegos-en-escenario-openstack.html" class="btn btn--facebook" aria-label="Share on Facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook">
+    <i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span>
+  </a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http://localhost:4000/seguridad/2021/03/12/Cortafuegos-en-escenario-openstack.html" class="btn btn--linkedin" aria-label="Share on LinkedIn" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn">
+    <i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span>
+  </a>
+
+  <a href="https://bsky.app/intent/compose?text=Cortafuegos+en+escenario+Openstack%20http%3A%2F%2Flocalhost%3A4000%2Fseguridad%2F2021%2F03%2F12%2FCortafuegos-en-escenario-openstack.html" class="btn btn--bluesky" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Bluesky">
+    <i class="fab fa-fw fa-bluesky" aria-hidden="true"></i><span> Bluesky</span>
+  </a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/sistemas/2021/03/12/Sistemas-de-ficheros-btrfs.html" class="pagination--pager" title="Sistemas de ficheros Btrfs">Previous</a>
+    
+    
+      <a href="/aplicaciones%20web/2021/03/12/Integracion-continua.html" class="pagination--pager" title="Introduccion a la Integracion Continua">Next</a>
+    
+  </nav>
+
+
+    </div>
+
+    
+      
+        <p>
+          Comments are configured with provider: <strong>giscus</strong>,
+          but are disabled in non-production environments.
+        </p>
+      
+    
+  </article>
+
+  
+  
+    
+<div class="page__related">
+  
+  <h2 class="page__related-title">You May Also Enjoy</h2>
+  <div class="grid__wrapper">
+    
+      
+      
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/sistemas/monitorizaci%C3%B3n/2025/05/01/Instalacion-configuracion-y-monitoreo-zabbix.html" rel="permalink">Instalación, configuración y monitorización usando Zabbix
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2025-05-01T13:19:00+02:00">May 1, 2025</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          7 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Este post describe paso a paso cómo instalar y configurar Zabbix 6.0 LTS en una máquina virtual con Debian 12. Está pensado para crear un entorno de práctica...</p>
+  </article>
+</div>
+
+    
+      
+      
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/sistemas/monitorizaci%C3%B3n/2024/04/11/Monitorizaci%C3%B3n-de-servidores-con-grafana.html" rel="permalink">Monitorización de servidores con Grafana
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2024-04-11T13:14:06+02:00">April 11, 2024</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          10 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Aprende a instalar, configurar y personalizar Grafana para la monitorización avanzada de servidores. Descubre cómo integrar Prometheus, crear dashboards inte...</p>
+  </article>
+</div>
+
+    
+      
+      
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/seguridad/2021/12/21/SoftEther-VPN.html" rel="permalink">Introducción SoftEther VPN
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2021-12-21T13:44:30+01:00">December 21, 2021</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          64 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">SoftEther VPN es uno de los software VPN multiprotocolo más potentes y rápidos del mundo en la actualidad. Funciona en sistemas Windows, Solaris, Mac, FreeBS...</p>
+  </article>
+</div>
+
+    
+      
+      
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/aplicaciones%20web/apuntes/2021/09/21/Introduccion-a-Docker.html" rel="permalink">Introducción a Docker
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2021-09-21T13:14:06+02:00">September 21, 2021</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          19 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Docker nos permite de forma sencilla crear contenedores ligeros y fáciles de mover donde ejecutar nuestras aplicaciones software sobre cualquier máquina con ...</p>
+  </article>
+</div>
+
+    
+  </div>
+</div>
+
+  
+  
+</div>
+
+      
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">&copy; 2025 <a href="http://localhost:4000">Blog de Sergio Ibáñez</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+    <script>
+  'use strict';
+
+  (function () {
+    var commentContainer = document.querySelector('#giscus-comments');
+
+    if (!commentContainer) {
+      return;
+    }
+
+    var script = document.createElement('script');
+
+    script.setAttribute('src', 'https://giscus.app/client.js');
+    script.setAttribute('data-repo', '');
+    script.setAttribute('data-repo-id', '');
+    script.setAttribute('data-category', '');
+    script.setAttribute('data-category-id', '');
+    script.setAttribute('data-mapping', 'pathname');
+    script.setAttribute('data-strict', '0');
+    script.setAttribute('data-reactions-enabled', '1');
+    script.setAttribute('data-emit-metadata', '0');
+    script.setAttribute('data-input-position', 'top');
+    script.setAttribute('data-theme', 'preferred_color_scheme');
+    script.setAttribute('data-lang',  'es');
+    
+    script.setAttribute('crossorigin', 'anonymous');
+
+    script.setAttribute('async', '');
+
+    commentContainer.appendChild(script);
+  })();
+</script>
+
+  
+
+
+
+
+  </body>
+</html>

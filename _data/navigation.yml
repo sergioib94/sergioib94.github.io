@@ -1,0 +1,13 @@
+main:
+  - title: "Inicio"
+    url: /
+  - title: "Posts"
+    url: /posts/
+  - title: "Categorías"
+    url: /categories/
+  - title: "Etiquetas"
+    url: /tags/
+  - title: "Buscar"
+    url: /search/
+  - title: "Sobre mí"
+    url: /about/

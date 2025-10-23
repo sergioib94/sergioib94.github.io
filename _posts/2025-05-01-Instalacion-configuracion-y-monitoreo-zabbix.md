@@ -1,5 +1,4 @@
 ---
-layout: post
 title: "Instalación, configuración y monitorización usando Zabbix"
 date: 2025-05-01T13:19:00+02:00
 categories: [Sistemas, Monitorización]
@@ -20,41 +19,33 @@ Para este post se han usado los siguientes elementos para realizar instalación,
 
 Lo primero que haremos al arrancar nuestro servidor Debian sera actualizar el sistema en el caso de que no lo este.
 
-<div class="highlight">
-<pre class="chroma">
-<code class="language-bash" data-lang="bash">sudo apt update && sudo apt upgrade -y</code>
-</pre>
-</div>
+~~~
+sudo apt update && sudo apt upgrade -y
+~~~
 
 Una vez se tenga actualizado el sistema lo primero que haremos sera instalar LAMP en nuestra maquina (Apache, Mariadb y Php), inicialmente lo que necesitaremos sera solo mariadb, pero como mas adelante necesitaremos también Apache y php evitaremos problemas a la hora de usar Zabbix.
 
 **Instalación de Apache**
 
-<div class="highlight">
-<pre class="chroma">
-<code class="language-bash" data-lang="bash">sudo apt install apache2 -y</code>
-</pre>
-</div>
+~~~
+sudo apt install apache2 -y
+~~~
 
 Apache lo usara Zabbix para incluir una interfaz web que necesita un servidor web.
 
 **Instalación de Mariadb**
 
-<div class="highlight">
-<pre class="chroma">
-<code class="language-bash" data-lang="bash">sudo apt install mariadb-server mariadb-client -y</code>
-</pre>
-</div>
+~~~
+sudo apt install mariadb-server mariadb-client -y
+~~~
 
 Zabbix almacena todos sus datos (eventos, hosts, métricas, configuración, etc.) en una base de datos.
 
 **Aseguramos Mariadb**
 
-<div class="highlight">
-<pre class="chroma">
-<code class="language-bash" data-lang="bash">sudo mysql_secure_installation</code>
-</pre>
-</div>
+~~~
+sudo mysql_secure_installation
+~~~
 
 A la hora de asegurar mariadb tendremos que indicar las siguientes opciones:
 
@@ -66,11 +57,9 @@ A la hora de asegurar mariadb tendremos que indicar las siguientes opciones:
 
 **Instalación de PHP y extensiones necesarias**
 
-<div class="highlight">
-<pre class="chroma">
-<code class="language-bash" data-lang="bash">sudo apt install php php-mysql php-bcmath php-mbstring php-gd php-xml php-ldap php-json php-zip php-snmp php-curl libapache2-mod-php -y</code>
-</pre>
-</div>
+~~~
+sudo apt install php php-mysql php-bcmath php-mbstring php-gd php-xml php-ldap php-json php-zip php-snmp php-curl libapache2-mod-php -y
+~~~
 
 La interfaz web de Zabbix está hecha en PHP, por lo que se necesita tenerlo instalado con ciertas extensiones.
 
@@ -78,47 +67,36 @@ La interfaz web de Zabbix está hecha en PHP, por lo que se necesita tenerlo ins
 
 A la hora de instalar Zabbix en nuestro sistema lo primero sera añadir el repositorio oficial de Zabbix.
 
-<div class="highlight">
-<pre class="chroma">
-<code class="language-bash" data-lang="bash">
+~~~
 wget https://repo.zabbix.com/zabbix/6.0/debian/pool/main/z/zabbix-release/zabbix-release_6.0-5+debian12_all.deb
 sudo dpkg -i zabbix-release_6.0-5+debian12_all.deb
 sudo apt update
-</code>
-</pre>
-</div>
+~~~
 
 *Nota: Es posible que dependiendo de la distribución del sistema operativo que se este usando o de la version escogida de Zabbix de error al instalar el paquete con dpkg, en caso de error ejecutar el comando "sudo apt --fix-broken install -y" para reparar las dependencias que falten* 
 
+
 Una vez hayamos añadido el repositorio y hayamos descargado e instalado el paquete Zabbix, pasamos a instalar servidor, frontend, agente y base de datos.
 
-<div class="highlight">
-<pre class="chroma">
-<code class="language-bash" data-lang="bash">sudo apt install zabbix-server-mysql zabbix-frontend-php zabbix-apache-conf zabbix-sql-scripts zabbix-agent -y</code>
-</pre>
-</div>
+~~~
+sudo apt install zabbix-server-mysql zabbix-frontend-php zabbix-apache-conf zabbix-sql-scripts zabbix-agent -y
+~~~
 
 Después crearemos la base de datos de zabbix en mariadb previamente instalada:
 
-<div class="highlight">
-<pre class="chroma">
-<code class="language-bash" data-lang="bash">sudo mysql -u root -p</code>
-</pre>
-</div>
+~~~
+sudo mysql -u root -p
+~~~
 
 Dentro del prompt de mariadb, añadiremos los siguientes códigos:
 
-<div class="highlight">
-<pre class="chroma">
-<code class="language-sql" data-lang="sql">
+~~~
 CREATE DATABASE zabbix CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;
 CREATE USER sergioib@localhost IDENTIFIED BY 'contraseña';
 GRANT ALL PRIVILEGES ON zabbix.* TO sergioib@localhost;
 FLUSH PRIVILEGES;
 EXIT;
-</code>
-</pre>
-</div>
+~~~
 
 * Con la primera linea lo que haremos sera crear una base de datos llamada zabbix, a parte de eso con "CHARACTER SET utf8mb4": Especificamos que se usará el conjunto de caracteres UTF-8 de 4 bytes, compatible con emojis y otros símbolos especiales. Es el más recomendado hoy en día y con "COLLATE utf8mb4_bin" Define la forma en que se comparan y ordenan los datos. utf8mb4_bin hace que las comparaciones sean sensibles a mayúsculas/minúsculas y a acentos (comparación binaria).
 
@@ -130,11 +108,9 @@ EXIT;
 
 Cuando ya tengamos la base de datos creada, ya podremos importar el esquema de la base de datos
 
-<div class="highlight">
-<pre class="chroma">
-<code class="language-bash" data-lang="bash">zcat /usr/share/zabbix-sql-scripts/mysql/server.sql.gz | mysql -u sergioib -p zabbix</code>
-</pre>
-</div>
+~~~
+zcat /usr/share/zabbix-sql-scripts/mysql/server.sql.gz | mysql -u sergioib -p zabbix
+~~~
 
 Introducimos la contraseña especificada anteriormente para completar la importación y en cuanto a la instalación de zabbix ya estaría todo listo.
 
@@ -142,25 +118,18 @@ Introducimos la contraseña especificada anteriormente para completar la importa
 
 Para la configuración empezamos abriendo el fichero zabbix-server.conf para editarlo
 
-<div class="highlight">
-<pre class="chroma">
-<code class="language-bash" data-lang="bash">sudo nano /etc/zabbix/zabbix_server.conf</code>
-</pre>
-</div>
+~~~
+sudo nano /etc/zabbix/zabbix_server.conf
+~~~
 
 En este fichero tendremos que buscar la linea en la que se indique el parámetro DBpassword y primero descomentar la linea y después sustituir la password por defecto por la que hayamos puesto en pasos anteriores para la base de datos mariadb
 
 Después de eso reiniciamos y habilitamos el servicio
 
-<div class="highlight">
-<pre class="chroma">
-<code class="language-bash" data-lang="bash">
+~~~
 sudo systemctl restart zabbix-server zabbix-agent apache2
 sudo systemctl enable zabbix-server zabbix-agent apache2
-</code>
-</pre>
-</div>
-
+~~~
 Ya con todo configurado y habilitado podemos acceder al frontend web y empezar a usar zabbix.
 
 ## **Frontend web** ##
@@ -169,19 +138,19 @@ Para acceder al frontend de zabbix abrimos un navegador y realizamos una búsque
 
 La primera vez que accedamos a zabbix tendremos que indicar una serie de configuraciones previas, por ejemplo el tema del idioma, por defecto zabbix solo trae instalados los paquetes de español e ingles (al menos en mi caso) por lo que para otros idiomas se tendrá que descargar el paquete de idiomas a parte.
 
-![inicio en zabbix](/assets/images/Zabbix/zabbix1.PNG)
+![inicio en zabbix](/images/Zabbix/zabbix1.PNG)
 
 En la siguiente pantalla se realizara una comprobación de los requisitos previos para el uso de zabbix, en este caso como al inicio del post se instalaron tanto apache como php no debería haber ningún problema, en caso de que falte algún paquete en concreto seria solo cuestión de instalarlo, el caso es que todo tiene que estar "OK".
 
-![requisitos previos](/assets/images/Zabbix/zbbix_requisitos.PNG)
+![requisitos previos](/images/Zabbix/zbbix_requisitos.PNG)
 
 Después introducimos la información de la base de datos que hemos configurado en mariadb
 
-![BBDD](/assets/images/Zabbix/zabbix_bbdd.PNG)
+![BBDD](/images/Zabbix/zabbix_bbdd.PNG)
 
 Por ultimo le pondremos nombre a nuestro servidor zabbix y con esto completaremos la instalación para poder acceder. El acceso lo realizaremos con el usuario por defecto "Admin" y la contraseña "zabbix".
 
-![zabbix server](/assets/images/Zabbix/zabbix_server.PNG)
+![zabbix server](/images/Zabbix/zabbix_server.PNG)
 
 Una vez que tienes tu entorno Zabbix completamente funcional, puedes comenzar a realizar prácticas para familiarizarte con sus principales funcionalidades. Aquí tienes una serie de ejercicios recomendados:
 
@@ -195,25 +164,21 @@ En este caso podemos crear un trigger que nos alerte cuando un parámetro (%CPU,
 
 En la pantalla que tendremos para rellenar los datos de configuración del iniciándolos campos mas importantes a rellenar serian: Nombre (dado que es obligatorio), la gravedad ya sera util para clasificar como de grave sera el problema de nuestra maquina y la expresión (evalúa el valor de un ítem (métrica) y si se cumple una condición, dispara una alerta). Para este caso en concreto en el que la alerta aparecerá cuando la CPU supere el 80%, la configuración quedaría de la siguiente forma:
 
-![Trigger CPU](/assets/images/Zabbix/trigger_CPU.PNG)
+![Trigger CPU](/images/Zabbix/trigger_CPU.PNG)
 
 Para poner a prueba el trigger instalaremos el comando "stress" en nuestra maquina servidor. El comando stress lo que hará sera lanzar procesos que consumirán los recursos que se le vayan indicando como parámetro, en este caso la CPU.
 
-<div class="highlight">
-<pre class="chroma">
-<code class="language-bash" data-lang="bash">
+~~~
 sudo apt install stress
 stress --cpu 2 --timeout 60
-</code>
-</pre>
-</div>
+~~~
 
 * --cpu 2: lanza procesos que hacen cálculos intensivos (usa 2 núcleos).
 * --timeout 60: ejecuta la carga durante el tiempo establecido (en segundos) y después se detiene.
 
 Una vez ejecutado el comando stress, volveremos al frontend de Zabbix y para comprobar si realmente funciona el trigger abrimos la opción Monitorización → Problemas. Si el trigger esta funcionando correctamente nos debería aparecer algo como esto:
 
-![Prueba CPU](/assets/images/Zabbix/prueba_trigguer_CPU.PNG)
+![Prueba CPU](/images/Zabbix/prueba_trigguer_CPU.PNG)
 
 *Nota: los datos que llegan del servidor tardar unos segundos en actualizarse en el frontend por lo que es posible que aunque el comando funcione, no aparezca el trigger inmediatamente*
 

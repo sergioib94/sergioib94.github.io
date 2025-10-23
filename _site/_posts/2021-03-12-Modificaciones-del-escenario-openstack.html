@@ -1,0 +1,474 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.27.3 by Michael Rose
+  Copyright 2013-2025 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="es-ES" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Modificaciones del escenario Openstack - Blog de Sergio Ibáñez</title>
+<meta name="description" content="En el siguiente post, haciendo uso del escenario openstack creado en una de las practicas anteriores haremos una serie de modificaciones en dicho escenario como pueden ser la creacion de una red DMZ, crear un nodo en la nueva red DMZ y mover una de las maquinas anteriormente creadas de la red interna a DMZ.">
+
+
+  <meta name="author" content="Sergio Ibáñez Núñez">
+  
+  <meta property="article:author" content="Sergio Ibáñez Núñez">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="es_ES">
+<meta property="og:site_name" content="Blog de Sergio Ibáñez">
+<meta property="og:title" content="Modificaciones del escenario Openstack">
+<meta property="og:url" content="http://localhost:4000/_posts/2021-03-12-Modificaciones-del-escenario-openstack.html">
+
+
+  <meta property="og:description" content="En el siguiente post, haciendo uso del escenario openstack creado en una de las practicas anteriores haremos una serie de modificaciones en dicho escenario como pueden ser la creacion de una red DMZ, crear un nodo en la nueva red DMZ y mover una de las maquinas anteriormente creadas de la red interna a DMZ.">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2021-03-12T14:06:50+01:00">
+
+
+
+
+
+
+<link rel="canonical" href="http://localhost:4000/_posts/2021-03-12-Modificaciones-del-escenario-openstack.html">
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Blog de Sergio Ibáñez Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single" dir="ltr">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          Blog de Sergio Ibáñez
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a
+                href="/"
+                
+                
+              >Inicio</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/posts/"
+                
+                
+              >Posts</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/categories/"
+                
+                
+              >Categorías</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/tags/"
+                
+                
+              >Etiquetas</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/search/"
+                
+                
+              >Buscar</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/about/"
+                
+                
+              >Sobre mí</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="http://localhost:4000/">
+        <img src="/assets/images/avatar.png" alt="Sergio Ibáñez Núñez" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="http://localhost:4000/" itemprop="url">Sergio Ibáñez Núñez</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>Técnico IT y entusiasta de la automatización</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Modificaciones del escenario Openstack">
+    <meta itemprop="description" content="En el siguiente post, haciendo uso del escenario openstack creado en una de las practicas anteriores haremos una serie de modificaciones en dicho escenario como pueden ser la creacion de una red DMZ, crear un nodo en la nueva red DMZ y mover una de las maquinas anteriormente creadas de la red interna a DMZ.">
+    <meta itemprop="datePublished" content="2021-03-12T14:06:50+01:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">
+            <a href="http://localhost:4000/_posts/2021-03-12-Modificaciones-del-escenario-openstack.html" itemprop="url">Modificaciones del escenario Openstack
+</a>
+          </h1>
+          
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <h3 id="introducción"><strong>Introducción</strong></h3>
+
+<p>En el siguiente post, haciendo uso del escenario openstack creado en una de las practicas anteriores haremos una serie de modificaciones en dicho escenario.</p>
+
+<p>Modificaciones:</p>
+
+<ul>
+  <li>
+    <p>Creación de la red DMZ:
+  Nombre: DMZ de “nombre de usuario”
+  10.0.2.0/24</p>
+  </li>
+  <li>Creación de las instancias:
+  freston:
+      Debian Buster sobre volumen de 10GB con sabor m1.mini
+      Conectada a la red interna
+      Accesible indirectamente a través de dulcinea
+      IP estática</li>
+  <li>Modificación de la ubicación de quijote
+  Pasa de la red interna a la DMZ y su direccionamiento tiene que modificarse apropiadamente</li>
+</ul>
+
+<h3 id="modificaciones-del-escenario-openstack"><strong>Modificaciones del escenario openstack</strong></h3>
+
+<ul>
+  <li>Creación de maquina Freston:</li>
+</ul>
+
+<p>Esta maquina se creara igual que las anteriores, mediante un volumen con debian buster y se le agregara una interfaz en la red 10.0.1.0/24.</p>
+
+<p>En un principio como en esta red esta deshabilitado el servidor dhcp, esta maquina no recibirá ip ninguna y por lo tanto no se podrá acceder a ella de ningún modo, por lo que lo primero que se hará sera habilitar el dhcp en esta red para que freston obtenga una ip y una vez que se realicen los cambios básicos tales como asignarle una ip dinámica y asignarle al usuario freston una contraseña por si fuese necesario entrar por consola, se volverá a deshabilitar el dhcp.
+Deshabilitamos el servidor dhcp de nuevo y una vez que comprobamos que la maquina freston tiene ip, accedemos a ella de forma remota para comenzar con las configuraciones necesarias.</p>
+
+<p>Empezamos configurando el nombre de la maquina añadiendo a /etc/host el nombre de freston y a /etc/hosts el nombre freston-sergio.gonzalonazareno.org ademas del nombre y dirección del resto de maquinas del escenario para que freston sea capaz de reconocerlos.</p>
+
+<p>Creamos el usuario profesor asignándole una password mediante el comando useradd profesor -m -s/bin/bash. En el directorio /home de profesor creamos con mkdir la carpeta .ssh y se añaden las contraseñas de los profesores de modo que tengan acceso.</p>
+
+<p>En el fichero /etc/apt/sources.list añadimos los siguientes repositorios para permitir que el equipo permanezca actualizado:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>deb https://ftp.cica.es/debian/ buster main
+deb https://ftp.cica.es/debian/ buster-updates main
+deb https://ftp.cica.es/debian-security/ buster/updates main
+</code></pre></div></div>
+
+<p>Ademas de estos cambios, se pondrá en hora el reloj configurando el servicio ntp y se desactivara cloud-init ya que de no desactivarlo, algunos de los cambios realizados anteriormente se borraran.</p>
+
+<p>NTP</p>
+
+<p>Eliminamos ntp:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>apt purge ntp
+</code></pre></div></div>
+
+<p>modificamos /etc/systemd/timesyncd.conf con la siguiente linea, indicando de donde cogerá la configuración:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ntp
+     es.pool.ntp.org
+</code></pre></div></div>
+
+<p>Reiniciamos el servicio</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>systemctl restart systemd-timesyncd.service
+</code></pre></div></div>
+
+<p>Ponemos la zona horaria</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>timedatectl set-timezone Europe/Madrid
+</code></pre></div></div>
+
+<p>Cloud-init</p>
+
+<p>Modificamos el fichero /etc/cloud/cloud.cfg y cambiar la linea manage_etc_hosts poniéndolo a false.</p>
+
+<ul>
+  <li>Modificaciones en Quijote</li>
+</ul>
+
+<p>En la maquina quijote los cambios que hay que hacer básicamente son desactivarle la interfaz que tiene y añadirle una nueva conectada a la nueva red DMZ (10.0.2.0/24)
+Al ser una nueva red, esta se creo con el dhcp activado ya que sino hubiésemos tenido el mismo problema que freston, por lo que al conectarnos a quijote lo primero sera modificar la configuración de red modificando tanto la ip, como la puerta de enlace y la mac de la interfaz nuevas.
+Una vez modificada la configuración de red solo faltara agregar el hostname de freston al /etc/hosts de quijote y modificar su enrutamiento ya que su ruta por defecto esta en la red 10.0.1.0/24</p>
+
+<ul>
+  <li>Modificaciones en Sancho</li>
+</ul>
+
+<p>Sancho al ser una maquina que no ha sido afectada por las modificaciones del escenario, en ella el único cambio que hay que realizar es incluir la nueva maquina freston en su /etc/hosts.</p>
+
+<ul>
+  <li>Modificaciones en Dulcinea</li>
+</ul>
+
+<p>En dulcinea al igual que en sancho pocos cambios se deben realizar ya que solo agregaremos una nueva interfaz de red que conectara con la red nueva DMZ.</p>
+
+<p>Se añadirá la nueva configuración de red para la interfaz eth2 y se modificara el enrutamiento de forma que tengamos algo así:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>default via 10.0.0.1 dev eth0 
+10.0.0.0/24 dev eth0 proto kernel scope link src 10.0.0.12 
+10.0.1.0/24 dev eth1 proto kernel scope link src 10.0.1.5 
+10.0.2.0/24 dev eth2 proto kernel scope link src 10.0.2.3
+</code></pre></div></div>
+
+<p>Añadimos también la nueva regla de ip tables de forma que dulcinea haga de nat tanto en la red 1.0 como en la 2.0:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  123  8630 MASQUERADE  all  --  *      eth0    10.0.1.0/24          0.0.0.0/0           
+    0     0 MASQUERADE  all  --  *      eth0    10.0.2.0/24          0.0.0.0/0
+</code></pre></div></div>
+
+<p>Una vez hecho todo, añadimos a freston al etc/hosts de dulcinea y ya estará todo listo. En esta practica por error quite la interfaz 10.0.1.0/24 de dulcinea, por lo que al volver a conectarla a la red cambio la ip de 10.0.1.4 a 10.0.1.5 por lo que en el resto de equipos cambie la ip de dulcinea en los etc/hosts y la ip de puerta de enlace en los enrutamientos de la red 10.0.1.0/24.</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/categories/#cloud" class="page__taxonomy-item p-category" rel="tag">Cloud</a>
+    
+    </span>
+  </p>
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2021-03-12T14:06:50+01:00">March 12, 2021</time></p>
+
+      </footer>
+
+      
+
+      
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+
+      
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">&copy; 2025 <a href="http://localhost:4000">Blog de Sergio Ibáñez</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

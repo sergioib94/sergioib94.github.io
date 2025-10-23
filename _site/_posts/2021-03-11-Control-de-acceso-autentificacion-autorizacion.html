@@ -1,0 +1,830 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.27.3 by Michael Rose
+  Copyright 2013-2025 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="es-ES" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Control de acceso, autentificacion y autorizacion - Blog de Sergio Ibáñez</title>
+<meta name="description" content="Haciendo uso de la practica anterior en la que instalamos el virtualhosting apache en vagrant o bien creando un escenario nuesvo en el que instalaremos un servidor dhcp, configuraremos el control de acceso, autentificacion y autorizacion para acceder al sitio web creado.">
+
+
+  <meta name="author" content="Sergio Ibáñez Núñez">
+  
+  <meta property="article:author" content="Sergio Ibáñez Núñez">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="es_ES">
+<meta property="og:site_name" content="Blog de Sergio Ibáñez">
+<meta property="og:title" content="Control de acceso, autentificacion y autorizacion">
+<meta property="og:url" content="http://localhost:4000/_posts/2021-03-11-Control-de-acceso-autentificacion-autorizacion.html">
+
+
+  <meta property="og:description" content="Haciendo uso de la practica anterior en la que instalamos el virtualhosting apache en vagrant o bien creando un escenario nuesvo en el que instalaremos un servidor dhcp, configuraremos el control de acceso, autentificacion y autorizacion para acceder al sitio web creado.">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2021-03-11T16:13:52+01:00">
+
+
+
+
+
+
+<link rel="canonical" href="http://localhost:4000/_posts/2021-03-11-Control-de-acceso-autentificacion-autorizacion.html">
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Blog de Sergio Ibáñez Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single" dir="ltr">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          Blog de Sergio Ibáñez
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a
+                href="/"
+                
+                
+              >Inicio</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/posts/"
+                
+                
+              >Posts</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/categories/"
+                
+                
+              >Categorías</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/tags/"
+                
+                
+              >Etiquetas</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/search/"
+                
+                
+              >Buscar</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/about/"
+                
+                
+              >Sobre mí</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="http://localhost:4000/">
+        <img src="/assets/images/avatar.png" alt="Sergio Ibáñez Núñez" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="http://localhost:4000/" itemprop="url">Sergio Ibáñez Núñez</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>Técnico IT y entusiasta de la automatización</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Control de acceso, autentificacion y autorizacion">
+    <meta itemprop="description" content="Haciendo uso de la practica anterior en la que instalamos el virtualhosting apache en vagrant o bien creando un escenario nuesvo en el que instalaremos un servidor dhcp, configuraremos el control de acceso, autentificacion y autorizacion para acceder al sitio web creado.">
+    <meta itemprop="datePublished" content="2021-03-11T16:13:52+01:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">
+            <a href="http://localhost:4000/_posts/2021-03-11-Control-de-acceso-autentificacion-autorizacion.html" itemprop="url">Control de acceso, autentificacion y autorizacion
+</a>
+          </h1>
+          
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <h2 id="introduccion"><strong>Introduccion</strong></h2>
+
+<p>Haciendo uso de la practica anterior en la que instalamos el virtualhosting apache en vagrant o bien creando un escenario nuesvo en el que instalaremos un servidor dhcp, configuraremos el control de acceso, autentificacion y autorizacion para acceder al sitio web creado.</p>
+
+<h2 id="configuración"><strong>Configuración</strong></h2>
+
+<ul>
+  <li>Tarea1: A la URL departamentos.iesgn.org/intranet sólo se debe tener acceso desde el cliente de la red local, y no se pueda acceder desde la anfitriona por la red pública. A la URL departamentos.iesgn.org/internet, sin embargo, sólo se debe tener acceso desde la anfitriona por la red pública, y no desde la red local.</li>
+</ul>
+
+<p>Empezamos modificando el fichero departamentos.conf en /etc/apache2/sites-available de la siguiente forma:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ServerAdmin webmaster@localhost
+DocumentRoot /srv/www/departamentos
+ServerName www.departamento.iesgn.org
+
+&lt;Directory /srv/www/departamentos/intranet/&gt;
+       Option Indexes FollowLinks
+       Require ip 192.168.100
+&lt;/Directory&gt;
+&lt;Directory /srv/www/departamentos/internet/&gt;
+       Option Indexes FollowLinks
+     &lt;RequireAll&gt;
+             Require all granted
+             Require not ip 192.168.100
+    &lt;/RequireAll&gt;
+&lt;/Directory&gt;
+</code></pre></div></div>
+
+<p>Ya que la red interna tiene ip 192.168.100 (.1 servidor y .2 cliente) en el caso de intranet pondremos como ip requerida en el rango 192.168.100 y para Internet lo contrario, se pondrá como requerido que no tenga la ip en el rango de la red interna.</p>
+
+<p>Una vez que este todo listo iniciamos la prueba de funcionamiento:</p>
+
+<ul>
+  <li>Intranet de equipo en red interna</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Bienvenido a la pagina intranet
+</code></pre></div></div>
+
+<ul>
+  <li>Internet de equipo en red interna</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Forbidden
+
+You don't have permission to access this resource.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Apache/2.4.38 (Debian) Server at www.departamentos.iesgn.org Port 80
+</code></pre></div></div>
+
+<ul>
+  <li>Intranet equipo fuera de la red</li>
+</ul>
+
+<p><img src="/images/control-accesos/intranet.png" alt="prueba desde navegador" /></p>
+
+<ul>
+  <li>Internet equipo fuera de la red</li>
+</ul>
+
+<p><img src="/images/control-accesos/internet.png" alt="prueba desde navegador" /></p>
+
+<ul>
+  <li>Tarea2: Autentificación básica. Limita el acceso a la URL departamentos.iesgn.org/secreto. Comprueba las cabeceras de los mensajes HTTP que se intercambian entre el servidor y el cliente. ¿Cómo se manda la contraseña entre el cliente y el servidor?. Entrega una breve explicación del ejercicio.*</li>
+</ul>
+
+<p>Creamos en /src/www/departamentos un directorio secreto con un index.html</p>
+
+<p>En /etc/apache2 creamos un directorio claves</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mkdir claves
+</code></pre></div></div>
+
+<p>Creamos un usuario con su contraseña</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vagrant@server:/etc/apache2$ sudo htpasswd -c /etc/apache2/claves/passwd.txt sergio
+New password: 
+Re-type new password: 
+Adding password for user sergio
+</code></pre></div></div>
+
+<p>Editamos departamentos.conf</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;Directory /srv/www/departamentos/secreto/&gt;
+                AuthUserFile "/etc/apache2/claves/passwd.txt"
+                AuthName "password"
+                AuthType Basic
+                Require valid-user
+&lt;/Directory&gt;
+</code></pre></div></div>
+
+<p>Se ejecuta tcpdump -vi en el servidor mientras que en el cliente intentamos acceder a www.departamentos.iesgn.org/secretos</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vagrant@server:/etc/apache2$ sudo tcpdump -vi eth2
+tcpdump: listening on eth2, link-type EN10MB (Ethernet), capture size 262144 bytes
+10:32:30.587861 IP (tos 0x0, ttl 64, id 48967, offset 0, flags [DF], proto TCP (6), length 60)
+    192.168.100.2.39280 &gt; 192.168.100.1.http: Flags [S], cksum 0x4dc7 (correct), seq 2846383261, win 64240, options [mss 1460,sackOK,TS val 772204519 ecr 0,nop,wscale 6], length 0
+10:32:30.587894 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 60)
+    192.168.100.1.http &gt; 192.168.100.2.39280: Flags [S.], cksum 0x4983 (incorrect -&gt; 0x933c), seq 960572023, ack 2846383262, win 65160, options [mss 1460,sackOK,TS val 1366884784 ecr 772204519,nop,wscale 6], length 0
+10:32:30.588178 IP (tos 0x0, ttl 64, id 48968, offset 0, flags [DF], proto TCP (6), length 52)
+    192.168.100.2.39280 &gt; 192.168.100.1.http: Flags [.], cksum 0xbca4 (correct), ack 1, win 1004, options [nop,nop,TS val 772204519 ecr 1366884784], length 0
+10:32:30.588810 IP (tos 0x0, ttl 64, id 48969, offset 0, flags [DF], proto TCP (6), length 286)
+    192.168.100.2.39280 &gt; 192.168.100.1.http: Flags [P.], cksum 0x8d82 (correct), seq 1:235, ack 1, win 1004, options [nop,nop,TS val 772204519 ecr 1366884784], length 234: HTTP, length: 234
+	GET /secreto HTTP/1.0
+	User-Agent: w3m/0.5.3+git20190105
+	Accept: text/html, text/*;q=0.5, image/*, application/*
+	Accept-Encoding: gzip, compress, bzip, bzip2, deflate
+	Accept-Language: en;q=1.0
+	Host: www.departamentos.iesgn.org
+	
+10:32:30.588832 IP (tos 0x0, ttl 64, id 28880, offset 0, flags [DF], proto TCP (6), length 52)
+    192.168.100.1.http &gt; 192.168.100.2.39280: Flags [.], cksum 0x497b (incorrect -&gt; 0xbbae), ack 235, win 1015, options [nop,nop,TS val 1366884785 ecr 772204519], length 0
+10:32:30.589077 IP (tos 0x0, ttl 64, id 28881, offset 0, flags [DF], proto TCP (6), length 751)
+    192.168.100.1.http &gt; 192.168.100.2.39280: Flags [P.], cksum 0x4c36 (incorrect -&gt; 0x238f), seq 1:700, ack 235, win 1015, options [nop,nop,TS val 1366884785 ecr 772204519], length 699: HTTP, length: 699
+	HTTP/1.1 401 Unauthorized
+	Date: Sat, 31 Oct 2020 10:32:30 GMT
+	Server: Apache/2.4.38 (Debian)
+	WWW-Authenticate: Basic realm="password"
+	Content-Length: 474
+	Connection: close
+	Content-Type: text/html; charset=iso-8859-1
+	
+	&lt;!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN"&gt;
+	&lt;html&gt;&lt;head&gt;
+	&lt;title&gt;401 Unauthorized&lt;/title&gt;
+	&lt;/head&gt;&lt;body&gt;
+	&lt;h1&gt;Unauthorized&lt;/h1&gt;
+	&lt;p&gt;This server could not verify that you
+	are authorized to access the document
+	requested.  Either you supplied the wrong
+	credentials (e.g., bad password), or your
+	browser doesn't understand how to supply
+	the credentials required.&lt;/p&gt;
+	&lt;hr&gt;
+	&lt;address&gt;Apache/2.4.38 (Debian) Server at www.departamentos.iesgn.org Port 80&lt;/address&gt;
+	&lt;/body&gt;&lt;/html&gt;
+10:32:30.589159 IP (tos 0x0, ttl 64, id 28882, offset 0, flags [DF], proto TCP (6), length 52)
+    192.168.100.1.http &gt; 192.168.100.2.39280: Flags [F.], cksum 0x497b (incorrect -&gt; 0xb8f2), seq 700, ack 235, win 1015, options [nop,nop,TS val 1366884785 ecr 772204519], length 0
+10:32:35.728779 ARP, Ethernet (len 6), IPv4 (len 4), Request who-has 192.168.100.2 tell 192.168.100.1, length 28
+10:32:35.729117 ARP, Ethernet (len 6), IPv4 (len 4), Request who-has 192.168.100.1 tell 192.168.100.2, length 46
+10:32:35.729146 ARP, Ethernet (len 6), IPv4 (len 4), Reply 192.168.100.1 is-at 08:00:27:23:e5:a4 (oui Unknown), length 28
+10:32:35.729205 ARP, Ethernet (len 6), IPv4 (len 4), Reply 192.168.100.2 is-at 08:00:27:c3:6c:a0 (oui Unknown), length 46
+10:32:42.652286 IP (tos 0x0, ttl 64, id 48972, offset 0, flags [DF], proto TCP (6), length 52)
+    192.168.100.2.39280 &gt; 192.168.100.1.http: Flags [F.], cksum 0x89dd (correct), seq 235, ack 701, win 1002, options [nop,nop,TS val 772216584 ecr 1366884785], length 0
+10:32:42.652336 IP (tos 0x0, ttl 64, id 28883, offset 0, flags [DF], proto TCP (6), length 52)
+    192.168.100.1.http &gt; 192.168.100.2.39280: Flags [.], cksum 0x497b (incorrect -&gt; 0x5ab0), ack 236, win 1015, options [nop,nop,TS val 1366896849 ecr 772216584], length 0
+10:32:42.652499 IP (tos 0x0, ttl 64, id 10193, offset 0, flags [DF], proto TCP (6), length 60)
+    192.168.100.2.39282 &gt; 192.168.100.1.http: Flags [S], cksum 0xe722 (correct), seq 1435363385, win 64240, options [mss 1460,sackOK,TS val 772216584 ecr 0,nop,wscale 6], length 0
+10:32:42.652535 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 60)
+    192.168.100.1.http &gt; 192.168.100.2.39282: Flags [S.], cksum 0x4983 (incorrect -&gt; 0xb312), seq 1802912422, ack 1435363386, win 65160, options [mss 1460,sackOK,TS val 1366896849 ecr 772216584,nop,wscale 6], length 0
+10:32:42.653177 IP (tos 0x0, ttl 64, id 10194, offset 0, flags [DF], proto TCP (6), length 52)
+    192.168.100.2.39282 &gt; 192.168.100.1.http: Flags [.], cksum 0xdc79 (correct), ack 1, win 1004, options [nop,nop,TS val 772216585 ecr 1366896849], length 0
+10:32:42.653528 IP (tos 0x0, ttl 64, id 10195, offset 0, flags [DF], proto TCP (6), length 329)
+    192.168.100.2.39282 &gt; 192.168.100.1.http: Flags [P.], cksum 0xc2bf (correct), seq 1:278, ack 1, win 1004, options [nop,nop,TS val 772216585 ecr 1366896849], length 277: HTTP, length: 277
+	GET /secreto HTTP/1.0
+	User-Agent: w3m/0.5.3+git20190105
+	Accept: text/html, text/*;q=0.5, image/*, application/*
+	Accept-Encoding: gzip, compress, bzip, bzip2, deflate
+	Accept-Language: en;q=1.0
+	Host: www.departamentos.iesgn.org
+	Authorization: Basic c2VyZ2lvOnBhc3N3ZA==
+	
+10:32:42.653594 IP (tos 0x0, ttl 64, id 58770, offset 0, flags [DF], proto TCP (6), length 52)
+    192.168.100.1.http &gt; 192.168.100.2.39282: Flags [.], cksum 0x497b (incorrect -&gt; 0xdb59), ack 278, win 1014, options [nop,nop,TS val 1366896850 ecr 772216585], length 0
+10:32:42.655595 IP (tos 0x0, ttl 64, id 58771, offset 0, flags [DF], proto TCP (6), length 639)
+    192.168.100.1.http &gt; 192.168.100.2.39282: Flags [P.], cksum 0x4bc6 (incorrect -&gt; 0x723a), seq 1:588, ack 278, win 1014, options [nop,nop,TS val 1366896852 ecr 772216585], length 587: HTTP, length: 587
+	HTTP/1.1 301 Moved Permanently
+	Date: Sat, 31 Oct 2020 10:32:42 GMT
+	Server: Apache/2.4.38 (Debian)
+	Location: http://www.departamentos.iesgn.org/secreto/
+	Content-Length: 344
+	Connection: close
+	Content-Type: text/html; charset=iso-8859-1
+	
+	&lt;!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN"&gt;
+	&lt;html&gt;&lt;head&gt;
+	&lt;title&gt;301 Moved Permanently&lt;/title&gt;
+	&lt;/head&gt;&lt;body&gt;
+	&lt;h1&gt;Moved Permanently&lt;/h1&gt;
+	&lt;p&gt;The document has moved &lt;a href="http://www.departamentos.iesgn.org/secreto/"&gt;here&lt;/a&gt;.&lt;/p&gt;
+	&lt;hr&gt;
+	&lt;address&gt;Apache/2.4.38 (Debian) Server at www.departamentos.iesgn.org Port 80&lt;/address&gt;
+	&lt;/body&gt;&lt;/html&gt;
+10:32:42.655836 IP (tos 0x0, ttl 64, id 58772, offset 0, flags [DF], proto TCP (6), length 52)
+    192.168.100.1.http &gt; 192.168.100.2.39282: Flags [F.], cksum 0x497b (incorrect -&gt; 0xd90b), seq 588, ack 278, win 1014, options [nop,nop,TS val 1366896852 ecr 772216585], length 0
+10:32:42.655970 IP (tos 0x0, ttl 64, id 10196, offset 0, flags [DF], proto TCP (6), length 52)
+    192.168.100.2.39282 &gt; 192.168.100.1.http: Flags [.], cksum 0xd915 (correct), ack 588, win 1002, options [nop,nop,TS val 772216588 ecr 1366896852], length 0
+10:32:42.656539 IP (tos 0x0, ttl 64, id 10197, offset 0, flags [DF], proto TCP (6), length 52)
+    192.168.100.2.39282 &gt; 192.168.100.1.http: Flags [F.], cksum 0xd913 (correct), seq 278, ack 589, win 1002, options [nop,nop,TS val 772216588 ecr 1366896852], length 0
+10:32:42.656653 IP (tos 0x0, ttl 64, id 58773, offset 0, flags [DF], proto TCP (6), length 52)
+    192.168.100.1.http &gt; 192.168.100.2.39282: Flags [.], cksum 0x497b (incorrect -&gt; 0xd906), ack 279, win 1014, options [nop,nop,TS val 1366896853 ecr 772216588], length 0
+10:32:42.657247 IP (tos 0x0, ttl 64, id 17530, offset 0, flags [DF], proto TCP (6), length 60)
+    192.168.100.2.39284 &gt; 192.168.100.1.http: Flags [S], cksum 0x14f4 (correct), seq 3977388764, win 64240, options [mss 1460,sackOK,TS val 772216589 ecr 0,nop,wscale 6], length 0
+10:32:42.657259 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 60)
+    192.168.100.1.http &gt; 192.168.100.2.39284: Flags [S.], cksum 0x4983 (incorrect -&gt; 0xc682), seq 2215986275, ack 3977388765, win 65160, options [mss 1460,sackOK,TS val 1366896854 ecr 772216589,nop,wscale 6], length 0
+10:32:42.657506 IP (tos 0x0, ttl 64, id 17531, offset 0, flags [DF], proto TCP (6), length 52)
+    192.168.100.2.39284 &gt; 192.168.100.1.http: Flags [.], cksum 0xefea (correct), ack 1, win 1004, options [nop,nop,TS val 772216589 ecr 1366896854], length 0
+10:32:42.657524 IP (tos 0x0, ttl 64, id 17532, offset 0, flags [DF], proto TCP (6), length 330)
+    192.168.100.2.39284 &gt; 192.168.100.1.http: Flags [P.], cksum 0x1cba (correct), seq 1:279, ack 1, win 1004, options [nop,nop,TS val 772216589 ecr 1366896854], length 278: HTTP, length: 278
+	GET /secreto/ HTTP/1.0
+	User-Agent: w3m/0.5.3+git20190105
+	Accept: text/html, text/*;q=0.5, image/*, application/*
+	Accept-Encoding: gzip, compress, bzip, bzip2, deflate
+	Accept-Language: en;q=1.0
+	Host: www.departamentos.iesgn.org
+	Authorization: Basic c2VyZ2lvOnBhc3N3ZA==
+	
+10:32:42.657537 IP (tos 0x0, ttl 64, id 28220, offset 0, flags [DF], proto TCP (6), length 52)
+    192.168.100.1.http &gt; 192.168.100.2.39284: Flags [.], cksum 0x497b (incorrect -&gt; 0xeeca), ack 279, win 1014, options [nop,nop,TS val 1366896854 ecr 772216589], length 0
+10:32:42.657983 IP (tos 0x0, ttl 64, id 28221, offset 0, flags [DF], proto TCP (6), length 296)
+    192.168.100.1.http &gt; 192.168.100.2.39284: Flags [P.], cksum 0x4a6f (incorrect -&gt; 0xdbf1), seq 1:245, ack 279, win 1014, options [nop,nop,TS val 1366896854 ecr 772216589], length 244: HTTP, length: 244
+	HTTP/1.1 200 OK
+	Date: Sat, 31 Oct 2020 10:32:42 GMT
+	Server: Apache/2.4.38 (Debian)
+	Last-Modified: Sat, 31 Oct 2020 09:38:47 GMT
+	ETag: "0-5b2f447a9b98e"
+	Accept-Ranges: bytes
+	Content-Length: 0
+	Connection: close
+	Content-Type: text/html
+	
+10:32:42.658063 IP (tos 0x0, ttl 64, id 28222, offset 0, flags [DF], proto TCP (6), length 52)
+    192.168.100.1.http &gt; 192.168.100.2.39284: Flags [F.], cksum 0x497b (incorrect -&gt; 0xedd4), seq 245, ack 279, win 1014, options [nop,nop,TS val 1366896855 ecr 772216589], length 0
+10:32:42.658124 IP (tos 0x0, ttl 64, id 17533, offset 0, flags [DF], proto TCP (6), length 52)
+    192.168.100.2.39284 &gt; 192.168.100.1.http: Flags [.], cksum 0xede1 (correct), ack 245, win 1002, options [nop,nop,TS val 772216590 ecr 1366896854], length 0
+10:32:42.658427 IP (tos 0x0, ttl 64, id 17534, offset 0, flags [DF], proto TCP (6), length 52)
+    192.168.100.2.39284 &gt; 192.168.100.1.http: Flags [F.], cksum 0xedde (correct), seq 279, ack 246, win 1002, options [nop,nop,TS val 772216590 ecr 1366896855], length 0
+10:32:42.658448 IP (tos 0x0, ttl 64, id 28223, offset 0, flags [DF], proto TCP (6), length 52)
+    192.168.100.1.http &gt; 192.168.100.2.39284: Flags [.], cksum 0x497b (incorrect -&gt; 0xedd2), ack 280, win 1014, options [nop,nop,TS val 1366896855 ecr 772216590], length 0
+</code></pre></div></div>
+
+<p>Explicación del ejercicio:</p>
+
+<p>Cuando desde el cliente intentamos acceder a la pagina del servidor que necesita autorización, el servidor manda una respuesta del tipo 401 HTTP/1.1 401 Authorization Required con una cabecera WWW-Authenticate al cliente y el navegador del cliente muestra una ventana emergente preguntando por el nombre de usuario y contraseña y cuando se rellena se manda una petición con una cabecera Authorization.</p>
+
+<p>Esta contraseña al mandarse en base 64, es muy facil de decodificar por lo que este método es muy poco seguro.</p>
+
+<ul>
+  <li>Tarea3: Cómo hemos visto la autentificación básica no es segura, modifica la autentificación para que sea del tipo digest, y sólo sea accesible a los usuarios pertenecientes al grupo directivos. Comprueba las cabeceras de los mensajes HTTP que se intercambian entre el servidor y el cliente. ¿Cómo funciona esta autentificación?</li>
+</ul>
+
+<p>Activamos el modulo digest y reiniciamos apache</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vagrant@server:/etc/apache2$ sudo a2enmod auth_digest
+Considering dependency authn_core for auth_digest:
+Module authn_core already enabled
+Enabling module auth_digest.
+To activate the new configuration, you need to run:
+  systemctl restart apache2
+</code></pre></div></div>
+
+<p>Cambiamos el tipo de autentificación en departamentos.conf</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;Directory /srv/www/departamentos/secreto/&gt;
+                AuthUserFile /etc/apache2/claves/passwdigest.txt
+                AuthName "password"
+                AuthType Digest
+                Require valid-user
+&lt;/Directory&gt;
+</code></pre></div></div>
+
+<p>Se añade el usuario y la contraseña</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vagrant@server:/etc/apache2$ sudo htdigest -c /etc/apache2/claves/passwdigest passwd sergio
+Adding password for sergio in realm passwd.
+New password: 
+Re-type new password: 
+</code></pre></div></div>
+
+<p>Creación del grupo</p>
+
+<p>Para ello habilitamos el modulo authz_groupfile y una vez instalado, reiniciamos el servicio apache y creamos un fichero con los grupos y usuarios que podrán acceder en el directorio claves:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vagrant@server:/etc/apache2/claves$ sudo a2enmod authz_groupfile 
+Considering dependency authz_core for authz_groupfile:
+Module authz_core already enabled
+Enabling module authz_groupfile.
+To activate the new configuration, you need to run:
+  systemctl restart apache2
+</code></pre></div></div>
+
+<p>Contenido de fichero group:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>directivos: sergio 
+</code></pre></div></div>
+
+<p>Y configuramos el fichero departamentos.conf añadiendo la linea require group de forma que en lugar de validar un usuario, se valide un grupo.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;Directory /srv/www/departamentos/secreto/&gt;
+                AuthUserFile /etc/apache2/claves/passwdigest.txt
+                AuthGroupFile /etc/apache2/claves/grupos.txt
+                AuthName "password"
+                AuthType Digest
+                Require group directivos
+&lt;/Directory&gt;
+</code></pre></div></div>
+
+<p>Cabeceras Http:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vagrant@server:/srv/www/departamentos$ sudo tcpdump -vi eth2
+tcpdump: listening on eth2, link-type EN10MB (Ethernet), capture size 262144 bytes
+16:49:37.157798 IP (tos 0x0, ttl 64, id 58074, offset 0, flags [DF], proto TCP (6), length 60)
+    192.168.100.2.37394 &gt; 192.168.100.1.http: Flags [S], cksum 0x167e (correct), seq 680969265, win 64240, options [mss 1460,sackOK,TS val 1980495879 ecr 0,nop,wscale 6], length 0
+16:49:37.157871 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 60)
+    192.168.100.1.http &gt; 192.168.100.2.37394: Flags [S.], cksum 0x4983 (incorrect -&gt; 0x61a1), seq 2286756866, ack 680969266, win 65160, options [mss 1460,sackOK,TS val 2584308442 ecr 1980495879,nop,wscale 6], length 0
+16:49:37.159568 IP (tos 0x0, ttl 64, id 58075, offset 0, flags [DF], proto TCP (6), length 52)
+    192.168.100.2.37394 &gt; 192.168.100.1.http: Flags [.], cksum 0x8b08 (correct), ack 1, win 1004, options [nop,nop,TS val 1980495880 ecr 2584308442], length 0
+16:49:37.160214 IP (tos 0x0, ttl 64, id 58076, offset 0, flags [DF], proto TCP (6), length 286)
+    192.168.100.2.37394 &gt; 192.168.100.1.http: Flags [P.], cksum 0x5be4 (correct), seq 1:235, ack 1, win 1004, options [nop,nop,TS val 1980495882 ecr 2584308442], length 234: HTTP, length: 234
+	GET /secreto HTTP/1.0
+	User-Agent: w3m/0.5.3+git20190105
+	Accept: text/html, text/*;q=0.5, image/*, application/*
+	Accept-Encoding: gzip, compress, bzip, bzip2, deflate
+	Accept-Language: en;q=1.0
+	Host: www.departamentos.iesgn.org
+	
+16:49:37.160262 IP (tos 0x0, ttl 64, id 24103, offset 0, flags [DF], proto TCP (6), length 52)
+    192.168.100.1.http &gt; 192.168.100.2.37394: Flags [.], cksum 0x497b (incorrect -&gt; 0x8a0e), ack 235, win 1015, options [nop,nop,TS val 2584308445 ecr 1980495882], length 0
+16:49:37.161173 IP (tos 0x0, ttl 64, id 24104, offset 0, flags [DF], proto TCP (6), length 841)
+    192.168.100.1.http &gt; 192.168.100.2.37394: Flags [P.], cksum 0x4c90 (incorrect -&gt; 0xcf5e), seq 1:790, ack 235, win 1015, options [nop,nop,TS val 2584308446 ecr 1980495882], length 789: HTTP, length: 789
+	HTTP/1.1 401 Unauthorized
+	Date: Mon, 02 Nov 2020 16:49:37 GMT
+	Server: Apache/2.4.38 (Debian)
+	WWW-Authenticate: Digest realm="password", nonce="/h4ZiCKzBQA=74ac3d5cfcc6e98652142b3bcc88d18843cf66d4", algorithm=MD5, qop="auth"
+	Content-Length: 474
+	Connection: close
+	Content-Type: text/html; charset=iso-8859-1
+	
+	&lt;!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN"&gt;
+	&lt;html&gt;&lt;head&gt;
+	&lt;title&gt;401 Unauthorized&lt;/title&gt;
+	&lt;/head&gt;&lt;body&gt;
+	&lt;h1&gt;Unauthorized&lt;/h1&gt;
+	&lt;p&gt;This server could not verify that you
+	are authorized to access the document
+	requested.  Either you supplied the wrong
+	credentials (e.g., bad password), or your
+	browser doesn't understand how to supply
+	the credentials required.&lt;/p&gt;
+	&lt;hr&gt;
+	&lt;address&gt;Apache/2.4.38 (Debian) Server at www.departamentos.iesgn.org Port 80&lt;/address&gt;
+	&lt;/body&gt;&lt;/html&gt;
+16:49:37.161383 IP (tos 0x0, ttl 64, id 24105, offset 0, flags [DF], proto TCP (6), length 52)
+    192.168.100.1.http &gt; 192.168.100.2.37394: Flags [F.], cksum 0x497b (incorrect -&gt; 0x86f7), seq 790, ack 235, win 1015, options [nop,nop,TS val 2584308446 ecr 1980495882], length 0
+16:49:37.210384 IP (tos 0x0, ttl 64, id 58078, offset 0, flags [DF], proto TCP (6), length 52)
+    192.168.100.2.37394 &gt; 192.168.100.1.http: Flags [.], cksum 0x86d2 (correct), ack 791, win 1002, options [nop,nop,TS val 1980495932 ecr 2584308446], length 0
+16:49:42.378189 ARP, Ethernet (len 6), IPv4 (len 4), Request who-has 192.168.100.1 tell 192.168.100.2, length 46
+16:49:42.378226 ARP, Ethernet (len 6), IPv4 (len 4), Reply 192.168.100.1 is-at 08:00:27:23:e5:a4 (oui Unknown), length 28
+16:49:42.378743 ARP, Ethernet (len 6), IPv4 (len 4), Request who-has 192.168.100.2 tell 192.168.100.1, length 28
+16:49:42.379214 ARP, Ethernet (len 6), IPv4 (len 4), Reply 192.168.100.2 is-at 08:00:27:c3:6c:a0 (oui Unknown), length 46
+16:49:46.004749 IP (tos 0x0, ttl 64, id 58079, offset 0, flags [DF], proto TCP (6), length 52)
+    192.168.100.2.37394 &gt; 192.168.100.1.http: Flags [F.], cksum 0x6477 (correct), seq 235, ack 791, win 1002, options [nop,nop,TS val 1980504726 ecr 2584308446], length 0
+16:49:46.004838 IP (tos 0x0, ttl 64, id 24106, offset 0, flags [DF], proto TCP (6), length 52)
+    192.168.100.1.http &gt; 192.168.100.2.37394: Flags [.], cksum 0x497b (incorrect -&gt; 0x41df), ack 236, win 1015, options [nop,nop,TS val 2584317289 ecr 1980504726], length 0
+16:49:46.005002 IP (tos 0x0, ttl 64, id 59506, offset 0, flags [DF], proto TCP (6), length 60)
+    192.168.100.2.37396 &gt; 192.168.100.1.http: Flags [S], cksum 0x1d14 (correct), seq 2539531329, win 64240, options [mss 1460,sackOK,TS val 1980504727 ecr 0,nop,wscale 6], length 0
+16:49:46.005109 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 60)
+    192.168.100.1.http &gt; 192.168.100.2.37396: Flags [S.], cksum 0x4983 (incorrect -&gt; 0x5af5), seq 3389181183, ack 2539531330, win 65160, options [mss 1460,sackOK,TS val 2584317289 ecr 1980504727,nop,wscale 6], length 0
+16:49:46.005530 IP (tos 0x0, ttl 64, id 59507, offset 0, flags [DF], proto TCP (6), length 52)
+    192.168.100.2.37396 &gt; 192.168.100.1.http: Flags [.], cksum 0x845d (correct), ack 1, win 1004, options [nop,nop,TS val 1980504727 ecr 2584317289], length 0
+16:49:46.005638 IP (tos 0x0, ttl 64, id 59508, offset 0, flags [DF], proto TCP (6), length 549)
+    192.168.100.2.37396 &gt; 192.168.100.1.http: Flags [P.], cksum 0x93dd (correct), seq 1:498, ack 1, win 1004, options [nop,nop,TS val 1980504727 ecr 2584317289], length 497: HTTP, length: 497
+	GET /secreto HTTP/1.0
+	User-Agent: w3m/0.5.3+git20190105
+	Accept: text/html, text/*;q=0.5, image/*, application/*
+	Accept-Encoding: gzip, compress, bzip, bzip2, deflate
+	Accept-Language: en;q=1.0
+	Host: www.departamentos.iesgn.org
+	Authorization: Digest username="sergio", realm="password", nonce="/h4ZiCKzBQA=74ac3d5cfcc6e98652142b3bcc88d18843cf66d4", uri="/secreto", response="093386273ee965f9c0314ff4355476da", algorithm=MD5, cnonce="d8f54c9aa44e17187a8343c5473fdf75", qop=auth, nc=00000001
+	
+16:49:46.005670 IP (tos 0x0, ttl 64, id 36050, offset 0, flags [DF], proto TCP (6), length 52)
+    192.168.100.1.http &gt; 192.168.100.2.37396: Flags [.], cksum 0x497b (incorrect -&gt; 0x8264), ack 498, win 1011, options [nop,nop,TS val 2584317290 ecr 1980504727], length 0
+16:49:46.006293 IP (tos 0x0, ttl 64, id 36051, offset 0, flags [DF], proto TCP (6), length 869)
+    192.168.100.1.http &gt; 192.168.100.2.37396: Flags [P.], cksum 0x4cac (incorrect -&gt; 0x99ed), seq 1:818, ack 498, win 1011, options [nop,nop,TS val 2584317291 ecr 1980504727], length 817: HTTP, length: 817
+	HTTP/1.1 500 Internal Server Error
+	Date: Mon, 02 Nov 2020 16:49:46 GMT
+	Server: Apache/2.4.38 (Debian)
+	Content-Length: 625
+	Connection: close
+	Content-Type: text/html; charset=iso-8859-1
+	
+	&lt;!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN"&gt;
+	&lt;html&gt;&lt;head&gt;
+	&lt;title&gt;500 Internal Server Error&lt;/title&gt;
+	&lt;/head&gt;&lt;body&gt;
+	&lt;h1&gt;Internal Server Error&lt;/h1&gt;
+	&lt;p&gt;The server encountered an internal error or
+	misconfiguration and was unable to complete
+	your request.&lt;/p&gt;
+	&lt;p&gt;Please contact the server administrator at 
+	 webmaster@localhost to inform them of the time this error occurred,
+	 and the actions you performed just before this error.&lt;/p&gt;
+	&lt;p&gt;More information about this error may be available
+	in the server error log.&lt;/p&gt;
+	&lt;hr&gt;
+	&lt;address&gt;Apache/2.4.38 (Debian) Server at www.departamentos.iesgn.org Port 80&lt;/address&gt;
+	&lt;/body&gt;&lt;/html&gt;
+16:49:46.006405 IP (tos 0x0, ttl 64, id 36052, offset 0, flags [DF], proto TCP (6), length 52)
+    192.168.100.1.http &gt; 192.168.100.2.37396: Flags [F.], cksum 0x497b (incorrect -&gt; 0x7f31), seq 818, ack 498, win 1011, options [nop,nop,TS val 2584317291 ecr 1980504727], length 0
+16:49:46.006466 IP (tos 0x0, ttl 64, id 59509, offset 0, flags [DF], proto TCP (6), length 52)
+    192.168.100.2.37396 &gt; 192.168.100.1.http: Flags [.], cksum 0x7f3a (correct), ack 818, win 1002, options [nop,nop,TS val 1980504728 ecr 2584317291], length 0
+16:49:46.007359 IP (tos 0x0, ttl 64, id 59510, offset 0, flags [DF], proto TCP (6), length 52)
+    192.168.100.2.37396 &gt; 192.168.100.1.http: Flags [F.], cksum 0x7f37 (correct), seq 498, ack 819, win 1002, options [nop,nop,TS val 1980504729 ecr 2584317291], length 0
+16:49:46.007408 IP (tos 0x0, ttl 64, id 36053, offset 0, flags [DF], proto TCP (6), length 52)
+    192.168.100.1.http &gt; 192.168.100.2.37396: Flags [.], cksum 0x497b (incorrect -&gt; 0x7f2d), ack 499, win 1011, options [nop,nop,TS val 2584317292 ecr 1980504729], length 0
+</code></pre></div></div>
+
+<p>Explicación breve de la autorización:</p>
+
+<p>En este caso al igual que en anterior el servidor manda una respuesta del tipo 401 HTTP/1.1 401 Authorization Required con una cabecera WWW-Authenticate (aunque de forma distinta) al cliente y el navegador del cliente muestra una ventana emergente preguntando por el nombre de usuario y contraseña y cuando se rellena se manda una petición con una cabecera Authorization, sin embargo con el método digest esta clave ya no se manda en base 64 que es fácilmente descifrable, sino en md5.</p>
+
+<p>Por medio de md5 se calcula el H1 (se calcula el md5 del nombre de usuario, del dominio (realm) y la contraseña), el H2 (se calcula el md5 del método de la petición (por ejemplo GET) y de la uri a la que estamos accediendo). El resultado que se manda es el md5 de HA1, un número aleatorio (nonce), el contador de peticiones (nc), el qop y el HA2. Este resultado se manda al servidor para que este haga los mismos cálculos para comprobar la validez de los datos y permitir así, o no el acceso.</p>
+
+<p>h3. <em>Tarea4: Vamos a combinar el control de acceso (ejercicio 1) y la autentificación (Ejercicios 2 y 3), y vamos a configurar el virtual host para que se comporte de la siguiente manera: el acceso a la URL departamentos.iesgn.org/secreto se hace forma directa desde la intranet, desde la red pública te pide la autentificación. Muestra el resultado al profesor.</em></p>
+
+<p>Configuración departamentos.conf:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;VirtualHost *:80&gt;
+        ServerAdmin webmaster@localhost
+        DocumentRoot /srv/www/departamentos
+        ServerName www.departamentos.iesgn.org
+
+        &lt;Directory /srv/www/departamentos/intranet/&gt;
+                Options Indexes FollowSymLinks
+                Require ip 192.168.100
+        &lt;/Directory&gt;
+        &lt;Directory /srv/www/departamentos/internet/&gt;
+                Options Indexes FollowSymLinks
+                &lt;RequireAll&gt;
+                        Require all granted
+                        Require not ip 192.168.100
+                &lt;/RequireAll&gt;
+        &lt;/Directory&gt;
+
+        &lt;Directory /srv/www/departamentos/secreto/&gt;
+                AuthUserFile /etc/apache2/claves/passwdigest.txt
+                AuthName "password"
+                AuthType Digest
+                Require valid-user
+                &lt;RequireAll&gt;
+                        Require all granted
+                        Require ip 192.168.100
+                &lt;/RequireAll&gt;
+        &lt;/Directory&gt;
+        ErrorLog ${APACHE_LOG_DIR}/error.log
+        CustomLog ${APACHE_LOG_DIR}/access.log combined
+&lt;/VirtualHost&gt;
+</code></pre></div></div>
+
+<ul>
+  <li>Funcionamiento desde la red interna:</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Bienvenido directivo
+</code></pre></div></div>
+
+<ul>
+  <li>Funcionamiento desde fuera de la red:</li>
+</ul>
+
+<p><img src="/images/control-accesos/secreto2.png" alt="autentificcion" /></p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/categories/#servicios" class="page__taxonomy-item p-category" rel="tag">Servicios</a>
+    
+    </span>
+  </p>
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2021-03-11T16:13:52+01:00">March 11, 2021</time></p>
+
+      </footer>
+
+      
+
+      
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+
+      
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">&copy; 2025 <a href="http://localhost:4000">Blog de Sergio Ibáñez</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

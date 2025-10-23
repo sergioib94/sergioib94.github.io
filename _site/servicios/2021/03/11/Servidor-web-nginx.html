@@ -1,0 +1,994 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.27.3 by Michael Rose
+  Copyright 2013-2025 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="es-ES" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Servidor Web Nginx - Blog de Sergio Ibáñez</title>
+<meta name="description" content="NGINX es un servidor web open source de alta performance que ofrece el contenido estático de un sitio web de forma rápida y fácil de configurar. Ofrece recursos de equilibrio de carga, proxy inverso y streaming, además de gestionar miles de conexiones simultáneas. El resultado de sus aportes es una mayor velocidad y escalabilidad.">
+
+
+  <meta name="author" content="Sergio Ibáñez Núñez">
+  
+  <meta property="article:author" content="Sergio Ibáñez Núñez">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="es_ES">
+<meta property="og:site_name" content="Blog de Sergio Ibáñez">
+<meta property="og:title" content="Servidor Web Nginx">
+<meta property="og:url" content="http://localhost:4000/servicios/2021/03/11/Servidor-web-nginx.html">
+
+
+  <meta property="og:description" content="NGINX es un servidor web open source de alta performance que ofrece el contenido estático de un sitio web de forma rápida y fácil de configurar. Ofrece recursos de equilibrio de carga, proxy inverso y streaming, además de gestionar miles de conexiones simultáneas. El resultado de sus aportes es una mayor velocidad y escalabilidad.">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2021-03-11T16:43:41+01:00">
+
+
+
+
+
+
+<link rel="canonical" href="http://localhost:4000/servicios/2021/03/11/Servidor-web-nginx.html">
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Blog de Sergio Ibáñez Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single wide" dir="ltr">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          Blog de Sergio Ibáñez
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a
+                href="/"
+                
+                
+              >Inicio</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/posts/"
+                
+                
+              >Posts</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/categories/"
+                
+                
+              >Categorías</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/tags/"
+                
+                
+              >Etiquetas</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/search/"
+                
+                
+              >Buscar</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/about/"
+                
+                
+              >Sobre mí</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Servidor Web Nginx">
+    <meta itemprop="description" content="NGINX es un servidor web open source de alta performance que ofrece el contenido estático de un sitio web de forma rápida y fácil de configurar. Ofrece recursos de equilibrio de carga, proxy inverso y streaming, además de gestionar miles de conexiones simultáneas. El resultado de sus aportes es una mayor velocidad y escalabilidad.">
+    <meta itemprop="datePublished" content="2021-03-11T16:43:41+01:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">
+            <a href="http://localhost:4000/servicios/2021/03/11/Servidor-web-nginx.html" itemprop="url">Servidor Web Nginx
+</a>
+          </h1>
+          
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2021-03-11T16:43:41+01:00">March 11, 2021</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          10 minute read
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <h2 id="introducción"><strong>Introducción</strong></h2>
+
+<p>NGINX es un servidor web open source de alta performance que ofrece el contenido estático de un sitio web de forma rápida y fácil de configurar. Ofrece recursos de equilibrio de carga, proxy inverso y streaming, además de gestionar miles de conexiones simultáneas. El resultado de sus aportes es una mayor velocidad y escalabilidad.</p>
+
+<p>Además de otras tareas, los servidores web son los encargados de la entrega de aplicaciones web, respondiendo a peticiones HTTPS realizadas por usuarios, normalmente desde un navegador web.</p>
+
+<p>El funcionamiento base de Nginx es similar al de otros servidores web, en el que un usuario realiza una petición a través del navegador al servidor, y este le envía la información solicitada al navegador.</p>
+
+<p>Lo que hace diferente a Nginx es su arquitectura a la hora de manejar procesos, ya que otros servidores web como Apache crean un hilo por cada solicitud.</p>
+
+<h2 id="servidor-web-nginx"><strong>Servidor web Nginx</strong></h2>
+
+<ul>
+  <li>Tarea 1: Creamos una máquina en el cloud (openstack) con una red pública. Añadimos la clave pública del profesor a la máquina para poder comprobarla por ssh. Instalamos el servidor web nginx en la máquina. Modificamos la página index.html que viene por defecto y accede a ella desde nuestro navegador.</li>
+</ul>
+
+<p>Instalamos Ngingx en nuestra maquina:</p>
+
+<p>Para instalar Nginx vamos a usar el repositorio de Debian, así que lo primero será actualizar la información de paquetes.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo su
+apt update
+apt upgrade
+</code></pre></div></div>
+<p>Instalamos el paquete nginx</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>apt install nginx
+</code></pre></div></div>
+
+<p>Modificamos el html y visualizamos nuestro sitio</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root@servidor-nginx:/var/www/html# nano index.html 
+</code></pre></div></div>
+
+<ul>
+  <li>Entrega una captura de pantalla accediendo a ella.</li>
+</ul>
+
+<p>Configuración de index.html default:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;title&gt;Welcome to nginx!&lt;/title&gt;
+&lt;style&gt;
+    body {
+        width: 35em;
+        margin: 0 auto;
+        font-family: Tahoma, Verdana, Arial, sans-serif;
+    }
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;h1&gt;Bienvenido al sitio web de sergio&lt;/h1&gt;
+&lt;p&gt;If you see this page, the nginx web server is successfully installed and
+working. Further configuration is required.&lt;/p&gt;
+
+&lt;p&gt;For online documentation and support please refer to
+&lt;a href="http://nginx.org/"&gt;nginx.org&lt;/a&gt;.&lt;br/&gt;
+Commercial support is available at
+&lt;a href="http://nginx.com/"&gt;nginx.com&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Thank you for using nginx.&lt;/em&gt;&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre></div></div>
+
+<p>Funcionamiento:</p>
+
+<p><img src="/images/nginx/nginx1.png" alt="inicio" /></p>
+
+<h3 id="virtualhosting"><strong>Virtualhosting</strong></h3>
+
+<p>Queremos que nuestro servidor web ofrezca dos sitios web, teniendo en cuenta lo siguiente:</p>
+
+<ul>
+  <li>
+    <p>Cada sitio web tendrá nombres distintos.</p>
+  </li>
+  <li>
+    <p>Cada sitio web compartirán la misma dirección IP y el mismo puerto (80).
+Los dos sitios web tendrán las siguientes características:</p>
+  </li>
+  <li>
+    <p>El nombre de dominio del primero será www.iesgn.org, su directorio base será /srv/www/iesgn y contendrá una página llamada index.html, donde sólo se verá una bienvenida a la página del Instituto Gonzalo Nazareno.</p>
+  </li>
+  <li>
+    <p>En el segundo sitio vamos a crear una página donde se pondrán noticias por parte de los departamento, el nombre de este sitio será departamentos.iesgn.org, y su directorio base será /srv/www/departamentos. En este sitio sólo tendremos una página inicial index.html, dando la bienvenida a la página de los departamentos del instituto.</p>
+  </li>
+  <li>
+    <p>Tarea 2: Configuramos la resolución estática en los clientes y muestra el acceso a cada una de las páginas.</p>
+  </li>
+</ul>
+
+<p>Empezamos haciendo un cp de default para así crear los ficheros de configuración de los dos sitios web y una vez creados los configuramos de la siguiente forma:</p>
+
+<p>Iesgn:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>server {
+    listen 80;
+    listen [::]:80;
+
+    root /srv/www/iesgn;
+
+    index index.html index.htm index.nginx-debian.html;
+
+    server_name www.iesgn.org;
+
+    location / {
+                try_files $uri $uri/ =404;
+    }
+}
+</code></pre></div></div>
+
+<p>departamentos:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>server {
+    listen 80;
+    listen [::]:80;
+
+    root /srv/www/departamentos;
+
+    # Add index.php to the list if you are using PHP
+    index index.html index.htm index.nginx-debian.html;
+
+    server_name departamentos.iesgn.org;
+
+    location / {
+        try_files $uri $uri/ =404;
+    }
+}
+</code></pre></div></div>
+
+<p>Creamos los enlaces simbólicos con el comando ln -s ya que nginx no cuenta con el comando a2ensite como apache.</p>
+
+<p>Prueba de funcionamiento:</p>
+
+<p>iesgn</p>
+
+<p><img src="/images/nginx/nginx2.png" alt="iesgn" /></p>
+
+<p>departamentos:</p>
+
+<p><img src="/images/nginx/nginx3.png" alt="departamentos.iesgn" /></p>
+
+<h3 id="mapeo-url"><strong>Mapeo URL</strong></h3>
+
+<p>Cambia la configuración del sitio web www.iesgn.org para que se comporte de la siguiente forma:</p>
+
+<ul>
+  <li>Tarea 3: Cuando se entre a la dirección www.iesgn.org se redireccionará automáticamente a www.iesgn.org/principal, donde se mostrará el mensaje de bienvenida. En el directorio principal no se permite ver la lista de los ficheros, no se permite que se siga los enlaces simbólicos y no se permite negociación de contenido. Muestra al profesor el funcionamiento.</li>
+</ul>
+
+<p>Lo primero sera crear el directorio principal en /srv/www/iesgn y dentro de este directorio el index.html dando la bienvenida a iesgn. Luego configuraremos la redirección en el fichero iesgn creado anteriormente de la siguiente forma:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>server {
+    listen 80;
+    listen [::]:80;
+
+    root /srv/www/iesgn;
+
+    index index.html index.htm index.nginx-debian.html;
+
+    server_name www.iesgn.org;
+
+    location / {
+            return 301 http://www.iesgn.org/principal;
+    }
+    location /principal {
+            try_files $uri $uri/ =404;
+    }
+}
+</code></pre></div></div>
+
+<p>Reiniciamos nginx para que se cargue la nueva configuración ejecutando systemctl restart gnix o bien systemctl reload gnix (como root).</p>
+
+<ul>
+  <li>Tarea 4: Si accedes a la página www.iesgn.org/principal/documentos se visualizarán los documentos que hay en /srv/doc. Por lo tanto se permitirá el listado de fichero y el seguimiento de enlaces simbólicos siempre que sean a ficheros o directorios cuyo dueño sea el usuario. Muestra al profesor el funcionamiento.</li>
+</ul>
+
+<p>Creamos el directorio doc en srv y una vez creado, configuramos un alias en iesgn de la siguiente forma:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>server {
+    listen 80;
+    listen [::]:80;
+
+    root /srv/www/iesgn;
+
+    index index.html index.htm index.nginx-debian.html;
+
+    server_name www.iesgn.org;
+
+    #Redireccion
+    location / {
+            return 301 http://www.iesgn.org/principal;
+    }
+
+    location /principal {
+            try_files $uri $uri/ =404;
+    }
+
+    location /principal/documentos {
+            try_files $uri $uri/ =404;
+            alias /srv/doc;
+            autoindex on;
+            disable_symlinks if_not_owner;
+    }
+</code></pre></div></div>
+
+<p>Creamos algunos ficheros, uno cuyo usuario sea el mismo propietario que el enlace simbólico y otro en el que fichero y enlace tengan distintos propietarios para comprobar el funcionamiento:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>debian@nginx:/srv/www/iesgn/principal/documentos$ sudo ln -s /srv/doc/ficherodata 
+debian@nginx:/srv/www/iesgn/principal/documentos$ sudo ln -s /srv/doc/ficherousuario 
+debian@nginx:/srv/www/iesgn/principal/documentos$ sudo chown -R www-data:www-data ficherodata
+</code></pre></div></div>
+
+<p>Propietarios de los ficheros:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>debian@nginx:/srv/www/iesgn/principal/documentos$ ls -l
+total 0
+lrwxrwxrwx 1 www-data www-data 20 Nov  4 11:45 ficherodata -&gt; /srv/doc/ficherodata
+lrwxrwxrwx 1 www-data www-data 23 Nov  4 11:45 ficherousuario -&gt; /srv/doc/ficherousuario
+debian@nginx:/srv/www/iesgn/principal/documentos$ ls -l /srv/doc/
+total 0
+-rw-r--r-- 1 www-data www-data 0 Nov  4 11:10 ficherodata
+-rw-r--r-- 1 debian   debian   0 Nov  4 11:10 ficherousuario
+</code></pre></div></div>
+
+<ul>
+  <li>Tarea 5: En todo el host virtual se debe redefinir los mensajes de error de objeto no encontrado y no permitido. Para ello se crearan dos ficheros html dentro del directorio error. Entrega las modificaciones necesarias en la configuración y una comprobación del buen funcionamiento.*</li>
+</ul>
+
+<p>Creamos el directorio errores en /srv/www/iesgn y creamos en el los ficheros de error para no encontrado y prohibido. Después configuramos iesgn para que muestre los mensajes personalizados de la siguiente forma:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>server {
+    listen 80;
+    listen [::]:80;
+
+    root /srv/www/iesgn;
+
+    index index.html index.htm index.nginx-debian.html;
+
+    server_name www.iesgn.org;
+
+    #Redireccion
+    location / {
+            return 301 http://www.iesgn.org/principal;
+    }
+
+    location /principal {
+            try_files $uri $uri/ =404;
+    }
+
+    #Alias
+    location /principal/documentos {
+            try_files $uri $uri/ =404;
+            alias /srv/doc;
+            autoindex on;
+            disable_symlinks if_not_owner;
+    }
+
+    #Errores
+
+    error_page 404 /error/404.html;
+            location /error/404.html {
+                   internal;
+            }
+
+    error_page 403 /error/403.html;
+            location /error/403.html {
+                    internal;
+            }
+</code></pre></div></div>
+
+<p>Prueba de funcionamiento:</p>
+
+<p><img src="/images/nginx/nginx6.png" alt="error 404" /></p>
+
+<ul>
+  <li>Tarea 6: Añade al escenario otra máquina conectada por una red interna al servidor. A la URL departamentos.iesgn.org/intranet sólo se debe tener acceso desde el cliente de la red local, y no se pueda acceder desde la anfitriona por la red pública. A la URL departamentos.iesgn.org/internet, sin embargo, sólo se debe tener acceso desde la anfitriona por la red pública, y no desde la red local.</li>
+</ul>
+
+<p>Creamos los directorios intranet e internet en /departamentos:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>debian@nginx:~$ sudo mkdir /srv/www/departamentos/intranet
+debian@nginx:~$ sudo mkdir /srv/www/departamentos/internet
+debian@nginx:~$ sudo touch /srv/www/departamentos/internet/index.html
+debian@nginx:~$ sudo touch /srv/www/departamentos/intranet/index.html
+</code></pre></div></div>
+
+<p>Configuramos departamentos:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>server {
+    listen 80;
+    listen [::]:80;
+
+    root /srv/www/departamentos;
+
+    index index.html index.htm index.nginx-debian.html;
+
+    server_name departamentos.iesgn.org;
+
+    location / {
+            try_files $uri $uri/ =404;
+    }
+    location /internet {
+            deny 172.22.200.0/24;
+            allow all;
+    }
+
+    location /intranet {
+            allow 172.22.200.0/24;
+            deny all;
+    }
+}
+</code></pre></div></div>
+
+<p>Pruebas de funcionamiento:</p>
+
+<p>Cliente de la red interna (intranet):</p>
+
+<p>Ejecutando w3m departamentos.iesgn.org/intranet</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Bienvenido desde intranet
+</code></pre></div></div>
+
+<p>Cliente fuera de la red (intranet):</p>
+
+<p><img src="/images/nginx/nginx8.png" alt="error 403" /></p>
+
+<p>Cliente de la red interna (internet):</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>                                 403 Forbidden
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+                                 nginx/1.14.2
+
+</code></pre></div></div>
+
+<p>Cliente fuera de la red (internet):</p>
+
+<p><img src="/nginx/nginx9.png" alt="" /></p>
+
+<ul>
+  <li>Tarea 7: Autentificación básica. Limita el acceso a la URL departamentos.iesgn.org/secreto. Comprueba las cabeceras de los mensajes HTTP que se intercambian entre el servidor y el cliente.</li>
+</ul>
+
+<p>Para la configurar la autentificación básica sera necesario instalar apache2-utils.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo apt install apache2-utils
+</code></pre></div></div>
+
+<p>Creamos el directorio secreto en /srv/www/departamentos con un fichero y añadimos al fichero de configuración de departamentos las siguientes lineas:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>location /secreto {
+                auth_basic "Secreto";
+                auth_basic_user_file /etc/nginx/.htpasswd;
+</code></pre></div></div>
+
+<p>Se añade el usuario al .htpasswd como en apache, de la siguiente forma:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>debian@nginx:/srv/www/departamentos$ sudo htpasswd -c -m /etc/nginx/.htpasswd usuarioNew password: 
+Re-type new password: 
+Adding password for user usuario
+</code></pre></div></div>
+
+<p>Prueba de funcionamiento:</p>
+
+<p>!nginx7.png!</p>
+
+<p>Cabeceras http:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>tcpdump: listening on eth0, link-type EN10MB (Ethernet), capture size 262144 bytes
+    172.22.200.142.47276 &gt; 10.0.0.8.http: Flags [S], cksum 0x4637 (correct), seq 139924513, win 62370, options [mss 8910,sackOK,TS val 1249792621 ecr 0,nop,wscale 6], length 0
+    10.0.0.8.http &gt; 172.22.200.142.47276: Flags [S.], cksum 0x7edb (incorrect -&gt; 0x39b8), seq 2814053701, ack 139924514, win 62286, options [mss 8910,sackOK,TS val 3541337260 ecr 1249792621,nop,wscale 6], length 0
+    172.22.200.142.47276 &gt; 10.0.0.8.http: Flags [.], cksum 0x751c (correct), ack 1, win 975, options [nop,nop,TS val 1249792622 ecr 3541337260], length 0
+    172.22.200.142.47276 &gt; 10.0.0.8.http: Flags [P.], cksum 0xebec (correct), seq 1:231, ack 1, win 975, options [nop,nop,TS val 1249792622 ecr 3541337260], length 230: HTTP, length: 230
+    10.0.0.8.http &gt; 172.22.200.142.47276: Flags [.], cksum 0x7ed3 (incorrect -&gt; 0x743a), ack 231, win 970, options [nop,nop,TS val 3541337261 ecr 1249792622], length 0
+    10.0.0.8.http &gt; 172.22.200.142.47276: Flags [P.], cksum 0x8058 (incorrect -&gt; 0x57e1), seq 1:390, ack 231, win 970, options [nop,nop,TS val 3541337262 ecr 1249792622], length 389: HTTP, length: 389
+    172.22.200.142.47276 &gt; 10.0.0.8.http: Flags [.], cksum 0x72b3 (correct), ack 390, win 969, options [nop,nop,TS val 1249792624 ecr 3541337262], length 0
+    10.0.0.8.http &gt; 172.22.200.142.47276: Flags [F.], cksum 0x7ed3 (incorrect -&gt; 0x72b0), seq 390, ack 231, win 970, options [nop,nop,TS val 3541337263 ecr 1249792624], length 0
+    172.22.200.142.47276 &gt; 10.0.0.8.http: Flags [.], cksum 0x7287 (correct), ack 391, win 969, options [nop,nop,TS val 1249792666 ecr 3541337263], length 0
+    172.22.200.142.47276 &gt; 10.0.0.8.http: Flags [F.], cksum 0x534b (correct), seq 231, ack 391, win 969, options [nop,nop,TS val 1249800661 ecr 3541337263], length 0
+    10.0.0.8.http &gt; 172.22.200.142.47276: Flags [.], cksum 0x33e4 (correct), ack 232, win 970, options [nop,nop,TS val 3541345301 ecr 1249800661], length 0
+    172.22.200.142.47278 &gt; 10.0.0.8.http: Flags [S], cksum 0x4e42 (correct), seq 1886291091, win 62370, options [mss 8910,sackOK,TS val 1249800662 ecr 0,nop,wscale 6], length 0
+    10.0.0.8.http &gt; 172.22.200.142.47278: Flags [S.], cksum 0x7edb (incorrect -&gt; 0xa48d), seq 762774870, ack 1886291092, win 62286, options [mss 8910,sackOK,TS val 3541345301 ecr 1249800662,nop,wscale 6], length 0
+    172.22.200.142.47278 &gt; 10.0.0.8.http: Flags [.], cksum 0xdff1 (correct), ack 1, win 975, options [nop,nop,TS val 1249800663 ecr 3541345301], length 0
+    172.22.200.142.47278 &gt; 10.0.0.8.http: Flags [P.], cksum 0xfed2 (correct), seq 1:274, ack 1, win 975, options [nop,nop,TS val 1249800663 ecr 3541345301], length 273: HTTP, length: 273
+    10.0.0.8.http &gt; 172.22.200.142.47278: Flags [.], cksum 0x7ed3 (incorrect -&gt; 0xdee5), ack 274, win 969, options [nop,nop,TS val 3541345302 ecr 1249800663], length 0
+    10.0.0.8.http &gt; 172.22.200.142.47278: Flags [P.], cksum 0x805d (incorrect -&gt; 0xf467), seq 1:395, ack 274, win 969, options [nop,nop,TS val 3541345306 ecr 1249800663], length 394: HTTP, length: 394
+	Location: http://departamentos.iesgn.org/secreto/
+    10.0.0.8.http &gt; 172.22.200.142.47278: Flags [F.], cksum 0x7ed3 (incorrect -&gt; 0xdd56), seq 395, ack 274, win 969, options [nop,nop,TS val 3541345306 ecr 1249800663], length 0
+    172.22.200.142.47278 &gt; 10.0.0.8.http: Flags [.], cksum 0xdd52 (correct), ack 395, win 969, options [nop,nop,TS val 1249800668 ecr 3541345306], length 0
+    172.22.200.142.47278 &gt; 10.0.0.8.http: Flags [F.], cksum 0xdd4f (correct), seq 274, ack 396, win 969, options [nop,nop,TS val 1249800669 ecr 3541345306], length 0
+    10.0.0.8.http &gt; 172.22.200.142.47278: Flags [.], cksum 0x7ed3 (incorrect -&gt; 0xdd4e), ack 275, win 969, options [nop,nop,TS val 3541345307 ecr 1249800669], length 0
+    172.22.200.142.47280 &gt; 10.0.0.8.http: Flags [S], cksum 0xe159 (correct), seq 1069621792, win 62370, options [mss 8910,sackOK,TS val 1249800669 ecr 0,nop,wscale 6], length 0
+    10.0.0.8.http &gt; 172.22.200.142.47280: Flags [S.], cksum 0x7edb (incorrect -&gt; 0x2885), seq 1484253550, ack 1069621793, win 62286, options [mss 8910,sackOK,TS val 3541345308 ecr 1249800669,nop,wscale 6], length 0
+</code></pre></div></div>
+
+<ul>
+  <li>Tarea 8: Vamos a combinar el control de acceso (tarea 6) y la autentificación (tarea 7), y vamos a configurar el virtual host para que se comporte de la siguiente manera: el acceso a la URL departamentos.iesgn.org/secreto se hace forma directa desde la intranet, desde la red pública te pide la autentificación. Muestra el resultado al profesor.</li>
+</ul>
+
+<p>Configuracion de departamentos:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>location /secreto {
+            satisfy any;
+            allow 172.22.200.0/24;
+            deny all;
+            auth_basic "Contenido Secreto Nginx";
+            auth_basic_user_file /etc/nginx/.htpasswd.txt ;
+          }
+</code></pre></div></div>
+
+<p>Prueba de funcionamiento:</p>
+
+<p>Intranet ejecutando w3m departamentos.iesgn.org/secreto nos muestra el mensaje de la pagina sin autentificación.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pagina secreta revelada
+</code></pre></div></div>
+
+<p>Desde fuera de la red interna por el contrario se nos pide autentificacion:</p>
+
+<p><img src="/images/nginx/nginx10.png" alt="" /></p>
+
+<p><img src="/images/nginx/nginx11.png" alt="" /></p>
+
+<p>Como vemos en esta practica es muy similar a la anteriormente hecha usando un virtualhost apache debido a que apache y nginx cumplen la misma funcion, salvo que nginx a demostrado tener mejor rendimiento.</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/categories/#servicios" class="page__taxonomy-item p-category" rel="tag">Servicios</a>
+    
+    </span>
+  </p>
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2021-03-11T16:43:41+01:00">March 11, 2021</time></p>
+
+      </footer>
+
+      <section class="page__share">
+  <h4 class="page__share-title">Share on</h4>
+
+  <a href="https://x.com/intent/tweet?text=Servidor+Web+Nginx%20http%3A%2F%2Flocalhost%3A4000%2Fservicios%2F2021%2F03%2F11%2FServidor-web-nginx.html" class="btn btn--x" aria-label="Share on X" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on X">
+    <i class="fab fa-fw fa-x-twitter" aria-hidden="true"></i><span> X</span>
+  </a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fservicios%2F2021%2F03%2F11%2FServidor-web-nginx.html" class="btn btn--facebook" aria-label="Share on Facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook">
+    <i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span>
+  </a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http://localhost:4000/servicios/2021/03/11/Servidor-web-nginx.html" class="btn btn--linkedin" aria-label="Share on LinkedIn" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn">
+    <i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span>
+  </a>
+
+  <a href="https://bsky.app/intent/compose?text=Servidor+Web+Nginx%20http%3A%2F%2Flocalhost%3A4000%2Fservicios%2F2021%2F03%2F11%2FServidor-web-nginx.html" class="btn btn--bluesky" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Bluesky">
+    <i class="fab fa-fw fa-bluesky" aria-hidden="true"></i><span> Bluesky</span>
+  </a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/cloud/2021/03/11/Configuracion-clientevpn.html" class="pagination--pager" title="Configuracion cliente VPN con certificado x509">Previous</a>
+    
+    
+      <a href="/servicios/2021/03/12/OVH-Lemp.html" class="pagination--pager" title="OVH Lemp">Next</a>
+    
+  </nav>
+
+
+    </div>
+
+    
+      
+        <p>
+          Comments are configured with provider: <strong>giscus</strong>,
+          but are disabled in non-production environments.
+        </p>
+      
+    
+  </article>
+
+  
+  
+    
+<div class="page__related">
+  
+  <h2 class="page__related-title">You May Also Enjoy</h2>
+  <div class="grid__wrapper">
+    
+      
+      
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/sistemas/monitorizaci%C3%B3n/2025/05/01/Instalacion-configuracion-y-monitoreo-zabbix.html" rel="permalink">Instalación, configuración y monitorización usando Zabbix
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2025-05-01T13:19:00+02:00">May 1, 2025</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          7 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Este post describe paso a paso cómo instalar y configurar Zabbix 6.0 LTS en una máquina virtual con Debian 12. Está pensado para crear un entorno de práctica...</p>
+  </article>
+</div>
+
+    
+      
+      
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/sistemas/monitorizaci%C3%B3n/2024/04/11/Monitorizaci%C3%B3n-de-servidores-con-grafana.html" rel="permalink">Monitorización de servidores con Grafana
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2024-04-11T13:14:06+02:00">April 11, 2024</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          10 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Aprende a instalar, configurar y personalizar Grafana para la monitorización avanzada de servidores. Descubre cómo integrar Prometheus, crear dashboards inte...</p>
+  </article>
+</div>
+
+    
+      
+      
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/seguridad/2021/12/21/SoftEther-VPN.html" rel="permalink">Introducción SoftEther VPN
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2021-12-21T13:44:30+01:00">December 21, 2021</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          64 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">SoftEther VPN es uno de los software VPN multiprotocolo más potentes y rápidos del mundo en la actualidad. Funciona en sistemas Windows, Solaris, Mac, FreeBS...</p>
+  </article>
+</div>
+
+    
+      
+      
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/aplicaciones%20web/apuntes/2021/09/21/Introduccion-a-Docker.html" rel="permalink">Introducción a Docker
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2021-09-21T13:14:06+02:00">September 21, 2021</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          19 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Docker nos permite de forma sencilla crear contenedores ligeros y fáciles de mover donde ejecutar nuestras aplicaciones software sobre cualquier máquina con ...</p>
+  </article>
+</div>
+
+    
+  </div>
+</div>
+
+  
+  
+</div>
+
+      
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">&copy; 2025 <a href="http://localhost:4000">Blog de Sergio Ibáñez</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+    <script>
+  'use strict';
+
+  (function () {
+    var commentContainer = document.querySelector('#giscus-comments');
+
+    if (!commentContainer) {
+      return;
+    }
+
+    var script = document.createElement('script');
+
+    script.setAttribute('src', 'https://giscus.app/client.js');
+    script.setAttribute('data-repo', '');
+    script.setAttribute('data-repo-id', '');
+    script.setAttribute('data-category', '');
+    script.setAttribute('data-category-id', '');
+    script.setAttribute('data-mapping', 'pathname');
+    script.setAttribute('data-strict', '0');
+    script.setAttribute('data-reactions-enabled', '1');
+    script.setAttribute('data-emit-metadata', '0');
+    script.setAttribute('data-input-position', 'top');
+    script.setAttribute('data-theme', 'preferred_color_scheme');
+    script.setAttribute('data-lang',  'es');
+    
+    script.setAttribute('crossorigin', 'anonymous');
+
+    script.setAttribute('async', '');
+
+    commentContainer.appendChild(script);
+  })();
+</script>
+
+  
+
+
+
+
+  </body>
+</html>

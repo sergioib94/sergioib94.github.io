@@ -1,0 +1,1063 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.27.3 by Michael Rose
+  Copyright 2013-2025 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="es-ES" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Kubernetes Letschat - Blog de Sergio Ibáñez</title>
+<meta name="description" content="En este post, lo que haremos sera primero crear un cluster de kubernetes, para lo cual nuestro equipo debe de contar con al menos 4 o 5 Gb de ram al menos ya se van a crear 3 maquinas virtuales, un nodo master o controlador y 2 nodos secundarios.">
+
+
+  <meta name="author" content="Sergio Ibáñez Núñez">
+  
+  <meta property="article:author" content="Sergio Ibáñez Núñez">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="es_ES">
+<meta property="og:site_name" content="Blog de Sergio Ibáñez">
+<meta property="og:title" content="Kubernetes Letschat">
+<meta property="og:url" content="http://localhost:4000/_posts/2021-03-13-Kubernetes-lets-chat.html">
+
+
+  <meta property="og:description" content="En este post, lo que haremos sera primero crear un cluster de kubernetes, para lo cual nuestro equipo debe de contar con al menos 4 o 5 Gb de ram al menos ya se van a crear 3 maquinas virtuales, un nodo master o controlador y 2 nodos secundarios.">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2021-03-13T12:13:11+01:00">
+
+
+
+
+
+
+<link rel="canonical" href="http://localhost:4000/_posts/2021-03-13-Kubernetes-lets-chat.html">
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Blog de Sergio Ibáñez Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single" dir="ltr">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          Blog de Sergio Ibáñez
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a
+                href="/"
+                
+                
+              >Inicio</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/posts/"
+                
+                
+              >Posts</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/categories/"
+                
+                
+              >Categorías</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/tags/"
+                
+                
+              >Etiquetas</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/search/"
+                
+                
+              >Buscar</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/about/"
+                
+                
+              >Sobre mí</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="http://localhost:4000/">
+        <img src="/assets/images/avatar.png" alt="Sergio Ibáñez Núñez" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="http://localhost:4000/" itemprop="url">Sergio Ibáñez Núñez</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>Técnico IT y entusiasta de la automatización</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Kubernetes Letschat">
+    <meta itemprop="description" content="En este post, lo que haremos sera primero crear un cluster de kubernetes, para lo cual nuestro equipo debe de contar con al menos 4 o 5 Gb de ram al menos ya se van a crear 3 maquinas virtuales, un nodo master o controlador y 2 nodos secundarios.">
+    <meta itemprop="datePublished" content="2021-03-13T12:13:11+01:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">
+            <a href="http://localhost:4000/_posts/2021-03-13-Kubernetes-lets-chat.html" itemprop="url">Kubernetes Letschat
+</a>
+          </h1>
+          
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <h3 id="introduccion"><strong>Introduccion</strong></h3>
+
+<p>En este post, lo que haremos sera primero crear un cluster de kubernetes, para lo cual nuestro equipo debe de contar con al menos 4 o 5 Gb de ram al menos ya se van a crear 3 maquinas virtuales, un nodo master o controlador y 2 nodos secundarios.</p>
+
+<p>En este escenario credo haciendo uso de vagrant, desplegaremos una aplicacion llamada letschat usando kubeadm.</p>
+
+<h3 id="preparacion-del-escenario"><strong>Preparacion del escenario</strong></h3>
+
+<p>Empezamos creando en nuestro equipo un directorio donde almacenaremos nuestro escenario vagrant. Dicho escenario sera el siguiente:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+IMAGE_NAME = "bento/ubuntu-16.04"
+N = 2
+
+Vagrant.configure("2") do |config|
+    config.ssh.insert_key = false
+
+    config.vm.provider "virtualbox" do |v|
+        v.memory = 2048
+        v.cpus = 2
+    end
+
+    config.vm.define "k8s-master" do |master|
+        master.vm.box = IMAGE_NAME
+        master.vm.network "private_network", ip: "192.168.50.10"
+        master.vm.hostname = "k8s-master"
+        master.vm.provision "ansible" do |ansible|
+            ansible.playbook = "kubernetes-setup/master-playbook.yml"
+            ansible.extra_vars = {
+                node_ip: "192.168.50.10",
+            }
+        end
+    end
+
+    (1..N).each do |i|
+        config.vm.define "node-#{i}" do |node|
+            node.vm.box = IMAGE_NAME
+            node.vm.network "private_network", ip: "192.168.50.#{i + 10}"
+            node.vm.hostname = "node-#{i}"
+            node.vm.provision "ansible" do |ansible|
+                ansible.playbook = "kubernetes-setup/node-playbook.yml"
+                ansible.extra_vars = {
+                    node_ip: "192.168.50.#{i + 10}",
+                }
+            end
+        end
+    end
+end
+</code></pre></div></div>
+
+<p>Con este escenario desplegaremos 3 maquinas, una maquina master en la que se instalara ansible y ejecutara el playbook que pondremos, y 2 nodos en los que se ejecutara ansible también pero con un playbook distinto.</p>
+
+<p>Para que el despliegue mas adelante funcione, sera necesario tener instalado en la maquina anfitriona ansible, en mi caso la version 2.7.7, ya que es el ansible de la maquina anfitriona el que se instalara posteriormente en las maquinas de nuestro escenario.</p>
+
+<p>Los dos playbooks los crearemos en un directorio dentro de nuestro directorio de kubernetes con el siguiente contenido:</p>
+
+<p>master-playbook.yaml:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>- hosts: all
+  become: true
+  tasks:
+  - name: Instala los paquetes que permite usar APT con HTTPS
+    apt:
+      name: ""
+      state: present
+      update_cache: yes
+    vars:
+      packages:
+      - apt-transport-https
+      - ca-certificates
+      - curl
+      - gnupg-agent
+      - software-properties-common
+
+  - name: Añade la clave apt para Docker
+    apt_key:
+      url: https://download.docker.com/linux/ubuntu/gpg
+      state: present
+
+  - name: Añade el repositorio apt de la versión estable
+    apt_repository:
+      repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu xenial stable
+      state: present
+
+  - name: Instala Docker y sus dependencias
+    apt: 
+      name: ""
+      state: present
+      update_cache: yes
+    vars:
+      packages:
+      - docker-ce 
+      - docker-ce-cli 
+      - containerd.io
+    notify:
+      - docker status
+
+  - name: Añade al usuario vagrant al grupo de docker
+    user:
+      name: vagrant
+      group: docker
+
+  - name: Elimina el fichero swap de /etc/fstab
+    mount:
+      name: ""
+      fstype: swap
+      state: absent
+    with_items:
+      - swap
+      - none
+
+  - name: Deshabilita el swap
+    command: swapoff -a
+    when: ansible_swaptotal_mb &gt; 0
+
+  - name: Añade la clave apt para Kubernetes
+    apt_key:
+      url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+      state: present
+
+  - name: Añade el repositorio apt para Kubernetes
+    apt_repository:
+      repo: deb https://apt.kubernetes.io/ kubernetes-xenial main
+      state: present
+      filename: kubernetes.list
+
+  - name: Instala los binarios de Kubernetes
+    apt: 
+      name: ""
+      state: present
+      update_cache: yes
+    vars:
+      packages:
+        - kubelet 
+        - kubeadm 
+        - kubectl
+
+  - name: Configura el node ip
+    lineinfile:
+      path: /etc/default/kubelet
+      line: KUBELET_EXTRA_ARGS=--node-ip=
+      create: yes
+
+  - name: Reinicia kubelet
+    service:
+      name: kubelet
+      daemon_reload: yes
+      state: restarted
+
+  - name: Reinicia Docker
+    systemd:
+     name: docker
+     state: restarted
+
+  - name: Inicializa el cluster de Kubernetes usando kubeadm
+    command: kubeadm init --apiserver-advertise-address="192.168.50.10" --apiserver-cert-extra-sans="192.168.50.10" --pod-network-cidr=192.168.0.0/16 --node-name k8s-master
+
+  - name: Organiza el kubeconfig del usuario vagrant
+    command: ""
+    with_items:
+     - mkdir -p /home/vagrant/.kube
+     - cp -i /etc/kubernetes/admin.conf /home/vagrant/.kube/config
+     - chown vagrant:vagrant /home/vagrant/.kube/config
+
+  - name: Instala el pod de red Calico
+    become: false
+    command: kubectl create -f https://docs.projectcalico.org/manifests/tigera-operator.yaml
+
+  - name: Instala el pod de red Calico 2
+    become: false
+    command: kubectl create -f https://docs.projectcalico.org/manifests/custom-resources.yaml
+
+  - name: Genera el comando de join
+    command: kubeadm token create --print-join-command
+    register: join_command
+    
+
+  - name: Copia el comando de join a un fichero local
+    become: false
+    local_action: copy content="" dest="./join-command"
+
+  handlers:
+    - name: docker status
+      service: name=docker state=started
+</code></pre></div></div>
+
+<p>node-playbook.yaml:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>- hosts: all
+  become: true
+  tasks:
+  - name: Instala los paquetes que permite usar APT con HTTPS
+    apt:
+      name: ""
+      state: present
+      update_cache: yes
+    vars:
+      packages:
+      - apt-transport-https
+      - ca-certificates
+      - curl
+      - gnupg-agent
+      - software-properties-common
+
+  - name: Añade la clave apt para Docker
+    apt_key:
+      url: https://download.docker.com/linux/ubuntu/gpg
+      state: present
+
+  - name: Añade el repositorio apt de la versión estable
+    apt_repository:
+      repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu xenial stable
+      state: present
+
+  - name: Instala Docker y sus dependencias
+    apt: 
+      name: ""
+      state: present
+      update_cache: yes
+    vars:
+      packages:
+      - docker-ce 
+      - docker-ce-cli 
+      - containerd.io
+    notify:
+      - docker status
+
+  - name: Añade al usuario vagrant al grupo de Docker
+    user:
+      name: vagrant
+      group: docker
+
+  - name: Elimina el fichero de swap de /etc/fstab
+    mount:
+      name: ""
+      fstype: swap
+      state: absent
+    with_items:
+      - swap
+      - none
+
+  - name: Deshabilita el swap
+    command: swapoff -a
+    when: ansible_swaptotal_mb &gt; 0
+
+  - name: Añade la clave apt para Kubernetes
+    apt_key:
+      url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+      state: present
+
+  - name: Añade el repositorio apt para Kubernetes
+    apt_repository:
+      repo: deb https://apt.kubernetes.io/ kubernetes-xenial main
+      state: present
+      filename: kubernetes.list
+
+  - name: Instala los binarios para Kubernetes
+    apt: 
+      name: ""
+      state: present
+      update_cache: yes
+    vars:
+      packages:
+        - kubelet 
+        - kubeadm 
+        - kubectl
+
+  - name: Configura node ip
+    lineinfile:
+      path: /etc/default/kubelet
+      line: KUBELET_EXTRA_ARGS=--node-ip=
+      create: yes
+
+  - name: Reinicia kubelet
+    service:
+      name: kubelet
+      daemon_reload: yes
+      state: restarted
+
+  - name: Reinicia Docker
+    systemd:
+     name: docker
+     state: restarted
+
+  - name: Copia el comando de join a la localización del server
+    copy: src=join-command dest=/tmp/join-command.sh mode=0777
+
+  - name: Une el nodo al clúster
+    command: sh /tmp/join-command.sh
+
+  handlers:
+    - name: docker status
+      service: name=docker state=started
+</code></pre></div></div>
+
+<p>Levantamos el escenario:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sergioib@debian-sergio:~/Escritorio/Informatica/Vagrant/k8$ vagrant up
+Bringing machine 'k8s-master' up with 'virtualbox' provider...
+Bringing machine 'node-1' up with 'virtualbox' provider...
+Bringing machine 'node-2' up with 'virtualbox' provider...
+==&gt; k8s-master: Importing base box 'bento/ubuntu-16.04'...
+==&gt; k8s-master: Matching MAC address for NAT networking...
+==&gt; k8s-master: Checking if box 'bento/ubuntu-16.04' version '202102.02.0' is up to date...
+==&gt; k8s-master: Setting the name of the VM: k8_k8s-master_1615035261709_29283
+==&gt; k8s-master: Clearing any previously set network interfaces...
+==&gt; k8s-master: Preparing network interfaces based on configuration...
+    k8s-master: Adapter 1: nat
+    k8s-master: Adapter 2: hostonly
+==&gt; k8s-master: Forwarding ports...
+    k8s-master: 22 (guest) =&gt; 2222 (host) (adapter 1)
+==&gt; k8s-master: Running 'pre-boot' VM customizations...
+==&gt; k8s-master: Booting VM...
+==&gt; k8s-master: Waiting for machine to boot. This may take a few minutes...
+    k8s-master: SSH address: 127.0.0.1:2222
+    k8s-master: SSH username: vagrant
+    k8s-master: SSH auth method: private key
+==&gt; k8s-master: Machine booted and ready!
+==&gt; k8s-master: Checking for guest additions in VM...
+    k8s-master: The guest additions on this VM do not match the installed version of
+    k8s-master: VirtualBox! In most cases this is fine, but in rare cases it can
+    k8s-master: prevent things such as shared folders from working properly. If you see
+    k8s-master: shared folder errors, please make sure the guest additions within the
+    k8s-master: virtual machine match the version of VirtualBox you have installed on
+    k8s-master: your host and reload your VM.
+    k8s-master: 
+    k8s-master: Guest Additions Version: 6.1.18
+    k8s-master: VirtualBox Version: 6.0
+==&gt; k8s-master: Setting hostname...
+==&gt; k8s-master: Configuring and enabling network interfaces...
+==&gt; k8s-master: Mounting shared folders...
+    k8s-master: /vagrant =&gt; /home/sergioib/Escritorio/Informatica/Vagrant/k8
+==&gt; k8s-master: Running provisioner: ansible...
+Vagrant has automatically selected the compatibility mode '2.0'
+according to the Ansible version installed (2.7.7).
+
+Alternatively, the compatibility mode can be specified in your Vagrantfile:
+https://www.vagrantup.com/docs/provisioning/ansible_common.html#compatibility_mode
+
+    k8s-master: Running ansible-playbook...
+
+PLAY [all] *********************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [k8s-master]
+
+TASK [Instala los paquetes que permite usar APT con HTTPS] *********************
+changed: [k8s-master]
+
+TASK [Añade la clave apt para Docker] ******************************************
+changed: [k8s-master]
+
+TASK [Añade el repositorio apt de la versión estable] **************************
+changed: [k8s-master]
+
+TASK [Instala Docker y sus dependencias] ***************************************
+changed: [k8s-master]
+
+TASK [Añade al usuario vagrant al grupo de docker] *****************************
+changed: [k8s-master]
+
+TASK [Elimina el fichero swap de /etc/fstab] ***********************************
+ok: [k8s-master] =&gt; (item=swap)
+changed: [k8s-master] =&gt; (item=none)
+
+TASK [Deshabilita el swap] *****************************************************
+changed: [k8s-master]
+
+TASK [Añade la clave apt para Kubernetes] **************************************
+changed: [k8s-master]
+
+TASK [Añade el repositorio apt para Kubernetes] ********************************
+changed: [k8s-master]
+
+TASK [Instala los binarios de Kubernetes] **************************************
+changed: [k8s-master]
+
+TASK [Configura el node ip] ****************************************************
+changed: [k8s-master]
+
+TASK [Reinicia kubelet] ********************************************************
+changed: [k8s-master]
+
+TASK [Reinicia Docker] *********************************************************
+changed: [k8s-master]
+
+TASK [Inicializa el cluster de Kubernetes usando kubeadm] **********************
+changed: [k8s-master]
+
+TASK [Organiza el kubeconfig del usuario vagrant] ******************************
+changed: [k8s-master] =&gt; (item=mkdir -p /home/vagrant/.kube)
+changed: [k8s-master] =&gt; (item=cp -i /etc/kubernetes/admin.conf /home/vagrant/.kube/config)
+changed: [k8s-master] =&gt; (item=chown vagrant:vagrant /home/vagrant/.kube/config)
+ [WARNING]: Consider using the file module with state=directory rather than
+running mkdir.  If you need to use command because file is insufficient you can
+add warn=False to this command task or set command_warnings=False in
+ansible.cfg to get rid of this message.
+
+ [WARNING]: Consider using the file module with owner rather than running
+chown.  If you need to use command because file is insufficient you can add
+warn=False to this command task or set command_warnings=False in ansible.cfg to
+get rid of this message.
+
+
+TASK [Instala el pod de red Calico] ********************************************
+changed: [k8s-master]
+
+TASK [Instala el pod de red Calico 2] ******************************************
+changed: [k8s-master]
+
+TASK [Genera el comando de join] ***********************************************
+changed: [k8s-master]
+
+TASK [Copia el comando de join a un fichero local] *****************************
+changed: [k8s-master -&gt; localhost]
+
+RUNNING HANDLER [docker status] ************************************************
+ok: [k8s-master]
+
+PLAY RECAP *********************************************************************
+k8s-master                 : ok=21   changed=19   unreachable=0    failed=0   
+
+==&gt; node-1: Importing base box 'bento/ubuntu-16.04'...
+==&gt; node-1: Matching MAC address for NAT networking...
+==&gt; node-1: Checking if box 'bento/ubuntu-16.04' version '202102.02.0' is up to date...
+==&gt; node-1: Setting the name of the VM: k8_node-1_1615035591709_14063
+==&gt; node-1: Fixed port collision for 22 =&gt; 2222. Now on port 2200.
+==&gt; node-1: Clearing any previously set network interfaces...
+==&gt; node-1: Preparing network interfaces based on configuration...
+    node-1: Adapter 1: nat
+    node-1: Adapter 2: hostonly
+==&gt; node-1: Forwarding ports...
+    node-1: 22 (guest) =&gt; 2200 (host) (adapter 1)
+==&gt; node-1: Running 'pre-boot' VM customizations...
+==&gt; node-1: Booting VM...
+==&gt; node-1: Waiting for machine to boot. This may take a few minutes...
+    node-1: SSH address: 127.0.0.1:2200
+    node-1: SSH username: vagrant
+    node-1: SSH auth method: private key
+==&gt; node-1: Machine booted and ready!
+==&gt; node-1: Checking for guest additions in VM...
+    node-1: The guest additions on this VM do not match the installed version of
+    node-1: VirtualBox! In most cases this is fine, but in rare cases it can
+    node-1: prevent things such as shared folders from working properly. If you see
+    node-1: shared folder errors, please make sure the guest additions within the
+    node-1: virtual machine match the version of VirtualBox you have installed on
+    node-1: your host and reload your VM.
+    node-1: 
+    node-1: Guest Additions Version: 6.1.18
+    node-1: VirtualBox Version: 6.0
+==&gt; node-1: Setting hostname...
+==&gt; node-1: Configuring and enabling network interfaces...
+==&gt; node-1: Mounting shared folders...
+    node-1: /vagrant =&gt; /home/sergioib/Escritorio/Informatica/Vagrant/k8
+==&gt; node-1: Running provisioner: ansible...
+Vagrant has automatically selected the compatibility mode '2.0'
+according to the Ansible version installed (2.7.7).
+
+Alternatively, the compatibility mode can be specified in your Vagrantfile:
+https://www.vagrantup.com/docs/provisioning/ansible_common.html#compatibility_mode
+
+    node-1: Running ansible-playbook...
+
+PLAY [all] *********************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [node-1]
+
+TASK [Instala los paquetes que permite usar APT con HTTPS] *********************
+changed: [node-1]
+
+TASK [Añade la clave apt para Docker] ******************************************
+changed: [node-1]
+
+TASK [Añade el repositorio apt de la versión estable] **************************
+changed: [node-1]
+
+TASK [Instala Docker y sus dependencias] ***************************************
+changed: [node-1]
+
+TASK [Añade al usuario vagrant al grupo de Docker] *****************************
+changed: [node-1]
+
+TASK [Elimina el fichero de swap de /etc/fstab] ********************************
+ok: [node-1] =&gt; (item=swap)
+changed: [node-1] =&gt; (item=none)
+
+TASK [Deshabilita el swap] *****************************************************
+changed: [node-1]
+
+TASK [Añade la clave apt para Kubernetes] **************************************
+changed: [node-1]
+
+TASK [Añade el repositorio apt para Kubernetes] ********************************
+changed: [node-1]
+
+TASK [Instala los binarios para Kubernetes] ************************************
+changed: [node-1]
+
+TASK [Configura node ip] *******************************************************
+changed: [node-1]
+
+TASK [Reinicia kubelet] ********************************************************
+changed: [node-1]
+
+TASK [Reinicia Docker] *********************************************************
+changed: [node-1]
+
+TASK [Copia el comando de join a la localización del server] *******************
+changed: [node-1]
+
+TASK [Une el nodo al clúster] **************************************************
+changed: [node-1]
+
+RUNNING HANDLER [docker status] ************************************************
+ok: [node-1]
+
+PLAY RECAP *********************************************************************
+node-1                     : ok=17   changed=15   unreachable=0    failed=0   
+
+==&gt; node-2: Importing base box 'bento/ubuntu-16.04'...
+==&gt; node-2: Matching MAC address for NAT networking...
+==&gt; node-2: Checking if box 'bento/ubuntu-16.04' version '202102.02.0' is up to date...
+==&gt; node-2: Setting the name of the VM: k8_node-2_1615035854760_61331
+==&gt; node-2: Fixed port collision for 22 =&gt; 2222. Now on port 2201.
+==&gt; node-2: Clearing any previously set network interfaces...
+==&gt; node-2: Preparing network interfaces based on configuration...
+    node-2: Adapter 1: nat
+    node-2: Adapter 2: hostonly
+==&gt; node-2: Forwarding ports...
+    node-2: 22 (guest) =&gt; 2201 (host) (adapter 1)
+==&gt; node-2: Running 'pre-boot' VM customizations...
+==&gt; node-2: Booting VM...
+==&gt; node-2: Waiting for machine to boot. This may take a few minutes...
+    node-2: SSH address: 127.0.0.1:2201
+    node-2: SSH username: vagrant
+    node-2: SSH auth method: private key
+==&gt; node-2: Machine booted and ready!
+==&gt; node-2: Checking for guest additions in VM...
+    node-2: The guest additions on this VM do not match the installed version of
+    node-2: VirtualBox! In most cases this is fine, but in rare cases it can
+    node-2: prevent things such as shared folders from working properly. If you see
+    node-2: shared folder errors, please make sure the guest additions within the
+    node-2: virtual machine match the version of VirtualBox you have installed on
+    node-2: your host and reload your VM.
+    node-2: 
+    node-2: Guest Additions Version: 6.1.18
+    node-2: VirtualBox Version: 6.0
+==&gt; node-2: Setting hostname...
+==&gt; node-2: Configuring and enabling network interfaces...
+==&gt; node-2: Mounting shared folders...
+    node-2: /vagrant =&gt; /home/sergioib/Escritorio/Informatica/Vagrant/k8
+==&gt; node-2: Running provisioner: ansible...
+Vagrant has automatically selected the compatibility mode '2.0'
+according to the Ansible version installed (2.7.7).
+
+Alternatively, the compatibility mode can be specified in your Vagrantfile:
+https://www.vagrantup.com/docs/provisioning/ansible_common.html#compatibility_mode
+
+    node-2: Running ansible-playbook...
+
+PLAY [all] *********************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [node-2]
+
+TASK [Instala los paquetes que permite usar APT con HTTPS] *********************
+changed: [node-2]
+
+TASK [Añade la clave apt para Docker] ******************************************
+changed: [node-2]
+
+TASK [Añade el repositorio apt de la versión estable] **************************
+changed: [node-2]
+
+TASK [Instala Docker y sus dependencias] ***************************************
+changed: [node-2]
+
+TASK [Añade al usuario vagrant al grupo de Docker] *****************************
+changed: [node-2]
+
+TASK [Elimina el fichero de swap de /etc/fstab] ********************************
+ok: [node-2] =&gt; (item=swap)
+changed: [node-2] =&gt; (item=none)
+
+TASK [Deshabilita el swap] *****************************************************
+changed: [node-2]
+
+TASK [Añade la clave apt para Kubernetes] **************************************
+changed: [node-2]
+
+TASK [Añade el repositorio apt para Kubernetes] ********************************
+changed: [node-2]
+
+TASK [Instala los binarios para Kubernetes] ************************************
+changed: [node-2]
+
+TASK [Configura node ip] *******************************************************
+changed: [node-2]
+
+TASK [Reinicia kubelet] ********************************************************
+changed: [node-2]
+
+TASK [Reinicia Docker] *********************************************************
+changed: [node-2]
+
+TASK [Copia el comando de join a la localización del server] *******************
+changed: [node-2]
+
+TASK [Une el nodo al clúster] **************************************************
+changed: [node-2]
+
+RUNNING HANDLER [docker status] ************************************************
+ok: [node-2]
+
+PLAY RECAP *********************************************************************
+node-2                     : ok=17   changed=15   unreachable=0    failed=0   
+</code></pre></div></div>
+
+<p>Accedemos a nuestra maquina master para comprobar que a este se le han unido los dos nodos si el despliegue a ido correctamente.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vagrant@k8s-master:~$ kubectl get nodes
+NAME         STATUS     ROLES                  AGE   VERSION
+k8s-master   Ready      control-plane,master   19m   v1.20.4
+node-1       NotReady   &lt;none&gt;                 15m   v1.20.4
+node-2       NotReady   &lt;none&gt;                 10m   v1.20.4
+</code></pre></div></div>
+
+<p>Para poder acceder desde nuestra maquina en lugar de desde nuestro master, copiamos el contenido de .kube/config y lo copiamos en el .kube/config en nuestra maquina anfitriona y comprobamos que podemos ejecutar los comandos en nuestra maquina.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sergioib@debian-sergio:~$ kubectl get nodes
+NAME         STATUS   ROLES                  AGE   VERSION
+k8s-master   Ready    control-plane,master   26m   v1.20.4
+node-1       Ready    &lt;none&gt;                 22m   v1.20.4
+node-2       Ready    &lt;none&gt;                 17m   v1.20.4
+</code></pre></div></div>
+
+<p>Copiamos los ficheros donde tenemos los ficheros para el despliegue de letschat en nuestro directorio kubernetes-setup y los añadimos al escenario de la siguiente forma:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sergioib@debian-sergio:~/Escritorio/Informatica/Vagrant/k8/kubernetes-setup$ kubectl create -f mongo-deployment.yaml
+deployment.apps/mongo created
+sergioib@debian-sergio:~/Escritorio/Informatica/Vagrant/k8/kubernetes-setup$ kubectl create -f mongo-srv.yaml
+service/mongo created
+sergioib@debian-sergio:~/Escritorio/Informatica/Vagrant/k8/kubernetes-setup$ kubectl create -f letschat-deployment.yaml
+deployment.apps/letschat created
+sergioib@debian-sergio:~/Escritorio/Informatica/Vagrant/k8/kubernetes-setup$ kubectl create -f letschat-srv.yaml
+service/letschat created
+</code></pre></div></div>
+
+<p>Comprobamos que funcione, para ello ejecutamos o bien un kubectl get service o bien un kubectl get all para saber en que puerto se esta ejecutando nuestro letschat y una vez sepamos el puerto comprobamos que se esta ejecutando en el navegador.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sergioib@debian-sergio:~$ kubectl get service
+NAME         TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
+kubernetes   ClusterIP   10.96.0.1       &lt;none&gt;        443/TCP          26h
+letschat     NodePort    10.99.77.113    &lt;none&gt;        8080:30961/TCP   25h
+mongo        ClusterIP   10.103.65.204   &lt;none&gt;        27017/TCP        26h
+
+sergioib@debian-sergio:~$ kubectl get all
+NAME                            READY   STATUS   RESTARTS   AGE
+pod/letschat-7c66bd64f5-w2frt   0/1     Error    19         26h
+pod/mongo-5c694c878b-flgcg      0/1     Error    10         26h
+
+NAME                 TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
+service/kubernetes   ClusterIP   10.96.0.1       &lt;none&gt;        443/TCP          26h
+service/letschat     NodePort    10.99.77.113    &lt;none&gt;        8080:30961/TCP   25h
+service/mongo        ClusterIP   10.103.65.204   &lt;none&gt;        27017/TCP        26h
+
+NAME                       READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/letschat   1/1     1            1           26h
+deployment.apps/mongo      1/1     1            1           26h
+
+NAME                                  DESIRED   CURRENT   READY   AGE
+replicaset.apps/letschat-7c66bd64f5   1         1         1       26h
+replicaset.apps/mongo-5c694c878b      1         1         1       26h
+</code></pre></div></div>
+
+<p><img src="/images/kubernetes-lestchat/letschat.png" alt="letschat" /></p>
+
+<p>Una vez que se haya comprobado que funcione, probamos a escalar varias replicas de la siguiente forma:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sergioib@debian-sergio:~$ kubectl scale --replicas=3 deploy/letschat
+deployment.apps/letschat scaled
+</code></pre></div></div>
+
+<p>Comprobamos que se hayan creado dos pods nuevos:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sergioib@debian-sergio:~$ kubectl get pod -o wide
+NAME                        READY   STATUS    RESTARTS   AGE   IP               NODE     NOMINATED NODE   READINESS GATES
+letschat-7c66bd64f5-75kjv   1/1     Running   2          46m   192.168.84.147   node-1   &lt;none&gt;           &lt;none&gt;
+letschat-7c66bd64f5-zbbn7   1/1     Running   7          46m   192.168.247.23   node-2   &lt;none&gt;           &lt;none&gt;
+letschat-7c66bd64f5-zc5k7   1/1     Running   1          20m   192.168.247.22   node-2   &lt;none&gt;           &lt;none&gt;
+mongo-5c694c878b-flgcg      1/1     Running   14         27h   192.168.84.148   node-1   &lt;none&gt;           &lt;none&gt;
+</code></pre></div></div>
+
+<p>Como se puede ver se ha creado un nuevo pod. al indicar que haya 3 replicas como en este ejemplo, en el caso de eliminar una de las replicas se creara otro de forma automática. En el caso de tener varias replicas activadas, al hacer una desescalada el nodo que permanecerá sera el de mayor antigüedad.</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/categories/#cloud" class="page__taxonomy-item p-category" rel="tag">Cloud</a>
+    
+    </span>
+  </p>
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2021-03-13T12:13:11+01:00">March 13, 2021</time></p>
+
+      </footer>
+
+      
+
+      
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+
+      
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">&copy; 2025 <a href="http://localhost:4000">Blog de Sergio Ibáñez</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

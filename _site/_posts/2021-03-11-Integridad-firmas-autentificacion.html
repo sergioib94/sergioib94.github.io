@@ -1,0 +1,746 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.27.3 by Michael Rose
+  Copyright 2013-2025 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="es-ES" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Integridad, firmas y autentificacion - Blog de Sergio Ibáñez</title>
+<meta name="description" content="En esta apartado mediante un conjunto de tareas trabajaremos temas de seguridad como las firmas electronicas usando gpg, correos seguros usando thunderbird/evolution, integridad de archivos y autentificacion con ssh.">
+
+
+  <meta name="author" content="Sergio Ibáñez Núñez">
+  
+  <meta property="article:author" content="Sergio Ibáñez Núñez">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="es_ES">
+<meta property="og:site_name" content="Blog de Sergio Ibáñez">
+<meta property="og:title" content="Integridad, firmas y autentificacion">
+<meta property="og:url" content="http://localhost:4000/_posts/2021-03-11-Integridad-firmas-autentificacion.html">
+
+
+  <meta property="og:description" content="En esta apartado mediante un conjunto de tareas trabajaremos temas de seguridad como las firmas electronicas usando gpg, correos seguros usando thunderbird/evolution, integridad de archivos y autentificacion con ssh.">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2021-03-11T16:00:38+01:00">
+
+
+
+
+
+
+<link rel="canonical" href="http://localhost:4000/_posts/2021-03-11-Integridad-firmas-autentificacion.html">
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Blog de Sergio Ibáñez Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single" dir="ltr">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          Blog de Sergio Ibáñez
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a
+                href="/"
+                
+                
+              >Inicio</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/posts/"
+                
+                
+              >Posts</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/categories/"
+                
+                
+              >Categorías</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/tags/"
+                
+                
+              >Etiquetas</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/search/"
+                
+                
+              >Buscar</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/about/"
+                
+                
+              >Sobre mí</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="http://localhost:4000/">
+        <img src="/assets/images/avatar.png" alt="Sergio Ibáñez Núñez" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="http://localhost:4000/" itemprop="url">Sergio Ibáñez Núñez</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>Técnico IT y entusiasta de la automatización</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Integridad, firmas y autentificacion">
+    <meta itemprop="description" content="En esta apartado mediante un conjunto de tareas trabajaremos temas de seguridad como las firmas electronicas usando gpg, correos seguros usando thunderbird/evolution, integridad de archivos y autentificacion con ssh.">
+    <meta itemprop="datePublished" content="2021-03-11T16:00:38+01:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">
+            <a href="http://localhost:4000/_posts/2021-03-11-Integridad-firmas-autentificacion.html" itemprop="url">Integridad, firmas y autentificacion
+</a>
+          </h1>
+          
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <h2 id="introduccion"><strong>Introduccion</strong></h2>
+
+<p>En esta apartado mediante un conjunto de tareas trabajaremos temas de seguridad como las firmas electronicas usando gpg, correos seguros usando thunderbird/evolution, integridad de archivos y autentificacion con ssh.</p>
+
+<h3 id="firmas-electrónicas"><strong>Firmas electrónicas</strong></h3>
+
+<ul>
+  <li>Para trabajar con una firma electronica, empezaremos mandando un documento y la firma electrónica del mismo a un compañero. Una vez recibida, verificaremos la firma que se ha recibido.</li>
+</ul>
+
+<p>Creamos el fichero firmado:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sergioib@debian-sergio:~/Descargas$ gpg --output doc.sig --sign Triggers_I.ppt
+</code></pre></div></div>
+
+<p>Verificacion de la firma de documento con compañero Lora:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sergioib@debian-sergio:~/Descargas$ gpg --output lora --decrypt documentolora.pdf.sig
+gpg: Firmado el mié 14 oct 2020 13:37:44 CEST
+gpg:                usando RSA clave 9233303D1F5495739A6D2CB4636AE9EBCB7E3294
+gpg: Firma correcta de "Manuel Lora Román &lt;manuelloraroman@gmail.com&gt;" [desconocido]
+gpg: ATENCIÓN: ¡Esta clave no está certificada por una firma de confianza!
+gpg:          No hay indicios de que la firma pertenezca al propietario.
+Huellas dactilares de la clave primaria: 9233 303D 1F54 9573 9A6D  2CB4 636A E9EB CB7E 3294
+</code></pre></div></div>
+
+<ul>
+  <li>¿Qué significa el mensaje que aparece en el momento de verificar la firma?</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gpg: Firma correcta de "Pepe D &lt;josedom24@gmail.com&gt;" [desconocido]
+ gpg: ATENCIÓN: ¡Esta clave no está certificada por una firma de confianza!
+ gpg:          No hay indicios de que la firma pertenezca al propietario.
+ Huellas dactilares de la clave primaria: E8DD 5DA9 3B88 F08A DA1D  26BF 5141 3DDB 0C99 55FC
+</code></pre></div></div>
+
+<p>Significa que aunque la firma este bien al no estar certificada por una firma de confianza, es posible que la persona que nos mande el mensaje no sea la misma con la que queremos contactar, que no sea de confianza.</p>
+
+<ul>
+  <li>
+    <p>Vamos a crear un anillo de confianza entre los miembros de nuestra clase, para ello nuestra clave pública debe estar en un servidor de claves.</p>
+  </li>
+  <li>
+    <p>Te debes bajar al menos tres claves públicas de compañeros y firmamos estas claves.</p>
+  </li>
+</ul>
+
+<p>Proceso de importación de claves:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Clave de Juanan:
+
+	gpg --keyserver keyserver.ubuntu.com --recv-key 9987B52D (fingerprint)
+
+Clave Celia:
+
+	gpg --keyserver pgp.rediris.es --recv-key 08950F41
+	
+Clave Alejandro:
+
+sergioib@debian-sergio:~/Descargas$ gpg --import alejandrogut.asc
+gpg: key C3B291882C4EE5DF: 1 firma no comprobada por falta de una clave
+gpg: clave C3B291882C4EE5DF: clave pública "Alejandro Gutierrez Valencia &lt;tojandro@gmail.com&gt;" importada
+gpg: Cantidad total procesada: 1
+gpg:               importadas: 1
+gpg: marginals needed: 3  completes needed: 1  trust model: pgp
+gpg: nivel: 0  validez:   3  firmada:   3  confianza: 0-, 0q, 0n, 0m, 0f, 3u
+gpg: nivel: 1  validez:   3  firmada:   1  confianza: 3-, 0q, 0n, 0m, 0f, 0u
+gpg: siguiente comprobación de base de datos de confianza el: 2020-11-07
+</code></pre></div></div>
+
+<p>Proceso de firma:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Juanan:
+
+gpg --sign-key 9987B52D
+
+Celia:
+
+gpg --sign-key 08950F41
+
+Alejandro:
+
+sergioib@debian-sergio:~/Descargas$ gpg --sign-key tojandro@gmail.com
+
+pub  rsa3072/C3B291882C4EE5DF
+     creado: 2020-10-08  caduca: 2020-11-07  uso: SC  
+     confianza: desconocido   validez: no definido
+sub  rsa3072/3C5DBE21F6961E37
+     creado: 2020-10-08  caduca: 2020-11-07  uso: E   
+[no definida] (1). Alejandro Gutierrez Valencia &lt;tojandro@gmail.com&gt;
+
+
+pub  rsa3072/C3B291882C4EE5DF
+     creado: 2020-10-08  caduca: 2020-11-07  uso: SC  
+     confianza: desconocido   validez: no definido
+Huella clave primaria: 443D 661D 9AAF 3ABA EDCA  93E1 C3B2 9188 2C4E E5DF
+
+     Alejandro Gutierrez Valencia &lt;tojandro@gmail.com&gt;
+
+Esta clave expirará el 2020-11-07.
+¿Está realmente seguro de querer firmar esta clave
+con su clave: "sergio ibañez &lt;sergio_hd_sony@hotmail.com&gt;" (CFCF1D130D5A52C5)?
+
+¿Firmar de verdad? (s/N) s
+</code></pre></div></div>
+
+<p>En el caso de Alejandro, como a sido la ultima clave que he firmado, he puesto la salida completa del comando, con juanan y celia, solo he puesto el comando.</p>
+
+<ul>
+  <li>Una vez que firmada la clave se la devolvemos a su dueño, para que otra persona se la firme.</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Juanan:
+
+gpg --export -a Juan Antonio Reifs &gt; juanan.asc
+
+Celia:
+
+gpg --export -a celia garcia &gt; celia.asc
+
+Alejandro:
+
+gpg --export -a Alejandro Gutierrez Valencia &gt; alefirmado.asc
+
+</code></pre></div></div>
+
+<ul>
+  <li>Muestra las firmas que tiene tu clave pública.</li>
+</ul>
+
+<p>Volvemos a bajarnos nuestra clave una vez que varias personas la hayan firmado y mostramos el resultado.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sergioib@debian-sergio:~$ gpg --list-sign
+/home/sergioib/.gnupg/pubring.kbx
+---------------------------------
+pub   rsa3072 2020-10-06 [SC] [caduca: 2022-10-06]
+      547D6FBDF49CD2340F1D5DB6CFCF1D130D5A52C5
+uid        [  absoluta ] sergio ibañez &lt;sergio_hd_sony@hotmail.com&gt;
+sig 3        CFCF1D130D5A52C5 2020-10-06  sergio ibañez &lt;sergio_hd_sony@hotmail.com&gt;
+sig          4F54B5799987B52D 2020-10-28  Juan Antonio Reifs &lt;initategnat9@gmail.com&gt;
+sig          7A01A1F808950F41 2020-11-04  celia garcia &lt;cg.marquez95@gmail.com&gt;
+sig          C3B291882C4EE5DF 2020-11-06  Alejandro Gutierrez Valencia &lt;tojandro@gmail.com&gt;
+sub   rsa3072 2020-10-06 [E] [caduca: 2022-10-06]
+sig          CFCF1D130D5A52C5 2020-10-06  sergio ibañez &lt;sergio_hd_sony@hotmail.com&gt;
+</code></pre></div></div>
+
+<ul>
+  <li>Comprobamos que ya puedemos verificar sin “problemas” una firma recibida por una persona en la que confíamos.</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sergioib@debian-sergio:~/Descargas$ gpg --output juanan --decrypt saludo.sig
+gpg: Firmado el mar 10 nov 2020 08:53:41 CET
+gpg:                usando RSA clave AD19812061DA946F8DA70E0C4F54B5799987B52D
+gpg: Firma correcta de "Juan Antonio Reifs &lt;initategnat9@gmail.com&gt;" [total]
+</code></pre></div></div>
+
+<ul>
+  <li>Compruebamos que puedes verificar con confianza una firma de una persona en las que no confías, pero sin embargo si confía otra persona en la que tu tienes confianza total.</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sergioib@debian-sergio:~/Descargas$ gpg --output verificacion_lora --decrypt documentolora.pdf.sig
+El fichero 'verificacion_lora' ya existe. ¿Sobreescribir? (s/N) s
+gpg: Firmado el mié 14 oct 2020 13:37:44 CEST
+gpg:                usando RSA clave 9233303D1F5495739A6D2CB4636AE9EBCB7E3294
+gpg: comprobando base de datos de confianza
+gpg: marginals needed: 3  completes needed: 1  trust model: pgp
+gpg: nivel: 0  validez:   4  firmada:   2  confianza: 0-, 0q, 0n, 0m, 0f, 4u
+gpg: nivel: 1  validez:   2  firmada:   0  confianza: 2-, 0q, 0n, 0m, 0f, 0u
+gpg: siguiente comprobación de base de datos de confianza el: 2020-11-10
+gpg: Firma correcta de "Manuel Lora Román &lt;manuelloraroman@gmail.com&gt;" [desconocido]
+gpg: ATENCIÓN: ¡Esta clave no está certificada por una firma de confianza!
+gpg:          No hay indicios de que la firma pertenezca al propietario.
+Huellas dactilares de la clave primaria: 9233 303D 1F54 9573 9A6D  2CB4 636A E9EB CB7E 3294
+</code></pre></div></div>
+
+<h3 id="correo-thunderbirdevolution"><strong>Correo thunderbird/evolution</strong></h3>
+
+<p>Ahora vamos a configurar nuestro cliente de correo electrónico para poder mandar correos cifrados, para ello:</p>
+
+<ul>
+  <li>
+    <p>Configuramos el cliente de correo evolution con nuestra cuenta de correo habitual.</p>
+  </li>
+  <li>
+    <p>Añade a la cuenta las opciones de seguridad para poder enviar correos firmados con tu clave privada o cifrar los mensajes para otros destinatarios.</p>
+  </li>
+</ul>
+
+<p><img src="/images/integracion-firmas-autentificacion/seguridad_correo.png" alt="" /></p>
+
+<ul>
+  <li>Envíamos y recibimos varios mensajes de los compañeros y compruebamos el funcionamiento adecuado de GPG.</li>
+</ul>
+
+<p>Prueba de correo de Celia a mi:</p>
+
+<p><img src="/images/integracion-firmas-autentificacion/prueb_correo.png" alt="prueba de correo 1" /></p>
+
+<p>Prueba de correo de mi a Celia:</p>
+
+<p><img src="/images/integracion-firmas-autentificacion/pruebcorreo1.png" alt="prueba de correo 2" /></p>
+
+<h3 id="integridad-de-ficheros"><strong>Integridad de ficheros</strong></h3>
+
+<p>Vamos a descargarnos la ISO de debian, y posteriormente vamos a comprobar su integridad. Puedes encontrar la ISO en la dirección: https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/.</p>
+
+<ul>
+  <li>
+    <p>Para validar el contenido de la imagen CD, solo asegúrese de usar la herramienta apropiada para sumas de verificación. Para cada versión publicada existen archivos de suma de comprobación con algoritmos fuertes (SHA256 y SHA512); debería usar las herramientas sha256sum o sha512sum para trabajar con ellos.</p>
+  </li>
+  <li>
+    <p>Verificamos que el contenido del hash que hemos utilizado no ha sido manipulado, usando la firma digital que encontrarás en el repositorio. Puedes encontrar una guía para realizarlo en este artículo: How to verify an authenticity of downloaded Debian ISO images.</p>
+  </li>
+</ul>
+
+<p>Para ello nos descargamos los ficheros necesarios en un mismo directorio. Para verificar la firma haremos lo siguiente:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>wget https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/SHA256SUMS.sign
+wget https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/SHA256SUMS
+
+wget https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/SHA512SUMS.sign
+wget https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/SHA512SUMS
+</code></pre></div></div>
+
+<p>Comprobamos quien a firmado los ficheros de firma de comprobación para de esta forma saber así su ID de clave publica:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sergioib@debian-sergio:~/Descargas$ gpg --verify SHA512SUMS.sign 
+gpg: asumiendo que los datos firmados están en 'SHA512SUMS'
+gpg: Firmado el dom 27 sep 2020 02:24:23 CEST
+gpg:                usando RSA clave DF9B9C49EAA9298432589D76DA87E80D6294BE9B
+gpg: Imposible comprobar la firma: No public key
+</code></pre></div></div>
+
+<p>Una vez que conocemos la ID de la persona que ha firmado estos ficheros, nos descargamos su clave del servidor de claves de debian, ya que tendremos que tener la clave en nuestro sistema para mas adelante comprobar la firma.</p>
+
+<p>En este caso probamos a verificar como ejemplo el SHA512.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sergioib@debian-sergio:~/Descargas$ gpg --keyserver keyring.debian.org --recv DF9B9C49EAA9298432589D76DA87E80D6294BE9B
+gpg: clave DA87E80D6294BE9B: clave pública "Debian CD signing key &lt;debian-cd@lists.debian.org&gt;" importada
+gpg: Cantidad total procesada: 1
+gpg:               importadas: 1
+</code></pre></div></div>
+
+<p>Cuando ya tengamos la clave en nuestro equipo, ya podremos verificar la firma:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sergioib@debian-sergio:~/Descargas$ gpg --verify SHA512SUMS.sign SHA512SUMS
+gpg: Firmado el dom 27 sep 2020 02:24:23 CEST
+gpg:                usando RSA clave DF9B9C49EAA9298432589D76DA87E80D6294BE9B
+gpg: comprobando base de datos de confianza
+gpg: marginals needed: 3  completes needed: 1  trust model: pgp
+gpg: nivel: 0  validez:   3  firmada:   3  confianza: 0-, 0q, 0n, 0m, 0f, 3u
+gpg: nivel: 1  validez:   3  firmada:   0  confianza: 3-, 0q, 0n, 0m, 0f, 0u
+gpg: siguiente comprobación de base de datos de confianza el: 2020-11-10
+gpg: Firma correcta de "Debian CD signing key &lt;debian-cd@lists.debian.org&gt;" [desconocido]
+gpg: ATENCIÓN: ¡Esta clave no está certificada por una firma de confianza!
+gpg:          No hay indicios de que la firma pertenezca al propietario.
+Huellas dactilares de la clave primaria: DF9B 9C49 EAA9 2984 3258  9D76 DA87 E80D 6294 BE9B
+</code></pre></div></div>
+
+<h3 id="identidad-y-autenticidad-apt-source"><strong>Identidad y autenticidad (apt source)</strong></h3>
+
+<p>Cuando nos instalamos un paquete en nuestra distribución linux tenemos que asegurarnos que ese paquete es legítimo. Para conseguir este objetivo se utiliza criptografía asimétrica, y en el caso de Debian a este sistema se llama apt secure. Esto lo debemos tener en cuenta al utilizar los repositorios oficiales. Cuando añadamos nuevos repositorios tendremos que añadir las firmas necesarias para confiar en que los paquetes son legítimos y no han sido modificados.</p>
+
+<ul>
+  <li>
+    <p>Busca información sobre apt secure y responde las siguientes preguntas:</p>
+  </li>
+  <li>
+    <p>¿Qué software utiliza apt secure para realizar la criptografía asimétrica?</p>
+  </li>
+</ul>
+
+<p>Utiliza gpg</p>
+
+<ul>
+  <li>¿Para que sirve el comando apt-key? ¿Qué muestra el comando apt-key list? Sirve para ver una lista de claves usadas por el comando apt. Apt-key list sirve para listar las claves dichas anteriormente.</li>
+</ul>
+
+<p>Apt-key es una herramienta que sirve para gestionar las claves que apt usa para identificar paquetes.</p>
+
+<ul>
+  <li>En que fichero se guarda el anillo de claves que guarda la herramienta apt-key?</li>
+</ul>
+
+<p>Las claves se guardan en /etc/apt/trusted.gpg.d/</p>
+
+<ul>
+  <li>¿Qué contiene el archivo Release de un repositorio de paquetes?. ¿Y el archivo Release.gpg?. Puedes ver estos archivos en el repositorio http://ftp.debian.org/debian/dists/Debian10.1/. Estos archivos se descargan cuando hacemos un apt update.</li>
+</ul>
+
+<p>Release → es el archivo usado para firmar el repositorio 
+Release.gpg → en el fichero se guardan las firmas del fichero release</p>
+
+<ul>
+  <li>
+    <p>Explica el proceso por el cual el sistema nos asegura que los ficheros que estamos descargando son legítimos.</p>
+  </li>
+  <li>
+    <p>Añade de forma correcta el repositorio de virtualbox añadiendo la clave pública de virtualbox como se indica en la documentación.</p>
+  </li>
+</ul>
+
+<p>Paso1: Añadir la clave publica de oracle</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root@debian-sergio:~# wget -q https://www.virtualbox.org/download/oracle_vbox_2016.asc -O- | apt-key add -
+</code></pre></div></div>
+
+<p>Paso2: configuracion de /etc/apt/sources.list</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo add-apt-repository "deb http://download.virtualbox.org/virtualbox/debian buster contrib"
+</code></pre></div></div>
+
+<p>Paso3: se hace un update</p>
+
+<p>Paso4: se instala virtualbox.</p>
+
+<h3 id="autentificación-ssh"><strong>Autentificación SSH</strong></h3>
+
+<ul>
+  <li>Explica los pasos que se producen entre el cliente y el servidor para que el protocolo cifre la información que se transmite? ¿Para qué se utiliza la criptografía simétrica? ¿Y la asimétrica?</li>
+</ul>
+
+<p>Una vez que se establece conexión entre cliente y servidor se utiliza un algoritmo para generar un hash único a partir de los datos transmitidos. Si se manipulan los datos, el valor del hash también cambia automáticamente, lo que permite al destinatario reconocer si los datos han sido modificados por terceros.</p>
+
+<p>La criptografía simétrica se utiliza para cifrar y descifrar haciendo uso de una única clave entre emisor y receptor.</p>
+
+<p>La criptografía asimétrica se utiliza al igual que la simétrica para cifrar y descifrar, pero haciendo uso de un par de claves publica y privada de forma que emisor y receptor intercambien claves publicas y usen sus claves privadas para cifrar (privada del emisor) y descifrar (privada del receptor).</p>
+
+<ul>
+  <li>Explica los dos métodos principales de autentificación: por contraseña y utilizando un par de claves públicas y privadas.</li>
+</ul>
+
+<p>Autentificación por contraseña → hace uso de la encriptación asimétrica haciendo uso de una contraseña para conectarse a un usuario por ssh</p>
+
+<p>Autentificación por par de claves → esta forma hace uso de encriptación asimétrica, en este caso se utiliza un par de claves, en nuestro equipo se mantendrá la clave publica, mientras que la clave publica la mandaremos al equipo remoto para mas tarde poder conectarnos por ssh.</p>
+
+<ul>
+  <li>En el cliente para que sirve el contenido que se guarda en el fichero ~/.ssh/know_hosts?</li>
+</ul>
+
+<p>Este fichero contiene las claves de host DSA de los servidores SSH a los que se accede mediante el usuario. Este fichero es muy importante para asegurarse de que el cliente SHH está conectado al servidor SSH correcto.</p>
+
+<ul>
+  <li>¿Qué significa este mensaje que aparece la primera vez que nos conectamos a un servidor?</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ ssh debian@172.22.200.74
+The authenticity of host '172.22.200.74 (172.22.200.74)' can't be established.
+ECDSA key fingerprint is SHA256:7ZoNZPCbQTnDso1meVSNoKszn38ZwUI4i6saebbfL4M.
+Are you sure you want to continue connecting (yes/no)? 
+</code></pre></div></div>
+
+<p>La primera vez, al no tener la clave publica en la maquina a la que nos queremos conectar, nos salta este mensaje ya que puede tratarse de un servidor poco seguro.</p>
+
+<ul>
+  <li>En ocasiones cuando estamos trabajando en el cloud, y reutilizamos una ip flotante nos aparece este mensaje:</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ ssh debian@172.22.200.74
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@    WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!     @
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+IT IS POSSIBLE THAT SOMEONE IS DOING SOMETHING NASTY!
+Someone could be eavesdropping on you right now (man-in-the-middle attack)!
+It is also possible that a host key has just been changed.
+The fingerprint for the ECDSA key sent by the remote host is
+SHA256:W05RrybmcnJxD3fbwJOgSNNWATkVftsQl7EzfeKJgNc.
+Please contact your system administrator.
+Add correct host key in /home/jose/.ssh/known_hosts to get rid of this message.
+Offending ECDSA key in /home/jose/.ssh/known_hosts:103
+    remove with:
+    ssh-keygen -f "/home/jose/.ssh/known_hosts" -R "172.22.200.74"
+ECDSA host key for 172.22.200.74 has changed and you have requested strict checking.
+</code></pre></div></div>
+
+<ul>
+  <li>¿Qué guardamos y para qué sirve el fichero en el servidor ~/.ssh/authorized_keys?</li>
+</ul>
+
+<p>En el fichero se guardan una lista de claves públicas “autorizadas”. Si un usuario que se conecta puede comprobar que conoce la clave privada que corresponde a cualquiera de las claves públicas, entonces será autenticada.</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/categories/#seguridad" class="page__taxonomy-item p-category" rel="tag">Seguridad</a>
+    
+    </span>
+  </p>
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2021-03-11T16:00:38+01:00">March 11, 2021</time></p>
+
+      </footer>
+
+      
+
+      
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+
+      
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">&copy; 2025 <a href="http://localhost:4000">Blog de Sergio Ibáñez</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

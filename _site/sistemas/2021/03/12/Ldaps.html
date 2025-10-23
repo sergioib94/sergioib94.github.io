@@ -1,0 +1,670 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.27.3 by Michael Rose
+  Copyright 2013-2025 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="es-ES" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Ldaps - Blog de Sergio Ibáñez</title>
+<meta name="description" content="En este post se configurara LDAP, en una maquina virtual creada en la practica anterior (modificaciones del escenario openstack).">
+
+
+  <meta name="author" content="Sergio Ibáñez Núñez">
+  
+  <meta property="article:author" content="Sergio Ibáñez Núñez">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="es_ES">
+<meta property="og:site_name" content="Blog de Sergio Ibáñez">
+<meta property="og:title" content="Ldaps">
+<meta property="og:url" content="http://localhost:4000/sistemas/2021/03/12/Ldaps.html">
+
+
+  <meta property="og:description" content="En este post se configurara LDAP, en una maquina virtual creada en la practica anterior (modificaciones del escenario openstack).">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2021-03-12T14:13:08+01:00">
+
+
+
+
+
+
+<link rel="canonical" href="http://localhost:4000/sistemas/2021/03/12/Ldaps.html">
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Blog de Sergio Ibáñez Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single wide" dir="ltr">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          Blog de Sergio Ibáñez
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a
+                href="/"
+                
+                
+              >Inicio</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/posts/"
+                
+                
+              >Posts</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/categories/"
+                
+                
+              >Categorías</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/tags/"
+                
+                
+              >Etiquetas</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/search/"
+                
+                
+              >Buscar</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/about/"
+                
+                
+              >Sobre mí</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Ldaps">
+    <meta itemprop="description" content="En este post se configurara LDAP, en una maquina virtual creada en la practica anterior (modificaciones del escenario openstack).">
+    <meta itemprop="datePublished" content="2021-03-12T14:13:08+01:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">
+            <a href="http://localhost:4000/sistemas/2021/03/12/Ldaps.html" itemprop="url">Ldaps
+</a>
+          </h1>
+          
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2021-03-12T14:13:08+01:00">March 12, 2021</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          2 minute read
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <h3 id="introducción"><strong>Introducción</strong></h3>
+
+<p>Configuraremos el servidor LDAP de frestón instalado y configurado en la practica anterior para que utilice el protocolo ldaps:// a la vez que el ldap:// utilizando el certificado x509 de la práctica de https o solicitando el correspondiente a través de gestiona. Realiza las modificaciones adecuadas en el cliente ldap de frestón para que todas las consultas se realicen por defecto utilizando ldaps://</p>
+
+<h3 id="ldaps"><strong>LDAPS</strong></h3>
+
+<p>Lo primero que tendremos que hacer para usar ldaps, sera tener tanto un certificado .crt de la unidad certificadora, en este caso el IES Gonzalo Nazareno, un .crt firmado por la unidad certificadora y un fichero .key usado para crear un fichero csr que posteriormente se firmará.</p>
+
+<p>Después de crear los certificados y ubicarlos en /etc/ssl/certs/ (los ficheros .crt) y el fichero .key en /etc/ssl/private/, hay que cambiar las acl con el comando setfacl para agregar los permisos:</p>
+
+<p>Instalamos el paquete acl:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo apt install acl
+</code></pre></div></div>
+
+<p>Una vez tengamos los certificados en la maquina de freston, pasamos a ubicarlos en sus respectivos directorios:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>debian@freston:~$ sudo mv gonzalonazareno.crt /etc/ssl/certs/
+debian@freston:~$ sudo mv sergio.ibanez.crt /etc/ssl/certs/
+debian@freston:~$ sudo mv sergio.ibanez.key /etc/ssl/private/
+</code></pre></div></div>
+
+<p>Agregamos los permisos necesarios para que el usuario openldap pueda hacer uso de los certificados usando el comando setfacl, en este caso usando la opcion -m ya que vamos a modificar las ACL de un determinado fichero o directorio:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>debian@freston:~$ sudo setfacl -m u:openldap:r-x /etc/ssl/private
+debian@freston:~$ sudo setfacl -m u:openldap:r-x /etc/ssl/private/sergio.ibanez.key
+debian@freston:~$ sudo setfacl -m u:openldap:r-x /etc/ssl/certs
+debian@freston:~$ sudo setfacl -m u:openldap:r-x /etc/ssl/certs/gonzalonazareno.crt 
+debian@freston:~$ sudo setfacl -m u:openldap:r-x /etc/ssl/certs/sergio.ibanez.crt
+</code></pre></div></div>
+
+<p>Se crea un fichero .ldif con el siguiente contenido indicando que en el objeto config se van a modificar las ubicaciones de los certificados:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dn: cn=config
+changetype: modify
+replace: olcTLSCACertificateFile
+olcTLSCACertificateFile: /etc/ssl/certs/gonzalonazareno.crt
+-
+replace: olcTLSCertificateKeyFile
+olcTLSCertificateKeyFile: /etc/ssl/private/sergio.ibanez.key
+-
+replace: olcTLSCertificateFile
+olcTLSCertificateFile: /etc/ssl/certs/sergio.ibanez.crt
+</code></pre></div></div>
+
+<p>Se añaden los cambios del fichero ldif creado anteriormente:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>debian@freston:~$ sudo ldapmodify -Y EXTERNAL -H ldapi:/// -f ldaps.ldif
+SASL/EXTERNAL authentication started
+SASL username: gidNumber=0+uidNumber=0,cn=peercred,cn=external,cn=auth
+SASL SSF: 0
+modifying entry "cn=config"
+</code></pre></div></div>
+
+<p>Configuramos /etc/ldap/ldap.conf para indicar la ubicación del certificado de AC:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># TLS certificates (needed for GnuTLS)
+TLS_CACERT      /etc/ssl/certs/gonzalonazareno.crt
+
+</code></pre></div></div>
+
+<p>Por defecto la ubicación es /etc/ssl/certs/ca-certificates.crt por lo que otra forma de hacerlo seria mover nuestro gonzalonazareno.crt a /etc/ssl/certs/ca-certificates.</p>
+
+<p>Configuramos también en /etc/default/ldap la siguiente linea:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>SLAPD_SERVICES="ldap:/// ldapi:/// ldaps:///"
+</code></pre></div></div>
+
+<p>Reiniciamos el servicio ldap:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo systemctl restart slapd
+</code></pre></div></div>
+
+<p>Comprobación usando ldaps:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>debian@freston:~$ sudo ldapsearch -x -H ldaps://freston.sergio.gonzalonazareno.org:636 -b "cn=admin,dc=sergio,dc=gonzalonazareno,dc=org"
+# extended LDIF
+#
+# LDAPv3
+# base &lt;cn=admin,dc=sergio,dc=gonzalonazareno,dc=org&gt; with scope subtree
+# filter: (objectclass=*)
+# requesting: ALL
+#
+
+# admin, sergio.gonzalonazareno.org
+dn: cn=admin,dc=sergio,dc=gonzalonazareno,dc=org
+objectClass: simpleSecurityObject
+objectClass: organizationalRole
+cn: admin
+description: LDAP administrator
+
+# search result
+search: 2
+result: 0 Success
+
+# numResponses: 2
+# numEntries: 1
+</code></pre></div></div>
+
+<p>Comprobamos también si haciéndolo con ldap funciona:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>debian@freston:~$ sudo ldapsearch -x -H ldap://freston.sergio.gonzalonazareno.org:636 -b "cn=admin,dc=sergio,dc=gonzalonazareno,dc=org"
+ldap_result: Can't contact LDAP server (-1)
+</code></pre></div></div>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/categories/#sistemas" class="page__taxonomy-item p-category" rel="tag">Sistemas</a>
+    
+    </span>
+  </p>
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2021-03-12T14:13:08+01:00">March 12, 2021</time></p>
+
+      </footer>
+
+      <section class="page__share">
+  <h4 class="page__share-title">Share on</h4>
+
+  <a href="https://x.com/intent/tweet?text=Ldaps%20http%3A%2F%2Flocalhost%3A4000%2Fsistemas%2F2021%2F03%2F12%2FLdaps.html" class="btn btn--x" aria-label="Share on X" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on X">
+    <i class="fab fa-fw fa-x-twitter" aria-hidden="true"></i><span> X</span>
+  </a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fsistemas%2F2021%2F03%2F12%2FLdaps.html" class="btn btn--facebook" aria-label="Share on Facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook">
+    <i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span>
+  </a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http://localhost:4000/sistemas/2021/03/12/Ldaps.html" class="btn btn--linkedin" aria-label="Share on LinkedIn" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn">
+    <i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span>
+  </a>
+
+  <a href="https://bsky.app/intent/compose?text=Ldaps%20http%3A%2F%2Flocalhost%3A4000%2Fsistemas%2F2021%2F03%2F12%2FLdaps.html" class="btn btn--bluesky" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Bluesky">
+    <i class="fab fa-fw fa-bluesky" aria-hidden="true"></i><span> Bluesky</span>
+  </a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/sistemas/2021/03/12/Instalacion-y-configuracion-openldap.html" class="pagination--pager" title="Instalacion y configuracion básica OpenLDAP">Previous</a>
+    
+    
+      <a href="/sistemas/2021/03/12/Usuarios-grupos-y-acls-en-ldap.html" class="pagination--pager" title="Usuarios, grupos y ACLs en Ldap">Next</a>
+    
+  </nav>
+
+
+    </div>
+
+    
+      
+        <p>
+          Comments are configured with provider: <strong>giscus</strong>,
+          but are disabled in non-production environments.
+        </p>
+      
+    
+  </article>
+
+  
+  
+    
+<div class="page__related">
+  
+  <h2 class="page__related-title">You May Also Enjoy</h2>
+  <div class="grid__wrapper">
+    
+      
+      
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/sistemas/monitorizaci%C3%B3n/2025/05/01/Instalacion-configuracion-y-monitoreo-zabbix.html" rel="permalink">Instalación, configuración y monitorización usando Zabbix
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2025-05-01T13:19:00+02:00">May 1, 2025</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          7 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Este post describe paso a paso cómo instalar y configurar Zabbix 6.0 LTS en una máquina virtual con Debian 12. Está pensado para crear un entorno de práctica...</p>
+  </article>
+</div>
+
+    
+      
+      
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/sistemas/monitorizaci%C3%B3n/2024/04/11/Monitorizaci%C3%B3n-de-servidores-con-grafana.html" rel="permalink">Monitorización de servidores con Grafana
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2024-04-11T13:14:06+02:00">April 11, 2024</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          10 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Aprende a instalar, configurar y personalizar Grafana para la monitorización avanzada de servidores. Descubre cómo integrar Prometheus, crear dashboards inte...</p>
+  </article>
+</div>
+
+    
+      
+      
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/seguridad/2021/12/21/SoftEther-VPN.html" rel="permalink">Introducción SoftEther VPN
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2021-12-21T13:44:30+01:00">December 21, 2021</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          64 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">SoftEther VPN es uno de los software VPN multiprotocolo más potentes y rápidos del mundo en la actualidad. Funciona en sistemas Windows, Solaris, Mac, FreeBS...</p>
+  </article>
+</div>
+
+    
+      
+      
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/aplicaciones%20web/apuntes/2021/09/21/Introduccion-a-Docker.html" rel="permalink">Introducción a Docker
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2021-09-21T13:14:06+02:00">September 21, 2021</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          19 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Docker nos permite de forma sencilla crear contenedores ligeros y fáciles de mover donde ejecutar nuestras aplicaciones software sobre cualquier máquina con ...</p>
+  </article>
+</div>
+
+    
+  </div>
+</div>
+
+  
+  
+</div>
+
+      
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">&copy; 2025 <a href="http://localhost:4000">Blog de Sergio Ibáñez</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+    <script>
+  'use strict';
+
+  (function () {
+    var commentContainer = document.querySelector('#giscus-comments');
+
+    if (!commentContainer) {
+      return;
+    }
+
+    var script = document.createElement('script');
+
+    script.setAttribute('src', 'https://giscus.app/client.js');
+    script.setAttribute('data-repo', '');
+    script.setAttribute('data-repo-id', '');
+    script.setAttribute('data-category', '');
+    script.setAttribute('data-category-id', '');
+    script.setAttribute('data-mapping', 'pathname');
+    script.setAttribute('data-strict', '0');
+    script.setAttribute('data-reactions-enabled', '1');
+    script.setAttribute('data-emit-metadata', '0');
+    script.setAttribute('data-input-position', 'top');
+    script.setAttribute('data-theme', 'preferred_color_scheme');
+    script.setAttribute('data-lang',  'es');
+    
+    script.setAttribute('crossorigin', 'anonymous');
+
+    script.setAttribute('async', '');
+
+    commentContainer.appendChild(script);
+  })();
+</script>
+
+  
+
+
+
+
+  </body>
+</html>

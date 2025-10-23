@@ -1,0 +1,769 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.27.3 by Michael Rose
+  Copyright 2013-2025 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="es-ES" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Introducción a C++ - Blog de Sergio Ibáñez</title>
+<meta name="description" content="C++ es un lenguaje de programación compilado creado en 1979 derivado del lenguaje C quedándose con lo mejor de C y añadiendo funcionalidades nuevas.">
+
+
+  <meta name="author" content="Sergio Ibáñez Núñez">
+  
+  <meta property="article:author" content="Sergio Ibáñez Núñez">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="es_ES">
+<meta property="og:site_name" content="Blog de Sergio Ibáñez">
+<meta property="og:title" content="Introducción a C++">
+<meta property="og:url" content="http://localhost:4000/_posts/2021-06-09-Introduccion-a-C++.html">
+
+
+  <meta property="og:description" content="C++ es un lenguaje de programación compilado creado en 1979 derivado del lenguaje C quedándose con lo mejor de C y añadiendo funcionalidades nuevas.">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2021-06-09T16:43:19+02:00">
+
+
+
+
+
+
+<link rel="canonical" href="http://localhost:4000/_posts/2021-06-09-Introduccion-a-C++.html">
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Blog de Sergio Ibáñez Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single" dir="ltr">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          Blog de Sergio Ibáñez
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a
+                href="/"
+                
+                
+              >Inicio</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/posts/"
+                
+                
+              >Posts</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/categories/"
+                
+                
+              >Categorías</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/tags/"
+                
+                
+              >Etiquetas</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/search/"
+                
+                
+              >Buscar</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/about/"
+                
+                
+              >Sobre mí</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="http://localhost:4000/">
+        <img src="/assets/images/avatar.png" alt="Sergio Ibáñez Núñez" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="http://localhost:4000/" itemprop="url">Sergio Ibáñez Núñez</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>Técnico IT y entusiasta de la automatización</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Introducción a C++">
+    <meta itemprop="description" content="C++ es un lenguaje de programación compilado creado en 1979 derivado del lenguaje C quedándose con lo mejor de C y añadiendo funcionalidades nuevas.">
+    <meta itemprop="datePublished" content="2021-06-09T16:43:19+02:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">
+            <a href="http://localhost:4000/_posts/2021-06-09-Introduccion-a-C++.html" itemprop="url">Introducción a C++
+</a>
+          </h1>
+          
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <h3 id="introducción"><strong>Introducción</strong></h3>
+
+<p>C++ es un lenguaje de programación compilado creado en 1979 derivado del lenguaje C quedándose con lo mejor de C y añadiendo funcionalidades nuevas.</p>
+
+<p>Una de las mejoras que añade C++ es la posibilidad de usar la programación orientada a objetos la cual nos permite ampliar los tipos de datos que podemos utilizar permitiendo definir clases y objetos.</p>
+
+<p>Para escribir un programa en C++ necesitaremos de un editor de texto y un compilador, pero lo normal es utilizar herramientas de entornos integrados de desarrollo o IDEs que básicamente son herramientas como por ejemplo Visual Studio Code que permiten tanto editar el código fuente como compilar el programa una vez acabado.</p>
+
+<h3 id="herramienta-zinjai">Herramienta Zinjai</h3>
+
+<p>Es una herramienta del mismo creador que psinc (para aprender pseudocódigo) para programas en C y C++ esta disponible tanto para Linux como para Windows.</p>
+
+<p>Pasos de instalación en Windows:</p>
+
+<ol>
+  <li>Descargar instalador para Windows.</li>
+  <li>Ejecutamos el ejecutable descargado.</li>
+  <li>Aceptamos los términos y seleccionamos todos los componentes para la instalación.</li>
+  <li>Seleccionamos directorio de destino y comenzamos la instalación.</li>
+  <li>Configuramos el idioma.</li>
+</ol>
+
+<p>Pasos de instalación en Linux</p>
+
+<ol>
+  <li>Descargar paquete para GNU/Linux.</li>
+  <li>Descomprimimos el archivo descargado y ejecutamos el fichero zinjai para comenzar con la instalación (es posible que se requiera tener instalado xterm, por lo que al instalar, se instalara xterm y al ejecutar de nuevo la instalación se instalara completamente).</li>
+</ol>
+
+<h3 id="estructura-en-c">Estructura en C++</h3>
+
+<p>Ejemplo de programa básico:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#include &lt;iostream&gt;
+using namespace std;
+
+int main (int argc, char *argv[])
+{
+	cout &lt;&lt; “hola mundo”;
+	return 0;
+}
+</code></pre></div></div>
+
+<ul>
+  <li>
+    <p>La primera linea #include, nos permite añadir una librería, que en este caso se trata de la librería iostream donde se encuentran las funciones para la entrada y salida de datos.</p>
+  </li>
+  <li>
+    <p>Para que no haya problemas ni errores entre las distintas funciones, cada una usa un distinto espacio de nombre por lo que en este caso la función cout usa el espacio de nombres por defecto, std (especificada antes de iniciar la funcion principal).</p>
+  </li>
+  <li>
+    <p>La linea int main hace referencia a la función principal, la función por la que se empieza a ejecutar el programa y posteriormente se van ejecutando las distintas instrucciones en orden dentro de {}. La función principal siempre debe llamarse “main” y en este caso se indica que devuelve un valor entero (int).</p>
+  </li>
+  <li>
+    <p>Cout nos permite escribir en pantalla.</p>
+  </li>
+  <li>
+    <p>Return, devuelve un valor entero al sistema operativo, si la instrucción se ejecuta correctamente devuelve 0, sino dará como resultado devuelve cualquier otro valor.</p>
+  </li>
+</ul>
+
+<h3 id="tipos-de-datos">Tipos de datos</h3>
+
+<ul>
+  <li>
+    <p>Datos simples:
+  ◦ Numeros enteros (int)
+  ◦ Numeros reales (float o double)
+  ◦ Valores lógicos (bool)
+  ◦ Caracteres (char)</p>
+  </li>
+  <li>
+    <p>Datos complejos: 
+  ◦ Arrays
+  ◦ Cadenas de caracteres
+  ◦ Estructura de datos</p>
+  </li>
+</ul>
+
+<p>Los datos que nosotros indicamos en un programa lo podemos indicar de varias formas:</p>
+
+<ul>
+  <li>
+    <p>Literales: nos permiten representar valores, por ejemplo un literal entero será por ejemplo 5.</p>
+  </li>
+  <li>
+    <p>Variables: son identificadores en los que se guarda un valor. Las variables se declaran de un tipo de dato, por ejemplo una variable entera puede guardar datos enteros.</p>
+  </li>
+  <li>
+    <p>Constantes: nos permite declarar un valor de un determinado tipo por medio de de un identificador. Mientras el valor de una variable puede cambiar a lo largo de la ejecución de un programa, las constantes no cambian.</p>
+  </li>
+  <li>
+    <p>Expresiones: las expresiones son operaciones que podemos hacer entre distintos tipos de datos. El tipo de dato de una expresión dependerá del resultado de la operación. Según el tipo de datos con los que trabajemos tenemos distintos tipos de operadores:</p>
+
+    <ul>
+      <li>Operadores aritméticos: para hacer operaciones con datos numéricos.</li>
+      <li>Operadores relacionales: nos permiten comparar datos y nos devuelve un valor lógico.</li>
+      <li>Operadores lógicos: nos permite trabajar con valores lógicos.</li>
+      <li>Operadores de asignación: Nos permite asignar valores a variables.</li>
+      <li>Otras operadores: operadores para trabajar con bits o punteros.</li>
+    </ul>
+  </li>
+</ul>
+
+<p>La precedencia de operadores es la siguiente:</p>
+
+<ul>
+  <li>Paréntesis</li>
+  <li>Operadores unarios (+ / - para indicar números positivos y negativos)</li>
+  <li>Multiplicaciones, divisiones y módulos</li>
+  <li>Sumas y restas</li>
+  <li>Operador lógico. &amp;&amp; (Y)</li>
+  <li>Operador lógico. || (O)</li>
+  <li>Operadores de comparación</li>
+  <li>Operadores de asignación</li>
+</ul>
+
+<p>Es decir, los operadores dentro de un paréntesis serán los primeros en ejecutarse mientras que los operadores de asignación serán los últimos.</p>
+
+<h3 id="literales-y-constantes">Literales y Constantes</h3>
+
+<h3 id="literales">Literales</h3>
+
+<p>Como se ha dicho anteriormente nos permiten representar valores de diferentes tipos, por lo que contamos con diferentes tipos de literales:</p>
+
+<ul>
+  <li>
+    <p>Literales enteros: para representar números enteros utilizamos cifras enteras. Ej: 5, -9, números en base octal: 877, base hexadecimal 0xfe, etc.</p>
+  </li>
+  <li>
+    <p>Literales reales: usamos un punto para separar la parte entera de la decimal. Por ejemplo 3.14159. también podemos usar “e” o “E” para representar el exponente.</p>
+  </li>
+  <li>
+    <p>Literales booleanos o lógicos: solo tienen dos valores, false cuando algo es falso y true cuando algo es verdadero.</p>
+  </li>
+  <li>
+    <p>Literales carácter: para indicar un valor de tipo carácter utilizamos las comillas simples (‘’). también podemos usar algunos caracteres especiales como pueden ser \n para indicar un salto de linea o \t para indicar una tabulación.</p>
+  </li>
+  <li>
+    <p>Literales cadenas de caracteres: una cadena de caracteres es un conjunto de caracteres. Para indicar una cadena de caracteres hacemos uso de las comillas dobles (“”).</p>
+  </li>
+</ul>
+
+<h3 id="constantes">Constantes</h3>
+
+<p>Como se ha dicho anteriormente, las constantes nos permiten declarar un valor de un determinado tipo por medio de de un identificador. Mientras el valor de una variable puede cambiar a lo largo de la ejecución de un programa, las constantes no cambian.</p>
+
+<p>Para crear constantes usamos #define identificador valor (deben declararse antes del programa principal). Por ejemplo:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#include &lt;iostream&gt;
+using namespace std;
+#define ANCHURA 10
+#define ALTURA 5
+#define NUEVALINEA ‘\n’
+int main () {
+	int área;
+	área = ANCHURA * ALTURA;
+	cout &lt;&lt; área;
+	cout &lt;&lt; NUEVALINEA;
+	return 0;
+}
+</code></pre></div></div>
+
+<p>Este programa lo que hace es que en programa principal cuando encuentra el identificador de la constante, en este caso altura y anchura, se sustituye el identificador por sus valores correspondientes, en este caso 5 y 10 respectivamente por lo que a la hora de ejecutar el programa principal el programa hará “área = 10 * 5” y el valor entero se mostrará en pantalla a través de cout « y después se mostrará el salto de linea.</p>
+
+<h3 id="variables">Variables</h3>
+
+<p>Las variables nos permiten almacenar información. Las variables tienen un nombre y al crearlas hay que especificar el tipo de datos que se van a almacenar. Ej:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>int variable1;
+</code></pre></div></div>
+
+<p>En este caso en la variable1 solo se almacenaran datos enteros.</p>
+
+<p>El nombre de las variables debe ir en minúsculas para así diferenciarse de las constantes que van en mayúsculas, además el nombre de las variables deben estar compuestos por caracteres, números o subrayados, pero no puede empezar por un numero.</p>
+
+<p>Ejemplos de declaración de variables:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	int variable1; → si no incluimos el valor, este se pondrá por defecto, en el caso de los enteros el valor por defecto es 0. en este caso posteriormente en el programa será necesario inicializar la variable dandole un valor.
+
+	int variable2=10;
+	int variable3, variable4;
+	int variable5=20, variable6=-10;
+</code></pre></div></div>
+
+<p>Contamos con dos tipos o ambitas de variables:</p>
+
+<ul>
+  <li>
+    <p>Variables locales: se crean dentro de la función es decir si por ejemplo tengo una variable1 cuyo valor es 5 esa variable1 solo existirá en esa función, si tenemos varias funciones en esas otras variable1 no existira, se tendrá que volver a declarar e inicializar.</p>
+  </li>
+  <li>
+    <p>Variables Globales: estas variables sin embargo al contrario que las anteriores se declaran fuera de la función, por lo que es posible usarlas en cada una de las funciones con las que contemos en nuestro programa.</p>
+  </li>
+</ul>
+
+<h3 id="operadores-de-asignación">Operadores de asignación</h3>
+
+<p>Contamos con dos operadores de asignación en C++:</p>
+
+<ul>
+  <li>
+    <p>Asignación simple (=): nos permite asignar a una variable tanto valores literales, como numéricos y expresiones. Ej: a = b+7; en este caso guardamos la suma b+7 en la variable a.</p>
+  </li>
+  <li>
+    <p>+=: suma y a continuación hace la asignación. Ej: a+=b es igual que a=a+b, es decir si tenemos a=7 y después tenemos a+=7, entonces nuestra variable a ya no vale 7, sino 14. en este caso también pueden usarse -=, *=, /=, etc.</p>
+  </li>
+</ul>
+
+<h3 id="tipos-de-datos-numericos">Tipos de datos numericos</h3>
+
+<ul>
+  <li>
+    <p>int → nos permite guardar valores enteros. Ej: 5, -8, 0…</p>
+  </li>
+  <li>
+    <p>Float → nos permite almacenar numeros reales, es decir con decimales (maximo 7 digitos decimales).</p>
+  </li>
+  <li>
+    <p>Double → es parecido a float solo que permite almacenar numeros reales pero con 16 decimales.</p>
+  </li>
+</ul>
+
+<p>La diferencia principal entre float y double es espacio que la variable de este tipo ocupa en memoria  ya que float ocupa 4 bytes, mientras que double al contar con 16 digitos decimales, ocupa 8 bytes.</p>
+
+<h3 id="tipo-de-dato-carácter">Tipo de dato carácter</h3>
+
+<ul>
+  <li>char: guarda un carácter, aunque realmente la variable es entera ya que internamente se guarda un numero que hace que cada carácter haga referencia a un numero usando la tabla ascii. Por ejemplo a una variable char le podemos asignar un valor de la siguientes formas:</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	char variable1=‘a’; o bien char variable2=97 (97 es el valor numerico asignado a ‘a’ en la 	tabla ascii);
+</code></pre></div></div>
+
+<h3 id="modificadores-de-tipo">Modificadores de tipo</h3>
+
+<p>Los modificadores de tipo se pueden usar para modificar el tamaño de memoria que se coge para guardar datos o si se quieren guardar numeros positivos o negativos.</p>
+
+<ul>
+  <li>
+    <p>int: nosotros podemos almacenar numeros desde el -2147483648 al 2147483647 mientras que si por ejemplo queremos la posibilidad de almacenar numeros solo positivos, usariamos unsigned int, que almacena valores de 0 al 4294967295.</p>
+  </li>
+  <li>
+    <p>short int: se usa para el caso en el que queramos redurie el tamaño de almacenamiento en memoria limitando la cantidad de valores posibles, en este caso de -32768 a 32767. en este caso en lugar de 4 bytes, ocupa 2 bytes.</p>
+  </li>
+  <li>
+    <p>unsigned short int: es una combinacion de las dos anteriores, por un lado limita el rango de valores de forma que ocupa menos espacio en memoria y a la vez permite solo valores positivos. Los valores van desde 0 a 65535.</p>
+  </li>
+  <li>
+    <p>long int: al igual que hay un short int para que los valores ocupen menos espacio en memoria, tambien contamos un long int que amplia el rango de valores al doble ocupando asu 8 bytes en memoria. El rango de vlores va desde -9223372036854775808 a 9223372036854775807.</p>
+  </li>
+</ul>
+
+<p>Al declarar las variables podemos usar notaciones cortas donde no es necesario indicar el tipo int. Ej:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>unsigned short var1;
+long var2;
+short var3;
+</code></pre></div></div>
+
+<p>Podemos usar sufijos para indicar literales numéricos largos (con el sufijo L) y sin signo (con el sufijo U). Por ejemplo:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var1=123U; var2=123L;
+</code></pre></div></div>
+
+<h3 id="conversion-de-tipos">Conversion de tipos</h3>
+
+<p>Por defecto C++ hace conversiones entre algunos tipos de datos como por ejemplo entre cgar e int o de int a float. Ej:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>int var1=10
+float var2=var1
+</code></pre></div></div>
+
+<p>En este caso por defecto el valor entero 10 se convierte en valor real 10,0.</p>
+
+<p>Si tenemos expresiones donde hacemos operaciones entre datos del mismo tipo, el resultado de la expresión será del mismo tipo.</p>
+
+<p>Si tenemos expresiones donde hacemos operaciones entre datos de distintos tipos el resultado de la expresión será del tipo con más precisión de los datos operados.</p>
+
+<p>Por último podemos hacer una conversión explicita usando una expresión de typecast, por ejemplo para convertir un int a un float:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>int num1=10,num2=3; 
+float res; 
+res=(float)num1 / float(num2)
+</code></pre></div></div>
+
+<h3 id="operadores-aritmeticos">Operadores aritmeticos</h3>
+
+<ul>
+  <li>+: suma dos numeros.</li>
+  <li>-: resta dos numeros.</li>
+  <li>*: multiplica dos numeros.</li>
+  <li>/: divide dos numeros.</li>
+  <li>%: modulo o resto de la division.</li>
+  <li>+, -: operadores unarios positivo y negativo.</li>
+  <li>++: operador de incremento, suma 1 a la variable, 1++ es lo mismo a 1=1+1.</li>
+  <li>–: operador de decremento, resta 1 a la variable.</li>
+</ul>
+
+<h3 id="funciones-matematicas">Funciones matematicas</h3>
+
+<p>En la librería cmath tenemos distintas funciones matemática. Las más útiles que podemos usar en nuestros programas son:</p>
+
+<ul>
+  <li>
+    <p>double pow(double, double);: Realiza la potencia, la base es el primer parámetro y el exponente el segundo. Recibe datos de tipo double y devuelve también una valor double.</p>
+  </li>
+  <li>
+    <p>double sqrt(double);: Realiza la raíz cuadrada del parámetro double que recibe. Devuelve un valor `double.</p>
+  </li>
+  <li>
+    <p>int abs(int);: Devuelve el valor absoluto (valor entero) del número entero que recibe como parámetro.</p>
+  </li>
+</ul>
+
+<p>Veamos un ejemplo:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#include &lt;iostream&gt;
+#include &lt;cmath&gt;
+using namespace std;
+
+int main(int argc, char *argv[]) {
+    int num1=4, num2=2;
+    cout &lt;&lt; "Potencia:" &lt;&lt; pow(num1,num2) &lt;&lt; endl; //Potencia
+    cout &lt;&lt; "Raíz Cuadrada:" &lt;&lt; sqrt(num1) &lt;&lt; endl; //Raíz cuadrada
+    num1=-4;
+    cout &lt;&lt; "Valor absoluto:" &lt;&lt; abs(num1) &lt;&lt; endl; //Valor absoluto
+    return 0;
+}
+</code></pre></div></div>
+
+<h3 id="cadenas-de-caracteres">Cadenas de caracteres</h3>
+
+<p>Tenemos dos formas de trabajar con cadenas de caracteres:</p>
+
+<ul>
+  <li>
+    <p>La tradicional usada en C, que es entender  como una cadena de caracteres como un conjunto de variables de tipo carácter (arrays).</p>
+  </li>
+  <li>
+    <p>C++ nos ofrece la clase string que nos permite trabajar con cadenas de caracteres.</p>
+  </li>
+</ul>
+
+<p>Podemos declarar una cadena string de la siguiente forma:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>string cadena1;
+string cadena2=“Hola mundo”;
+</code></pre></div></div>
+
+<p>Las cadenas de caracteres se pueden indexar, es decir que podemos obtener el valor de cada carácter, para ello tenemos que indicar la posicion, de izquierda a derecha empezando por el 0. Ej:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cadena2[0] nos devolveria el carácter H de Hola mundo.
+</code></pre></div></div>
+
+<p>Otra operación que podemos hacer con las cadenas de caracteres es saber cuantos caracteres tiene la cadena, para ello usamos el metodo length. Ej:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cadena2.length() nos devolvera 10 ya que “Hola mundo” cuenta con 10 caracteres.
+</code></pre></div></div>
+
+<p>Podemos tambien concatenar cadenas de caracteres usando +. Ej:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>string nombre=“sergio”;
+string apellido=“ibañez”;
+string nombre_completo;
+nombre_completo=nombre+“ ”+apellido
+</code></pre></div></div>
+
+<p>El resultado de la concatenacion será “sergio ibañez”.</p>
+
+<h3 id="entrada-y-salida-de-datos">Entrada y salida de datos</h3>
+
+<p>Las instrucciones que nos permiten leer y mostrar informacion por pantalla estan en la librería iostream.</p>
+
+<ul>
+  <li>cout: representa el dispositivo de salida (la pantalla), el operador que escribe en pantalla es « lo que hace es enviar el mensaje al dispositivo de salida estándar a traves de cout. Ej:</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	cout &lt;&lt; “bienvenido al sistema” end1; (end1 indica el final de linea)
+</code></pre></div></div>
+
+<ul>
+  <li>cin: valor para leer por teclado. Ej:</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	int edad;
+	cout &lt;&lt; “dime tu edad: ”;
+	cin &gt;&gt; edad;
+</code></pre></div></div>
+
+<p>De esta forma por pantalla se nos muestra la pregunta sobre nuestra edad mientras que la edad que introduzcamos por pantalla se guardara como valor de la variable edad a traves de ».</p>
+
+<p>Sin embargo, cin no es capaz de leer variables de tipo cadena de carcteres, por lo que en caso de querer o necesitar leer cadenas de caracteres usamos la funcion getline. Ej:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>string nombre;
+getline(cin,nombre);
+</code></pre></div></div>
+
+<p>De esta forma podremos introducir el valor que tendra la variable nombre.</p>
+
+<ul>
+  <li>cin.ignore: lo usamos para borrar valores introducidos por teclado.</li>
+</ul>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/categories/#apuntes" class="page__taxonomy-item p-category" rel="tag">Apuntes</a>
+    
+    </span>
+  </p>
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2021-06-09T16:43:19+02:00">June 9, 2021</time></p>
+
+      </footer>
+
+      
+
+      
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+
+      
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">&copy; 2025 <a href="http://localhost:4000">Blog de Sergio Ibáñez</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

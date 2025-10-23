@@ -1,0 +1,1794 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.27.3 by Michael Rose
+  Copyright 2013-2025 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="es-ES" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Introducción a Docker - Blog de Sergio Ibáñez</title>
+<meta name="description" content="Docker nos permite de forma sencilla crear contenedores ligeros y fáciles de mover donde ejecutar nuestras aplicaciones software sobre cualquier máquina con Docker instalado, independientemente del sistema operativo que la máquina tenga, facilitando así también los despliegues.">
+
+
+  <meta name="author" content="Sergio Ibáñez Núñez">
+  
+  <meta property="article:author" content="Sergio Ibáñez Núñez">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="es_ES">
+<meta property="og:site_name" content="Blog de Sergio Ibáñez">
+<meta property="og:title" content="Introducción a Docker">
+<meta property="og:url" content="http://localhost:4000/aplicaciones%20web/apuntes/2021/09/21/Introduccion-a-Docker.html">
+
+
+  <meta property="og:description" content="Docker nos permite de forma sencilla crear contenedores ligeros y fáciles de mover donde ejecutar nuestras aplicaciones software sobre cualquier máquina con Docker instalado, independientemente del sistema operativo que la máquina tenga, facilitando así también los despliegues.">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2021-09-21T13:14:06+02:00">
+
+
+
+
+
+
+<link rel="canonical" href="http://localhost:4000/aplicaciones%20web/apuntes/2021/09/21/Introduccion-a-Docker.html">
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Blog de Sergio Ibáñez Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single wide" dir="ltr">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          Blog de Sergio Ibáñez
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a
+                href="/"
+                
+                
+              >Inicio</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/posts/"
+                
+                
+              >Posts</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/categories/"
+                
+                
+              >Categorías</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/tags/"
+                
+                
+              >Etiquetas</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/search/"
+                
+                
+              >Buscar</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/about/"
+                
+                
+              >Sobre mí</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Introducción a Docker">
+    <meta itemprop="description" content="Docker nos permite de forma sencilla crear contenedores ligeros y fáciles de mover donde ejecutar nuestras aplicaciones software sobre cualquier máquina con Docker instalado, independientemente del sistema operativo que la máquina tenga, facilitando así también los despliegues.">
+    <meta itemprop="datePublished" content="2021-09-21T13:14:06+02:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">
+            <a href="http://localhost:4000/aplicaciones%20web/apuntes/2021/09/21/Introduccion-a-Docker.html" itemprop="url">Introducción a Docker
+</a>
+          </h1>
+          
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2021-09-21T13:14:06+02:00">September 21, 2021</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          18 minute read
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <h3 id="qué-es-docker"><strong>¿Qué es Docker?</strong></h3>
+
+<p>Docker es un proyecto de software libre que permite automatizar el despliegue de aplicaciones dentro de contenedores.</p>
+
+<p>Docker nos permite de forma sencilla crear contenedores ligeros y fáciles de mover donde ejecutar nuestras aplicaciones software sobre cualquier máquina con Docker instalado, independientemente del sistema operativo que la máquina tenga, facilitando así también los despliegues.</p>
+
+<p><strong>¿Que son los contenedores?</strong></p>
+
+<p>Los contenedores son una forma de virtulización del sistema opertaivo, son como maquinas virtuales aisladas en los que podemos ejecutar cualquier cosa como por ejemplo microservicios, aplicaciones, etc…</p>
+
+<p>¿En qué se diferencian los contenedores de las máquinas virtuales?
+Aunque tanto los contenedores como las máquinas virtuales permiten la ejecución de aplicaciones en entornos aislados, existen diferencias clave entre ambos.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Características</th>
+      <th>Contenedores (docker)</th>
+      <th>Máquinas Virtuales</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Aislamiento</td>
+      <td>Compartido con el sistema host</td>
+      <td>Completamente aislado</td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td>Consumo de recursos</td>
+      <td>Bajo (solo usa lo necesario)</td>
+      <td>Alto (requiere SO completo)</td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td>Velocidad</td>
+      <td>Muy rápido (milisegundos)</td>
+      <td>Lento (segundos/minutos)</td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td>Tamaño</td>
+      <td>Ligero (MB)</td>
+      <td>Pesado (GB)</td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td>Arranque</td>
+      <td>Inmediato</td>
+      <td>Lento</td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td>Uso de CPU/RAM</td>
+      <td>Optimizado, solo lo necesario</td>
+      <td>Consume más recursos</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="caracteristicas-de-docker"><strong>Caracteristicas de Docker</strong></h3>
+
+<ul>
+  <li>
+    <p><strong>Portabilidad</strong>: El contenedor Docker podremos desplegarlo en cualquier otro sistema siempre y cuando soporte esta tecnología, con lo que nos ahorraremos el tener que instalar en este nuevo entorno todas aquellas aplicaciones que normalmente usemos.</p>
+  </li>
+  <li>
+    <p><strong>Ligereza</strong>: Los sistemas virtualizados con Docker suelen pesar mucho menos que usando otros medios como pueden ser maquinas virtuales.</p>
+  </li>
+  <li>
+    <p><strong>Autosuficiencia</strong>: Un contenedor Docker no contiene todo un sistema completo, sino únicamente aquellas librerías, archivos y configuraciones necesarias para desplegar las funcionalidades que contenga. Asimismo, Docker se encarga de la gestión del contenedor y de las aplicaciones que contenga.</p>
+  </li>
+  <li>
+    <p><strong>Seguridad</strong>: Es seguro haciendo uso de namespaces y cgroups, los recursos están aislados.</p>
+  </li>
+  <li>
+    <p><strong>Uso de imágenes</strong>: Una imagen Docker podríamos entenderla como un Sistema Operativo con aplicaciones instaladas. A partir de una imagen se puede crear un contenedor. Las imágenes de docker son portables entre diferentes plataformas, el único requisito es que en el sistema huésped esté disponible docker.</p>
+  </li>
+</ul>
+
+<h3 id="instalación-de-docker-debian-buster"><strong>Instalación de Docker (Debian Buster)</strong></h3>
+
+<ol>
+  <li>Empezamos actualizando la paqueteria:</li>
+</ol>
+
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash"> sudo apt-get update </code>
+</pre>
+</div>
+
+<ol>
+  <li>Instalamos los siguientes paquetes para el uso de docker:</li>
+</ol>
+
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
+sudo apt-get install \
+    apt-transport-https \
+    ca-certificates \
+    curl \
+    gnupg \
+    lsb-release
+</code>
+</pre>
+</div>
+
+<ol>
+  <li>Añadimos la clave gpg a nuestro repositorio (en este caso repositorios de debian):</li>
+</ol>
+
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
+curl -fsSL https://download.docker.com/linux/debian/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+</code>
+</pre>
+</div>
+
+<ol>
+  <li>Configuramos el repositorio estable de docker:</li>
+</ol>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>echo \
+  "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/debian \
+  $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list &gt; /dev/null
+</code></pre></div></div>
+
+<ol>
+  <li>Instalamos Docker:</li>
+</ol>
+
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
+sudo apt-get update
+sudo apt-get install docker-ce docker-ce-cli containerd.io
+</code>
+</pre>
+</div>
+
+<p>Si lo que queremos es usar docker sin sudo, ejecutaremos el siguiente comando:</p>
+
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
+sudo usermod -aG docker $USER
+</code>
+</pre>
+</div>
+
+<h3 id="comandos-utiles-de-docker"><strong>Comandos utiles de docker</strong></h3>
+
+<ul>
+  <li>Ejecutar un contenedor a partir de una imagen:</li>
+</ul>
+
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
+docker run "nombre de la imagen"
+</code>
+</pre>
+</div>
+
+<p>Podemos obtener varias imágenes de docker en la sigiente pagina <a href="https://hub.docker.com/">Dockerhub</a>. En el caso de que una imagen tenga varias versiones podemos ejecutar la version deseada de la siguiente forma:</p>
+
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
+docker run "nombre de la imagen":"version"
+</code>
+</pre>
+</div>
+
+<p>En el caso de no indicar la version, por defecto se ejecutara la ultima version que exista de la imagen.</p>
+
+<ul>
+  <li>Ejecutar un contenedor en background o segundo plano:</li>
+</ul>
+
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
+docker run -d "nombre de la imagen"
+</code>
+</pre>
+</div>
+
+<ul>
+  <li>Descargar imágenes docker:</li>
+</ul>
+
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
+docker pull "nombre de la imagen"
+</code>
+</pre>
+</div>
+
+<p>Aunque este comando no es del todo necesario ya que si la imagen que queremos ejecutar no la tenemos, al ejecutar docker run se descarga de forma automatica siempre y cuando exista la imagen que queremos. Este comando se usa sobre todo en el caso de querer descargar imágenes sin que se ejecuten automticamente.</p>
+
+<ul>
+  <li>Comprobar las imágenes que tenemos en nuestra maquina:</li>
+</ul>
+
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
+docker images
+</code>
+</pre>
+</div>
+
+<p>Ejemplo:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sergioib@debian-sergio:~$ docker images
+REPOSITORY                 TAG                 IMAGE ID            CREATED             SIZE
+sergioib94/drupal          v1                  ffabd2bb2653        6 months ago        334MB
+sergioib94/bookmedik-php   v1                  5b857f8a175a        6 months ago        436MB
+mysql                      5.6                 0abf1c71efa3        6 months ago        303MB
+sergioib94/bookmedik2      v1                  5dd61ff34e91        6 months ago        435MB
+sergioib94/bookmedik       v1                  3d1d3ed847f8        6 months ago        249MB
+sergioib94/bookmedik       &lt;none&gt;              df7505c5a0ba        6 months ago        251MB
+mariadb                    latest              70e69b4a7bda        7 months ago        401MB
+joomla                     latest              6014b57fda53        7 months ago        458MB
+php                        7.4-apache          83db90327db8        7 months ago        414MB
+debian                     latest              5890f8ba95f6        7 months ago        114MB
+php                        7.4.3-apache        d753d5b380a1        7 months ago        414MB
+</code></pre></div></div>
+
+<p>En mi caso estas son las imágenes que tengo en mi equipo, algunas usadas en otras practicas y ejemplos y otras descargadas y modificadas por mi.</p>
+
+<p>Cada imagen cuenta con una ID unica que podremos usar posteriormente para eliminar las imágenes.</p>
+
+<ul>
+  <li>Mostrar contenedores que se estan ejecutando:</li>
+</ul>
+
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
+docker ps
+</code>
+</pre>
+</div>
+
+<p>A este comando le podemos añadir la opción -a si lo que queremos es mostrar todos los contenedores que en algun momento se han ejecutado.</p>
+
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
+sergioib@debian-sergio:~$ docker ps
+CONTAINER ID        IMAGE                         COMMAND                  CREATED             STATUS                          PORTS                     NAMES
+83deaf076a51        joomla                        "/entrypoint.sh apac…"   6 months ago        Up 2 hours                      0.0.0.0:8080-&gt;80/tcp      deploy_joomla_1
+530ef214963a        mysql:5.6                     "docker-entrypoint.s…"   6 months ago        Up 2 hours                      0.0.0.0:32768-&gt;3306/tcp   deploy_joomladb_1
+220f6974c26f        mysql:5.6                     "docker-entrypoint.s…"   6 months ago        Restarting (1) 31 seconds ago                             deploy_db_1
+b18afffe8d15        sergioib94/drupal:v1          "/usr/sbin/apache2ct…"   6 months ago        Up 2 hours                      0.0.0.0:8083-&gt;80/tcp      drupal
+28dc5d493419        sergioib94/bookmedik-php:v1   "docker-php-entrypoi…"   6 months ago        Up 2 hours                      0.0.0.0:8081-&gt;80/tcp      bookmedik-php
+
+sergioib@debian-sergio:~$ docker ps -a
+CONTAINER ID        IMAGE                         COMMAND                  CREATED             STATUS                         PORTS                     NAMES
+83deaf076a51        joomla                        "/entrypoint.sh apac…"   6 months ago        Up 2 hours                     0.0.0.0:8080-&gt;80/tcp      deploy_joomla_1
+530ef214963a        mysql:5.6                     "docker-entrypoint.s…"   6 months ago        Up 2 hours                     0.0.0.0:32768-&gt;3306/tcp   deploy_joomladb_1
+220f6974c26f        mysql:5.6                     "docker-entrypoint.s…"   6 months ago        Restarting (1) 6 seconds ago                             deploy_db_1
+b18afffe8d15        sergioib94/drupal:v1          "/usr/sbin/apache2ct…"   6 months ago        Up 2 hours                     0.0.0.0:8083-&gt;80/tcp      drupal
+631dc24356c6        5890f8ba95f6                  "/bin/sh -c 'apt-get…"   6 months ago        Exited (100) 6 months ago                                mystifying_visvesvaraya
+28dc5d493419        sergioib94/bookmedik-php:v1   "docker-php-entrypoi…"   6 months ago        Up 2 hours                     0.0.0.0:8081-&gt;80/tcp      bookmedik-php
+</code>
+</pre>
+</div>
+
+<ul>
+  <li>Reiniciar un contenedor:</li>
+</ul>
+
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
+docker start "ID del contenedor"
+</code>
+</pre>
+</div>
+
+<ul>
+  <li>Mostrar logs de un contenedor:</li>
+</ul>
+
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
+docker logs "ID del contenedor" o bien docker logs "nombre del contenedor"
+</code>
+</pre>
+</div>
+
+<ul>
+  <li>Ejecutar comandos dentro de un contenedor que se este ejecutando:</li>
+</ul>
+
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
+docker exec "ID del contenedor"
+</code>
+</pre>
+</div>
+
+<p>Con este comando podemos usar las opciones -i para crear una sesion interactiva y -t emulara una terminal. Por ejemplo:</p>
+
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
+sergioib@debian-sergio:~$ docker exec -it 83deaf076a51 sh
+# ls
+LICENSE.txt  administrator  cache  components	      htaccess.txt  includes   language  libraries  modules  robots.txt  tmp
+README.txt   bin	    cli    configuration.php  images	    index.php  layouts	 media	    plugins  templates	 web.config.txt
+# 
+</code>
+</pre>
+</div>
+
+<p>En este caso por ejemplo abrimos una terminal sh para poder ejecutar comandos en el contenedor que en este caso es un contenedor joomla y probamos la ejecucion de ls.</p>
+
+<ul>
+  <li>Parar uno o varios contenedores:</li>
+</ul>
+
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
+docker stop "ID del contenedor"
+</code>
+</pre>
+</div>
+
+<p>En el caso de querer parar varios contenedores simplemente se ponen las ID de los contenedores separadas por espacios una tras otra.</p>
+
+<ul>
+  <li>Conectarse al contenedor:</li>
+</ul>
+
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
+docker attach "ID contenedor"
+</code>
+</pre>
+</div>
+
+<ul>
+  <li>Mostrar las caracteristicas del contenedor:</li>
+</ul>
+
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
+docker inspect "ID del conetedor"
+</code>
+</pre>
+</div>
+
+<p>Ejemplo:</p>
+
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
+sergioib@debian-sergio:~$ docker inspect b18afffe8d15
+[
+    {
+        "Id": "b18afffe8d155d67e3992d10c4336a78c90afcadba4fbddc6f7379d66ca5ceec",
+        "Created": "2021-03-03T15:57:19.599943415Z",
+        "Path": "/usr/sbin/apache2ctl",
+        "Args": [
+            "-D",
+            "FOREGROUND"
+        ],
+        "State": {
+            "Status": "running",
+            "Running": true,
+            "Paused": false,
+            "Restarting": false,
+            "OOMKilled": false,
+            "Dead": false,
+            "Pid": 1976,
+            "ExitCode": 0,
+            "Error": "",
+            "StartedAt": "2021-09-23T08:46:42.423040032Z",
+            "FinishedAt": "2021-09-22T14:27:05.965384671Z"
+        },
+        "Image": "sha256:ffabd2bb26538aa1861095857117a51d13cae77cc89e9736cd69ddd006409803",
+        "ResolvConfPath": "/var/lib/docker/containers/b18afffe8d155d67e3992d10c4336a78c90afcadba4fbddc6f7379d66ca5ceec/resolv.conf",
+        "HostnamePath": "/var/lib/docker/containers/b18afffe8d155d67e3992d10c4336a78c90afcadba4fbddc6f7379d66ca5ceec/hostname",
+        "HostsPath": "/var/lib/docker/containers/b18afffe8d155d67e3992d10c4336a78c90afcadba4fbddc6f7379d66ca5ceec/hosts",
+        "LogPath": "/var/lib/docker/containers/b18afffe8d155d67e3992d10c4336a78c90afcadba4fbddc6f7379d66ca5ceec/b18afffe8d155d67e3992d10c4336a78c90afcadba4fbddc6f7379d66ca5ceec-json.log",
+        "Name": "/drupal",
+        "RestartCount": 0,
+        "Driver": "overlay2",
+        "Platform": "linux",
+        "MountLabel": "",
+        "ProcessLabel": "",
+        "AppArmorProfile": "docker-default",
+        "ExecIDs": null,
+        "HostConfig": {
+            "Binds": [
+                "/home/sergio/Escritorio/Informatica/Github/docker-bookmedik/Tarea4/vol-app:/var/log/apache2:rw"
+            ],
+            "ContainerIDFile": "",
+            "LogConfig": {
+                "Type": "json-file",
+                "Config": {}
+            },
+            "NetworkMode": "deploy_default",
+            "PortBindings": {
+                "80/tcp": [
+                    {
+                        "HostIp": "",
+                        "HostPort": "8083"
+                    }
+                ]
+            },
+            "RestartPolicy": {
+                "Name": "always",
+                "MaximumRetryCount": 0
+            },
+            "AutoRemove": false,
+            "VolumeDriver": "",
+            "VolumesFrom": [],
+            "CapAdd": null,
+            "CapDrop": null,
+            "Dns": [],
+            "DnsOptions": [],
+            "DnsSearch": [],
+            "ExtraHosts": null,
+            "GroupAdd": null,
+            "IpcMode": "shareable",
+            "Cgroup": "",
+            "Links": null,
+            "OomScoreAdj": 0,
+            "PidMode": "",
+            "Privileged": false,
+            "PublishAllPorts": false,
+            "ReadonlyRootfs": false,
+            "SecurityOpt": null,
+            "UTSMode": "",
+            "UsernsMode": "",
+            "ShmSize": 67108864,
+            "Runtime": "runc",
+            "ConsoleSize": [
+                0,
+                0
+            ],
+            "Isolation": "",
+            "CpuShares": 0,
+            "Memory": 0,
+            "NanoCpus": 0,
+            "CgroupParent": "",
+            "BlkioWeight": 0,
+            "BlkioWeightDevice": null,
+            "BlkioDeviceReadBps": null,
+            "BlkioDeviceWriteBps": null,
+            "BlkioDeviceReadIOps": null,
+            "BlkioDeviceWriteIOps": null,
+            "CpuPeriod": 0,
+            "CpuQuota": 0,
+            "CpuRealtimePeriod": 0,
+            "CpuRealtimeRuntime": 0,
+            "CpusetCpus": "",
+            "CpusetMems": "",
+            "Devices": null,
+            "DeviceCgroupRules": null,
+            "DiskQuota": 0,
+            "KernelMemory": 0,
+            "MemoryReservation": 0,
+            "MemorySwap": 0,
+            "MemorySwappiness": null,
+            "OomKillDisable": false,
+            "PidsLimit": 0,
+            "Ulimits": null,
+            "CpuCount": 0,
+            "CpuPercent": 0,
+            "IOMaximumIOps": 0,
+            "IOMaximumBandwidth": 0,
+            "MaskedPaths": [
+                "/proc/asound",
+                "/proc/acpi",
+                "/proc/kcore",
+                "/proc/keys",
+                "/proc/latency_stats",
+                "/proc/timer_list",
+                "/proc/timer_stats",
+                "/proc/sched_debug",
+                "/proc/scsi",
+                "/sys/firmware"
+            ],
+            "ReadonlyPaths": [
+                "/proc/bus",
+                "/proc/fs",
+                "/proc/irq",
+                "/proc/sys",
+                "/proc/sysrq-trigger"
+            ]
+        },
+        "GraphDriver": {
+            "Data": {
+                "LowerDir": "/var/lib/docker/overlay2/99132561004d96471fbd8c8bf78bcdd3edb404b60bb6a56b7bd7b5210642cf9a-init/diff:/var/lib/docker/overlay2/8c19cff03760c3f3538225d3dda65f1417b24d7bf36620df33a0b82397ae0bdc/diff:/var/lib/docker/overlay2/59b79af32079cb6f562e43f6a2942e683371fedf54ab563b2d02a900328286a3/diff:/var/lib/docker/overlay2/7120a8197d4c96b9f28c9920a6efd08ef521c63dc59853c0b54d04cc147c2824/diff:/var/lib/docker/overlay2/8fd883ebf1a0ff23f7569944810d7e1442a78af7305c2ab7c5d7a94df2dfdba3/diff",
+                "MergedDir": "/var/lib/docker/overlay2/99132561004d96471fbd8c8bf78bcdd3edb404b60bb6a56b7bd7b5210642cf9a/merged",
+                "UpperDir": "/var/lib/docker/overlay2/99132561004d96471fbd8c8bf78bcdd3edb404b60bb6a56b7bd7b5210642cf9a/diff",
+                "WorkDir": "/var/lib/docker/overlay2/99132561004d96471fbd8c8bf78bcdd3edb404b60bb6a56b7bd7b5210642cf9a/work"
+            },
+            "Name": "overlay2"
+        },
+        "Mounts": [
+            {
+                "Type": "bind",
+                "Source": "/home/sergio/Escritorio/Informatica/Github/docker-bookmedik/Tarea4/vol-app",
+                "Destination": "/var/log/apache2",
+                "Mode": "rw",
+                "RW": true,
+                "Propagation": "rprivate"
+            }
+        ],
+        "Config": {
+            "Hostname": "b18afffe8d15",
+            "Domainname": "",
+            "User": "",
+            "AttachStdin": false,
+            "AttachStdout": false,
+            "AttachStderr": false,
+            "ExposedPorts": {
+                "80/tcp": {}
+            },
+            "Tty": false,
+            "OpenStdin": false,
+            "StdinOnce": false,
+            "Env": [
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+            ],
+            "Cmd": [
+                "/usr/sbin/apache2ctl",
+                "-D",
+                "FOREGROUND"
+            ],
+            "ArgsEscaped": true,
+            "Image": "sergioib94/drupal:v1",
+            "Volumes": {
+                "/var/log/apache2": {}
+            },
+            "WorkingDir": "",
+            "Entrypoint": null,
+            "OnBuild": null,
+            "Labels": {
+                "com.docker.compose.config-hash": "bdc0b1a85207601bcc1fd0c585c01d9686d3d4f0ff6fd4db65d59399d6b782eb",
+                "com.docker.compose.container-number": "1",
+                "com.docker.compose.oneoff": "False",
+                "com.docker.compose.project": "deploy",
+                "com.docker.compose.service": "drupal",
+                "com.docker.compose.version": "1.21.0"
+            }
+        },
+        "NetworkSettings": {
+            "Bridge": "",
+            "SandboxID": "ed755bb08c99f9185c07790e7a3d1c57a3d36fbb3424b680c0e6985ab6173f2c",
+            "HairpinMode": false,
+            "LinkLocalIPv6Address": "",
+            "LinkLocalIPv6PrefixLen": 0,
+            "Ports": {
+                "80/tcp": [
+                    {
+                        "HostIp": "0.0.0.0",
+                        "HostPort": "8083"
+                    }
+                ]
+            },
+            "SandboxKey": "/var/run/docker/netns/ed755bb08c99",
+            "SecondaryIPAddresses": null,
+            "SecondaryIPv6Addresses": null,
+            "EndpointID": "",
+            "Gateway": "",
+            "GlobalIPv6Address": "",
+            "GlobalIPv6PrefixLen": 0,
+            "IPAddress": "",
+            "IPPrefixLen": 0,
+            "IPv6Gateway": "",
+            "MacAddress": "",
+            "Networks": {
+                "deploy_default": {
+                    "IPAMConfig": null,
+                    "Links": null,
+                    "Aliases": [
+                        "drupal",
+                        "b18afffe8d15"
+                    ],
+                    "NetworkID": "2d13f9ba198280146426de0bc4704bd911c6a593640187644d83bda98cf8daab",
+                    "EndpointID": "df8047a7c43eab47ea408f970c982eb6c86e743897d3c4328a013cc7415a4785",
+                    "Gateway": "172.21.0.1",
+                    "IPAddress": "172.21.0.4",
+                    "IPPrefixLen": 16,
+                    "IPv6Gateway": "",
+                    "GlobalIPv6Address": "",
+                    "GlobalIPv6PrefixLen": 0,
+                    "MacAddress": "02:42:ac:15:00:04",
+                    "DriverOpts": null
+                }
+            }
+        }
+    }
+]
+</code>
+</pre>
+</div>
+
+<p>En este caso vemos la informacion relacionada con un contenedor que aloja Drupal. Aqui podemos encontrar varia informacion como:</p>
+
+<ul>
+  <li>El id del contenedor.</li>
+  <li>Los puertos abiertos y sus redirecciones</li>
+  <li>Los bind mounts y volúmenes usados.</li>
+  <li>El tamaño del contenedor</li>
+  <li>La configuración de red del contenedor.</li>
+  <li>El ENTRYPOINT que es lo que se ejecuta al hacer docker run.</li>
+  <li>El valor de las variables de entorno.</li>
+  <li>
+    <p>Y muchas más cosas….</p>
+  </li>
+  <li>Destruir o “matar” un contenedor:</li>
+</ul>
+
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
+docker kill "ID controlador"
+</code>
+</pre>
+</div>
+
+<ul>
+  <li>Pausar/reanudar un contenedor:</li>
+</ul>
+
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
+docker pause "ID controlador" / docker unpause "ID controlador"
+</code>
+</pre>
+</div>
+
+<ul>
+  <li>Ver o establecer un puerto para un contenedor:</li>
+</ul>
+
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
+docker port "numero de puerto" "ID contenedor"
+</code>
+</pre>
+</div>
+
+<p>A la hora de establecer el puerto de un contenedor tambien podemos hacerlo usando la opcion -p:</p>
+
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
+docker -p "nuemro de puerto" "ID contenedor"
+</code>
+</pre>
+</div>
+
+<ul>
+  <li>Renombrar un contenedor:</li>
+</ul>
+
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
+docker renamo "ID contenedor"
+</code>
+</pre>
+</div>
+
+<ul>
+  <li>Eliminar todos los contenedores:</li>
+</ul>
+
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
+docker rm -f $(docker ps -a -q)
+</code>
+</pre>
+</div>
+
+<ul>
+  <li>Comprobar la version de docker:</li>
+</ul>
+
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
+docker --version
+</code>
+</pre>
+</div>
+
+<p>Ejemplo:</p>
+
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
+sergioib@debian-sergio:~$ docker --version
+Docker version 18.09.1, build 4c52b90
+</code>
+</pre>
+</div>
+
+<p>En mi caso la version esta un poco desactualizada ya que actualmente si no me equivoco la version actual es la 20.10.</p>
+
+<h3 id="creación-de-imágenes"><strong>Creación de imágenes</strong></h3>
+
+<h4 id="modificando-una-imagen"><strong>Modificando una imagen</strong></h4>
+
+<p>Con Docker tenemos la posibilidad de crear una imagen personalizada a partir de una imagen ya existente modificando el contenedor de la siguiente forma:</p>
+
+<ol>
+  <li>Arrancamos un contenedor artiendo de una imagen como base:</li>
+  <li>Realizamos algun tipo de modificacion:</li>
+  <li>Usamos el comando docker commit para crear una imagen que contenga la imagen base usasda + las modificaciones añadidas:</li>
+</ol>
+
+<p>En el caso de que queramos añadir nuestra imagen personalizada en docker hub ejecutamos los siguientes comandos:</p>
+
+<ol>
+  <li>
+    <p>Nos logueamos en docker hub ejecutando el comando docker logine introduciendo nuestro usuario y contraseña.</p>
+  </li>
+  <li>
+    <p>Una vez logueados ejecutamos docker push subiendo nuestra imagen a docker hub.</p>
+  </li>
+</ol>
+
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
+sergioib@debian-sergio:~$ docker ps
+CONTAINER ID        IMAGE                         COMMAND                  CREATED             STATUS                          PORTS                     NAMES
+b18afffe8d15        sergioib94/drupal:v1          "/usr/sbin/apache2ct…"   6 months ago        Up 3 hours                      0.0.0.0:8083-&gt;80/tcp      drupal
+</code>
+</pre>
+</div>
+
+<p>En mi caso por ejemplo cuento con una imagen modificada por mi de un contenedor que cuenta con un drupal, en este caso si quiero subir este drupal mio a docker hub tendria que loguarme con docker login y una vez logueado subir la imagen con docker push:</p>
+
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
+docker push sergioib94/drupal:v1
+</code>
+</pre>
+</div>
+
+<p>De esta forma cualquier usuario de docker hub puede descargarse nuestra imagen y trabajar con ella ejecutando un docker pull.</p>
+
+<h4 id="haciendo-uso-de-un-fichero-dockerfile"><strong>Haciendo uso de un fichero dockerfile</strong></h4>
+
+<p>Esta que hemos visto es una forma de crear una imagen personalizada en docker, pero lo abitual es crearla haciendo uso de un fichero dockerfile.</p>
+
+<p>¿Que es un fichero dockerfile? este es un fichero de texto plano que contiene una serie de instrucciones, necesarias para crear una imagen que posteriormente, se convertirá en una aplicacion.</p>
+
+<p>Unos ejemplos sobre el uso de dockerfile los podemos encontrar en el post <a href="https://sergioib.netlify.app/posts/aplicaciones-web-php-en-docker/">aplicaciones web php en docker</a> en el que a traves de unos ejercicios hacemos uso de una imagen de la aplicacion bookmedic y la personalizamos.</p>
+
+<p>La estructura de los dockerfile será la siguiente:</p>
+
+<ul>
+  <li>
+    <p>En los ficheros dockerfile la primera linea que indicaremos será un <strong>FROM</strong> indicando la imagen “padre” o imagen base que va a usarse.</p>
+  </li>
+  <li>
+    <p>La linea de <strong>WORKDIR</strong>, en el que se va a declarar en que directorio se va a realizar todo el trabajo, en el caso de que no exista el directorio, se creara de forma automática.</p>
+  </li>
+  <li>
+    <p>En el caso necesario podemos tener tambien una linea <strong>COPY</strong> con la linea copy podremos copiar los ficheros del directorio donde esta nuestro dockerfile al directorio de trabajo de nuestro contenedor indicado en la linea workdir.</p>
+  </li>
+  <li>
+    <p>Podemos hacer uso tambien de RUN en nuestro dockerfile para que se ejecuten los comandos indocados una vez se cree el contenedor.</p>
+  </li>
+  <li>
+    <p>Todos los dockerfile deben acabar con una linea <strong>CMD</strong>, indicando los comandos o scripts que se van a ejecutar.</p>
+  </li>
+</ul>
+
+<p>Ejemplo:</p>
+
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
+# Imágen base de PHP con docker
+FROM php:7.4-apache
+
+# Variables de entorno
+ENV MARIADB_USER admin
+ENV MARIADB_PASS admin
+ENV MARIADB_HOST servidor_mysql2
+
+# Instalación de paquetes necesarios
+RUN apt-get update
+RUN docker-php-ext-install pdo pdo_mysql mysqli json
+RUN a2enmod rewrite
+
+# Exponer puerto 80
+EXPOSE 80
+
+# Habilitar módulos de Apache
+WORKDIR /var/www/html
+
+# Copiar archivos de la aplicación
+COPY bookmedik/ /var/www/html
+
+ADD script.sh /usr/local/bin/script.sh
+
+RUN chmod +x /usr/local/bin/script.sh
+
+# Comando que ejecutará el contenedor
+CMD ["script.sh"]
+</code>
+</pre>
+</div>
+
+<p>En este ejemplo usamos una imagen base de php version 7.4 con apache. Se han creado tres variables, mariadb_user, mariadb_pass y mariadb_host de forma que el mysql que tendremos en nuestro contenedor reciva las varioables a traves del script indicado al final del dockerfile.</p>
+
+<p>Una vez creado el contenedor se ejecutaran los comandos indicados con run, es decir que el contenedor de actualizara, se descargaran varios paquetes y se habilitara el modulo rewrite de apache.</p>
+
+<p>Como nuestro contenedor tendra un apache y php, se abrira el puerto 80 para que haga uso de el apache usando para ello la linea <strong>EXPOSE</strong>.</p>
+
+<p>El directorio de trabajo indicado será /var/www/html y copiaremos en ese directorio los ficheros de nuestro directorio bookmedik (una aplicacion web que hace de agenda).</p>
+
+<p>añdimos s nuestro contenedor el script indicado usando <strong>ADD</strong> en la ubicacion necesaria y jecutamos otro RUN para darle permisos de ejecucion a al script y que de esa forma mysql reciba los datos necesario y al ejecutar apache se pueda usar la aplicacion web de bookmedik</p>
+
+<p>El contenido de nuestro script.sh será el siguiente:</p>
+
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
+#!/bin/bash
+sed -i "s/$this-&gt;user=\"root\";/$this-&gt;user=\"$MARIADB_USER\";/g" /var/www/html/core/controller/Database.php
+sed -i "s/$this-&gt;pass=\"\";/$this-&gt;pass=\"$MARIADB_PASS\";/g" /var/www/html/core/controller/Database.php
+sed -i "s/$this-&gt;host=\"localhost\";/$this-&gt;host=\"$MARIADB_HOST\";/g" /var/www/html/core/controller/Database.php
+</code>
+</pre>
+</div>
+
+<p>Después para construir el contenedor, ejecutamos docker build -t “nombre de la imagen”</p>
+
+<h3 id="redes-en-docker"><strong>Redes en Docker</strong></h3>
+
+<p>A los contenedores que creemos, tenemos la posibilidad de añadirlos a una red haciendo uso de los siguientes comandos:</p>
+
+<ul>
+  <li>Conectar/desconectar una red de un contenedor:</li>
+</ul>
+
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
+docker network connect/disconnect "ID red"
+</code>
+</pre>
+</div>
+
+<ul>
+  <li>Crear una nueva red:</li>
+</ul>
+
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
+docker network create
+</code>
+</pre>
+</div>
+
+<ul>
+  <li>Mostrar informacion de una red:</li>
+</ul>
+
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
+docker network inspect "ID red"
+</code>
+</pre>
+</div>
+
+<ul>
+  <li>Mostrar todas las redes docker</li>
+</ul>
+
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
+docker network ls
+</code>
+</pre>
+</div>
+
+<ul>
+  <li>Eliminar red:</li>
+</ul>
+
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
+docker network rm
+</code>
+</pre>
+</div>
+
+<p>Por defecto al instalar docker se crean automaticamente tres redes, bridge, none y host:</p>
+
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
+sergioib@debian-sergio:~$ docker network ls
+NETWORK ID          NAME                DRIVER              SCOPE
+1857a84cc7c7        bridge              bridge              local
+daeb4ba11558        host                host                local
+98f5e7fa91c2        none                null                local
+</code>
+</pre>
+</div>
+
+<ul>
+  <li>
+    <p>Red bridge: Es la red a la que se conectan los contenedores por defecto (con direccionamiento 172.17.0.0/16). Esta red corresponde a la interfaz docker0 en nuestra maquina fisica, esta interfaz hace de puerta de enlace de los contenedores.</p>
+
+    <ul>
+      <li>
+        <p>Con esta red podremos aislar los distintos contenedores en distintas subredes docker, de tal manera que desde cada una de las subredes solo podremos acceder a los equipos de esa misma subred.</p>
+      </li>
+      <li>
+        <p>Aislar los contenedores del acceso exterior.</p>
+      </li>
+      <li>
+        <p>Publicar servicios que tengamos en los contenedores mediante redirecciones que docker implementará con las reglas de iptables.</p>
+      </li>
+    </ul>
+  </li>
+  <li>
+    <p>Si conectamos un contenedor a la red host, el contenedor estaría en la misma red que el host (por lo tanto toma direccionamiento del servidor DHCP de nuestra red). Además los puertos son accesibles directamente desde el host.</p>
+  </li>
+  <li>
+    <p>La red none no configurará ninguna IP para el contenedor y no tiene acceso a la red externa ni a otros contenedores. Tiene la dirección loopback y se puede usar para ejecutar trabajos por lotes.</p>
+  </li>
+</ul>
+
+<h3 id="almacenamiento-en-docker"><strong>Almacenamiento en Docker</strong></h3>
+
+<p>La información de los contenedores que ejecutamos es efimera, lo que quiere decir que una vez cerramos sesión, toda la informacion se pierde por lo que necesitaremos crear volumenes si queremos que dicha informacion permanezca. Estos volumenes son simplemente directorios que se crean en nuestro sistema de ficheros para que docker pueda almacenar la información.</p>
+
+<p>Para mantener la informacion de los contenedores tendremos varias opciones:</p>
+
+<ul>
+  <li>Volumenes docker</li>
+  <li>Bind mounts</li>
+</ul>
+
+<h4 id="volumenes-docker"><strong>Volumenes docker</strong></h4>
+
+<p>Para gestionar los volumenes docker podemos ejecutar los siguientes comandos:</p>
+
+<ul>
+  <li>Creacion de volumenes:</li>
+</ul>
+
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
+docker volume create "nombre del volumen"
+</code>
+</pre>
+</div>
+
+<ul>
+  <li>Eliminacion de volumenes:</li>
+</ul>
+
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
+docker volume rm "nombre del volumen"
+</code>
+</pre>
+</div>
+
+<ul>
+  <li>Mostrar volumenes que tenemos creados:</li>
+</ul>
+
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
+docker volume ls
+</code>
+</pre>
+</div>
+
+<ul>
+  <li>Eliminacion de volumenes que no se estan usando:</li>
+</ul>
+
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
+docker volume prune
+</code>
+</pre>
+</div>
+
+<ul>
+  <li>Mostrar detalles sobre los volumenes:</li>
+</ul>
+
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
+docker volume inspect "nombre del volumen"
+</code>
+</pre>
+</div>
+
+<p>Como ejemplo se va a crear un contenedor con una imagen base de debian haciendo uso de la opción -v para así indicar la ubicación de nuestro volumen creado.</p>
+
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
+#Creamos primero un volumen que usaremos de prueba.
+
+sergioib@debian-sergio:~$ docker volume create prueba
+prueba
+
+#Ejecutamos el contenedor indicando tanto el nombre del contenedor, donde se ubicara el volumen y la imagen a usar.
+
+sergioib@debian-sergio:~$ docker run -d --name debian-prueba -v prueba:/usr/share/prueba debian
+905c1a3bac1bdce990d459aa9668e90d55135fc29f080a2056286c66b4a2c037
+
+#Comprobamos que se ha creado.
+
+sergioib@debian-sergio:~$ docker ps -a
+CONTAINER ID        IMAGE                         COMMAND                  CREATED              STATUS                          PORTS                     NAMES                          prueba-mdb
+905c1a3bac1b        debian                        "bash"                   3 minutes ago        UP 3 minutes ago                                  debian-prueba
+</code>
+</pre>
+</div>
+
+<h4 id="bind-mounts"><strong>Bind mounts</strong></h4>
+
+<p>Con el método bind mount hacemos la información persistente y estará gestionada por nosotros mismos, a diferencia de los volúmenes Docker que requieren permisos. Este sistema es muy parecido ya que se trata de montar una parte del sistema de ficheros en el contenedor.</p>
+
+<p>Para poner en practica este método, empezaremos creando un directorio donde se alojara nuestra información. Este volumen se usara más adelante como ejemplo a la hora de usar docker compose, en este caso se ha creado el directorio en la siguiente ruta “docker-bookmedik/Tarea4/”.</p>
+
+<h3 id="docker-compose"><strong>Docker Compose</strong></h3>
+
+<p>Docker-Compose es una herramienta soluciona el problema de tener que repetir cada comando al levantar nuestro contenedores, ya que parte de un fichero YML en el que estan indicados todos los elementos que necesita Docker para montar nuestros escenarios de multicontenedor. Es importante el orden en el que se escriben los parámetros.</p>
+
+<p>Para hacer uso de docker compose, lo primero será instalarlo:</p>
+
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
+# Añadimos la clave GPG
+curl -fsSL https://download.docker.com/linux/debian/gpg | sudo apt-key add -
+
+# Buscamos el paquete 
+sudo apt-cache policy docker-compose
+
+# Lo instalamos
+sudo apt-get install docker-compose
+</code>
+</pre>
+</div>
+
+<p>Ejemplo de uso:</p>
+
+<p>Vamos ha hacer una prueba de instalación, instalando como ejemplo un contenedor docker con drupal que use una base de datos mysql.</p>
+
+<p>Para ello crearemos una carpeta deply donde guardaremos nuestro docker compose, a diferencia de con dockerfile que lo guardabamos todo lo relacionado con la instalacion del contenedor en un directorio buil (no es necesaria esta distincion entre directorio build y directorio deploy, es solo para que se entienda mejor).</p>
+
+<p>Nuestro fichero docker compose será el siguiente:</p>
+
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
+version: "3.1"
+
+services:
+  db:
+    container_name: servidor_mysql_drupal
+    image: mariadb
+    restart: always
+    environment:
+      MYSQL_DATABASE: drupal
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: admin
+      MYSQL_ROOT_PASSWORD: drupal_admin
+    volumes:
+      - /home/sergio/Escritorio/Informatica/Github/docker-bookmedik/Tarea4/vol-maria:/var/lib/mysql
+
+  drupal:
+    container_name: drupal
+    image: sergioib94/drupal:v1
+    restart: always
+    ports:
+      - 8083:80
+    volumes:
+      - /home/sergio/Escritorio/Informatica/Github/docker-bookmedik/Tarea4/vol-app:/var/log/apache2
+</code>
+</pre>
+</div>
+
+<p>En este ejemplo estamos creando dos contenedores, uno al que llamamos db que alojara la base de datos de mariadb y otro contenedor en el que se desplegará drupal.</p>
+
+<p>En el contenedor de mariadb, indicamos tanto la imagen que se usará, así como las variables de entorno necesarias para que dicha base de datos funcione correctamente (nombre de la base de datos, usuario, contraseña, contraseña de administrador) y querer que permanezcan persistentes los datos de nuestra base de datos, creamos un volumen persistente haciendo uso de bind mount.</p>
+
+<p>Por otro lado al contenedor de drupal solo será necesario indicar la imagen que en este caso es una imagen drupal configurada por mi ya que la configuración por defecto daba error a la hora de instarse, indicamos los puertos a usar (en mi caso el puerto 8083 ya que los puertos 82, 81 y 80 los tengo ocupados con otros contenedores).</p>
+
+<p>Desplegamos el docker compose ejecutando el siguiente comando en el directorio donde este el fichero:</p>
+
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
+sergioib@debian-sergio:~/Escritorio/Informatica/Github/docker-bookmedik/Tarea4/deploy$ docker-compose up -d
+Creating servidor_mysql_drupal ... done
+Creating drupal                ... done
+
+sergioib@debian-sergio:~$ docker ps
+CONTAINER ID        IMAGE                         COMMAND                  CREATED             STATUS              PORTS                     NAMES
+205d30bcee2f        mariadb                       "docker-entrypoint.s…"   10 minutes ago      Up About a minute   3306/tcp                  servidor_mysql_drupal
+b18afffe8d15        sergioib94/drupal:v1          "/usr/sbin/apache2ct…"   7 months ago        Up About a minute   0.0.0.0:8083-&gt;80/tcp      drupal
+                    0.0.0.0:8083-&gt;80/tc
+</code>
+</pre>
+</div>
+
+<p>Una vez desplegado, comenzaremos con la instalación y comprobaremos que funciona correctamente, para ello en nuestro navegador accedemos al puerto indicado anteriormente, es decir a localhost:8083.</p>
+
+<p>Comenzamos con la instalación y comprobamos que podemos usar drupal:</p>
+
+<p><img src="/images/Intro-Docker/idioma.png" alt="Elección de idioma" /></p>
+
+<p><img src="/images/Intro-Docker/instalacion.png" alt="Comenzamos la instalación" /></p>
+
+<p><img src="/images/Intro-Docker/drupal.png" alt="Drupal" /></p>
+
+<h3 id="instalación-de-docker-en-windows"><strong>Instalación de Docker en Windows</strong></h3>
+
+<p>Aunque el proyecto de docker inicialmente era para uso de sistemas Linux, actualmente tambien es posible usarlo en sistemas operativos de windows siempre que nuestro windows cumpla con algunos requisitos:</p>
+
+<ul>
+  <li>Windows 10 versión Professional o Enterprise.</li>
+  <li>Virtualización activada en nuestro equipo.</li>
+  <li>Windows actualizado.</li>
+</ul>
+
+<p>La instalación de docker al igual que la mayoria de instalaciones en windows es bastante simple, lo descargamos <a href="https://desktop.docker.com/win/main/amd64/Docker%20Desktop%20Installer.exe">aqui</a>. En mi caso la version de docker que tengo es la 4.1.0.</p>
+
+<p>Una vez descargado, ejecutamos el fichero .exe y comenzara el proceso de instalación.</p>
+
+<p><img src="/images/Intro-Docker/docker1.png" alt="instalación docker" /></p>
+
+<p>Cuando la instalación finalice, debera reiniciarse el equipo para que docker pueda poder usarse (en algunos casos se iniciará y abrirá sin necesidad de reinicio).</p>
+
+<p>A la hora de empezar a usar docker por primera vez, es posible que nos salga un error parecido al siguiente:</p>
+
+<p><img src="/images/Intro-Docker/docker-error.png" alt="error wls2" /></p>
+
+<p>Este error se debe a que docker detecta que nuestra versión de WLS (Windows Subsystem for Linux) es antigua por lo que deberemos instalar la version actual que seria la versión 2 que es la que ahoramismo esta sustituyendo tanto el uso de Hyper-v y VirtualBox en el uso de docker.</p>
+
+<p>Para reparar este error podemos hacer dos cosas, o bien actualizar a WSL2 o utilizar Hyper-V en lugar de WLS2 (Esta última opción en mi caso no ha funcionado con mi version de docker la 4.1.0):</p>
+
+<ul>
+  <li>Actualizando WLS2:</li>
+</ul>
+
+<p>Empezamos descargandonos la actualización <a href="https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_x64.msi">aqui</a> (link valido para equipos x64).</p>
+
+<p>Una vez descargado WLS2, ejecutamos el instalador y acabar la instalacion reiniciamos docker.</p>
+
+<p><img src="/images/Intro-Docker/docker3.png" alt="instalación docker" /></p>
+
+<p>Probamos a crear un par de contenedores a traves de la cmd:</p>
+
+<p><img src="/images/Intro-Docker/docker4.png" alt="creación de contenedores" /></p>
+
+<p>Podemos ver que en windows podemos trabajar tanto por linea de comandos como por entorno gráfico.</p>
+
+<p><img src="/images/Intro-Docker/docker5.png" alt="docker desktop" /></p>
+
+<ul>
+  <li>Usando Hyper-V:</li>
+</ul>
+
+<p>Vamos a la configuración de windows:</p>
+
+<div class="highlight">
+<pre class="chroma">
+<code class="language-bash" data-lang="bash">
+Inicio &gt; Configuración &gt; Aplicaciones &gt; Características Opcionales
+</code>
+</pre>
+</div>
+
+<p>Marcamos “Hyper-V” y damos click en “Aceptar” para reiniciar Windows.</p>
+
+<p><img src="/images/Intro-Docker/docker2.png" alt="instalación Hyper-V" /></p>
+
+<p>Después de reiniciar vamos a la configuración de docker, desmarcamos la opción de “Use the WSL 2 Based engine” y damos click en “Save &amp; Restart”.</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/categories/#aplicaciones-web" class="page__taxonomy-item p-category" rel="tag">Aplicaciones Web</a><span class="sep">, </span>
+    
+      <a href="/categories/#apuntes" class="page__taxonomy-item p-category" rel="tag">Apuntes</a>
+    
+    </span>
+  </p>
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2021-09-21T13:14:06+02:00">September 21, 2021</time></p>
+
+      </footer>
+
+      <section class="page__share">
+  <h4 class="page__share-title">Share on</h4>
+
+  <a href="https://x.com/intent/tweet?text=Introducci%C3%B3n+a+Docker%20http%3A%2F%2Flocalhost%3A4000%2Faplicaciones%2520web%2Fapuntes%2F2021%2F09%2F21%2FIntroduccion-a-Docker.html" class="btn btn--x" aria-label="Share on X" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on X">
+    <i class="fab fa-fw fa-x-twitter" aria-hidden="true"></i><span> X</span>
+  </a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Faplicaciones%2520web%2Fapuntes%2F2021%2F09%2F21%2FIntroduccion-a-Docker.html" class="btn btn--facebook" aria-label="Share on Facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook">
+    <i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span>
+  </a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http://localhost:4000/aplicaciones%20web/apuntes/2021/09/21/Introduccion-a-Docker.html" class="btn btn--linkedin" aria-label="Share on LinkedIn" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn">
+    <i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span>
+  </a>
+
+  <a href="https://bsky.app/intent/compose?text=Introducci%C3%B3n+a+Docker%20http%3A%2F%2Flocalhost%3A4000%2Faplicaciones%2520web%2Fapuntes%2F2021%2F09%2F21%2FIntroduccion-a-Docker.html" class="btn btn--bluesky" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Bluesky">
+    <i class="fab fa-fw fa-bluesky" aria-hidden="true"></i><span> Bluesky</span>
+  </a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/base%20de%20datos/apuntes/2021/09/13/Introduccion-a-PLSQL-oracle.html" class="pagination--pager" title="Introducción a PLSQL (Oracle)">Previous</a>
+    
+    
+      <a href="/seguridad/2021/12/21/SoftEther-VPN.html" class="pagination--pager" title="Introducción SoftEther VPN">Next</a>
+    
+  </nav>
+
+
+    </div>
+
+    
+      
+        <p>
+          Comments are configured with provider: <strong>giscus</strong>,
+          but are disabled in non-production environments.
+        </p>
+      
+    
+  </article>
+
+  
+  
+    
+<div class="page__related">
+  
+  <h2 class="page__related-title">You May Also Enjoy</h2>
+  <div class="grid__wrapper">
+    
+      
+      
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/sistemas/monitorizaci%C3%B3n/2025/05/01/Instalacion-configuracion-y-monitoreo-zabbix.html" rel="permalink">Instalación, configuración y monitorización usando Zabbix
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2025-05-01T13:19:00+02:00">May 1, 2025</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          7 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Este post describe paso a paso cómo instalar y configurar Zabbix 6.0 LTS en una máquina virtual con Debian 12. Está pensado para crear un entorno de práctica...</p>
+  </article>
+</div>
+
+    
+      
+      
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/sistemas/monitorizaci%C3%B3n/2024/04/11/Monitorizaci%C3%B3n-de-servidores-con-grafana.html" rel="permalink">Monitorización de servidores con Grafana
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2024-04-11T13:14:06+02:00">April 11, 2024</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          10 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Aprende a instalar, configurar y personalizar Grafana para la monitorización avanzada de servidores. Descubre cómo integrar Prometheus, crear dashboards inte...</p>
+  </article>
+</div>
+
+    
+      
+      
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/seguridad/2021/12/21/SoftEther-VPN.html" rel="permalink">Introducción SoftEther VPN
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2021-12-21T13:44:30+01:00">December 21, 2021</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          64 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">SoftEther VPN es uno de los software VPN multiprotocolo más potentes y rápidos del mundo en la actualidad. Funciona en sistemas Windows, Solaris, Mac, FreeBS...</p>
+  </article>
+</div>
+
+    
+      
+      
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/base%20de%20datos/apuntes/2021/09/13/Introduccion-a-PLSQL-oracle.html" rel="permalink">Introducción a PLSQL (Oracle)
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2021-09-13T12:36:20+02:00">September 13, 2021</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          8 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">En este post se comentarán aspectos basicos a tener en cuenta de PLSQL para trabajar con ello en oracle.
+</p>
+  </article>
+</div>
+
+    
+  </div>
+</div>
+
+  
+  
+</div>
+
+      
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">&copy; 2025 <a href="http://localhost:4000">Blog de Sergio Ibáñez</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+    <script>
+  'use strict';
+
+  (function () {
+    var commentContainer = document.querySelector('#giscus-comments');
+
+    if (!commentContainer) {
+      return;
+    }
+
+    var script = document.createElement('script');
+
+    script.setAttribute('src', 'https://giscus.app/client.js');
+    script.setAttribute('data-repo', '');
+    script.setAttribute('data-repo-id', '');
+    script.setAttribute('data-category', '');
+    script.setAttribute('data-category-id', '');
+    script.setAttribute('data-mapping', 'pathname');
+    script.setAttribute('data-strict', '0');
+    script.setAttribute('data-reactions-enabled', '1');
+    script.setAttribute('data-emit-metadata', '0');
+    script.setAttribute('data-input-position', 'top');
+    script.setAttribute('data-theme', 'preferred_color_scheme');
+    script.setAttribute('data-lang',  'es');
+    
+    script.setAttribute('crossorigin', 'anonymous');
+
+    script.setAttribute('async', '');
+
+    commentContainer.appendChild(script);
+  })();
+</script>
+
+  
+
+
+
+
+  </body>
+</html>

@@ -1,0 +1,817 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.27.3 by Michael Rose
+  Copyright 2013-2025 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="es-ES" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Instalacion Openstack con Kolla Ansible - Blog de Sergio Ibáñez</title>
+<meta name="description" content="En este post crearemos un escenario virtual haciendo uso de vagrant y montaremos una instalacion de openstack haciendo uso de varias maquinas">
+
+
+  <meta name="author" content="Sergio Ibáñez Núñez">
+  
+  <meta property="article:author" content="Sergio Ibáñez Núñez">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="es_ES">
+<meta property="og:site_name" content="Blog de Sergio Ibáñez">
+<meta property="og:title" content="Instalacion Openstack con Kolla Ansible">
+<meta property="og:url" content="http://localhost:4000/cloud/2021/03/13/Instalacion-openstack-kolla-ansible.html">
+
+
+  <meta property="og:description" content="En este post crearemos un escenario virtual haciendo uso de vagrant y montaremos una instalacion de openstack haciendo uso de varias maquinas">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2021-03-13T13:08:14+01:00">
+
+
+
+
+
+
+<link rel="canonical" href="http://localhost:4000/cloud/2021/03/13/Instalacion-openstack-kolla-ansible.html">
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Blog de Sergio Ibáñez Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single wide" dir="ltr">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          Blog de Sergio Ibáñez
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a
+                href="/"
+                
+                
+              >Inicio</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/posts/"
+                
+                
+              >Posts</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/categories/"
+                
+                
+              >Categorías</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/tags/"
+                
+                
+              >Etiquetas</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/search/"
+                
+                
+              >Buscar</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/about/"
+                
+                
+              >Sobre mí</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Instalacion Openstack con Kolla Ansible">
+    <meta itemprop="description" content="En este post crearemos un escenario virtual haciendo uso de vagrant y montaremos una instalacion de openstack haciendo uso de varias maquinas">
+    <meta itemprop="datePublished" content="2021-03-13T13:08:14+01:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">
+            <a href="http://localhost:4000/cloud/2021/03/13/Instalacion-openstack-kolla-ansible.html" itemprop="url">Instalacion Openstack con Kolla Ansible
+</a>
+          </h1>
+          
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2021-03-13T13:08:14+01:00">March 13, 2021</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          4 minute read
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <h3 id="introduccion"><strong>Introduccion</strong></h3>
+
+<p>Para esta practica contaremos con un escenario de 3 nodos creados con vagrant:</p>
+
+<ul>
+  <li>Instalador (sistema ubuntu), sera donde se preparara openstack para su despliegue.</li>
+  <li>Master (sistema ubuntu)</li>
+  <li>Compute (sistema ubuntu)</li>
+</ul>
+
+<p>El montaje de openstack requiere de mucho recurso por parte de la maquina anfitriona, el nodo master debe de tener al menos 6Gb de ram para que sea capaz de funcionar y de poder desplegarse sin problemas, con respecto a los otros 2 nodos se recomienda usar al menos 2Gb.</p>
+
+<p>Tambien es recomendable usar sistemas operativos o ubuntu o centos en estos nodos (obviamente los 3 nodos deben de tener el mismo sistema operativo).</p>
+
+<h3 id="vgrantfile">Vgrantfile</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Vagrant.configure("2") do |config|
+  config.vm.define :instalador do |instalador|
+    instalador.vm.box = "ubuntu/bionic64"
+    instalador.vm.hostname = "instalador"
+    instalador.vm.network :public_network, :bridge=&gt;"wlo1"
+    instalador.vm.network :private_network, ip: "10.10.1.4", virtualbox__intnet: "redinterna"
+  end
+  config.vm.define :master do |master|
+    master.vm.box = "ubuntu/bionic64"
+    master.vm.hostname = "master"
+    master.vm.network :public_network, :bridge=&gt;"wlo1"
+    master.vm.network :private_network, ip: "10.10.1.2", virtualbox__intnet: "redinterna"
+    master.vm.network :public_network, :bridge=&gt;"wlo1"
+    master.vm.provider "virtualbox" do |mv|
+      mv.customize ["modifyvm", :id, "--memory", "6144"]
+    end
+  end
+  config.vm.define :compute do |compute|
+    compute.vm.box = "ubuntu/bionic64"
+    compute.vm.hostname = "compute"
+    compute.vm.network :public_network, :bridge=&gt;"wlo1"
+    compute.vm.network :private_network, ip: "10.10.1.3", virtualbox__intnet: "redinterna"
+    compute.vm.provider "virtualbox" do |mv|
+      mv.customize ["modifyvm", :id, "--memory", "2048"]
+    end
+  end
+end
+</code></pre></div></div>
+
+<p>Como podemos ver, en master tenemos 2 interfaces de red, sin embargo a una de las interfaces sera necesario quitarle la ip, esto lo podremos hacer ejecutando lo siguiente:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ip a del (interfaz de red)(ip de la interfaz)
+</code></pre></div></div>
+
+<h3 id="nodo-instalador">Nodo Instalador</h3>
+
+<p>Lo primero que haremos sera actualizar la maquina:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>apt update
+apt upgrade
+</code></pre></div></div>
+
+<p>Instalamos las dependencias de kolla ansible:</p>
+
+<p>Empezamos instalando python3-venv ya que openstack se montara en un entorno virtual:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>apt-get install python3-venv
+</code></pre></div></div>
+
+<p>Una vez instalado, creamos el entorno y accedemos a el:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>python3 -m venv openstack
+source openstack/bin/activate
+</code></pre></div></div>
+
+<p>Instalamos las dependencias de kolla-ansible</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>apt install python-dev libffi-dev gcc libssl-dev python-selinux sshpass
+</code></pre></div></div>
+
+<p>En nuestro entorno virtual instalamos tanto pip como ansible (la version de ansible debe ser 2.9.x sino no funciona):</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pip install -U pip
+pip install 'ansible&lt;2.10'
+</code></pre></div></div>
+
+<p>La opcion -U (upgrade) es para que pip se instale ya actualizado, es decir la ultima versión. Es importante que se instale una version de ansible inferior a la 2.10, de lo contrario en kolla ansible fallara el despliegue mas adelante.</p>
+
+<p>Creamos el directorio ansible en /etc con el siguiente fichero.</p>
+
+<p>ansible.cfg:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[defaults]
+host_key_checking=False
+pipelining=True
+forks=100
+</code></pre></div></div>
+
+<p>Y ponemos como propietario de este directorio a $USER</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>chown $USER:$USER /etc/ansible
+</code></pre></div></div>
+
+<p>En nuestro entorno virtual ya podemos instalar kolla-ansible</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pip install -U kolla-ansible
+</code></pre></div></div>
+
+<p>Creamos un directorio kolla en /etc y copiamos todos los ficheros necesarios para el despliegue de openstack en ese directorio:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cp -r openstack/share/kolla-ansible/etc_examples/kolla/* /etc/kolla
+
+cp openstack/share/kolla-ansible/ansible/inventory/* .
+</code></pre></div></div>
+
+<p>Al igual que con /etc/ansible, hacemos propietario del directorio kolla a $USER.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>chown $USER:$USER /etc/kolla
+</code></pre></div></div>
+
+<p>Del inventory copiaremos tanto el fichero multinode, que es el que usaremos como el all-in-one, pero estos ficheros deben estar dentro de nuestro entorno virtual, por lo tanto dentro del directorio openstack.</p>
+
+<p>Añadimos en el /etc/host de nuestro nodo instalador, la ip de la maquina master y de compute:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>192.168.1.76	master
+192.168.1.77	compute
+</code></pre></div></div>
+
+<p>Editamos el fichero multinodo:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[control]
+master ansible_user=root ansible_password=password
+
+[network:children]
+control
+
+[compute]
+compute ansible_user=root ansible_password=password
+
+[monitoring:children]
+control
+
+[storage:children]
+control
+
+[deployment]
+localhost ansible_connection=local
+</code></pre></div></div>
+
+<p>Comprobamos que las maquinas se hacen ping con el siguiente comando:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ansible -i multinode all -m ping
+</code></pre></div></div>
+
+<p>Para que el ping funcione correctamente, las tres maquinas tienen que tener instalado el paquete python3-dev y ademas tener la misma configuracion /etc/ssh/sshd_config habilitando y permitiendo que root pueda acceder por ssh y que pida autentificacion:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>PermitRootLogin yes
+PasswordAuthentication yes
+</code></pre></div></div>
+
+<p>Una vez que el ping se haga correctamente podremos empezar con el despliegue de openstack</p>
+
+<p>Generamos la clave kolla:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kolla-genpwd
+</code></pre></div></div>
+
+<p>Modificamos el fichero global en /etc/kolla de la siguiente forma:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kolla_base_distro: "ubuntu"  #distribucion que usa, en este caso ubuntu
+kolla_install_type: "binary"
+openstack_release: "victoria" #version de openstack que se instalara
+kolla_internal_vip_address: "10.10.1.254" #rango de ip interno, en este caso 10.10.1.x
+kolla_external_vip_address: "192.168.1.200" #ip que se le asignara a la interfaz vacia del nodo master (te la inventas)
+network_interface: "enp0s9" #interfaz de red interna
+kolla_external_vip_interface: "enp0s10" #interfaz de red externa en master (la que no tiene ip)
+neutron_external_interface: "enp0s10" #interfaz de red anterior, external_vip
+
+enable_cinder: "yes"
+enable_cinder_backup: "yes"
+enable_cinder_backend_hnas_nfs: "yes"
+enable_cinder_backend_nfs: "yes"
+nova_compute_virt_type: "qemu"
+</code></pre></div></div>
+
+<h3 id="despliegue-de-openstack">Despliegue de openstack</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kolla-ansible -i multinode bootstrap-servers
+</code></pre></div></div>
+
+<p>Si todo sale correctamente, seguiremos con el siguiente comando para comprobar que todo esta listo para el despliegue:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kolla-ansible -i multinode prechecks
+</code></pre></div></div>
+
+<p>Si tenemos okey, podemos empezar con el despliegue:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kolla-ansible -i multinode deploy
+</code></pre></div></div>
+
+<p>En el deploy, en mi caso, he tenido que habilitar las siguientes opciones en el fichero global porque de lo contrario me saltaba un error diciendo que era necesarios</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>enable_cinder_backend_hnas_nfs: "yes"
+enable_cinder_backend_nfs: "yes"
+</code></pre></div></div>
+
+<p>A parte de este error, al haber habilitado los backend, este despliegue nos saltara un error mas, ya que al haber habilitado los backend_nfs tendremos que hacer previamente una serie de configuraciones para poder hacer el deploy.</p>
+
+<p>Instalamos nfs-kernel-server:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>apt install nfs-kernel-server
+</code></pre></div></div>
+
+<p>Despues en el fichero /etc/exports añadimos la siguiente configuracion:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/kolla_nfs 10.10.1.0/24(rw,sync,no_root_squash)
+</code></pre></div></div>
+
+<p>Creamos el directorio /kolla_nfs</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mkdir /kolla_nfs
+</code></pre></div></div>
+
+<p>Reiniciamos el servicio:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>systemctl restart nfs-kernel-server
+</code></pre></div></div>
+
+<p>Ahora creamos un directorio config en /etc/kolla con el siguiente fichero:</p>
+
+<p>fichero nfs_shares:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>storage01:/kolla_nfs
+storage02:/kolla_nfs
+</code></pre></div></div>
+
+<p>Este fichero básicamente lo que hara sera indicar donde se almacenaran los datos de nuestro openstack.</p>
+
+<p>Una vez hecho todo lo anterior si podemos completar el despliegue de nuestro openstack, eso si, si el proceso de despliegue se queda parado mucho tiempo en algun sitio, querra decir que el nodo no dispone de los recursos necesarios y que necesitara mas ram.</p>
+
+<p>Si disponemos con los recursos necesarios, y el despliegue se completa correctamente sin problemas, haremos un kolla-ansible post-deploy para confirmar que es posible desplegar openstack.</p>
+
+<p>Podemos comprobar el funcionamiento de openstack entrando en el navegador y poniendo la ip que pusimos anteriormente (external_vip)
+El usuario y contraseña por defecto de openstack los encontramos en el fichero /etc/kolla/admin-source.sh</p>
+
+<p>En lugar de usar el navegador, tambien podemos instalar openstackclient en nuestro entorno virtual y acceder a openstack a traves de linea de comandos.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pip install python3-openstackclient
+</code></pre></div></div>
+
+<p>Con esto ya tendriamos un Openstack desplegado y dispuesto para su uso:</p>
+
+<p><img src="/images/instalacion-openstack/openstack.png" alt="openstack" /></p>
+
+<p><img src="/images/instalacion-openstack/proyecto_openstack.png" alt="proyecto openstack" /></p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/categories/#cloud" class="page__taxonomy-item p-category" rel="tag">Cloud</a>
+    
+    </span>
+  </p>
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2021-03-13T13:08:14+01:00">March 13, 2021</time></p>
+
+      </footer>
+
+      <section class="page__share">
+  <h4 class="page__share-title">Share on</h4>
+
+  <a href="https://x.com/intent/tweet?text=Instalacion+Openstack+con+Kolla+Ansible%20http%3A%2F%2Flocalhost%3A4000%2Fcloud%2F2021%2F03%2F13%2FInstalacion-openstack-kolla-ansible.html" class="btn btn--x" aria-label="Share on X" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on X">
+    <i class="fab fa-fw fa-x-twitter" aria-hidden="true"></i><span> X</span>
+  </a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fcloud%2F2021%2F03%2F13%2FInstalacion-openstack-kolla-ansible.html" class="btn btn--facebook" aria-label="Share on Facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook">
+    <i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span>
+  </a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http://localhost:4000/cloud/2021/03/13/Instalacion-openstack-kolla-ansible.html" class="btn btn--linkedin" aria-label="Share on LinkedIn" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn">
+    <i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span>
+  </a>
+
+  <a href="https://bsky.app/intent/compose?text=Instalacion+Openstack+con+Kolla+Ansible%20http%3A%2F%2Flocalhost%3A4000%2Fcloud%2F2021%2F03%2F13%2FInstalacion-openstack-kolla-ansible.html" class="btn btn--bluesky" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Bluesky">
+    <i class="fab fa-fw fa-bluesky" aria-hidden="true"></i><span> Bluesky</span>
+  </a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/servicios/2021/03/13/Proxy-y-balanceador-de-carga.html" class="pagination--pager" title="Proxy y balanceador de carga">Previous</a>
+    
+    
+      <a href="/aplicaciones%20web/2021/03/13/Creacion-blog-pelican.html" class="pagination--pager" title="Creacion blog Pelican">Next</a>
+    
+  </nav>
+
+
+    </div>
+
+    
+      
+        <p>
+          Comments are configured with provider: <strong>giscus</strong>,
+          but are disabled in non-production environments.
+        </p>
+      
+    
+  </article>
+
+  
+  
+    
+<div class="page__related">
+  
+  <h2 class="page__related-title">You May Also Enjoy</h2>
+  <div class="grid__wrapper">
+    
+      
+      
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/sistemas/monitorizaci%C3%B3n/2025/05/01/Instalacion-configuracion-y-monitoreo-zabbix.html" rel="permalink">Instalación, configuración y monitorización usando Zabbix
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2025-05-01T13:19:00+02:00">May 1, 2025</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          7 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Este post describe paso a paso cómo instalar y configurar Zabbix 6.0 LTS en una máquina virtual con Debian 12. Está pensado para crear un entorno de práctica...</p>
+  </article>
+</div>
+
+    
+      
+      
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/sistemas/monitorizaci%C3%B3n/2024/04/11/Monitorizaci%C3%B3n-de-servidores-con-grafana.html" rel="permalink">Monitorización de servidores con Grafana
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2024-04-11T13:14:06+02:00">April 11, 2024</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          10 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Aprende a instalar, configurar y personalizar Grafana para la monitorización avanzada de servidores. Descubre cómo integrar Prometheus, crear dashboards inte...</p>
+  </article>
+</div>
+
+    
+      
+      
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/seguridad/2021/12/21/SoftEther-VPN.html" rel="permalink">Introducción SoftEther VPN
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2021-12-21T13:44:30+01:00">December 21, 2021</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          64 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">SoftEther VPN es uno de los software VPN multiprotocolo más potentes y rápidos del mundo en la actualidad. Funciona en sistemas Windows, Solaris, Mac, FreeBS...</p>
+  </article>
+</div>
+
+    
+      
+      
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/aplicaciones%20web/apuntes/2021/09/21/Introduccion-a-Docker.html" rel="permalink">Introducción a Docker
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2021-09-21T13:14:06+02:00">September 21, 2021</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          19 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Docker nos permite de forma sencilla crear contenedores ligeros y fáciles de mover donde ejecutar nuestras aplicaciones software sobre cualquier máquina con ...</p>
+  </article>
+</div>
+
+    
+  </div>
+</div>
+
+  
+  
+</div>
+
+      
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">&copy; 2025 <a href="http://localhost:4000">Blog de Sergio Ibáñez</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+    <script>
+  'use strict';
+
+  (function () {
+    var commentContainer = document.querySelector('#giscus-comments');
+
+    if (!commentContainer) {
+      return;
+    }
+
+    var script = document.createElement('script');
+
+    script.setAttribute('src', 'https://giscus.app/client.js');
+    script.setAttribute('data-repo', '');
+    script.setAttribute('data-repo-id', '');
+    script.setAttribute('data-category', '');
+    script.setAttribute('data-category-id', '');
+    script.setAttribute('data-mapping', 'pathname');
+    script.setAttribute('data-strict', '0');
+    script.setAttribute('data-reactions-enabled', '1');
+    script.setAttribute('data-emit-metadata', '0');
+    script.setAttribute('data-input-position', 'top');
+    script.setAttribute('data-theme', 'preferred_color_scheme');
+    script.setAttribute('data-lang',  'es');
+    
+    script.setAttribute('crossorigin', 'anonymous');
+
+    script.setAttribute('async', '');
+
+    commentContainer.appendChild(script);
+  })();
+</script>
+
+  
+
+
+
+
+  </body>
+</html>

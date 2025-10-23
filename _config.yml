@@ -1,42 +1,137 @@
-title: "Blog técnico Sergio Ibáñez"
-tagline: "Administrador de sistemas | Técnico de soporte IT | Monitorización"
-description: "Blog personal sobre administración de sistemas, Linux, DevOps, monitorización y proyectos técnicos."
-url: "https://sergioib94.github.io"
-lang: es
-timezone: Europe/Madrid
+title: "Blog de Sergio Ibáñez"
+email: "tuemail@example.com"
+description: "Blog técnico sobre sistemas, DevOps y automatización"
+baseurl: "" 
+url: "https://sergioibanez.github.io"
+locale: "es-ES"
+lang: "es"
 
-# TEMA
+# Tema
+remote_theme: "mmistakes/minimal-mistakes"
 
-theme: jekyll-theme-chirpy
-#remote_theme: cotes2020/jekyll-theme-chirpy
+# Procesadores
+markdown: kramdown
+highlighter: rouge
 
-# MODO OSCURO
-theme_mode: dark
-
-# SOCIAL
-social:
-  name: Sergio Ibanez
-  email: sergioib309@gmail.com
-  links:
-    - https://github.com/sergioib94
-    - https://www.linkedin.com/in/sergio-ibañez-nuñez/
-
-# COMENTARIOS
-comments:
-  active: ""
-
-# PAGINACIÓN
-paginate: 5
-
-# ESTRUCTURA CHIRPY
-collections:
-  tabs:
-    output: true
-    permalink: /:name/
-
-#plugins:
+# Plugins
 plugins:
-  - jekyll-include-cache
-  - jekyll-paginate
   - jekyll-feed
   - jekyll-seo-tag
+  - jekyll-sitemap
+  - jekyll-paginate
+  - jekyll-include-cache
+
+# Paginación
+paginate: 5
+paginate_path: "/page:num/"
+
+# Autor
+author:
+  name: "Sergio Ibáñez Núñez"
+  avatar: "/assets/images/avatar.png"
+  bio: "Técnico IT y entusiasta de la automatización"
+  #location: "España"
+  #links:
+    #- label: "GitHub"
+    #  icon: "fab fa-fw fa-github"
+    #  url: "https://github.com/sergioibanez"
+    #- label: "LinkedIn"
+    #  icon: "fab fa-fw fa-linkedin"
+    #  url: "https://www.linkedin.com/in/sergio-ibañez-nuñez/"
+
+# Comentarios con Giscus
+comments:
+  provider: "giscus"
+  giscus:
+    repo: "sergioibanez/sergioibanez.github.io"
+    mapping: "pathname"
+    theme: "preferred_color_scheme"
+    lang: "es"
+
+# Redes sociales
+social:
+  type: "Person"
+  name: "Sergio Ibáñez Núñez"
+  links:
+    - "https://github.com/sergioibanez"
+    - "https://www.linkedin.com/in/sergio-ibañez-nuñez/"
+
+# Búsqueda
+search: false
+lunr:
+  search_path: "/search.json"
+
+# Configuraciones por defecto
+defaults:
+  - scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: "single"
+      author_profile: false
+      classes: wide
+      read_time: true
+      comments: true
+      share: true
+      related: true
+      show_date: true
+  - scope:
+      path: ""
+      type: "pages"
+    values:
+      layout: "single"
+      author_profile: true
+
+# Apariencia
+minimal_mistakes_skin: "dark"
+
+# SEO
+seo:
+  type: "Person"
+  name: "Sergio Ibáñez Núñez"
+
+# Excluir archivos
+exclude:
+  - "*.sublime-project"
+  - "*.sublime-workspace"
+  - .asset-cache
+  - .bundler
+  - .jekyll-cache
+  - .sass-cache
+  - assets/js/plugins
+  - assets/js/_main.js
+  - assets/js/vendor
+  - Capfile
+  - CHANGELOG
+  - config
+  - Gemfile
+  - Gemfile.lock
+  - Gruntfile.js
+  - gulpfile.js
+  - LICENSE
+  - log
+  - node_modules
+  - package.json
+  - Rakefile
+  - readme.md
+  - tmp
+
+# Para categorías y etiquetas
+category_archive:
+  type: liquid
+  path: /categories/
+tag_archive:
+  type: liquid
+  path: /tags/
+
+# Configuración para páginas
+collections:
+  pages:
+    output: true
+    permalink: /:path/
+
+# Asegurar que las páginas se procesen
+include:
+  - _pages
+  - _posts
+  - _data

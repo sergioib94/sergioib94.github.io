@@ -1,0 +1,601 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.27.3 by Michael Rose
+  Copyright 2013-2025 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="es-ES" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Servidor DHCP Linux - Blog de Sergio Ibáñez</title>
+<meta name="description" content="En el siguiente post se instalara y configurara un servidor DHCP en un escenario virtual.">
+
+
+  <meta name="author" content="Sergio Ibáñez Núñez">
+  
+  <meta property="article:author" content="Sergio Ibáñez Núñez">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="es_ES">
+<meta property="og:site_name" content="Blog de Sergio Ibáñez">
+<meta property="og:title" content="Servidor DHCP Linux">
+<meta property="og:url" content="http://localhost:4000/_posts/2021-03-11-Servidor-DHCP-Linux.html">
+
+
+  <meta property="og:description" content="En el siguiente post se instalara y configurara un servidor DHCP en un escenario virtual.">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2021-03-11T09:33:55+01:00">
+
+
+
+
+
+
+<link rel="canonical" href="http://localhost:4000/_posts/2021-03-11-Servidor-DHCP-Linux.html">
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Blog de Sergio Ibáñez Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single" dir="ltr">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          Blog de Sergio Ibáñez
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a
+                href="/"
+                
+                
+              >Inicio</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/posts/"
+                
+                
+              >Posts</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/categories/"
+                
+                
+              >Categorías</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/tags/"
+                
+                
+              >Etiquetas</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/search/"
+                
+                
+              >Buscar</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/about/"
+                
+                
+              >Sobre mí</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="http://localhost:4000/">
+        <img src="/assets/images/avatar.png" alt="Sergio Ibáñez Núñez" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="http://localhost:4000/" itemprop="url">Sergio Ibáñez Núñez</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>Técnico IT y entusiasta de la automatización</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Servidor DHCP Linux">
+    <meta itemprop="description" content="En el siguiente post se instalara y configurara un servidor DHCP en un escenario virtual.">
+    <meta itemprop="datePublished" content="2021-03-11T09:33:55+01:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">
+            <a href="http://localhost:4000/_posts/2021-03-11-Servidor-DHCP-Linux.html" itemprop="url">Servidor DHCP Linux
+</a>
+          </h1>
+          
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <h3 id="funcionamiento-de-un-servidor-dhcp"><strong>Funcionamiento de un servidor DHCP</strong></h3>
+
+<p>El cliente al iniciarse se encuentra en estado init, sin saber sus parámetros ip en ese momento envía un mensaje DHCPDiscover a la dirección de broadcast para saber si algún servidor dhcp le puede ofrecer una ip. El cliente espera un tiempo entre 1 y 10 seg al enviar este dhcpdiscover para evitar posibles colisiones con otras peticiones de otros clientes.</p>
+
+<p>Cuando ya se ha mandado el dhcpdiscover el cliente entra en fase selecting, en la que recibira las dhcpoffer de los servidores dhcp. En el caso de que un cliente reciba varios dhcpoffer, elegirá una de las ofertas indicándoselo al servidor con un dhcprequest y este servidor le responderá con un dhcpack. En el caso de que la ip ofrecida en el servidor ya este en uso en la red, el cliente responde al dhcpack con un dhcpdecline, rechazando así la oferta del servidor y volviendo así al estado de init.</p>
+
+<p>En el caso de que el cliente acepte la ip que le ofrece el servidor, al cliente pasara a un estado de bound o asociado en el que recibirá un T1,T2 y T3:</p>
+
+<ul>
+  <li>T1 → Tiempo en el que una ip ofrecida se renueva.</li>
+  <li>T2 → Tiempo de reenganche, es decir, el tiempo que tarda en volver a recibir una ip cuando el servido se apaga por ejemplo.</li>
+  <li>T3 → Tiempo que tendrá la ip ofrecida el cliente.</li>
+</ul>
+
+<p>Cuando expira el T1, el cliente pasa a estado de renovación en el que negocia de nuevo con el servidor una nueva ip. En el caso de que el servidor por algún motivo no renueve la ip del cliente, este volverá al estado init en el que volverá a solicitar una nueva ip. En el caso de que el servidor si responda, recibirá el cliente un dhcpack con la ip, y la nueva duración.</p>
+
+<p>Si el T2 expira mientras el cliente está esperando en el estado renewing, el cliente pasará al estado rebinding en el que envía de nuevo un DHCPrequest a cualquier servidor, ya que por el servidor original no estaría disponible. Si un servidor contesta con un dhcpack, el cliente renueva su ip y sus temporizadores y pasa al estado bound.</p>
+
+<p>Al expirar T3 el cliente devuelve su ip y deja de usarla en la red, pero el cliente no necesita esperar a que expire el tiempo de alquiler para dejar de usar la ip, también puede renunciar a ella.</p>
+
+<h3 id="preparación-de-escenario"><strong>Preparación de escenario</strong></h3>
+
+<p>Nuestro escenario vagrant contara con dos nodos, el node server y el cliente:
+    • Servidor: Tiene dos tarjetas de red (una pública y una privada que se conectan a la red local).
+    • nodo_lan1: Un cliente conectado a la red local.</p>
+
+<p>El Vagrantfile empleado para la creacion del escenarios es el siguiente:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Vagrant.configure("2") do |config|
+  config.vm.define :nodo1 do |nodo1|
+      nodo1.vm.box = "debian/buster64"
+      nodo1.vm.hostname = "server"
+      nodo1.vm.network :public_network,:bridge=&gt;"wlo1"
+      nodo1.vm.network :private_network, ip: "192.168.100.1/24", virtualbox__intnet: "Red1"
+  end
+  config.vm.define :nodo2 do |nodo2|
+      nodo2.vm.box = "debian/buster64"
+      nodo2.vm.hostname = "nodo1"
+      nodo2.vm.network :private_network, type: "dhcp", virtualbox__intnet: "Red1"
+  end
+</code></pre></div></div>
+
+<p>Instala un servidor dhcp en el ordenador “servidor” que de servicio a los ordenadores de red local, teniendo en cuenta que el tiempo de concesión sea 12 horas y que la red local tiene el direccionamiento 192.168.100.0/24.</p>
+
+<ul>
+  <li>Tarea 3: Muestra el fichero de configuración del servidor, la lista de concesiones, la modificación en la configuración que has hecho en el cliente para que tome la configuración de forma automática y muestra la salida del comando “ip address”.</li>
+</ul>
+
+<p>Configuraciones en el servidos dhcp en /etc/dhcp/dhcpd.conf:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Tiempo de concesión:
+default-lease-time 600;
+max-lease-time 43200;
+
+Rango de Ips que el servidos va a servir:
+subnet 192.168.100.0 netmask 255.255.255.0 {
+  range 192.168.100.50 192.168.100.100;
+}
+</code></pre></div></div>
+
+<p>Ip a del cliente</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host 
+       valid_lft forever preferred_lft forever
+
+2: eth0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc pfifo_fast state UP group default qlen 1000
+    link/ether 08:00:27:8d:c0:4d brd ff:ff:ff:ff:ff:ff
+    inet 10.0.2.15/24 brd 10.0.2.255 scope global dynamic eth0
+       valid_lft 86294sec preferred_lft 86294sec
+    inet6 fe80::a00:27ff:fe8d:c04d/64 scope link 
+       valid_lft forever preferred_lft forever
+
+3: eth1: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc pfifo_fast state UP group default qlen 1000
+    link/ether 08:00:27:5c:a2:a9 brd ff:ff:ff:ff:ff:ff
+    inet 192.168.100.50/24 brd 192.168.100.255 scope global dynamic eth1
+       valid_lft 495sec preferred_lft 495sec
+    inet6 fe80::a00:27ff:fe5c:a2a9/64 scope link 
+       valid_lft forever preferred_lft forever
+</code></pre></div></div>
+
+<ul>
+  <li>Tarea 4: Configura el servidor para que funcione como router y NAT, de esta forma los clientes tengan internet.</li>
+</ul>
+
+<p>Configuración de enrutamiento:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo ip r del default
+sudo ip r add default via 192.168.1.1
+</code></pre></div></div>
+
+<p>Quitamos la ruta ip por defecto (eth0) y ponemos por defecto la eth1 que es la interfaz por la que accederemos a internet.</p>
+
+<p>Añadimos la linea iptable al fichero /etc/network/interfaces de forma que indicamos la interfaz por la que haremos nat.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>up iptables -t nat -A POSTROUTING -s 192.168.100.0/24 -o eth1 -j MASQUERADE
+</code></pre></div></div>
+
+<p>-A → añade una regla a postrouting
+Postrouting → Permite modificar paquetes justo antes de que salgan del equipo.
+-s → se aplica a la dirección de origen, en este caso nuestra red interna
+-o → se indica la interfaz por la que saldrán los paquetes, eth1
+-J MASQUERADE → cambia la dirección origen por la que tenga la interfaz de salida
+De forma que al hacer un ip route show o ip r deberíamos tener algo asi:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vagrant@nodo1:~$ ip route show
+default via 192.168.1.1 dev eth1 
+10.0.2.0/24 dev eth0 proto kernel scope link src 10.0.2.15 
+192.168.1.0/24 dev eth1 proto kernel scope link src 192.168.1.50 
+192.168.100.0/24 dev eth2 proto kernel scope link src 192.168.100.1
+</code></pre></div></div>
+
+<ul>
+  <li>Tarea 5: Realizar una captura, desde el servidor usando tcpdump, de los cuatro paquetes que corresponden a una concesión: DISCOVER, OFFER, REQUEST, ACK.</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vagrant@nodo1:~$ sudo tcpdump -i eth2
+tcpdump: verbose output suppressed, use -v or -vv for full protocol decode
+listening on eth2, link-type EN10MB (Ethernet), capture size 262144 bytes
+15:02:53.325447 IP 192.168.100.50.bootpc &gt; 192.168.100.1.bootps: BOOTP/DHCP, Request from 08:00:27:a4:37:9b (oui Unknown), length 300
+15:02:53.338628 IP 192.168.100.1.bootps &gt; 192.168.100.50.bootpc: BOOTP/DHCP, Reply, length 300
+15:02:58.391241 ARP, Request who-has 192.168.100.1 tell 192.168.100.50, length 46
+15:02:58.391311 ARP, Reply 192.168.100.1 is-at 08:00:27:8f:2b:27 (oui Unknown), length 28
+15:02:58.490871 ARP, Request who-has 192.168.100.50 tell 192.168.100.1, length 28
+15:02:58.491611 ARP, Reply 192.168.100.50 is-at 08:00:27:a4:37:9b (oui Unknown), length 46
+</code></pre></div></div>
+
+<ul>
+  <li>Tarea 8: Indica las modificaciones realizadas en los ficheros de configuración y entrega una comprobación de que el cliente ha tomado esa dirección.*</li>
+</ul>
+
+<p>Añadimos la siguiente configuración a /etc/dhcp/dhcpd.conf:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>host nodo2 {
+hardware ethernet 08:00:27:a4:37:9b;
+fixed-address 192.168.100.100;
+}
+</code></pre></div></div>
+
+<p>De esta forma, una vez que se reinicie el servicio, y el tiempo de concesión de nuestro cliente pase, se cambiara de forma automática la ip por la 192.168.100.100</p>
+
+<p>Cliente antes:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vagrant@nodo2:~$ ip a
+1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host 
+       valid_lft forever preferred_lft forever
+
+2: eth0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc pfifo_fast state UP group default qlen 1000
+    link/ether 08:00:27:8d:c0:4d brd ff:ff:ff:ff:ff:ff
+    inet 10.0.2.15/24 brd 10.0.2.255 scope global dynamic eth0
+       valid_lft 85888sec preferred_lft 85888sec
+    inet6 fe80::a00:27ff:fe8d:c04d/64 scope link 
+       valid_lft forever preferred_lft forever
+
+3: eth1: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc pfifo_fast state UP group default qlen 1000
+    link/ether 08:00:27:a4:37:9b brd ff:ff:ff:ff:ff:ff
+    inet 192.168.100.50/24 brd 192.168.100.255 scope global dynamic eth1
+       valid_lft 45sec preferred_lft 45sec
+    inet6 fe80::a00:27ff:fea4:379b/64 scope link 
+       valid_lft forever preferred_lft forever
+</code></pre></div></div>
+
+<p>Cliente ahora:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vagrant@nodo2:~$ ip a
+1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host 
+       valid_lft forever preferred_lft forever
+
+2: eth0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc pfifo_fast state UP group default qlen 1000
+    link/ether 08:00:27:8d:c0:4d brd ff:ff:ff:ff:ff:ff
+    inet 10.0.2.15/24 brd 10.0.2.255 scope global dynamic eth0
+       valid_lft 85864sec preferred_lft 85864sec
+    inet6 fe80::a00:27ff:fe8d:c04d/64 scope link 
+       valid_lft forever preferred_lft forever
+
+3: eth1: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc pfifo_fast state UP group default qlen 1000
+    link/ether 08:00:27:a4:37:9b brd ff:ff:ff:ff:ff:ff
+    inet 192.168.100.100/24 brd 192.168.100.255 scope global dynamic eth1
+       valid_lft 50sec preferred_lft 50sec
+    inet6 fe80::a00:27ff:fea4:379b/64 scope link 
+       valid_lft forever preferred_lft forever
+</code></pre></div></div>
+
+<p>Uso de varios ámbitos</p>
+
+<p>Modifica el escenario Vagrant para añadir una nueva red local y un nuevo nodo:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>• Servidor: En el servidor hay que crear una nueva interfaz
+• nodo_lan2: Un cliente conectado a la segunda red local.
+</code></pre></div></div>
+
+<p>Configura el servidor dhcp en el ordenador “servidor” para que de servicio a los ordenadores de la nueva red local, teniendo en cuenta que el tiempo de concesión sea 24 horas y que la red local tiene el direccionamiento 192.168.200.0/24.</p>
+
+<ul>
+  <li>Tarea 9: Entrega el nuevo fichero Vagrantfile que define el escenario.</li>
+</ul>
+
+<p>En este caso he añadido una maquina windows ya existente y la he conectado a la red del server y el nodo1 por lo que el fichero vagrant file no ha sido modificado.</p>
+
+<ul>
+  <li>Tarea 10: Explica las modificaciones que has hecho en los distintos ficheros de configuración. Entrega las comprobaciones necesarias de que los dos ámbitos están funcionando.*</li>
+</ul>
+
+<p>Configuracion en /etc/dhcp/dhcpd.conf</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>option domain-name "example.org";
+option domain-name-servers ns1.example.org, ns2.example.org;
+default-lease-time 60;
+max-lease-time 60;
+ddns-update-style none;
+
+#Rango de direcciones
+
+subnet 192.168.100.0 netmask 255.255.255.0 {
+  range 192.168.100.50 192.168.100.100;
+}
+
+#Reservas IP
+
+host nodo2 {
+hardware ethernet 08:00:27:a4:37:9b;
+fixed-address 192.168.200.100;
+}
+</code></pre></div></div>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/categories/#servicios" class="page__taxonomy-item p-category" rel="tag">Servicios</a>
+    
+    </span>
+  </p>
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2021-03-11T09:33:55+01:00">March 11, 2021</time></p>
+
+      </footer>
+
+      
+
+      
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+
+      
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">&copy; 2025 <a href="http://localhost:4000">Blog de Sergio Ibáñez</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

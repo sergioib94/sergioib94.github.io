@@ -1,5 +1,4 @@
 ---
-layout: post
 title: "Despliegue de un servidor LAMP local y configuración de CMS PHP"
 date: 2021-03-11T10:13:49+01:00
 categories: [Aplicaciones Web]

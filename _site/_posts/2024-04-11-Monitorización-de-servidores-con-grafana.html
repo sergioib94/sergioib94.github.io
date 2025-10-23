@@ -1,0 +1,686 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.27.3 by Michael Rose
+  Copyright 2013-2025 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="es-ES" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Monitorización de servidores con Grafana - Blog de Sergio Ibáñez</title>
+<meta name="description" content="Aprende a instalar, configurar y personalizar Grafana para la monitorización avanzada de servidores. Descubre cómo integrar Prometheus, crear dashboards interactivos y configurar alertas para una gestión eficiente de tu infraestructura.">
+
+
+  <meta name="author" content="Sergio Ibáñez Núñez">
+  
+  <meta property="article:author" content="Sergio Ibáñez Núñez">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="es_ES">
+<meta property="og:site_name" content="Blog de Sergio Ibáñez">
+<meta property="og:title" content="Monitorización de servidores con Grafana">
+<meta property="og:url" content="http://localhost:4000/_posts/2024-04-11-Monitorizaci%C3%B3n-de-servidores-con-grafana.html">
+
+
+  <meta property="og:description" content="Aprende a instalar, configurar y personalizar Grafana para la monitorización avanzada de servidores. Descubre cómo integrar Prometheus, crear dashboards interactivos y configurar alertas para una gestión eficiente de tu infraestructura.">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2024-04-11T13:14:06+02:00">
+
+
+
+
+
+
+<link rel="canonical" href="http://localhost:4000/_posts/2024-04-11-Monitorizaci%C3%B3n-de-servidores-con-grafana.html">
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Blog de Sergio Ibáñez Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single" dir="ltr">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          Blog de Sergio Ibáñez
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a
+                href="/"
+                
+                
+              >Inicio</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/posts/"
+                
+                
+              >Posts</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/categories/"
+                
+                
+              >Categorías</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/tags/"
+                
+                
+              >Etiquetas</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/search/"
+                
+                
+              >Buscar</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/about/"
+                
+                
+              >Sobre mí</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="http://localhost:4000/">
+        <img src="/assets/images/avatar.png" alt="Sergio Ibáñez Núñez" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="http://localhost:4000/" itemprop="url">Sergio Ibáñez Núñez</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>Técnico IT y entusiasta de la automatización</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Monitorización de servidores con Grafana">
+    <meta itemprop="description" content="Aprende a instalar, configurar y personalizar Grafana para la monitorización avanzada de servidores. Descubre cómo integrar Prometheus, crear dashboards interactivos y configurar alertas para una gestión eficiente de tu infraestructura.">
+    <meta itemprop="datePublished" content="2024-04-11T13:14:06+02:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">
+            <a href="http://localhost:4000/_posts/2024-04-11-Monitorizaci%C3%B3n-de-servidores-con-grafana.html" itemprop="url">Monitorización de servidores con Grafana
+</a>
+          </h1>
+          
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <h3 id="requisitos-previos"><strong>Requisitos previos</strong></h3>
+
+<ul>
+  <li>Tener acceso a una máquina debian (máquina virtual o física) con permisos de root</li>
+  <li>Conocimientos básicos de administración de sistemas Linux</li>
+  <li>Conexión a internet para descargar paquetes</li>
+  <li>Herramientas necesarias instaladas: wget, curl, net-tools (si no están, instálalas con sudo apt install -y wget curl net-tools).</li>
+</ul>
+
+<h3 id="que-es-grafana"><strong>¿Que es grafana?</strong></h3>
+
+<p>Grafana open source es un software de análisis y visualización de código abierto. Le permite consultar, visualizar, alertar y explorar sus métricas, registros y seguimientos sin importar dónde estén almacenados. Le proporciona herramientas para convertir los datos de su base de datos de series temporales (TSDB) en gráficos y visualizaciones interesantes.</p>
+
+<h3 id="instalación-de-grafana-en-debian"><strong>Instalación de Grafana en debian</strong></h3>
+
+<p>Empezaremos instalando Grafana en nuestro sistema debian haciendo uso del repositorio oficial de grafana, pero antes necesitaremos instalar el software necesario que necesita grafana para poder funcionar ejecutando los siguientes comandos.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo apt install -y apt-transport-https
+sudo apt install -y software-properties-common wget
+</code></pre></div></div>
+
+<p>El siguiente paso es descargar la llave GPG, para poder firmar los paquetes instalado</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo wget -q -O /usr/share/keyrings/grafana.key https://apt.grafana.com/gpg.key
+</code></pre></div></div>
+
+<p>Ahora es necesario crear el fichero /etc/apt/sources.list.d/grafana.list para añadir los repositorios de Grafana.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>echo "deb [signed-by=/usr/share/keyrings/grafana.key] https://apt.grafana.com stable main" | sudo tee -a /etc/apt/sources.list.d/grafana.list
+</code></pre></div></div>
+
+<p>Actualizamos la lista de paquetes de nuestro sistema</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo apt update
+</code></pre></div></div>
+
+<p>Una vez actualizado los paquetes del sistema ya podemos empezar a instalar grafana</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo apt install grafana
+</code></pre></div></div>
+
+<p>Cuando ya tengamos grafana instalado, podremos iniciarlo y añadirlo al arranque de nuestra maquina</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo systemctl start grafana-server
+</code></pre></div></div>
+
+<p>Para poder asegurarnos de que el servidor se inicia correctamente (debe aparecer con estado active (running)) podemos ejecutar el comando usado anteriormente haciendo uso de la opción “status”.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo systemctl status grafana-server
+</code></pre></div></div>
+
+<p>Finalmente habilitamos grafana en el inicio de servidor para que inicie en el arranque</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo systemctl enable grafana-server.service
+</code></pre></div></div>
+
+<p>Con esto ya estaría completa la instalación de grafana y ya podríamos acceder a la web de grafana para poder logearnos, para ello hay que indicar en la barra de búsqueda de cualquier navegador la ip de nuestra maquina (o su dominio), indicando el puerto 3000 que es el usado por grafana por defecto. en mi caso se accede con la dirección 192.168.110.129:3000</p>
+
+<p><img src="/images/Grafana/grafana_login.png" alt="Grafana login" /></p>
+
+<p>NOTA: por defecto la primera vez que se accede a grafana las credenciales siempre van a ser admin/admin, una vez se acceda por primera vez pedirá un cambio de contraseña y podremos empezar a trabajar con grafana.</p>
+
+<p>Al acceder a grafana, en el menú de la izquierda encontraremos varias opciones interesantes para trabajar como pueden ser los dashboards que podremos configurar para revisar las métricas y monitorizar las maquinas de nuestro sistema, explorar Si su fuente de datos admite datos de gráficos y tablas, Explore muestra los resultados tanto en forma de gráfico como de tabla, alertas que nos permitirá conocer los problemas en sus sistemas momentos después de que ocurren o data sources que proporciona instrucciones paso a paso sobre cómo agregar una fuente de datos de Prometheus, InfluxDB o MS SQL Server.</p>
+
+<h3 id="instalación-de-prometheus"><strong>Instalación de Prometheus</strong></h3>
+
+<p>Grafana necesitas añadir un nuevo data source, que es la base de datos que guarda las métricas que muestra Grafana, en este caso se hará uso de prometheus por lo que empezaremos con la instalación de prometheus en nuestra maquina. Prometheus en un sistema open-source de monitorización y alerta.</p>
+
+<p>Comenzamos instalando prometheus</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>apt install prometheus prometheus-node-exporter
+</code></pre></div></div>
+
+<p>Tras la instalación de prometheus tenemos que comprobar tanto que tenemos dos conexiones TCP escuchando en los puertos 9090 y 9100, esto lo comprobamos con el siguiente comando</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>netstat -plunt
+</code></pre></div></div>
+
+<p>Nota: para poder hacer uso del comando netstat tendremos que tener instalado en el sistema el paquete net-tools</p>
+
+<p>Como la version de prometheus que usemos tiene que ser compatible con la de grafana, es recomendable revisar nuestra version de prometheus</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>prometheus-node-exporter --version
+</code></pre></div></div>
+
+<p>En mi caso la version de prometheus usada es la siguiente</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>node_exporter, version 1.5.1 (branch: debian/sid, revision: 1.5.0-1)
+</code></pre></div></div>
+
+<h3 id="configuración-de-prometheus-en-grafana"><strong>Configuración de prometheus en grafana</strong></h3>
+
+<p>Grafana necesita una base de datos que guarde las métricas guardadas por grafana, en este caso se hará uso de prometheus, otras opciones pueden ser graphite, influxDB u openTSDB entre otros.</p>
+
+<p>Para añadir la base de datos de prometheus a grafana accedemos primero al sitio web de nuestro grafana como se ha indicado anteriormente, buscando en nuestro navegador la ip o dominio de nuestra maquina e indicando el puerto 3000.</p>
+
+<p>En el menú de la izquierda vamos a la opción “connections” y después a la opción “data sources”, donde nos aparecerá la opción para añadir nuestra base de datos, en este caso prometheus, para ello será necesario añadir la URL http://localhost:9090.</p>
+
+<p><img src="/images/Grafana/data-source.png" alt="Data source" /></p>
+
+<h3 id="creación-de-dashboards"><strong>Creación de dashboards</strong></h3>
+
+<p>Con grafana tenemos la opción tanto de crear nuestro propio dashboard dependiendo de las necesidades de monitorización que tenga nuestro sistema así como también la opción de importar dashboards creados por la comunidad en <a href="https://grafana.com/grafana/dashboards/">Grafana dashboards</a></p>
+
+<p>En este caso para importar los dashboards en el menú de la izquierda buscamos la opción de “dashboards”, abrimos la opción “create dashboard” y después entre las tres opciones que nos ofrece grafana seleccionamos la opción “import dashboard”. Una vez ahi para importar el dashboard podemos indicar tanto la url del dashboard como la ID,</p>
+
+<p>A modo de ejemplo se ha usado el dashboard Node exporter siendo el mas descargado por lo que para su uso indicamos la ID de node-exportes (1860) y ya podremos empezar a usar el dashboard.</p>
+
+<p><img src="/images/Grafana/metrica.png" alt="Dashboard" /></p>
+
+<p>Si por el contrario en lugar de importar dashboards creados por la comunidad queremos crear nuestros propios dashboards personalizados dependiendo de las necesidades que tengamos a la hora de monitorizar tendríamos que realizar los siguientes pasos:</p>
+
+<p>Al igual que se ha hecho anteriormente, en el menú de la izquierda buscamos la opción de “dashboards” y abrimos la opción “create dashboard” pero esta vez en lugar de seleccionar la opción “import dashboard”, elegimos la opción “+ add visualization”.</p>
+
+<p>Al acceder a “add visualization” lo primero que nos pedirá grafana será que elijamos un data source que será desde donde grafana obtenga los datos de las métricas. Al tratarse de una maquina recién creada en mi caso el único data source que da la opción de seleccionar será el de prometheus pero según las necesidades que tengamos podemos instalar cualquier otro para poder usarlo.</p>
+
+<p><img src="/images/Grafana/prometheus.png" alt="Prometheus" /></p>
+
+<p>Al crear un dashboard vacío, lo primero que haremos será crear los paneles. Un panel es el bloque básico para la visualización de los datos. Grafana provee diferentes tipos de paneles y cada uno de ellos provee un editor de consulta (query) dependiendo del tipo de Data Source seleccionado.</p>
+
+<p><img src="/images/Grafana/panel.png" alt="Panel vacío" /></p>
+
+<p>Vamos a crear un panel de tipo gráfico en el que por ejemplo consultaremos la tasa promedio de solicitudes HTTP en los últimos 5 minutos, para ello en la parte de abajo donde visualizamos los paneles encontraremos la opción “query” donde podremos realizar diversas consultas de datos en el apartado “metrics”. Como por ejemplo lo que queremos consultar es la tasa promedio de solicitudes http la métrica que necesitamos seria la de “prometheus_http_request_total”.</p>
+
+<p>También podemos agregar un rango de tiempo para que los datos estén lo mas actualizados posibles, en este caso como rango de tiempo se ha puesto de 5 min, para ello bajo el apartado métrica nos aparecerá una opción llamada “hint: add rate” donde tendremos para elegir distintos rangos de actualización, desde 1 min a 24h.</p>
+
+<p>Cuando tengamos claro el tipo de consulta que haremos, en el apartado derecho seleccionaremos el tipo de gráfica para mostrar los datos ademas de poder seleccionar diversas opciones para que esos datos se muestren lo mejor y mas claramente posible.</p>
+
+<p>La consulta nos quedaria de la siguiente forma:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>rate(prometheus_http_request_total[5m])
+</code></pre></div></div>
+
+<h3 id="configuraciones-de-paneles"><strong>Configuraciones de paneles</strong></h3>
+
+<p>A la hora de configurar y editar nuestros paneles en el menú de la derecha contamos con varias opciones que nos pueden ser útiles para poder diferenciar los datos que mostrara dicho panel en el dashboard. La primera opción que veremos será la que nos permitirá seleccionar la forma gráfica en la que los datos se nos mostraran.</p>
+
+<ul>
+  <li>Panel options</li>
+</ul>
+
+<p>En este apartado podremos ponerle un nombre y descripción (si fuese necesario) al panel que se haya creado. Ademas de indicar un nombre y descripción también contaremos con una opción que puede ser muy util que seria la opción “panel links” lo que nos permitirá compartir paneles entre distintos miembros de un equipo o distintos usuarios compartiendo la url que genere el panel.</p>
+
+<h3 id="personalización-avanzada-de-dashboards-y-alertas-en-grafana"><strong>Personalización avanzada de dashboards y alertas en grafana</strong></h3>
+
+<ul>
+  <li>
+    <p>Dashboards avanzados
+Los dashboards en Grafana permiten visualizar métricas de manera clara y personalizada. Para optimizar su uso, puedes aplicar las siguientes técnicas avanzadas:</p>
+  </li>
+  <li>
+    <p>Uso de variables en dashboards
+Las variables en Grafana permiten cambiar dinámicamente los datos mostrados en los paneles sin modificar las consultas manualmente. Esto es útil cuando deseas filtrar información en tiempo real.</p>
+  </li>
+</ul>
+
+<p>Ejemplo práctico:</p>
+
+<p>Si estás monitoreando múltiples servidores, puedes crear una variable $server con la lista de servidores disponibles.
+En tu consulta PromQL, en lugar de escribir manualmente cada servidor, usas:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>node_cpu_seconds_total{instance="$server"}
+</code></pre></div></div>
+
+<p>Al cambiar la variable $server, los gráficos mostrarán solo los datos de ese servidor.</p>
+
+<ul>
+  <li>¿Como configurar una variable en grafana?</li>
+</ul>
+
+<p>Para dicha configuracion seguirmos los siguientes pasos:</p>
+
+<ol>
+  <li>Vamos a dashboards settings y seleccionamos la opcion “Variables”.</li>
+  <li>Creamos una nueva variable.</li>
+  <li>Configuramos la variable.</li>
+</ol>
+
+<p>Usando el ejemplo indicado anteriormente, se configurará la variable $server de la siguiente manera:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>* Nombre de la variable: Server
+* Tipo: query
+* Data source: Prometheus
+* Query: label_values(node_cpu_seconds_total, instance)
+</code></pre></div></div>
+
+<p>Indicando label_values(métrica, etiqueta) obtendremos todos los valores únicos de la etiqueta “instance” en la métrica node_cpu_seconds_total. Esto devolverá una lista de servidores registrados en Prometheus, por ejemplo:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>server1:9100
+server2:9100
+server3:9100
+</code></pre></div></div>
+
+<ol>
+  <li>En Multi-value, activamos la opción para permitir seleccionar múltiples servidores.</li>
+  <li>En Include All option, marcamos la casilla para agregar la opción All, que mostrará los datos de todos los servidores simultáneamente.</li>
+  <li>Guardamos la variable y volvemos al dashboard.</li>
+</ol>
+
+<ul>
+  <li>Filtros y segmentación</li>
+</ul>
+
+<p>Grafana permite filtrar datos en tiempo real sin necesidad de cambiar las consultas directamente en PromQL.</p>
+
+<p>Ejemplo práctico:</p>
+
+<p>Si estás monitoreando diferentes servicios en un clúster, puedes agregar filtros para ver solo las métricas de un servicio en específico, como nginx, mysql, o redis.</p>
+
+<ul>
+  <li>¿Cómo configurarlo?</li>
+</ul>
+
+<ol>
+  <li>
+    <table>
+      <tbody>
+        <tr>
+          <td>Añade una variable de tipo Custom con valores como nginx</td>
+          <td>mysql</td>
+          <td>redis.</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+  <li>En la consulta, usamos:</li>
+</ol>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>node_network_receive_bytes_total{job="$servicio"}
+</code></pre></div></div>
+
+<ol>
+  <li>Ahora puedes seleccionar el servicio desde un menú desplegable y ver los datos filtrados.</li>
+</ol>
+
+<ul>
+  <li>Uso de templates y dashboards reutilizables</li>
+</ul>
+
+<p>Si necesitas monitorizar múltiples entornos (Producción, Desarrollo, Testing), es recomendable crear dashboards reutilizables en lugar de duplicarlos.</p>
+
+<ul>
+  <li>¿Cómo hacer un dashboard genérico y reutilizable?</li>
+</ul>
+
+<ol>
+  <li>
+    <table>
+      <tbody>
+        <tr>
+          <td>Usa variables para definir instancias o entornos ($env = prod</td>
+          <td>dev</td>
+          <td>test).</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+  <li>En las consultas, usa $env en lugar de nombres fijos.</li>
+  <li>Guarda el dashboard como Template y reutilízalo en distintas configuraciones.</li>
+</ol>
+
+<h3 id="configuración-avanzada-de-alertas"><strong>Configuración avanzada de alertas</strong></h3>
+
+<p>Las alertas en Grafana permiten monitorear valores críticos en los sistemas y recibir notificaciones cuando se superan ciertos umbrales.</p>
+
+<ul>
+  <li>Definir condiciones personalizadas</li>
+</ul>
+
+<p>Podemos configurar alertas para detectar problemas antes de que afecten el rendimiento del sistema.</p>
+
+<p>Ejemplo práctico:</p>
+
+<p>Si queremos recibir una alerta cuando el uso de CPU supera el 85% durante más de 5 minutos:</p>
+
+<ol>
+  <li>Vamos a Alerting y creamos la nueva alerta con la opcion “New Alert”.</li>
+  <li>Definimos la métrica a monitorear con esta consulta en PromQL:</li>
+</ol>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>100 - (avg(rate(node_cpu_seconds_total{mode="idle"}[5m])) * 100) &gt; 85
+</code></pre></div></div>
+
+<ol>
+  <li>Establecemos la condición If above 85 for 5m.</li>
+  <li>Configuramos la acción (correo, stack, telegram, etc…). Grafana permite enviar alertas a traves de diferentes plataformas.</li>
+</ol>
+
+<ul>
+  <li>¿Como configuramos una alerta para slack por ejemplo?</li>
+</ul>
+
+<ol>
+  <li>vamos a “Alerting” y abrimos la opción llamada “notification channels”.</li>
+  <li>Creamos un nuevo canal y seleccionamos Slack en este caso.</li>
+  <li>Ingresamos la URL del webhook de slack (Un webhook es un mecanismo que permite que una aplicación envíe datos en tiempo real a otra aplicación cuando ocurre un evento específico.).</li>
+  <li>Guardamos y asignamos este canal a las alertas configuradas.</li>
+</ol>
+
+<ul>
+  <li>Grupos de alerta para una gestión eficiente</li>
+</ul>
+
+<p>Si se tienen muchas alertas configuradas, es recomendable agruparlas para evitar recibir demasiadas notificaciones.</p>
+
+<p>Ejemplo práctico:</p>
+
+<p>Si monitoreamos múltiples servidores, en lugar de recibir una alerta por cada uno, se pueden agrupar y recibir un solo mensaje que indique cuántos servidores están en estado crítico.</p>
+
+<ul>
+  <li>¿Como hacerlo?</li>
+</ul>
+
+<ol>
+  <li>Configuramos un Grupo de alertas en Grafana.</li>
+  <li>Usamos etiquetas (labels) para clasificar alertas por tipo (cpu, memoria, disco).</li>
+  <li>Configuramos el envío de notificaciones con una frecuencia específica (ej. cada 10 minutos).</li>
+</ol>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/categories/#monitorizaci%C3%B3n" class="page__taxonomy-item p-category" rel="tag">Monitorización</a><span class="sep">, </span>
+    
+      <a href="/categories/#sistemas" class="page__taxonomy-item p-category" rel="tag">Sistemas</a>
+    
+    </span>
+  </p>
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2024-04-11T13:14:06+02:00">April 11, 2024</time></p>
+
+      </footer>
+
+      
+
+      
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+
+      
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">&copy; 2025 <a href="http://localhost:4000">Blog de Sergio Ibáñez</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

@@ -1,0 +1,502 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.27.3 by Michael Rose
+  Copyright 2013-2025 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="es-ES" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Vpn Site to Site - Blog de Sergio Ibáñez</title>
+<meta name="description" content="En este post se iran indicando los pasos de configuracion para poder crear una vpn site to site haciendo uso de un escenario virtual en openstack creado en posts anteriores.">
+
+
+  <meta name="author" content="Sergio Ibáñez Núñez">
+  
+  <meta property="article:author" content="Sergio Ibáñez Núñez">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="es_ES">
+<meta property="og:site_name" content="Blog de Sergio Ibáñez">
+<meta property="og:title" content="Vpn Site to Site">
+<meta property="og:url" content="http://localhost:4000/_posts/2021-03-12-Vpn-site-to-site.html">
+
+
+  <meta property="og:description" content="En este post se iran indicando los pasos de configuracion para poder crear una vpn site to site haciendo uso de un escenario virtual en openstack creado en posts anteriores.">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2021-03-12T19:00:38+01:00">
+
+
+
+
+
+
+<link rel="canonical" href="http://localhost:4000/_posts/2021-03-12-Vpn-site-to-site.html">
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Blog de Sergio Ibáñez Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single" dir="ltr">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          Blog de Sergio Ibáñez
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a
+                href="/"
+                
+                
+              >Inicio</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/posts/"
+                
+                
+              >Posts</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/categories/"
+                
+                
+              >Categorías</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/tags/"
+                
+                
+              >Etiquetas</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/search/"
+                
+                
+              >Buscar</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/about/"
+                
+                
+              >Sobre mí</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="http://localhost:4000/">
+        <img src="/assets/images/avatar.png" alt="Sergio Ibáñez Núñez" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="http://localhost:4000/" itemprop="url">Sergio Ibáñez Núñez</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>Técnico IT y entusiasta de la automatización</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Vpn Site to Site">
+    <meta itemprop="description" content="En este post se iran indicando los pasos de configuracion para poder crear una vpn site to site haciendo uso de un escenario virtual en openstack creado en posts anteriores.">
+    <meta itemprop="datePublished" content="2021-03-12T19:00:38+01:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">
+            <a href="http://localhost:4000/_posts/2021-03-12-Vpn-site-to-site.html" itemprop="url">Vpn Site to Site
+</a>
+          </h1>
+          
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <h3 id="introduccion"><strong>Introduccion</strong></h3>
+
+<p>Configuraremos una conexión VPN sitio a sitio entre dos equipos del cloud openstack:</p>
+
+<p>Cada equipo estará conectado a dos redes, una de ellas en común. Para la autenticación de los extremos se usarán obligatoriamente certificados digitales, que se generarán utilizando openssl y se almacenarán en el directorio /etc/openvpn, junto con con los parámetros Diffie-Helman y el certificado de la propia Autoridad de Certificación.</p>
+
+<p>Se utilizarán direcciones de la red 10.99.99.0/24 para las direcciones virtuales de la VPN.
+Tras el establecimiento de la VPN, una máquina de cada red detrás de cada servidor VPN debe ser capaz de acceder a una máquina del otro extremo.</p>
+
+<h3 id="vpn-sitio-a-sitio-con-openvpn-y-certificados-x509"><strong>VPN sitio a sitio con OpenVPN y certificados x509</strong></h3>
+
+<ul>
+  <li>
+    <p>Servidor 1: vpn_server</p>
+
+    <ul>
+      <li>Red común 172.22.201.64</li>
+      <li>Red 10.0.0.8</li>
+      <li>Red1 192.168.100.2</li>
+    </ul>
+  </li>
+  <li>
+    <p>Maquina de la red local 1: lan</p>
+
+    <ul>
+      <li>Red1 192.168.100.10</li>
+    </ul>
+  </li>
+  <li>
+    <p>Servidor 2: vpn_server2</p>
+
+    <ul>
+      <li>Red común 172.22.201.33</li>
+      <li>Red 10.0.0.13</li>
+      <li>Red2 192.168.200.8</li>
+    </ul>
+  </li>
+  <li>
+    <p>Maquina de la red local 1: lan2</p>
+
+    <ul>
+      <li>Red2 192.168.200.4</li>
+    </ul>
+  </li>
+</ul>
+
+<p>Tras el establecimiento de la VPN, una máquina de cada red detrás de cada servidor VPN debe ser capaz de acceder a una máquina del otro extremo.</p>
+
+<p>Cabe decir que tenemos instalado en las 4 máquinas el paquete openvpn.</p>
+
+<h3 id="configuración"><strong>Configuración</strong></h3>
+
+<p>En este caso mi servidor hace de cliente del servidor del servidor de mi compañera celia.</p>
+
+<p>Fichero de configuracion de mi maquina que hara de cliente:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#### Fichero de sit-to-site vpn ####
+#Dispositivo de túnel
+dev tun
+
+#IP del servidor
+remote 172.22.201.33 (ip del servidor interno)
+
+#Encaminamiento
+ifconfig 10.99.99.2 10.99.99.1
+
+# Subred remota
+route 192.168.200.0 255.255.255.0 (ip externa del servidor)
+
+#Rol de cliente
+tls-client
+
+#Certificado de la CA
+ca /etc/openvpn/ca_celia.crt
+
+#Certificado cliente
+cert /etc/openvpn/cliente_celia.crt
+
+#Clave privada cliente
+key /etc/openvpn/cliente_celia.key
+
+#Activar la compresión LZO
+comp-lzo
+
+#Detectar caídas de la conexión
+keepalive 10 60
+
+#Nivel de la información
+verb 3
+
+log /var/log/vpn.log
+</code></pre></div></div>
+
+<p>Para ello mi compañera celia a tenido que pasarme los certificados y claves necesarias para que la conexion se establezca de forma corracta.</p>
+
+<p>Fichero Servidor celia:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># Use a dynamic TUN device
+dev tun
+
+# Virtual ip
+ifconfig 10.99.99.1 10.99.99.2
+
+# Local subnet
+route 192.168.100.0 255.255.255.0 (ruta de mi maquina que hace de cliente)
+
+# Enable TLS and assume server role
+tls-server
+
+# Diffie-Hellman
+dh /etc/openvpn/keys/dh.pem
+
+# Certificado de la CA
+ca /etc/openvpn/keys/ca.crt
+
+# Certificado local
+cert /etc/openvpn/keys/servidor.crt
+
+# Clave privada 
+key /etc/openvpn/keys/servidor.key
+
+# Use fast LZO compression
+comp-lzo
+
+# Ping remote every 10sg and restart after 60sg passed without sign of file from remote.
+keepalive 10 60
+
+# Set output verbosity to normal usage range
+verb 3
+
+log /var/log/office1.log
+</code></pre></div></div>
+
+<p>Una vez establecido el tunel vpn comprobamos que tanto servidor como cliente en ambas redes tienen conexion ejecutando un ping por ejemplo.</p>
+
+<p><img src="/images/site-to-site/Pueba_ping.jpeg" alt="Pueba de ping" /></p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/categories/#seguridad" class="page__taxonomy-item p-category" rel="tag">Seguridad</a>
+    
+    </span>
+  </p>
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2021-03-12T19:00:38+01:00">March 12, 2021</time></p>
+
+      </footer>
+
+      
+
+      
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+
+      
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">&copy; 2025 <a href="http://localhost:4000">Blog de Sergio Ibáñez</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

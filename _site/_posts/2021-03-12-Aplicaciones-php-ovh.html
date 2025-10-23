@@ -1,0 +1,794 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.27.3 by Michael Rose
+  Copyright 2013-2025 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="es-ES" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Aplicaciones PHP en OVH - Blog de Sergio Ibáñez</title>
+<meta name="description" content="En este post aprenderemos a migrar dos aplicaciones, Drupal y Nextcloud, para ello contamos con un un escenario compuesto por dos maquinas virtuales en redes distintas. La primera maquina virtual estara echa en vagrant y sera la maquina usada en la practica anterior Instalacion local CMS PHP.">
+
+
+  <meta name="author" content="Sergio Ibáñez Núñez">
+  
+  <meta property="article:author" content="Sergio Ibáñez Núñez">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="es_ES">
+<meta property="og:site_name" content="Blog de Sergio Ibáñez">
+<meta property="og:title" content="Aplicaciones PHP en OVH">
+<meta property="og:url" content="http://localhost:4000/_posts/2021-03-12-Aplicaciones-php-ovh.html">
+
+
+  <meta property="og:description" content="En este post aprenderemos a migrar dos aplicaciones, Drupal y Nextcloud, para ello contamos con un un escenario compuesto por dos maquinas virtuales en redes distintas. La primera maquina virtual estara echa en vagrant y sera la maquina usada en la practica anterior Instalacion local CMS PHP.">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2021-03-12T10:37:20+01:00">
+
+
+
+
+
+
+<link rel="canonical" href="http://localhost:4000/_posts/2021-03-12-Aplicaciones-php-ovh.html">
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Blog de Sergio Ibáñez Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single" dir="ltr">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          Blog de Sergio Ibáñez
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a
+                href="/"
+                
+                
+              >Inicio</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/posts/"
+                
+                
+              >Posts</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/categories/"
+                
+                
+              >Categorías</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/tags/"
+                
+                
+              >Etiquetas</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/search/"
+                
+                
+              >Buscar</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/about/"
+                
+                
+              >Sobre mí</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="http://localhost:4000/">
+        <img src="/assets/images/avatar.png" alt="Sergio Ibáñez Núñez" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="http://localhost:4000/" itemprop="url">Sergio Ibáñez Núñez</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>Técnico IT y entusiasta de la automatización</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Aplicaciones PHP en OVH">
+    <meta itemprop="description" content="En este post aprenderemos a migrar dos aplicaciones, Drupal y Nextcloud, para ello contamos con un un escenario compuesto por dos maquinas virtuales en redes distintas. La primera maquina virtual estara echa en vagrant y sera la maquina usada en la practica anterior Instalacion local CMS PHP.">
+    <meta itemprop="datePublished" content="2021-03-12T10:37:20+01:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">
+            <a href="http://localhost:4000/_posts/2021-03-12-Aplicaciones-php-ovh.html" itemprop="url">Aplicaciones PHP en OVH
+</a>
+          </h1>
+          
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <h2 id="introduccion"><strong>Introduccion</strong></h2>
+
+<p>En este post aprenderemos a migrar dos aplicaciones, Drupal y Nextcloud, para ello contamos con un un escenario compuesto por dos maquinas virtuales en redes distintas. La primera maquina virtual estara echa en vagrant y sera la maquina usada en la practica anterior “Instalacion local CMS PHP”.</p>
+
+<p>La segunda maquina estara alojada en OVH y es la maquina hecha en la practica anterior “OVH LEMP”.</p>
+
+<p>Lo que haremos sera instalar la aplicacion Nextcloud en la maquina vagrant local y migrar tanto drupal como nextcloud a la maquina OVH.</p>
+
+<h3 id="preparativos-y-configuración-de-migracion"><strong>Preparativos y configuración de migracion</strong></h3>
+
+<p>La aplicación se tendrá que migrar a un nuevo virtualhost al que se accederá con el nombre portal.iesgnXX.es por lo que empezamos creando el virtualhost Portal, para ello accedemos a /etc/nginx/sites-availables/ y ejecutamos un sudo cp default portal:</p>
+
+<p>Configuración de portal:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>server {
+    listen 80;
+    listen [::]:80;
+    root /srv/www/portal;
+    index index.html index.htm index.nginx-debian.html;
+    server_name portal.iesgn07.es;
+    location / {
+            try_files $uri $uri/ =404;
+    }
+    location ~ \.php$ {
+            include snippets/fastcgi-php.conf;
+            fastcgi_pass unix:/run/php/php7.3-fpm.sock;
+    }
+</code></pre></div></div>
+
+<p>Reiniciamos el servicio y creamos el enlace simbólico en /etc/nginx/sites-enabled/:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo systemctl restart nginx.service
+sudo ln -s /etc/nginx/sites-available/iesgn /etc/nginx/sites-enabled/
+</code></pre></div></div>
+
+<p>Configuramos en nuestra zona DNS de OVH un nuevo CNAME:</p>
+
+<p><img src="/images/ovh-aplicaciones-php/zona_dns.png" alt="zona dns en ovh" /></p>
+
+<p>Ahora vamos a nombrar el servicio de base de datos que tenemos en producción. Como es un servicio interno no lo vamos a nombrar en la zona DNS, lo vamos a nombrar usando resolución estática. El nombre del servicio de base de datos se llamara bd.iesgnXX.es (XX sera un numero asignado).</p>
+
+<p>Configuramos el fichero /etc/hosts añadiendo la siguiente linea:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>127.0.0.1 bd.iesgn07.es
+</code></pre></div></div>
+
+<p>Una vez configurado el nombre del servicio, configuraremos la base de datos con la siguiente informacion, los recursos que se crearan en la base de datos serán los siguientes:</p>
+
+<ul>
+  <li>Dirección de la base de datos: bd.iesgnXX.es</li>
+  <li>Base de datos: bd_drupal</li>
+  <li>Usuario: user_drupal</li>
+  <li>Password: pass_drupal</li>
+</ul>
+
+<p>Creamos el usuario user_drupal y le asignamos contraseña (como usuario root):</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>create user user_drupal;
+
+set password for user_drupal = password('pass_drupal');
+</code></pre></div></div>
+
+<p>Creamos la base de datos bd_drupal y le damos los permisos necesarios al usuario user_drupal:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>create database bd_drupal;
+
+grant all on bd_drupal.* to user_drupal identified by 'pass_drupal';
+</code></pre></div></div>
+
+<p>Una vez hecho y configurado todo comenzaremos la migración de la aplicación.</p>
+
+<h2 id="migracion-de-drupal"><strong>Migracion de Drupal</strong></h2>
+
+<p>Migramos primero la base de datos de nuestro entorno de desarrollo (local) al entorno de producción(ovh):</p>
+
+<p>En desarrollo enviamos la copia de seguridad previamente creada haciendo uso de scp:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>scp copiadrupalbd.sql debian@146.59.196.89:/home/debian
+</code></pre></div></div>
+
+<p>Una vez se haya enviado la copia de seguridad, se importan los datos en la base de datos creada anteriormente</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mysql -u user_drupal -p bd_drupal &lt; copiadrupalbd.sql
+</code></pre></div></div>
+
+<p>Despues que la base de datos este migrada, pasaremos a migrar la aplicación de drupal:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>scp -r Linux/drupal/ debian@146.59.196.89:/srv/www
+</code></pre></div></div>
+
+<p>Luego tenemos el directorio drupal en el nuevo servidor, editamos el fichero settings.php (drupal/sites/default/) de la siguiente forma:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$databases['default']['default'] = array (
+  'database' =&gt; 'bd_drupal',
+  'username' =&gt; 'user_drupal',
+  'password' =&gt; 'pass_drupal',
+  'prefix' =&gt; '',
+  'host' =&gt; 'localhost',
+  'port' =&gt; '3306',
+  'namespace' =&gt; 'Drupal\\Core\\Database\\Driver\\mysql',
+  'driver' =&gt; 'mysql',
+);
+$settings['config_sync_directory'] = 'sites/default/files/config_wGnfMPSoSAYjv-l4ZzdcDPpLHsqA_5AGGtjXvqWd1AafgbBo8fqSjD9SIx7zo6Qhg0OLxY7xvQ/sync';
+</code></pre></div></div>
+
+<p>A continuacion de esto, al entrar en la pagina obtendremos el siguiente error:</p>
+
+<p><img src="/images/ovh-aplicaciones-php/error_inicial.png" alt="error inicial" /></p>
+
+<p>Este error se debe a que son necesarios varios módulos php7.3 que no están instalados</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo apt install php7.3-gd, php7.3-xml y php7.3-mysql
+</code></pre></div></div>
+
+<p>Cuando estén instalados dichos modulo, comprobamos que realmente funciona y se puede acceder a drupal sin ningún tipo de problema.</p>
+
+<p><img src="/images/ovh-aplicaciones-php/proyecto-drupal2.png" alt="drupal" /></p>
+
+<p>Tendremos que asegurarnos que las URL limpias de drupal siguen funcionando en nginx debido a que en la maquina local no contamos con nginx, sino apache2.</p>
+
+<p>A drupal ahora mismo, tendremos acceso pero solo a la pagina principal no podremos usar nada ya que las url no están limpias, para ello volvemos a modificar el fichero de configuración portal añadiendo /index.php?$args</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>server {
+    listen 80;
+    listen [::]:80;
+    root /srv/www/portal;
+    index index.html index.htm index.nginx-debian.html;
+    server_name portal.iesgn07.es;
+    location / {
+            try_files $uri $uri/ /index.php?$args;
+    }
+    location ~ \.php$ {
+            include snippets/fastcgi-php.conf;
+            fastcgi_pass unix:/run/php/php7.3-fpm.sock;
+    }
+</code></pre></div></div>
+
+<p>Prueba de error accediendo al contenido de drupal:</p>
+
+<p><img src="/images/ovh-aplicaciones-php/error.png" alt="error" /></p>
+
+<p>Prueba de funcionamiento al acceder al mismo sitio, el contenido de nuestro drupal:</p>
+
+<p><img src="/images/ovh-aplicaciones-php/protyecto-drupal3.png" alt="funcionamiento drupal" /></p>
+
+<p>La aplicación debe estar disponible en la URL: portal.iesgnXX.es (Sin ningún directorio) por lo que comprobamos que podemos acceder a drupal desde esa url sin ningún directorio:</p>
+
+<p><img src="/ovh-aplicaciones-php/proyecto-drupal2.png" alt="drupal" /></p>
+
+<h3 id="instalaciónmigración-de-la-aplicación-nextcloud"><strong>Instalación/migración de la aplicación Nextcloud</strong></h3>
+
+<p>Instalamos la aplicación web Nextcloud en nuestra maquina local haciendo uso de wget:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo wget https://download.nextcloud.com/server/releases/nextcloud-20.0.1.zip
+</code></pre></div></div>
+
+<p>Descomprimimos el fichero descargado en /srv/www/iesgn:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo unzip nextcloud-20.0.1.zip
+</code></pre></div></div>
+
+<p>Cambiamos de usuario el directorio nextcloud y se lo asignamos a www-data:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo chown -R www-data: /srv/www/nextcloud/
+</code></pre></div></div>
+
+<p>Una vez hecho esto sera necesario instalar varios módulos php para que nextcloud funcione de forma correcta:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo apt install -y php-bcmath php-curl php-gd php-gmp php-imagick php-intl php-mbstring php-xml php-zip php-acpu
+</code></pre></div></div>
+
+<p>La instalación de php acpu puede ser opcional, lo que hace es configurar un sistema de cache por si se da el caso de que nuestro sistema tiene mucha carga de trabajo. Cuando este todo instalado reiniciamos apache2 y empezamos a preparar la configuración para usar nextcloud.</p>
+
+<p>Habilitamos el modulo rewrite (solo en caso de usar apache) y creamos un fichero nextcloud.conf con la siguiente configuración en /etc/apache2/sites-available/</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo a2enmod rewrite
+
+Nextcloud.conf:
+
+&lt;Directory /srv/www/nextcloud&gt;
+		AllowOverride all
+		php_value memory_limit "512M"
+&lt;/Directory&gt;
+</code></pre></div></div>
+
+<p>Habilitamos el sitio haciendo uso de a2ensite nextcloud.conf y volvemos a reiniciar el servidor. Con esto ya tendremos la configuración preparada y lo siguiente sera preparar la base de datos que en nuestro caso es mysql. Como en este entorno de desarrollo se elimino mysql al migrar la base de datos a otro servidor se tendrá que volver instalar mysql y php-mysql o bien crear la base en el segundo servidor, En este caso se vuelve a instalar mysql en el server1.</p>
+
+<p>Creación de base de datos:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mysql -u root -p
+create database bd_nextcloud;
+</code></pre></div></div>
+
+<p>Creamos el usuario y le asignamos una contraseña:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>create user nextcloud;
+set password for nextcloud = password('pass_next');
+</code></pre></div></div>
+
+<p>Le asignamos los permisos necesarios al usuario para usar la base de datos creada:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>grant all on bd_nextcloud.* to nextcloud identified by 'pass_next';
+</code></pre></div></div>
+
+<p>Después de tenerlo todo listo comenzamos con la instalación a través de un navegador web:</p>
+
+<p>!nextcloud.png!</p>
+
+<p>Ya tendremos nextcloud operativo, una vez instalado en caso de haber instalado php-acpu, se tendrá que modificar el fichero config.php en srv/www/nextcloud/config/ añadiendo la siguiente linea al final.</p>
+
+<p>!nextcloud_instalado.png!</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>'memcache.local' =&gt; '\OC\Memcache\APCu',
+);
+</code></pre></div></div>
+
+<p>Esto se debe a que la cache por defecto no se activa en la instalación. A continuación pasamos a migrar nuestro nextcloud al entorno de producción.</p>
+
+<p>Ahora prodremos realizar la migración al servidor en producción, para que la aplicación sea accesible en la URL: www.iesgnXX.es/cloud</p>
+
+<p>Entorno de desarrollo:</p>
+
+<p>Empezamos haciendo la copia de seguridad de la base de datos y posteriormente haciendo uso de scp, se enviara tanto la copia de seguridad de la base de datos como el directorio nextcloud al entorno de producción.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>scp copianextcloud.sql debian@hades.iesgn07.es:/home/debian
+scp -r /srv/www/nextcloud debian@hades.iesgn07.es:/home/debian
+</code></pre></div></div>
+
+<p>Entorno de producción:</p>
+
+<p>Empezamos a prepararlo todo para usar nextcloud, para empezar moveré el directorio nextcloaud a /srv/www/iesgn cambiándole el nombre por claud y una vez tenga el directorio en esa ubicación, se le cambiara de usuario y grupo y se le asignara a www-data.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo chown -R www-data:www-data cloud/
+</code></pre></div></div>
+
+<p>Después, al igual que en entorno de desarrollo, para que nextcloud funcione correctamente sera necesario instalar una serie de módulos php:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo apt install -y php-bcmath php-curl php-gd php-gmp php-imagick php-intl php-mbstring php-xml php-zip
+</code></pre></div></div>
+
+<p>Ahora que están todos los módulos instalados se configurara el sitio iesgn de la siguiente forma:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>server {
+    listen 80;
+    listen [::]:80;
+    root /srv/www/iesgn;
+    index index.html index.htm index.nginx-debian.html index.php;
+    server_name www.iesgn07.es;
+    location / {
+            return 301 http://www.iesgn07.es/principal;
+    }
+    location /principal {
+            try_files $uri $uri/ =404;
+    }
+    location = /robots.txt {
+            allow all;
+            log_not_found off;
+            access_log off;
+    }
+
+    location /.well-known {
+            rewrite ^/\.well-known/host-meta\.json  /cloud/public.php?service=host-meta-json    last;
+            rewrite ^/\.well-known/host-meta        /cloud/public.php?service=host-meta         last;
+            rewrite ^/\.well-known/webfinger        /cloud/public.php?service=webfinger         last;
+            rewrite ^/\.well-known/nodeinfo         /cloud/public.php?service=nodeinfo          last;
+
+            location = /.well-known/carddav   { return 301 /cloud/remote.php/dav/; }
+            location = /.well-known/caldav    { return 301 /cloud/remote.php/dav/; }
+
+            try_files $uri $uri/ =404;
+    }
+
+    location ^~ /cloud {
+            client_max_body_size 512M;
+            fastcgi_buffers 64 4K;
+
+            gzip on;
+            gzip_vary on;
+            gzip_comp_level 4;
+            gzip_min_length 256;
+            gzip_proxied expired no-cache no-store private no_last_modified no_etag auth;
+            gzip_types application/atom+xml application/javascript application/json application/ld+json application/manifest+json application/rss+xml application/vnd.geo+json application/vnd.ms-fontobject a$
+
+            add_header Referrer-Policy                      "no-referrer"   always;
+            add_header X-Content-Type-Options               "nosniff"       always;
+            add_header X-Download-Options                   "noopen"        always;
+            add_header X-Frame-Options                      "SAMEORIGIN"    always;
+            add_header X-Permitted-Cross-Domain-Policies    "none"          always;
+            add_header X-Robots-Tag                         "none"          always;
+            add_header X-XSS-Protection                     "1; mode=block" always;
+
+            fastcgi_hide_header X-Powered-By;
+            index index.php index.html /cloud/index.php$request_uri;
+
+            expires 1m;
+
+    location = /cloud {
+        if ( $http_user_agent ~ ^DavClnt ) {
+            return 302 /cloud/remote.php/webdav/$is_args$args;
+        }
+    }
+
+    location ~ ^/cloud/(?:build|tests|config|lib|3rdparty|templates|data)(?:$|/)    { return 404; }
+    location ~ ^/cloud/(?:\.|autotest|occ|issue|indie|db_|console)                { return 404; }
+
+    location ~ \.php(?:$|/) {
+        fastcgi_split_path_info ^(.+?\.php)(/.*)$;
+        set $path_info $fastcgi_path_info;
+
+        try_files $fastcgi_script_name =404;
+
+        include fastcgi_params;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        fastcgi_param PATH_INFO $path_info;
+
+        fastcgi_param modHeadersAvailable true;
+        fastcgi_param front_controller_active true;
+        fastcgi_pass unix:/run/php/php7.3-fpm.sock;
+
+        fastcgi_intercept_errors on;
+        fastcgi_request_buffering off;
+    }
+
+    location ~ \.(?:css|js|svg|gif)$ {
+        try_files $uri /cloud/index.php$request_uri;
+        expires 6M;
+        access_log off;
+    }
+
+    location ~ \.woff2?$ {
+        try_files $uri /cloud/index.php$request_uri;
+        expires 7d;
+        access_log off;
+    }
+
+    location /cloud {
+        try_files $uri $uri/ /cloud/index.php$request_uri;
+    }
+}
+</code></pre></div></div>
+
+<p>Una vez configurado el sitio, se reinicia nginx y se crea de nuevo la base de datos que usara nextcloud, en este caso como ya tenemos un usuario y contraseña para la base de datos de drupal, se escogerán ese mismo usuario y contraseña para la base de datos de nextcloud.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>create databases bd_nextcloud;
+grant all on bd_nextcloud.* to user_drupal identified by 'pass_drupal';
+</code></pre></div></div>
+
+<p>Después de crear la base de datos y de asignarle los permisos necesarios al usuario, user_drupal, pasamos a importar la base de datos:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mysql -u user_drupal -p bd_nextcloud &lt; copianextcloud.sql
+</code></pre></div></div>
+
+<p>Luego configuramos el fichero config.sample.php en /srv/www/iesgn/cloud/config/ rellenando los datos necesarios:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$CONFIG = array (
+  'instanceid' =&gt; 'ockxv791djwa',
+  'passwordsalt' =&gt; '017uPUlqFzZ5vMuJruRg4588K9KPvp',
+  'secret' =&gt; 'dBC2OZz/46h+uMbxtcgzDK/yIMX/ipq8mwBfJXXmigC7aK9K',
+  'trusted_domains' =&gt; 
+  array (
+    0 =&gt; 'www.iesgn07.es',
+  ),
+  'datadirectory' =&gt; '/srv/www/cloud/data',
+  'dbtype' =&gt; 'mysql',
+  'version' =&gt; '20.0.1.1',
+  'overwrite.cli.url' =&gt; 'http://www.iesgn07/cloud',
+  'dbname' =&gt; 'bd_nextcloud',
+  'dbhost' =&gt; 'localhost',
+  'dbport' =&gt; '',
+  'dbtableprefix' =&gt; 'oc_',
+  'mysql.utf8mb4' =&gt; true,
+  'dbuser' =&gt; 'user_drupal',
+  'dbpassword' =&gt; 'pass_drupal',
+  'installed' =&gt; true,
+  'memcache.local' =&gt; '\OC\Memcache\APCu',
+);
+</code></pre></div></div>
+
+<p>La linea memcache.local solo sera necesaria en caso de haber instalado php-apcu anteriormente.</p>
+
+<p>Prueba de funcionamiento de Nextcloud:</p>
+
+<p><img src="/images/ovh-aplicaciones-php/nextcloud_migrado.png" alt="nextcloud migrado" /></p>
+
+<ul>
+  <li>Tarea 3. Instala en un ordenador el cliente de nextcloud y realiza la configuración adecuada para acceder a “tu nube”.</li>
+</ul>
+
+<p>Instalamos el cliente de nextcloud:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo apt instalar nextcloud-desktop
+</code></pre></div></div>
+
+<p>Abrimos nextcloud y al hacerlo nos preguntaran si nos queremos registrar en un proveedor o entrar, en nuestro caso como tenemos un nextcloud montado en nuestro servidor hacemos clic en “Entrar”. Después de eso nos preguntara la dirección de nuestro nextcloud:</p>
+
+<p><img src="/images/ovh-aplicaciones-php/cliente1.png" alt="" /></p>
+
+<p>Luego, iniciaremos sesión con nuestro usuario:</p>
+
+<p>![]/images(/ovh-aplicaciones-php/cliente2.png)</p>
+
+<p>A continuación conectamos con nuestro nexclaud del servidor:</p>
+
+<p><img src="/images/ovh-aplicaciones-php/cliente3.png" alt="" /></p>
+
+<p>En este caso se sincronizara el directorio Nextcloud de nuestra maquina, con un directorio llamado Documentos creado en el servidor nextcloud.</p>
+
+<p>Prueba de funcionamiento:</p>
+
+<p>Maquina cliente:</p>
+
+<p>Creamos un fichero llamado prueba_funcionamiento dentro del directorio Nextcloud</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sergioib@debian-sergio:~/Nextcloud$ touch prueba_funcionamiento
+</code></pre></div></div>
+
+<p>Nextcloud:</p>
+
+<p><img src="/images/ovh-aplicaciones-php/cliente5.png" alt="" /></p>
+
+<p>Probamos a copiar un par de documentos de apuntes en Nextcloud.</p>
+
+<p>Nextcloud:</p>
+
+<p><img src="/images/ovh-aplicaciones-php/cliente6.png" alt="" /></p>
+
+<p>Como podemos comprobar, funciona.</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/categories/#aplicaciones-web" class="page__taxonomy-item p-category" rel="tag">Aplicaciones Web</a>
+    
+    </span>
+  </p>
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2021-03-12T10:37:20+01:00">March 12, 2021</time></p>
+
+      </footer>
+
+      
+
+      
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+
+      
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">&copy; 2025 <a href="http://localhost:4000">Blog de Sergio Ibáñez</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

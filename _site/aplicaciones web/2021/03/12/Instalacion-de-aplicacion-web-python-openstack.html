@@ -1,0 +1,1062 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.27.3 by Michael Rose
+  Copyright 2013-2025 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="es-ES" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Instalacion de Mezzanine en Openstack - Blog de Sergio Ibáñez</title>
+<meta name="description" content="En este post vamos a desplegar un CMS python basado en django, en este caso se ha elegido Mezzanine.">
+
+
+  <meta name="author" content="Sergio Ibáñez Núñez">
+  
+  <meta property="article:author" content="Sergio Ibáñez Núñez">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="es_ES">
+<meta property="og:site_name" content="Blog de Sergio Ibáñez">
+<meta property="og:title" content="Instalacion de Mezzanine en Openstack">
+<meta property="og:url" content="http://localhost:4000/aplicaciones%20web/2021/03/12/Instalacion-de-aplicacion-web-python-openstack.html">
+
+
+  <meta property="og:description" content="En este post vamos a desplegar un CMS python basado en django, en este caso se ha elegido Mezzanine.">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2021-03-12T16:01:48+01:00">
+
+
+
+
+
+
+<link rel="canonical" href="http://localhost:4000/aplicaciones%20web/2021/03/12/Instalacion-de-aplicacion-web-python-openstack.html">
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Blog de Sergio Ibáñez Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single wide" dir="ltr">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          Blog de Sergio Ibáñez
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a
+                href="/"
+                
+                
+              >Inicio</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/posts/"
+                
+                
+              >Posts</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/categories/"
+                
+                
+              >Categorías</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/tags/"
+                
+                
+              >Etiquetas</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/search/"
+                
+                
+              >Buscar</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/about/"
+                
+                
+              >Sobre mí</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Instalacion de Mezzanine en Openstack">
+    <meta itemprop="description" content="En este post vamos a desplegar un CMS python basado en django, en este caso se ha elegido Mezzanine.">
+    <meta itemprop="datePublished" content="2021-03-12T16:01:48+01:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">
+            <a href="http://localhost:4000/aplicaciones%20web/2021/03/12/Instalacion-de-aplicacion-web-python-openstack.html" itemprop="url">Instalacion de Mezzanine en Openstack
+</a>
+          </h1>
+          
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2021-03-12T16:01:48+01:00">March 12, 2021</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          9 minute read
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <h3 id="introducción"><strong>Introducción</strong></h3>
+
+<p>En este post vamos a desplegar un CMS python basado en django, en este caso se ha elegido Mezzanine.</p>
+
+<p>Para ello contaremos con dos entornos de trabajo, uno sera el entorno de desarrollo que sera mi propia maquina con un entorno virtual, y por otro lado el entorno de produccion que sera el nodo Quijote del entorno openstack creado y la practica de “Creacion de escenario Openstack”.</p>
+
+<h3 id="entorno-de-desarrollo"><strong>Entorno de desarrollo</strong></h3>
+
+<p>Creamos el entorno virtual:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sergioib@debian-sergio:~/Escritorio/Informatica/Virtualenv$ python3 -m venv mezzanine
+sergioib@debian-sergio:~/Escritorio/Informatica/Virtualenv$ source mezzanine/bin/activate
+</code></pre></div></div>
+
+<p>Instalamos mezzanine:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(mezzanine) sergioib@debian-sergio:~/Escritorio/Informatica/Virtualenv/mezzanine$ pip install mezzanine
+Collecting mezzanine
+  Downloading https://files.pythonhosted.org/packages/7f/cf/0f2cbd27edfc9568c7fad26ca217e02d209031e0298562a29040e2b75a5e/Mezzanine-4.3.1-py2.py3-none-any.whl (5.9MB)
+    100% |████████████████████████████████| 5.9MB 188kB/s 
+Collecting tzlocal&gt;=1.0 (from mezzanine)
+  Downloading https://files.pythonhosted.org/packages/5d/94/d47b0fd5988e6b7059de05720a646a2930920fff247a826f61674d436ba4/tzlocal-2.1-py2.py3-none-any.whl
+Collecting grappelli-safe&gt;=0.5.0 (from mezzanine)
+  Downloading https://files.pythonhosted.org/packages/3e/af/10804d792cfe4eb0029959c55169086e2d4ab02b99d88bd4d85281f48245/grappelli_safe-0.5.2-py2.py3-none-any.whl (163kB)
+    100% |████████████████████████████████| 163kB 745kB/s 
+Collecting django-contrib-comments (from mezzanine)
+  Downloading https://files.pythonhosted.org/packages/67/45/1c55c21d5151e8c39c7991b351bb4fae152ce863bb4b6a1ed35e88f31511/django_contrib_comments-2.0.0-py3-none-any.whl (414kB)
+    100% |████████████████████████████████| 419kB 739kB/s 
+Collecting future&gt;=0.9.0 (from mezzanine)
+  Downloading https://files.pythonhosted.org/packages/45/0b/38b06fd9b92dc2b68d58b75f900e97884c45bedd2ff83203d933cf5851c9/future-0.18.2.tar.gz (829kB)
+    100% |████████████████████████████████| 829kB 801kB/s 
+Collecting bleach&gt;=2.0 (from mezzanine)
+  Downloading https://files.pythonhosted.org/packages/03/c8/b7ed0dfea5cb287907bd22c5ff7c3ed0a65b346f2a4cf916eb9e83be66b3/bleach-3.2.1-py2.py3-none-any.whl (145kB)
+    100% |████████████████████████████████| 153kB 1.7MB/s 
+Collecting chardet (from mezzanine)
+  Downloading https://files.pythonhosted.org/packages/19/c7/fa589626997dd07bd87d9269342ccb74b1720384a4d739a1872bd84fbe68/chardet-4.0.0-py2.py3-none-any.whl (178kB)
+    100% |████████████████████████████████| 184kB 1.1MB/s 
+Collecting requests&gt;=2.1.0 (from mezzanine)
+  Downloading https://files.pythonhosted.org/packages/29/c1/24814557f1d22c56d50280771a17307e6bf87b70727d975fd6b2ce6b014a/requests-2.25.1-py2.py3-none-any.whl (61kB)
+    100% |████████████████████████████████| 61kB 1.3MB/s 
+Collecting requests-oauthlib&gt;=0.4 (from mezzanine)
+  Downloading https://files.pythonhosted.org/packages/a3/12/b92740d845ab62ea4edf04d2f4164d82532b5a0b03836d4d4e71c6f3d379/requests_oauthlib-1.3.0-py2.py3-none-any.whl
+Collecting filebrowser-safe&gt;=0.5.0 (from mezzanine)
+  Downloading https://files.pythonhosted.org/packages/77/f2/373598a98fe4643f4e2aeb99b2af5861a8cff75e0ab814f056b91f4d9c76/filebrowser_safe-0.5.0-py2.py3-none-any.whl (230kB)
+    100% |████████████████████████████████| 235kB 1.5MB/s 
+Collecting beautifulsoup4&gt;=4.5.3 (from mezzanine)
+  Downloading https://files.pythonhosted.org/packages/d1/41/e6495bd7d3781cee623ce23ea6ac73282a373088fcd0ddc809a047b18eae/beautifulsoup4-4.9.3-py3-none-any.whl (115kB)
+    100% |████████████████████████████████| 122kB 1.3MB/s 
+Collecting django&lt;1.12,&gt;=1.8 (from mezzanine)
+  Downloading https://files.pythonhosted.org/packages/49/49/178daa8725d29c475216259eb19e90b2aa0b8c0431af8c7e9b490ae6481d/Django-1.11.29-py2.py3-none-any.whl (6.9MB)
+    100% |████████████████████████████████| 7.0MB 152kB/s 
+Collecting pillow (from mezzanine)
+  Downloading https://files.pythonhosted.org/packages/eb/8e/d2f7a67cf8da9b83c1e3ee38dbf49448f3c8acb2cb38f76e4301f4a70223/Pillow-8.1.0-cp37-cp37m-manylinux1_x86_64.whl (2.2MB)
+    100% |████████████████████████████████| 2.2MB 485kB/s 
+Collecting pytz (from tzlocal&gt;=1.0-&gt;mezzanine)
+  Downloading https://files.pythonhosted.org/packages/89/06/2c2d3034b4d6bf22f2a4ae546d16925898658a33b4400cfb7e2c1e2871a3/pytz-2020.5-py2.py3-none-any.whl (510kB)
+    100% |████████████████████████████████| 512kB 959kB/s 
+Collecting six&gt;=1.9.0 (from bleach&gt;=2.0-&gt;mezzanine)
+  Using cached https://files.pythonhosted.org/packages/ee/ff/48bde5c0f013094d729fe4b0316ba2a24774b3ff1c52d924a8a4cb04078a/six-1.15.0-py2.py3-none-any.whl
+Collecting packaging (from bleach&gt;=2.0-&gt;mezzanine)
+  Downloading https://files.pythonhosted.org/packages/b1/a7/588bfa063e7763247ab6f7e1d994e331b85e0e7d09f853c59a6eb9696974/packaging-20.8-py2.py3-none-any.whl
+Collecting webencodings (from bleach&gt;=2.0-&gt;mezzanine)
+  Downloading https://files.pythonhosted.org/packages/f4/24/2a3e3df732393fed8b3ebf2ec078f05546de641fe1b667ee316ec1dcf3b7/webencodings-0.5.1-py2.py3-none-any.whl
+Collecting certifi&gt;=2017.4.17 (from requests&gt;=2.1.0-&gt;mezzanine)
+  Downloading https://files.pythonhosted.org/packages/5e/a0/5f06e1e1d463903cf0c0eebeb751791119ed7a4b3737fdc9a77f1cdfb51f/certifi-2020.12.5-py2.py3-none-any.whl (147kB)
+    100% |████████████████████████████████| 153kB 756kB/s 
+Collecting urllib3&lt;1.27,&gt;=1.21.1 (from requests&gt;=2.1.0-&gt;mezzanine)
+  Using cached https://files.pythonhosted.org/packages/f5/71/45d36a8df68f3ebb098d6861b2c017f3d094538c0fb98fa61d4dc43e69b9/urllib3-1.26.2-py2.py3-none-any.whl
+Collecting idna&lt;3,&gt;=2.5 (from requests&gt;=2.1.0-&gt;mezzanine)
+  Using cached https://files.pythonhosted.org/packages/a2/38/928ddce2273eaa564f6f50de919327bf3a00f091b5baba8dfa9460f3a8a8/idna-2.10-py2.py3-none-any.whl
+Collecting oauthlib&gt;=3.0.0 (from requests-oauthlib&gt;=0.4-&gt;mezzanine)
+  Downloading https://files.pythonhosted.org/packages/05/57/ce2e7a8fa7c0afb54a0581b14a65b56e62b5759dbc98e80627142b8a3704/oauthlib-3.1.0-py2.py3-none-any.whl (147kB)
+    100% |████████████████████████████████| 153kB 1.3MB/s 
+Collecting soupsieve&gt;1.2; python_version &gt;= "3.0" (from beautifulsoup4&gt;=4.5.3-&gt;mezzanine)
+  Downloading https://files.pythonhosted.org/packages/02/fb/1c65691a9aeb7bd6ac2aa505b84cb8b49ac29c976411c6ab3659425e045f/soupsieve-2.1-py3-none-any.whl
+Collecting pyparsing&gt;=2.0.2 (from packaging-&gt;bleach&gt;=2.0-&gt;mezzanine)
+  Using cached https://files.pythonhosted.org/packages/8a/bb/488841f56197b13700afd5658fc279a2025a39e22449b7cf29864669b15d/pyparsing-2.4.7-py2.py3-none-any.whl
+Building wheels for collected packages: future
+  Running setup.py bdist_wheel for future ... error
+  Complete output from command /home/sergioib/Escritorio/Informatica/Virtualenv/mezzanine/bin/python3 -u -c "import setuptools, tokenize;__file__='/tmp/pip-install-_8krtl_r/future/setup.py';f=getattr(tokenize, 'open', open)(__file__);code=f.read().replace('\r\n', '\n');f.close();exec(compile(code, __file__, 'exec'))" bdist_wheel -d /tmp/pip-wheel-cdnpy4r_ --python-tag cp37:
+  usage: -c [global_opts] cmd1 [cmd1_opts] [cmd2 [cmd2_opts] ...]
+     or: -c --help [cmd1 cmd2 ...]
+     or: -c --help-commands
+     or: -c cmd --help
+  
+  error: invalid command 'bdist_wheel'
+  
+  ----------------------------------------
+  Failed building wheel for future
+  Running setup.py clean for future
+Failed to build future
+Installing collected packages: pytz, tzlocal, grappelli-safe, django, django-contrib-comments, future, six, pyparsing, packaging, webencodings, bleach, chardet, certifi, urllib3, idna, requests, oauthlib, requests-oauthlib, filebrowser-safe, soupsieve, beautifulsoup4, pillow, mezzanine
+  Running setup.py install for future ... done
+Successfully installed beautifulsoup4-4.9.3 bleach-3.2.1 certifi-2020.12.5 chardet-4.0.0 django-1.11.29 django-contrib-comments-2.0.0 filebrowser-safe-0.5.0 future-0.18.2 grappelli-safe-0.5.2 idna-2.10 mezzanine-4.3.1 oauthlib-3.1.0 packaging-20.8 pillow-8.1.0 pyparsing-2.4.7 pytz-2020.5 requests-2.25.1 requests-oauthlib-1.3.0 six-1.15.0 soupsieve-2.1 tzlocal-2.1 urllib3-1.26.2 webencodings-0.5.1
+</code></pre></div></div>
+
+<p>Creamos el fichero requirements:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pip freeze &gt; requirements.txt
+</code></pre></div></div>
+
+<p>fichero requirements:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>beautifulsoup4==4.9.3
+bleach==3.2.1
+certifi==2020.12.5
+chardet==4.0.0
+Django==1.11.29
+django-contrib-comments==2.0.0
+filebrowser-safe==0.5.0
+future==0.18.2
+grappelli-safe==0.5.2
+idna==2.10
+Mezzanine==4.3.1
+oauthlib==3.1.0
+packaging==20.8
+Pillow==8.1.0
+pkg-resources==0.0.0
+pyparsing==2.4.7
+pytz==2020.5
+requests==2.25.1
+requests-oauthlib==1.3.0
+six==1.15.0
+soupsieve==2.1
+tzlocal==2.1
+urllib3==1.26.2
+webencodings==0.5.1
+</code></pre></div></div>
+
+<p>De los requeriments, tendremos que borrar pkg-resources==0.0.0 para evitar futuros conflictos.</p>
+
+<p>Creamos el proyecto mezzanine:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mezzanine-project cmspython
+
+(mezzanine) sergioib@debian-sergio:~/Escritorio/Informatica/Virtualenv/mezzanine$ python3 cmspython/manage.py migrate
+Operations to perform:
+  Apply all migrations: admin, auth, blog, conf, contenttypes, core, django_comments, forms, galleries, generic, pages, redirects, sessions, sites, twitter
+Running migrations:
+  Applying contenttypes.0001_initial... OK
+  Applying auth.0001_initial... OK
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying contenttypes.0002_remove_content_type_name... OK
+  Applying auth.0002_alter_permission_name_max_length... OK
+  Applying auth.0003_alter_user_email_max_length... OK
+  Applying auth.0004_alter_user_username_opts... OK
+  Applying auth.0005_alter_user_last_login_null... OK
+  Applying auth.0006_require_contenttypes_0002... OK
+  Applying auth.0007_alter_validators_add_error_messages... OK
+  Applying auth.0008_alter_user_username_max_length... OK
+  Applying sites.0001_initial... OK
+  Applying blog.0001_initial... OK
+  Applying blog.0002_auto_20150527_1555... OK
+  Applying blog.0003_auto_20170411_0504... OK
+  Applying conf.0001_initial... OK
+  Applying core.0001_initial... OK
+  Applying core.0002_auto_20150414_2140... OK
+  Applying django_comments.0001_initial... OK
+  Applying django_comments.0002_update_user_email_field_length... OK
+  Applying django_comments.0003_add_submit_date_index... OK
+  Applying pages.0001_initial... OK
+  Applying forms.0001_initial... OK
+  Applying forms.0002_auto_20141227_0224... OK
+  Applying forms.0003_emailfield... OK
+  Applying forms.0004_auto_20150517_0510... OK
+  Applying forms.0005_auto_20151026_1600... OK
+  Applying forms.0006_auto_20170425_2225... OK
+  Applying galleries.0001_initial... OK
+  Applying galleries.0002_auto_20141227_0224... OK
+  Applying generic.0001_initial... OK
+  Applying generic.0002_auto_20141227_0224... OK
+  Applying generic.0003_auto_20170411_0504... OK
+  Applying pages.0002_auto_20141227_0224... OK
+  Applying pages.0003_auto_20150527_1555... OK
+  Applying pages.0004_auto_20170411_0504... OK
+  Applying redirects.0001_initial... OK
+  Applying sessions.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+  Applying twitter.0001_initial... OK
+</code></pre></div></div>
+
+<p>Creamos el superusuario:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(mezzanine) sergioib@debian-sergio:~/Escritorio/Informatica/Virtualenv/mezzanine$ python3 cmspython/manage.py createsuperuser
+Username (leave blank to use 'sergioib'): sergioib
+Email address: sergio_hd_sony@hotmail.com
+Password: cmspython
+Password (again): cmspython 
+Superuser created successfully.
+
+
+(mezzanine) sergioib@debian-sergio:~/Escritorio/Informatica/Virtualenv/mezzanine$ python3 cmspython/manage.py runserver
+              .....
+          _d^^^^^^^^^b_
+       .d''           ``b.
+     .p'                `q.
+    .d'                   `b.
+   .d'                     `b.   * Mezzanine 4.3.1
+   ::                       ::   * Django 1.11.29
+  ::    M E Z Z A N I N E    ::  * Python 3.7.3
+   ::                       ::   * SQLite 3.27.2
+   `p.                     .q'   * Linux 4.19.0-13-amd64
+    `p.                   .q'
+     `b.                 .d'
+       `q..          ..p'
+          ^q........p^
+              ''''
+
+Performing system checks...
+
+System check identified no issues (0 silenced).
+January 17, 2021 - 13:04:43
+Django version 1.11.29, using settings 'cmspython.settings'
+Starting development server at http://127.0.0.1:8000/
+Quit the server with CONTROL-C.
+</code></pre></div></div>
+
+<p>Una vez instalado personalizaremos la página cambiando por ejemplo el nombre al blog y añadimos contenido (algún artículo con alguna imagen por ejemplo).</p>
+
+<p>En la página de administración en el menú de configuración(settings) podemos cambiar de nombre nuestro blog mientras que el articulo con la imagen lo podemos añadir en el apartado blog posts.</p>
+
+<p>Ejemplo de nombre:</p>
+
+<p><img src="/images/mezzanine/mezzanine1.png" alt="mezzanine" /></p>
+
+<p>Ejemplo de post:</p>
+
+<p><img src="/images/mezzanine/mezzanine2.png" alt="mezzanine" /></p>
+
+<p><img src="/images/mezzanine/mezzanine_post.png" alt="mezzanine post" /></p>
+
+<p>Guardamos los ficheros generados durante la instalación en un repositorio github. Guardaremos también en ese repositorio la copia de seguridad de la bese de datos.</p>
+
+<p>Por otro lado hay que tener en cuenta que en el entorno de desarrollo voy a tener una base de datos sqlite mientras que en el entorno de producción base de datos una mariadb, por lo tanto es recomendable para hacer la copia de seguridad y recuperarla los comandos: python manage.py dumpdata y python manage.py loaddata.</p>
+
+<p>Copiamos la base de datos en un fichro .json</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(mezzanine) sergioib@debian-sergio:~/Escritorio/Informatica/Virtualenv/mezzanine$ python3 cmspython/manage.py dumpdata &gt; cmspython/copiabd.json
+</code></pre></div></div>
+
+<p>Se sube todo a github</p>
+
+<p>Realizamos el despliegue de la aplicación en el entorno de producción (servidor web y servidor de base de datos en el cloud). Utilizamos un entorno virtual. Como servidor de aplicación puedes usar gunicorn o uwsgi (creando una unidad systemd para gestionar este servicio). El contenido estático debe servirlo el servidor web. La aplicación será accesible en la url python.tunombre.gonzalonazareno.org.</p>
+
+<h3 id="entorno-de-produccion-centos8"><strong>Entorno de produccion (centos8)</strong></h3>
+
+<p>Clonamos el directorio github dentro del documentroot.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[centos@quijote www]$ sudo git clone https://github.com/sergioib94/cmspython.git
+</code></pre></div></div>
+
+<p>En sancho tendremos que añadir python al dns como CNAME de quijote</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>GNU nano 3.2                                      /var/cache/bind/db.interna.gonzalonazareno.org                                                
+
+$TTL    604800
+@       IN      SOA     freston.sergio.gonzalonazareno.org. root.iesgn.org. (
+                              5         ; Serial
+                         604800         ; Refresh
+                          86400         ; Retry
+                        2419200         ; Expire
+                         604800 )       ; Negative Cache TTL
+;
+@       IN      NS      freston.sergio.gonzalonazareno.org.
+
+$ORIGIN sergio.gonzalonazareno.org.
+
+dulcinea        IN      A       10.0.1.5
+sancho  IN      A       10.0.1.8
+freston IN      A       10.0.1.3
+quijote IN      A       10.0.2.5
+www     IN      CNAME   quijote
+bd      IN      CNAME   sancho
+ldap    IN      CNAME   freston
+python  IN      CNAME   quijote
+</code></pre></div></div>
+
+<p>Creamos el entorno virtual en quijote</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>python3 -m venv mezzanine
+source mezzanine/bin/activate
+</code></pre></div></div>
+
+<p>Se instalan los paquetes del requirement</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(mezzanine) [centos@quijote cmspython]$ pip install -r requirements.txt 
+Collecting beautifulsoup4==4.9.3 (from -r requirements.txt (line 1))
+  Retrying (Retry(total=4, connect=None, read=None, redirect=None, status=None)) after connection broken by 'ReadTimeoutError("HTTPSConnectionPool(host='files.pythonhosted.org', port=443): Read timed out. (read timeout=15)",)': /packages/d1/41/e6495bd7d3781cee623ce23ea6ac73282a373088fcd0ddc809a047b18eae/beautifulsoup4-4.9.3-py3-none-any.whl
+  Downloading https://files.pythonhosted.org/packages/d1/41/e6495bd7d3781cee623ce23ea6ac73282a373088fcd0ddc809a047b18eae/beautifulsoup4-4.9.3-py3-none-any.whl (115kB)
+    100% |████████████████████████████████| 122kB 629kB/s 
+Collecting bleach==3.2.1 (from -r requirements.txt (line 2))
+  Downloading https://files.pythonhosted.org/packages/03/c8/b7ed0dfea5cb287907bd22c5ff7c3ed0a65b346f2a4cf916eb9e83be66b3/bleach-3.2.1-py2.py3-none-any.whl (145kB)
+    100% |████████████████████████████████| 153kB 1.6MB/s 
+Collecting certifi==2020.12.5 (from -r requirements.txt (line 3))
+  Downloading https://files.pythonhosted.org/packages/5e/a0/5f06e1e1d463903cf0c0eebeb751791119ed7a4b3737fdc9a77f1cdfb51f/certifi-2020.12.5-py2.py3-none-any.whl (147kB)
+    100% |████████████████████████████████| 153kB 1.9MB/s 
+Collecting chardet==4.0.0 (from -r requirements.txt (line 4))
+  Downloading https://files.pythonhosted.org/packages/19/c7/fa589626997dd07bd87d9269342ccb74b1720384a4d739a1872bd84fbe68/chardet-4.0.0-py2.py3-none-any.whl (178kB)
+    100% |████████████████████████████████| 184kB 1.4MB/s 
+Collecting Django==1.11.29 (from -r requirements.txt (line 5))
+  Downloading https://files.pythonhosted.org/packages/49/49/178daa8725d29c475216259eb19e90b2aa0b8c0431af8c7e9b490ae6481d/Django-1.11.29-py2.py3-none-any.whl (6.9MB)
+    100% |████████████████████████████████| 7.0MB 106kB/s 
+Collecting django-contrib-comments==2.0.0 (from -r requirements.txt (line 6))
+  Downloading https://files.pythonhosted.org/packages/67/45/1c55c21d5151e8c39c7991b351bb4fae152ce863bb4b6a1ed35e88f31511/django_contrib_comments-2.0.0-py3-none-any.whl (414kB)
+    100% |████████████████████████████████| 419kB 1.6MB/s 
+Collecting filebrowser-safe==0.5.0 (from -r requirements.txt (line 7))
+  Downloading https://files.pythonhosted.org/packages/77/f2/373598a98fe4643f4e2aeb99b2af5861a8cff75e0ab814f056b91f4d9c76/filebrowser_safe-0.5.0-py2.py3-none-any.whl (230kB)
+    100% |████████████████████████████████| 235kB 2.2MB/s 
+Collecting future==0.18.2 (from -r requirements.txt (line 8))
+  Downloading https://files.pythonhosted.org/packages/45/0b/38b06fd9b92dc2b68d58b75f900e97884c45bedd2ff83203d933cf5851c9/future-0.18.2.tar.gz (829kB)
+    100% |████████████████████████████████| 829kB 872kB/s 
+Collecting grappelli-safe==0.5.2 (from -r requirements.txt (line 9))
+  Downloading https://files.pythonhosted.org/packages/3e/af/10804d792cfe4eb0029959c55169086e2d4ab02b99d88bd4d85281f48245/grappelli_safe-0.5.2-py2.py3-none-any.whl (163kB)
+    100% |████████████████████████████████| 163kB 2.2MB/s 
+Collecting idna==2.10 (from -r requirements.txt (line 10))
+  Downloading https://files.pythonhosted.org/packages/a2/38/928ddce2273eaa564f6f50de919327bf3a00f091b5baba8dfa9460f3a8a8/idna-2.10-py2.py3-none-any.whl (58kB)
+    100% |████████████████████████████████| 61kB 2.3MB/s 
+Collecting Mezzanine==4.3.1 (from -r requirements.txt (line 11))
+  Downloading https://files.pythonhosted.org/packages/7f/cf/0f2cbd27edfc9568c7fad26ca217e02d209031e0298562a29040e2b75a5e/Mezzanine-4.3.1-py2.py3-none-any.whl (5.9MB)
+    100% |████████████████████████████████| 5.9MB 158kB/s 
+Collecting oauthlib==3.1.0 (from -r requirements.txt (line 12))
+  Downloading https://files.pythonhosted.org/packages/05/57/ce2e7a8fa7c0afb54a0581b14a65b56e62b5759dbc98e80627142b8a3704/oauthlib-3.1.0-py2.py3-none-any.whl (147kB)
+    100% |████████████████████████████████| 153kB 2.8MB/s 
+Collecting packaging==20.8 (from -r requirements.txt (line 13))
+  Downloading https://files.pythonhosted.org/packages/b1/a7/588bfa063e7763247ab6f7e1d994e331b85e0e7d09f853c59a6eb9696974/packaging-20.8-py2.py3-none-any.whl
+Collecting Pillow==8.1.0 (from -r requirements.txt (line 14))
+  Downloading https://files.pythonhosted.org/packages/b6/c0/442d9d87e0da00bf856ef6dd4916f84a2d710b5f1a367d42d7f3c4e99a6c/Pillow-8.1.0-cp36-cp36m-manylinux1_x86_64.whl (2.2MB)
+    100% |████████████████████████████████| 2.2MB 372kB/s 
+Collecting pyparsing==2.4.7 (from -r requirements.txt (line 15))
+  Downloading https://files.pythonhosted.org/packages/8a/bb/488841f56197b13700afd5658fc279a2025a39e22449b7cf29864669b15d/pyparsing-2.4.7-py2.py3-none-any.whl (67kB)
+    100% |████████████████████████████████| 71kB 5.0MB/s 
+Collecting pytz==2020.5 (from -r requirements.txt (line 16))
+  Downloading https://files.pythonhosted.org/packages/89/06/2c2d3034b4d6bf22f2a4ae546d16925898658a33b4400cfb7e2c1e2871a3/pytz-2020.5-py2.py3-none-any.whl (510kB)
+    100% |████████████████████████████████| 512kB 1.4MB/s 
+Collecting requests==2.25.1 (from -r requirements.txt (line 17))
+  Downloading https://files.pythonhosted.org/packages/29/c1/24814557f1d22c56d50280771a17307e6bf87b70727d975fd6b2ce6b014a/requests-2.25.1-py2.py3-none-any.whl (61kB)
+    100% |████████████████████████████████| 61kB 4.6MB/s 
+Collecting requests-oauthlib==1.3.0 (from -r requirements.txt (line 18))
+  Downloading https://files.pythonhosted.org/packages/a3/12/b92740d845ab62ea4edf04d2f4164d82532b5a0b03836d4d4e71c6f3d379/requests_oauthlib-1.3.0-py2.py3-none-any.whl
+Collecting six==1.15.0 (from -r requirements.txt (line 19))
+  Downloading https://files.pythonhosted.org/packages/ee/ff/48bde5c0f013094d729fe4b0316ba2a24774b3ff1c52d924a8a4cb04078a/six-1.15.0-py2.py3-none-any.whl
+Collecting soupsieve==2.1 (from -r requirements.txt (line 20))
+  Downloading https://files.pythonhosted.org/packages/02/fb/1c65691a9aeb7bd6ac2aa505b84cb8b49ac29c976411c6ab3659425e045f/soupsieve-2.1-py3-none-any.whl
+Collecting tzlocal==2.1 (from -r requirements.txt (line 21))
+  Downloading https://files.pythonhosted.org/packages/5d/94/d47b0fd5988e6b7059de05720a646a2930920fff247a826f61674d436ba4/tzlocal-2.1-py2.py3-none-any.whl
+Collecting urllib3==1.26.2 (from -r requirements.txt (line 22))
+  Downloading https://files.pythonhosted.org/packages/f5/71/45d36a8df68f3ebb098d6861b2c017f3d094538c0fb98fa61d4dc43e69b9/urllib3-1.26.2-py2.py3-none-any.whl (136kB)
+    100% |████████████████████████████████| 143kB 846kB/s 
+Collecting webencodings==0.5.1 (from -r requirements.txt (line 23))
+  Downloading https://files.pythonhosted.org/packages/f4/24/2a3e3df732393fed8b3ebf2ec078f05546de641fe1b667ee316ec1dcf3b7/webencodings-0.5.1-py2.py3-none-any.whl
+Installing collected packages: soupsieve, beautifulsoup4, pyparsing, packaging, six, webencodings, bleach, certifi, chardet, pytz, Django, django-contrib-comments, filebrowser-safe, future, grappelli-safe, idna, urllib3, requests, oauthlib, requests-oauthlib, tzlocal, Pillow, Mezzanine
+  Running setup.py install for future ... done
+Successfully installed Django-1.11.29 Mezzanine-4.3.1 Pillow-8.1.0 beautifulsoup4-4.9.3 bleach-3.2.1 certifi-2020.12.5 chardet-4.0.0 django-contrib-comments-2.0.0 filebrowser-safe-0.5.0 future-0.18.2 grappelli-safe-0.5.2 idna-2.10 oauthlib-3.1.0 packaging-20.8 pyparsing-2.4.7 pytz-2020.5 requests-2.25.1 requests-oauthlib-1.3.0 six-1.15.0 soupsieve-2.1 tzlocal-2.1 urllib3-1.26.2 webencodings-0.5.1
+You are using pip version 9.0.3, however version 20.3.3 is available.
+You should consider upgrading via the 'pip install --upgrade pip' command.
+</code></pre></div></div>
+
+<p>De paso actualizamos también el comando pip ya que nuestra maquina centos cuenta con una versión muy inferior a la actual:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(mezzanine) [centos@quijote cmspython]$ pip install --upgrade pip
+Collecting pip
+  Downloading https://files.pythonhosted.org/packages/54/eb/4a3642e971f404d69d4f6fa3885559d67562801b99d7592487f1ecc4e017/pip-20.3.3-py2.py3-none-any.whl (1.5MB)
+    100% |████████████████████████████████| 1.5MB 614kB/s 
+Installing collected packages: pip
+  Found existing installation: pip 9.0.3
+    Uninstalling pip-9.0.3:
+      Successfully uninstalled pip-9.0.3
+Successfully installed pip-20.3.3
+</code></pre></div></div>
+
+<p>Una vez hecho esto, creamos la base de datos y el usuario en mariadb de sancho</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root@sancho:/home/ubuntu# mysql -u root -p
+Enter password: 
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 243
+Server version: 10.3.25-MariaDB-0ubuntu0.20.04.1 Ubuntu 20.04
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]&gt; CREATE USER 'mezzanine'@10.0.2.5 IDENTIFIED BY 'mezzanine;'
+    -&gt; ;
+Query OK, 0 rows affected (0.048 sec)
+
+MariaDB [(none)]&gt; CREATE DATABASE mezzanine;
+
+MariaDB [(none)]&gt; GRANT ALL privileges ON `mezzanine`.* TO 'mezzanine'@'10.0.2.5';
+</code></pre></div></div>
+
+<p>instalamos el modulo wsgi</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[centos@quijote ~]$ sudo dnf install python3-mod_wsgi
+</code></pre></div></div>
+
+<p>instalamos también los paquetes gcc y python3-level</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[centos@quijote ~]$ sudo dnf install gcc python3-devel
+
+(mezzanine) [centos@quijote ~]$ pip install uwsgi
+Collecting uwsgi
+  Downloading uWSGI-2.0.19.1.tar.gz (803 kB)
+     |████████████████████████████████| 803 kB 824 kB/s 
+Using legacy 'setup.py install' for uwsgi, since package 'wheel' is not installed.
+Installing collected packages: uwsgi
+    Running setup.py install for uwsgi ... done
+Successfully installed uwsgi-2.0.19.1
+</code></pre></div></div>
+
+<p>Volvemos a quijote y modificamos el fichero settings.py indicando la base de datos que se va ha utilizar y además de indicar la base de datos a usar, hay que indicar también el allowed_host (python.sergio.gonzalonazareno.org).</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>DATABASES = {
+    "default": {
+        # Add "postgresql_psycopg2", "mysql", "sqlite3" or "oracle".
+        "ENGINE": "django.db.backends.mysql",
+        # DB name or path to database file if using sqlite3.
+        "NAME": "mezzanine",
+        # Not used with sqlite3.
+        "USER": "mezzanine",
+        # Not used with sqlite3.
+        "PASSWORD": "mezzanine;",
+        # Set to empty string for localhost. Not used with sqlite3.
+        "HOST": "10.0.1.8",
+        # Set to empty string for default. Not used with sqlite3.
+        "PORT": "",
+    }
+}
+</code></pre></div></div>
+
+<p>Ejecutamos un migrate para mandar los datos de nuestra aplicación mezzanine a la base de datos</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(mezzanine) [centos@quijote cmspython]$ python3 manage.py migrate
+</code></pre></div></div>
+
+<p>Una vez se haya hecho el migrate, ejecutamos python3 loaddata migrate</p>
+
+<p>Creamos los ficheros .conf en /etc/httpd/sites-aviables:</p>
+
+<p>fichero mezzanine.conf:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;VirtualHost *:80&gt;
+    ServerName python.sergio.gonzalonazareno.org
+    DocumentRoot /var/www/cmspython/cmspython
+    ErrorLog /var/www/cmspyrhon/log/error.log
+    CustomLog /var/www/cmspython/log/requests.log combined
+
+    &lt;Proxy "unix:/run/php-fpm/www.sock|fcgi://php-fpm"&gt;
+    ProxySet disablereuse=off
+    &lt;/Proxy&gt;
+
+    &lt;FilesMatch \.php$&gt;
+           SetHandler proxy:fcgi://php-fpm
+    &lt;/FilesMatch&gt;
+
+    Redirect permanent / https://python.sergio.gonzalonazareno.org
+&lt;/Virtualhost&gt;
+</code></pre></div></div>
+
+<p>fichero mezzanine_https.conf</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;VirtualHost *:443&gt;
+    ServerName python.sergio.gonzalonazareno.org
+    DocumentRoot /var/www/cmspython/cmspython
+    ErrorLog /var/www/cmspython/log/error.log
+    CustomLog /var/www/cmspython/log/requests.log combined
+
+    &lt;Proxy "unix:/run/php-fpm/www.sock|fcgi://php-fpm"&gt;
+    ProxySet disablereuse=off
+    &lt;/Proxy&gt;
+
+    &lt;FilesMatch \.php$&gt;
+           SetHandler proxy:fcgi://php-fpm
+    &lt;/FilesMatch&gt;
+
+    Alias /static "/var/www/cmspython/cmspython/static"
+
+    &lt;Directory /var/www/cmspython/cmspython/static&gt;
+    Require all granted
+    Options FollowSymlinks
+    &lt;/Directory&gt;
+    ProxyPass /static !
+    ProxyPass / http://127.0.0.1:8080/
+
+    SSLEngine on
+    SSLCertificateFile /etc/pki/tls/certs/sergio.ibanez.crt
+    SSLCertificateKeyFile /etc/pki/tls/private/sergio.ibanez.key
+
+&lt;/VirtualHost&gt;
+</code></pre></div></div>
+
+<p>iniciamos uwsgi usando un fichero .ini y comprobamos que el sitio funciona correctamente.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(mezzanine) [centos@quijote ~]$ uwsgi uwsgi.ini
+</code></pre></div></div>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/categories/#aplicaciones-web" class="page__taxonomy-item p-category" rel="tag">Aplicaciones Web</a>
+    
+    </span>
+  </p>
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2021-03-12T16:01:48+01:00">March 12, 2021</time></p>
+
+      </footer>
+
+      <section class="page__share">
+  <h4 class="page__share-title">Share on</h4>
+
+  <a href="https://x.com/intent/tweet?text=Instalacion+de+Mezzanine+en+Openstack%20http%3A%2F%2Flocalhost%3A4000%2Faplicaciones%2520web%2F2021%2F03%2F12%2FInstalacion-de-aplicacion-web-python-openstack.html" class="btn btn--x" aria-label="Share on X" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on X">
+    <i class="fab fa-fw fa-x-twitter" aria-hidden="true"></i><span> X</span>
+  </a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Faplicaciones%2520web%2F2021%2F03%2F12%2FInstalacion-de-aplicacion-web-python-openstack.html" class="btn btn--facebook" aria-label="Share on Facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook">
+    <i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span>
+  </a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http://localhost:4000/aplicaciones%20web/2021/03/12/Instalacion-de-aplicacion-web-python-openstack.html" class="btn btn--linkedin" aria-label="Share on LinkedIn" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn">
+    <i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span>
+  </a>
+
+  <a href="https://bsky.app/intent/compose?text=Instalacion+de+Mezzanine+en+Openstack%20http%3A%2F%2Flocalhost%3A4000%2Faplicaciones%2520web%2F2021%2F03%2F12%2FInstalacion-de-aplicacion-web-python-openstack.html" class="btn btn--bluesky" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Bluesky">
+    <i class="fab fa-fw fa-bluesky" aria-hidden="true"></i><span> Bluesky</span>
+  </a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/seguridad/2021/03/12/Https-en-openstack.html" class="pagination--pager" title="HTTPS en Openstack">Previous</a>
+    
+    
+      <a href="/sistemas/2021/03/12/Sistemas-de-ficheros-btrfs.html" class="pagination--pager" title="Sistemas de ficheros Btrfs">Next</a>
+    
+  </nav>
+
+
+    </div>
+
+    
+      
+        <p>
+          Comments are configured with provider: <strong>giscus</strong>,
+          but are disabled in non-production environments.
+        </p>
+      
+    
+  </article>
+
+  
+  
+    
+<div class="page__related">
+  
+  <h2 class="page__related-title">You May Also Enjoy</h2>
+  <div class="grid__wrapper">
+    
+      
+      
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/sistemas/monitorizaci%C3%B3n/2025/05/01/Instalacion-configuracion-y-monitoreo-zabbix.html" rel="permalink">Instalación, configuración y monitorización usando Zabbix
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2025-05-01T13:19:00+02:00">May 1, 2025</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          7 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Este post describe paso a paso cómo instalar y configurar Zabbix 6.0 LTS en una máquina virtual con Debian 12. Está pensado para crear un entorno de práctica...</p>
+  </article>
+</div>
+
+    
+      
+      
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/sistemas/monitorizaci%C3%B3n/2024/04/11/Monitorizaci%C3%B3n-de-servidores-con-grafana.html" rel="permalink">Monitorización de servidores con Grafana
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2024-04-11T13:14:06+02:00">April 11, 2024</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          10 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Aprende a instalar, configurar y personalizar Grafana para la monitorización avanzada de servidores. Descubre cómo integrar Prometheus, crear dashboards inte...</p>
+  </article>
+</div>
+
+    
+      
+      
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/seguridad/2021/12/21/SoftEther-VPN.html" rel="permalink">Introducción SoftEther VPN
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2021-12-21T13:44:30+01:00">December 21, 2021</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          64 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">SoftEther VPN es uno de los software VPN multiprotocolo más potentes y rápidos del mundo en la actualidad. Funciona en sistemas Windows, Solaris, Mac, FreeBS...</p>
+  </article>
+</div>
+
+    
+      
+      
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/aplicaciones%20web/apuntes/2021/09/21/Introduccion-a-Docker.html" rel="permalink">Introducción a Docker
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2021-09-21T13:14:06+02:00">September 21, 2021</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          19 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Docker nos permite de forma sencilla crear contenedores ligeros y fáciles de mover donde ejecutar nuestras aplicaciones software sobre cualquier máquina con ...</p>
+  </article>
+</div>
+
+    
+  </div>
+</div>
+
+  
+  
+</div>
+
+      
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">&copy; 2025 <a href="http://localhost:4000">Blog de Sergio Ibáñez</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+    <script>
+  'use strict';
+
+  (function () {
+    var commentContainer = document.querySelector('#giscus-comments');
+
+    if (!commentContainer) {
+      return;
+    }
+
+    var script = document.createElement('script');
+
+    script.setAttribute('src', 'https://giscus.app/client.js');
+    script.setAttribute('data-repo', '');
+    script.setAttribute('data-repo-id', '');
+    script.setAttribute('data-category', '');
+    script.setAttribute('data-category-id', '');
+    script.setAttribute('data-mapping', 'pathname');
+    script.setAttribute('data-strict', '0');
+    script.setAttribute('data-reactions-enabled', '1');
+    script.setAttribute('data-emit-metadata', '0');
+    script.setAttribute('data-input-position', 'top');
+    script.setAttribute('data-theme', 'preferred_color_scheme');
+    script.setAttribute('data-lang',  'es');
+    
+    script.setAttribute('crossorigin', 'anonymous');
+
+    script.setAttribute('async', '');
+
+    commentContainer.appendChild(script);
+  })();
+</script>
+
+  
+
+
+
+
+  </body>
+</html>

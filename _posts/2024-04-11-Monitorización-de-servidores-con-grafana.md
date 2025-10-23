@@ -1,5 +1,4 @@
 ---
-layout: post
 title: "Monitorización de servidores con Grafana"
 date: 2024-04-11T13:14:06+02:00
 categories: [Sistemas, Monitorización]
@@ -21,74 +20,56 @@ Grafana open source es un software de análisis y visualización de código abie
 
 Empezaremos instalando Grafana en nuestro sistema debian haciendo uso del repositorio oficial de grafana, pero antes necesitaremos instalar el software necesario que necesita grafana para poder funcionar ejecutando los siguientes comandos.
 
-<div class="highlight">
-<pre class="chroma">
-<code class="language-bash" data-lang="bash">
+~~~
 sudo apt install -y apt-transport-https
 sudo apt install -y software-properties-common wget
-</code>
-</pre>
-</div>
+~~~
 
 El siguiente paso es descargar la llave GPG, para poder firmar los paquetes instalado
 
-<div class="highlight">
-<pre class="chroma">
-<code class="language-bash" data-lang="bash">sudo wget -q -O /usr/share/keyrings/grafana.key https://apt.grafana.com/gpg.key</code>
-</pre>
-</div>
+~~~
+sudo wget -q -O /usr/share/keyrings/grafana.key https://apt.grafana.com/gpg.key
+~~~
 
 Ahora es necesario crear el fichero /etc/apt/sources.list.d/grafana.list para añadir los repositorios de Grafana.
 
-<div class="highlight">
-<pre class="chroma">
-<code class="language-bash" data-lang="bash">echo "deb [signed-by=/usr/share/keyrings/grafana.key] https://apt.grafana.com stable main" | sudo tee -a /etc/apt/sources.list.d/grafana.list</code>
-</pre>
-</div>
+~~~
+echo "deb [signed-by=/usr/share/keyrings/grafana.key] https://apt.grafana.com stable main" | sudo tee -a /etc/apt/sources.list.d/grafana.list
+~~~
 
 Actualizamos la lista de paquetes de nuestro sistema
 
-<div class="highlight">
-<pre class="chroma">
-<code class="language-bash" data-lang="bash">sudo apt update</code>
-</pre>
-</div>
+~~~
+sudo apt update
+~~~
 
 Una vez actualizado los paquetes del sistema ya podemos empezar a instalar grafana
 
-<div class="highlight">
-<pre class="chroma">
-<code class="language-bash" data-lang="bash">sudo apt install grafana</code>
-</pre>
-</div>
+~~~
+sudo apt install grafana
+~~~
 
 Cuando ya tengamos grafana instalado, podremos iniciarlo y añadirlo al arranque de nuestra maquina
 
-<div class="highlight">
-<pre class="chroma">
-<code class="language-bash" data-lang="bash">sudo systemctl start grafana-server</code>
-</pre>
-</div>
+~~~
+sudo systemctl start grafana-server
+~~~
 
 Para poder asegurarnos de que el servidor se inicia correctamente (debe aparecer con estado active (running)) podemos ejecutar el comando usado anteriormente haciendo uso de la opción "status".
 
-<div class="highlight">
-<pre class="chroma">
-<code class="language-bash" data-lang="bash">sudo systemctl status grafana-server</code>
-</pre>
-</div>
+~~~
+sudo systemctl status grafana-server
+~~~
 
 Finalmente habilitamos grafana en el inicio de servidor para que inicie en el arranque
 
-<div class="highlight">
-<pre class="chroma">
-<code class="language-bash" data-lang="bash">sudo systemctl enable grafana-server.service</code>
-</pre>
-</div>
+~~~
+sudo systemctl enable grafana-server.service
+~~~
 
 Con esto ya estaría completa la instalación de grafana y ya podríamos acceder a la web de grafana para poder logearnos, para ello hay que indicar en la barra de búsqueda de cualquier navegador la ip de nuestra maquina (o su dominio), indicando el puerto 3000 que es el usado por grafana por defecto. en mi caso se accede con la dirección 192.168.110.129:3000
 
-![Grafana login](/assets/images/Grafana/grafana_login.png)
+![Grafana login](/images/Grafana/grafana_login.png)
 
 NOTA: por defecto la primera vez que se accede a grafana las credenciales siempre van a ser admin/admin, una vez se acceda por primera vez pedirá un cambio de contraseña y podremos empezar a trabajar con grafana.
 
@@ -100,37 +81,29 @@ Grafana necesitas añadir un nuevo data source, que es la base de datos que guar
 
 Comenzamos instalando prometheus
 
-<div class="highlight">
-<pre class="chroma">
-<code class="language-bash" data-lang="bash">apt install prometheus prometheus-node-exporter</code>
-</pre>
-</div>
+~~~
+apt install prometheus prometheus-node-exporter
+~~~
 
 Tras la instalación de prometheus tenemos que comprobar tanto que tenemos dos conexiones TCP escuchando en los puertos 9090 y 9100, esto lo comprobamos con el siguiente comando
 
-<div class="highlight">
-<pre class="chroma">
-<code class="language-bash" data-lang="bash">netstat -plunt</code>
-</pre>
-</div>
+~~~
+netstat -plunt
+~~~
 
 Nota: para poder hacer uso del comando netstat tendremos que tener instalado en el sistema el paquete net-tools
 
 Como la version de prometheus que usemos tiene que ser compatible con la de grafana, es recomendable revisar nuestra version de prometheus
 
-<div class="highlight">
-<pre class="chroma">
-<code class="language-bash" data-lang="bash">prometheus-node-exporter --version</code>
-</pre>
-</div>
+~~~
+prometheus-node-exporter --version
+~~~
 
 En mi caso la version de prometheus usada es la siguiente
 
-<div class="highlight">
-<pre class="chroma">
-<code class="language-bash" data-lang="bash">node_exporter, version 1.5.1 (branch: debian/sid, revision: 1.5.0-1)</code>
-</pre>
-</div>
+~~~
+node_exporter, version 1.5.1 (branch: debian/sid, revision: 1.5.0-1)
+~~~
 
 ### **Configuración de prometheus en grafana** ###
 
@@ -140,7 +113,7 @@ Para añadir la base de datos de prometheus a grafana accedemos primero al sitio
 
 En el menú de la izquierda vamos a la opción "connections" y después a la opción "data sources", donde nos aparecerá la opción para añadir nuestra base de datos, en este caso prometheus, para ello será necesario añadir la URL http://localhost:9090.
 
-![Data source](/assets/images/Grafana/data-source.png)
+![Data source](/images/Grafana/data-source.png)
 
 ### **Creación de dashboards** ###
 
@@ -150,7 +123,7 @@ En este caso para importar los dashboards en el menú de la izquierda buscamos l
 
 A modo de ejemplo se ha usado el dashboard Node exporter siendo el mas descargado por lo que para su uso indicamos la ID de node-exportes (1860) y ya podremos empezar a usar el dashboard.
 
-![Dashboard](/assets/images/Grafana/metrica.png)
+![Dashboard](/images/Grafana/metrica.png)
 
 Si por el contrario en lugar de importar dashboards creados por la comunidad queremos crear nuestros propios dashboards personalizados dependiendo de las necesidades que tengamos a la hora de monitorizar tendríamos que realizar los siguientes pasos:
 
@@ -158,11 +131,11 @@ Al igual que se ha hecho anteriormente, en el menú de la izquierda buscamos la 
 
 Al acceder a "add visualization" lo primero que nos pedirá grafana será que elijamos un data source que será desde donde grafana obtenga los datos de las métricas. Al tratarse de una maquina recién creada en mi caso el único data source que da la opción de seleccionar será el de prometheus pero según las necesidades que tengamos podemos instalar cualquier otro para poder usarlo.
 
-![Prometheus](/assets/images/Grafana/prometheus.png) 
+![Prometheus](/images/Grafana/prometheus.png) 
 
 Al crear un dashboard vacío, lo primero que haremos será crear los paneles. Un panel es el bloque básico para la visualización de los datos. Grafana provee diferentes tipos de paneles y cada uno de ellos provee un editor de consulta (query) dependiendo del tipo de Data Source seleccionado.
 
-![Panel vacío](/assets/images/Grafana/panel.png)
+![Panel vacío](/images/Grafana/panel.png)
 
 Vamos a crear un panel de tipo gráfico en el que por ejemplo consultaremos la tasa promedio de solicitudes HTTP en los últimos 5 minutos, para ello en la parte de abajo donde visualizamos los paneles encontraremos la opción "query" donde podremos realizar diversas consultas de datos en el apartado "metrics". Como por ejemplo lo que queremos consultar es la tasa promedio de solicitudes http la métrica que necesitamos seria la de "prometheus_http_request_total".
 
@@ -172,11 +145,9 @@ Cuando tengamos claro el tipo de consulta que haremos, en el apartado derecho se
 
 La consulta nos quedaria de la siguiente forma:
 
-<div class="highlight">
-<pre class="chroma">
-<code class="language-bash" data-lang="bash">rate(prometheus_http_request_total[5m])</code>
-</pre>
-</div>
+~~~
+rate(prometheus_http_request_total[5m])
+~~~
 
 ### **Configuraciones de paneles** ###
 
@@ -199,11 +170,9 @@ Ejemplo práctico:
 Si estás monitoreando múltiples servidores, puedes crear una variable $server con la lista de servidores disponibles.
 En tu consulta PromQL, en lugar de escribir manualmente cada servidor, usas:
 
-<div class="highlight">
-<pre class="chroma">
-<code class="language-bash" data-lang="bash">node_cpu_seconds_total{instance="$server"}</code>
-</pre>
-</div>
+~~~
+node_cpu_seconds_total{instance="$server"}
+~~~
 
 Al cambiar la variable $server, los gráficos mostrarán solo los datos de ese servidor.
 
@@ -224,15 +193,11 @@ Usando el ejemplo indicado anteriormente, se configurará la variable $server de
 
 Indicando label_values(métrica, etiqueta) obtendremos todos los valores únicos de la etiqueta "instance" en la métrica node_cpu_seconds_total. Esto devolverá una lista de servidores registrados en Prometheus, por ejemplo:
 
-<div class="highlight">
-<pre class="chroma">
-<code class="language-bash" data-lang="bash">
+~~~
 server1:9100
 server2:9100
 server3:9100
-</code>
-</pre>
-</div>
+~~~
 
 4. En Multi-value, activamos la opción para permitir seleccionar múltiples servidores.
 5. En Include All option, marcamos la casilla para agregar la opción All, que mostrará los datos de todos los servidores simultáneamente.
@@ -251,11 +216,9 @@ Si estás monitoreando diferentes servicios en un clúster, puedes agregar filtr
 1. Añade una variable de tipo Custom con valores como nginx | mysql | redis.
 2. En la consulta, usamos:
 
-<div class="highlight">
-<pre class="chroma">
-<code class="language-bash" data-lang="bash">node_network_receive_bytes_total{job="$servicio"}</code>
-</pre>
-</div>
+~~~
+node_network_receive_bytes_total{job="$servicio"}
+~~~
 
 3. Ahora puedes seleccionar el servicio desde un menú desplegable y ver los datos filtrados.
 
@@ -284,11 +247,9 @@ Si queremos recibir una alerta cuando el uso de CPU supera el 85% durante más d
 1. Vamos a Alerting y creamos la nueva alerta con la opcion "New Alert".
 2. Definimos la métrica a monitorear con esta consulta en PromQL:
 
-<div class="highlight">
-<pre class="chroma">
-<code class="language-bash" data-lang="bash">100 - (avg(rate(node_cpu_seconds_total{mode="idle"}[5m])) * 100) > 85</code>
-</pre>
-</div>
+~~~
+100 - (avg(rate(node_cpu_seconds_total{mode="idle"}[5m])) * 100) > 85
+~~~
 
 3. Establecemos la condición If above 85 for 5m.
 4. Configuramos la acción (correo, stack, telegram, etc...). Grafana permite enviar alertas a traves de diferentes plataformas.

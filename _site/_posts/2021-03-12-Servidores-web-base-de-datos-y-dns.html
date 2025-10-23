@@ -1,0 +1,869 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.27.3 by Michael Rose
+  Copyright 2013-2025 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="es-ES" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Servidores Web, base de Datos y DNS en Openstack - Blog de Sergio Ibáñez</title>
+<meta name="description" content="Haciendo uso de nuestro escenario openstack creado en practicas anteriores instalaremos y configuraremos distintos servidores en los nodos del escenario (Servidor DNS, Servidor Web y Servidor BBDD).">
+
+
+  <meta name="author" content="Sergio Ibáñez Núñez">
+  
+  <meta property="article:author" content="Sergio Ibáñez Núñez">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="es_ES">
+<meta property="og:site_name" content="Blog de Sergio Ibáñez">
+<meta property="og:title" content="Servidores Web, base de Datos y DNS en Openstack">
+<meta property="og:url" content="http://localhost:4000/_posts/2021-03-12-Servidores-web-base-de-datos-y-dns.html">
+
+
+  <meta property="og:description" content="Haciendo uso de nuestro escenario openstack creado en practicas anteriores instalaremos y configuraremos distintos servidores en los nodos del escenario (Servidor DNS, Servidor Web y Servidor BBDD).">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2021-03-12T14:18:01+01:00">
+
+
+
+
+
+
+<link rel="canonical" href="http://localhost:4000/_posts/2021-03-12-Servidores-web-base-de-datos-y-dns.html">
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Blog de Sergio Ibáñez Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single" dir="ltr">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          Blog de Sergio Ibáñez
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a
+                href="/"
+                
+                
+              >Inicio</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/posts/"
+                
+                
+              >Posts</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/categories/"
+                
+                
+              >Categorías</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/tags/"
+                
+                
+              >Etiquetas</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/search/"
+                
+                
+              >Buscar</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/about/"
+                
+                
+              >Sobre mí</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="http://localhost:4000/">
+        <img src="/assets/images/avatar.png" alt="Sergio Ibáñez Núñez" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="http://localhost:4000/" itemprop="url">Sergio Ibáñez Núñez</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>Técnico IT y entusiasta de la automatización</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Servidores Web, base de Datos y DNS en Openstack">
+    <meta itemprop="description" content="Haciendo uso de nuestro escenario openstack creado en practicas anteriores instalaremos y configuraremos distintos servidores en los nodos del escenario (Servidor DNS, Servidor Web y Servidor BBDD).">
+    <meta itemprop="datePublished" content="2021-03-12T14:18:01+01:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">
+            <a href="http://localhost:4000/_posts/2021-03-12-Servidores-web-base-de-datos-y-dns.html" itemprop="url">Servidores Web, base de Datos y DNS en Openstack
+</a>
+          </h1>
+          
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <h3 id="introducción"><strong>Introducción</strong></h3>
+
+<p>Haciendo uso de nuestro escenario openstack creado en practicas anteriores instalaremos y configuraremos los siguientes servidores en los distintos nodos del escenario:</p>
+
+<p><strong>Servidor DNS</strong></p>
+
+<p>Vamos a instalar un servidor dns en freston que nos permita gestionar la resolución directa e inversa de nuestros nombres. Tendremos un servidor dns con autoridad sobre un subdominio de nuestro dominio principal gonzalonazareno.org, que se llamará tu_nombre.gonzalonazareno.org. A partir de este momento no será necesario la resolución estática en los servidores.</p>
+
+<p>Tendremos que determinar la regla DNAT en dulcinea para que podamos hacer consultas DNS desde el exterior.</p>
+
+<p>Configuraremos de forma adecuada todas las máquinas para que usen como servidor DNS a freston.</p>
+
+<p>Comprobaremos que los servidores tienen configurados el nuevo nombre de dominio de forma adecuada después de volver a reiniciar el servidor (o tomar una nueva configuración DHCP). Para que el servidor tenga el FQDN debemos tener configurado de forma correcta el parámetro domain y el parámetro search en el fichero /etc/resolv.conf, además debemos evitar que este fichero se sobreescriba con los datos que manda el servidor DHCP de OpenStack.</p>
+
+<p>El servidor DNS se va a configurar en un principio de la siguiente manera:</p>
+
+<ul>
+  <li>
+    <p>El servidor DNS se llama freston.tu_nombre.gonzalonazareno.org y va a ser el servidor con autoridad para la zona tu_nombre.gonzalonazareno.org.</p>
+  </li>
+  <li>El servidor debe resolver el nombre de todas las máquinas.</li>
+  <li>El servidor debe resolver los distintos servicios (virtualhosh, servidor de base de datos, servido ldap, …).</li>
+</ul>
+
+<p>Debemos determinar cómo vas a nombrar a dulcinea, para que seamos capaz de resolver la ip flotante y la ip fija. Para ello vamos a usar vistas en bind9.</p>
+
+<p>Debemos considerar la posibilidad de hacer tres zonas de resolución inversa: para las redes 10.0.0.0/24, 10.0.1.0/24 y 10.0.2.0/24. (No vamos a crear la zona inversa para la red externa de ip flotantres). para resolver ip fijas y flotantes del cloud.</p>
+
+<p>Realizaremos las siguientes consultas desde un cliente interno a nuestra red y otro externo:</p>
+
+<ul>
+  <li>El servidor DNS con autoridad sobre la zona del dominio tu_nombre.gonzalonazareno.org</li>
+  <li>La dirección IP de dulcinea.</li>
+  <li>Una resolución de www.</li>
+  <li>Un resolución inversa de IP fija en cada una de las redes. (Esta consulta sólo funcionará desde una máquina interna).</li>
+</ul>
+
+<p><strong>Servidor Web</strong></p>
+
+<p>En quijote (CentOs)(Servidor que está en la DMZ) vamos a instalar un servidor web apache. Configuraremos el servidor para que sea capaz de ejecutar código php (para ello vamos a usar un servidor de aplicaciones php-fpm). Como prueba de funcionamiento accederemos a www.tunombre.gonzalonazareno.org/info.php donde se vea la salida del fichero info.php.</p>
+
+<p><strong>Servidor de base de datos</strong></p>
+
+<p>En sancho (Ubuntu) vamos a instalar un servidor de base de datos mariadb (bd.tu_nombre.gonzalonazareno.org). Haremos una prueba de funcionamiento donde se vea como se realiza una conexión a la base de datos desde quijote</p>
+
+<h3 id="configuración-bind-con-vistas"><strong>Configuración bind con vistas</strong></h3>
+
+<p>En la maquina de Freston empezamos instalando el servidor dns:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo apt install bind9
+</code></pre></div></div>
+
+<p>Una vez instalado bind9, lo primero sera configurar las vistas en /etc/bind/named.conf.local:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>acl interna { 10.0.1.0/24; };
+acl DMZ { 10.0.2.0/24; };
+acl externa { 172.22.0.0/15; };
+
+view interna {
+    match-clients { interna; };
+    allow-recursion { any; };   
+
+        zone "gonzalonazareno.org"
+        {
+                type master;
+                file "db.interna.gonzalonazareno.org";
+        };
+        zone "1.0.10.in-addr.arpa"
+        {
+                type master;
+                file "db.1.0.10";
+        };
+	  zone "2.0.10.in-addr.arpa"
+        {
+                type master;
+                file "db.2.0.10";
+        };
+        include "/etc/bind/zones.rfc1918";
+        include "/etc/bind/named.conf.default-zones";
+};
+
+view DMZ {
+    match-clients { DMZ; };
+    allow-recursion { any; };   
+
+        zone "gonzalonazareno.org"
+        {
+                type master;
+                file "db.dmz.gonzalonazareno.org";
+        };
+        zone "1.0.10.in-addr.arpa"
+        {
+                type master;
+                file "db.1.0.10";
+        };
+	  zone "2.0.10.in-addr.arpa"
+        {
+                type master;
+                file "db.2.0.10";
+        };
+        include "/etc/bind/zones.rfc1918";
+        include "/etc/bind/named.conf.default-zones";
+};
+
+view externa {
+    match-clients { externa; 192.168.202.2; };
+    allow-recursion { any; };   
+
+        zone "gonzalonazareno.org"
+        {
+                type master;
+                file "db.externa.gonzalonazareno.org";
+        };
+        include "/etc/bind/zones.rfc1918";
+        include "/etc/bind/named.conf.default-zones";
+};
+</code></pre></div></div>
+
+<p>Una vez configuradas las vistas, empezamos a configurar las distintas zonas en /var/cache/bind/:</p>
+
+<p>db.externa.gonzalonazareno.org:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$TTL    604800
+$TTL    604800
+@       IN      SOA     dulcinea.sergio.gonzalonazareno.org. root.iesgn.org. (
+                              5         ; Serial
+                         604800         ; Refresh
+                          86400         ; Retry
+                        2419200         ; Expire
+                         604800 )       ; Negative Cache TTL
+;
+@       IN      NS      dulcinea.sergio.gonzalonazareno.org.
+
+$ORIGIN sergio.gonzalonazareno.org.
+
+dulcinea	IN	A	172.22.200.151
+www	IN	CNAME	dulcinea
+
+</code></pre></div></div>
+
+<p>db.interna.gonzalonazareno.org:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$TTL    604800
+@       IN      SOA     freston.sergio.gonzalonazareno.org. root.iesgn.org. (
+                              5         ; Serial
+                         604800         ; Refresh
+                          86400         ; Retry
+                        2419200         ; Expire
+                         604800 )       ; Negative Cache TTL
+;
+@       IN      NS      freston.sergio.gonzalonazareno.org.
+
+$ORIGIN sergio.gonzalonazareno.org.
+
+dulcinea	IN	A	10.0.1.5
+sancho	IN	A	10.0.1.8
+freston	IN	A	10.0.1.3
+quijote	IN	A	10.0.2.5
+www	IN	CNAME	quijote
+bd	IN	CNAME	sancho
+
+</code></pre></div></div>
+
+<p>db.1.0.10:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$TTL    604800
+@       IN      SOA     freston.sergio.gonzalonazareno.org. root.iesgn.org. (
+                              5         ; Serial
+                         604800         ; Refresh
+                          86400         ; Retry
+                        2419200         ; Expire
+                         604800 )       ; Negative Cache TTL
+;
+@	IN	NS	freston.sergio.gonzalonazareno.org.
+
+$ORIGIN 1.0.10.in-addr.arpa.
+
+3	IN	PTR	freston
+8	IN	PTR	sancho
+5	IN	PTR	dulcinea
+</code></pre></div></div>
+
+<p>db.2.0.10:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$TTL    604800
+@       IN      SOA     freston.sergio.gonzalonazareno.org. root.iesgn.org. (
+                              5         ; Serial
+                         604800         ; Refresh
+                          86400         ; Retry
+                        2419200         ; Expire
+                         604800 )       ; Negative Cache TTL
+;
+@	IN	NS	freston.sergio.gonzalonazareno.org.
+
+$ORIGIN 2.0.10.in-addr.arpa.
+
+3	IN	PTR	dulcinea
+5	IN	PTR	quijote
+</code></pre></div></div>
+
+<p>db.dmz.gonzalonazareno.org:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$TTL    604800
+@       IN      SOA     freston.sergio.gonzalonazareno.org. root.iesgn.org. (
+                              5         ; Serial
+                         604800         ; Refresh
+                          86400         ; Retry
+                        2419200         ; Expire
+                         604800 )       ; Negative Cache TTL
+;
+@       IN      NS      freston.sergio.gonzalonazareno.org.
+
+$ORIGIN sergio.gonzalonazareno.org.
+
+dulcinea	IN	A	10.0.2.3
+sancho	IN	A	10.0.1.8
+freston	IN	A	10.0.1.3
+quijote	IN	A	10.0.2.5
+www	IN	CNAME	quijote
+bd	IN	CNAME	sancho
+</code></pre></div></div>
+
+<p>A parte de las zonas, también deberán de configurarse los siguientes ficheros:</p>
+
+<p>/etc/bind/named.conf:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>include "/etc/bind/named.conf.options";
+include "/etc/bind/named.conf.local";
+//include "/etc/bind/named.conf.default-zones";
+</code></pre></div></div>
+
+<p>Una vez configurado el servidor DNS configuraremos la regla DNAT en dulcinea para redirigir trafico DNS a freston.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>iptables -A OUTPUT -o eth1 -p udp --dport 53 -m state --state NEW,ESTABLISHED -j ACCEPT
+iptables -A INPUT -i eth1 -p udp --sport 53 -m state --state ESTABLISHED -j ACCEPT
+</code></pre></div></div>
+
+<p>Hacemos una prueba de funcionamiento usando bind con clientes en distintas redes.</p>
+
+<p>Prueba de funcionamiento desde la red 10.0.1.0/24:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>debian@dulcinea:~$ dig www.sergio.gonzalonazareno.org
+
+; &lt;&lt;&gt;&gt; DiG 9.11.5-P4-5.1+deb10u2-Debian &lt;&lt;&gt;&gt; www.sergio.gonzalonazareno.org
+;; global options: +cmd
+;; Got answer:
+;; -&gt;&gt;HEADER&lt;&lt;- opcode: QUERY, status: NOERROR, id: 44719
+;; flags: qr aa rd ra; QUERY: 1, ANSWER: 2, AUTHORITY: 1, ADDITIONAL: 2
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 4096
+; COOKIE: 48901442818c6672534fe2f55fd90b0d24f7b1320c4d3afa (good)
+;; QUESTION SECTION:
+;www.sergio.gonzalonazareno.org.	IN	A
+
+;; ANSWER SECTION:
+www.sergio.gonzalonazareno.org.	604800 IN CNAME	quijote.sergio.gonzalonazareno.org.
+quijote.sergio.gonzalonazareno.org. 604800 IN A	10.0.2.5
+
+;; AUTHORITY SECTION:
+gonzalonazareno.org.	604800	IN	NS	freston.sergio.gonzalonazareno.org.
+
+;; ADDITIONAL SECTION:
+freston.sergio.gonzalonazareno.org. 604800 IN A	10.0.1.3
+
+;; Query time: 1 msec
+;; SERVER: 10.0.1.3#53(10.0.1.3)
+;; WHEN: Tue Dec 15 20:14:21 CET 2020
+;; MSG SIZE  rcvd: 163
+</code></pre></div></div>
+
+<p>Prueba de funcionamiento desde la red 10.0.2.0/24:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[centos@quijote ~]$ dig bd.gonzalonazareno.org
+
+; &lt;&lt;&gt;&gt; DiG 9.11.20-RedHat-9.11.20-5.el8 &lt;&lt;&gt;&gt; bd.gonzalonazareno.org
+;; global options: +cmd
+;; Got answer:
+;; -&gt;&gt;HEADER&lt;&lt;- opcode: QUERY, status: NXDOMAIN, id: 44056
+;; flags: qr aa rd ra; QUERY: 1, ANSWER: 0, AUTHORITY: 1, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 4096
+; COOKIE: 922ab462f44820362e9611fe5fd90b54944a9f3228cb888f (good)
+;; QUESTION SECTION:
+;bd.gonzalonazareno.org.		IN	A
+
+;; AUTHORITY SECTION:
+gonzalonazareno.org.	604800	IN	SOA	freston.sergio.gonzalonazareno.org. root.iesgn.org. 5 604800 86400 2419200 604800
+
+;; Query time: 2 msec
+;; SERVER: 10.0.1.3#53(10.0.1.3)
+;; WHEN: Tue Dec 15 20:15:32 CET 2020
+;; MSG SIZE  rcvd: 141
+</code></pre></div></div>
+
+<p>Una vez hecho lo anterior nos aseguraremos que /etc/resolv.conf tiene domain, search, nameserver bien configurado, después del reinicio. Hostname -f</p>
+
+<p>Freston:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>debian@freston:~$ hostname -f
+freston.sergio.gonzalonazareno.org
+</code></pre></div></div>
+
+<p>fichero /etc/resolv.conf:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>nameserver 10.0.1.3
+nameserver 192.168.202.2
+search freston.sergio.gonzalonazareno.org
+domain freston.sergio.gonzalonazareno.org
+</code></pre></div></div>
+
+<p>Dulcinea:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>debian@dulcinea:~$ hostname -f
+dulcinea.sergio.gonzalonazareno.org
+</code></pre></div></div>
+
+<p>fichero /etc/resolv.conf:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>nameserver 10.0.1.3
+nameserver 192.168.202.2
+search dulcinea.sergio.gonzalonazareno.org
+domain dulcinea.sergio.gonzalonazareno.org
+</code></pre></div></div>
+
+<p>Sancho:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ubuntu@sancho:~$ hostname -f
+sancho.sergio.gonzalonazareno.org
+</code></pre></div></div>
+
+<p>fichero /etc/resolv.conf:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>nameserver 10.0.1.3
+nameserver 192.168.202.2
+search sancho.sergio.gonzalonazareno.org
+domain sancho.sergio.gonzalonazareno.org
+</code></pre></div></div>
+
+<p>Quijote:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[centos@quijote ~]$ hostname -f
+quijote.sergio.gonzalonazareno.org
+</code></pre></div></div>
+
+<p>fichero /etc/resolv.conf:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>nameserver 10.0.1.3
+nameserver 192.168.202.2
+search quijote.sergio.gonzalonazareno.org
+domain quijote.sergio.gonzalonazareno.org
+</code></pre></div></div>
+
+<p>Para que estos cambios permanezcan después de un reinicio, sera necesario desactivar cloud-init:</p>
+
+<ul>
+  <li>
+    <p>Para desactivar cloud-init en las máquinas debian, tendremos que configurar el fichero /etc/cloud/cloud.cfg modificando la linea manage_etc_hosts cambiando su valor a false.</p>
+  </li>
+  <li>
+    <p>Para hacerlo en la máquina ubuntu, creamos el siguiente fichero /etc/cloud/cloud-init.disabled.</p>
+  </li>
+  <li>
+    <p>Para hacerlo en la máquina centos, al igual que en ubuntu, creamos el siguiente fichero /etc/cloud/cloud-init.disabled, pero en este caso con el siguiente contenido cloud-init=disabled, indicando de esta forma que en momento del arranque, el valor de cloud-init sea disabled.</p>
+  </li>
+</ul>
+
+<p>Delegamos la zona: es decir subdominio e ip flotante.</p>
+
+<p>Nombre de subdominio: sergio.gonzalonazareno.org</p>
+
+<p>ip flotante: 172.22.200.151</p>
+
+<h3 id="instalamos-apache2-en-quijote-centosselinux"><strong>Instalamos apache2 en quijote (CentOs)(SELinux)</strong></h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo dnf install httpd
+</code></pre></div></div>
+
+<p>Instalamos tambien php-fpm y configuramos php-fpm</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo dnf install php-fpm
+</code></pre></div></div>
+
+<p>Para comprobar que php-fpm a sido bien instalado y esta funcionando, creamos un fichero info.php en /var/www/html con el siguiente contenido:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+        phpinfo();
+</code></pre></div></div>
+
+<p>De forma que si accedemos a quijote a través del navegador obtengamos algo como esto:</p>
+
+<p><img src="/images/servidor-web-bbdd-y-dns/info.php.png" alt="info.php" /></p>
+
+<p>Añadimos la regla dnat en dulcinea para acceder al puerto 80,443 a quijote.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo iptables -A OUTPUT -o eth2 -p tcp -m multiport --dports 80,443 -m state --state NEW,ESTABLISHED -j ACCEPT
+
+sudo iptables -A INPUT -i eth2 -p tcp -m multiport --sports 80,443 -m state --state ESTABLISHED -j ACCEPT
+</code></pre></div></div>
+
+<h3 id="instalamos-mariadb-en-sancho"><strong>Instalamos mariadb en sancho</strong></h3>
+
+<p>Instalación:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo apt install mariadb-server
+</code></pre></div></div>
+
+<p>Ademas de instalar mariadb-server, para hacer el servidor de datos mas seguro se hará una instalación segura ejecutando mysql_secure_installation:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ubuntu@sancho:~$ sudo mysql_secure_installation
+
+NOTE: RUNNING ALL PARTS OF THIS SCRIPT IS RECOMMENDED FOR ALL MariaDB
+      SERVERS IN PRODUCTION USE!  PLEASE READ EACH STEP CAREFULLY!
+
+In order to log into MariaDB to secure it, we'll need the current
+password for the root user.  If you've just installed MariaDB, and
+you haven't set the root password yet, the password will be blank,
+so you should just press enter here.
+
+Enter current password for root (enter for none): 
+OK, successfully used password, moving on...
+
+Setting the root password ensures that nobody can log into the MariaDB
+root user without the proper authorisation.
+
+You already have a root password set, so you can safely answer 'n'.
+
+Change the root password? [Y/n] y
+New password: 
+Re-enter new password: 
+Password updated successfully!
+Reloading privilege tables..
+ ... Success!
+
+
+By default, a MariaDB installation has an anonymous user, allowing anyone
+to log into MariaDB without having to have a user account created for
+them.  This is intended only for testing, and to make the installation
+go a bit smoother.  You should remove them before moving into a
+production environment.
+
+Remove anonymous users? [Y/n] y
+ ... Success!
+
+Normally, root should only be allowed to connect from 'localhost'.  This
+ensures that someone cannot guess at the root password from the network.
+
+Disallow root login remotely? [Y/n] n
+ ... skipping.
+
+By default, MariaDB comes with a database named 'test' that anyone can
+access.  This is also intended only for testing, and should be removed
+before moving into a production environment.
+
+Remove test database and access to it? [Y/n] n
+ ... skipping.
+
+Reloading the privilege tables will ensure that all changes made so far
+will take effect immediately.
+
+Reload privilege tables now? [Y/n] n
+ ... skipping.
+
+Cleaning up...
+
+All done!  If you've completed all of the above steps, your MariaDB
+installation should now be secure.
+
+Thanks for using MariaDB!
+</code></pre></div></div>
+
+<p>Configuraremos la base de datos para tener acceso desde quijote.</p>
+
+<p>Modificamos el fichero /etc/mysql/mariadb.conf.d/50-server.cnf cambiando la linea bind-address de 127.0.0.1 a 0.0.0.0 o bien a 10.0.2.5 que sera nuestra ip de quijote.</p>
+
+<p>Creamos un usuario y configuramos los permisos necesarios para que el usuario pueda acceder de forma remota</p>
+
+<p>GRANT ALL PRIVILEGES ON <em>.</em> TO ‘centos’@’quijote.sergio.gonzalonazareno.org’ IDENTIFIED BY ‘quijote-01’ WITH GRANT OPTION;</p>
+
+<p>Comprobamos el acceso usando la base de datos de pruebas de mysql:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[centos@quijote ~]$ mysql --host=sancho --protocol=tcp --port=3306 mysql -p
+Enter password: 
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 37
+Server version: 5.5.5-10.3.25-MariaDB-0ubuntu0.20.04.1 Ubuntu 20.04
+
+Copyright (c) 2000, 2020, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql&gt;
+</code></pre></div></div>
+
+<p>Podemos acceder sin problemas a la base de datos de pruebas de sancho.</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/categories/#servicios" class="page__taxonomy-item p-category" rel="tag">Servicios</a>
+    
+    </span>
+  </p>
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2021-03-12T14:18:01+01:00">March 12, 2021</time></p>
+
+      </footer>
+
+      
+
+      
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+
+      
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">&copy; 2025 <a href="http://localhost:4000">Blog de Sergio Ibáñez</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

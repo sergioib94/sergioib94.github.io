@@ -1,0 +1,977 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.27.3 by Michael Rose
+  Copyright 2013-2025 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="es-ES" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Despliegue de un servidor LAMP local y configuración de CMS PHP - Blog de Sergio Ibáñez</title>
+<meta name="description" content="En el siguiente post desplegaremos un entorno LAMP (Linux, Apache, MySQL y PHP) sobre una maquina virtual en Vagrant con sistema operativo unix con el fin de alojar un CMS local en este caso Drupal y moodle. Este tipo de infraestructura es ampliamente utilizada para entornos de desarrollo, pruebas e incluso producción en pequeñas empresas.">
+
+
+  <meta name="author" content="Sergio Ibáñez Núñez">
+  
+  <meta property="article:author" content="Sergio Ibáñez Núñez">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="es_ES">
+<meta property="og:site_name" content="Blog de Sergio Ibáñez">
+<meta property="og:title" content="Despliegue de un servidor LAMP local y configuración de CMS PHP">
+<meta property="og:url" content="http://localhost:4000/aplicaciones%20web/2021/03/11/Despliegue-de-un-servidor-LAMP-local-y-configuraci%C3%B3n-de-CMS-PHP.html">
+
+
+  <meta property="og:description" content="En el siguiente post desplegaremos un entorno LAMP (Linux, Apache, MySQL y PHP) sobre una maquina virtual en Vagrant con sistema operativo unix con el fin de alojar un CMS local en este caso Drupal y moodle. Este tipo de infraestructura es ampliamente utilizada para entornos de desarrollo, pruebas e incluso producción en pequeñas empresas.">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2021-03-11T10:13:49+01:00">
+
+
+
+
+
+
+<link rel="canonical" href="http://localhost:4000/aplicaciones%20web/2021/03/11/Despliegue-de-un-servidor-LAMP-local-y-configuraci%C3%B3n-de-CMS-PHP.html">
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Blog de Sergio Ibáñez Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single wide" dir="ltr">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          Blog de Sergio Ibáñez
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a
+                href="/"
+                
+                
+              >Inicio</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/posts/"
+                
+                
+              >Posts</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/categories/"
+                
+                
+              >Categorías</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/tags/"
+                
+                
+              >Etiquetas</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/search/"
+                
+                
+              >Buscar</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/about/"
+                
+                
+              >Sobre mí</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Despliegue de un servidor LAMP local y configuración de CMS PHP">
+    <meta itemprop="description" content="En el siguiente post desplegaremos un entorno LAMP (Linux, Apache, MySQL y PHP) sobre una maquina virtual en Vagrant con sistema operativo unix con el fin de alojar un CMS local en este caso Drupal y moodle. Este tipo de infraestructura es ampliamente utilizada para entornos de desarrollo, pruebas e incluso producción en pequeñas empresas.">
+    <meta itemprop="datePublished" content="2021-03-11T10:13:49+01:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">
+            <a href="http://localhost:4000/aplicaciones%20web/2021/03/11/Despliegue-de-un-servidor-LAMP-local-y-configuraci%C3%B3n-de-CMS-PHP.html" itemprop="url">Despliegue de un servidor LAMP local y configuración de CMS PHP
+</a>
+          </h1>
+          
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2021-03-11T10:13:49+01:00">March 11, 2021</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          8 minute read
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <h3 id="introducción"><strong>Introducción</strong></h3>
+
+<p>En el siguiente post desplegaremos un entorno LAMP (Linux, Apache, MySQL y PHP) sobre una maquina virtual en Vagrant con sistema operativo unix con el fin de alojar un CMS local en este caso Drupal. Este tipo de infraestructura es ampliamente utilizada para entornos de desarrollo, pruebas e incluso producción en pequeñas empresas.</p>
+
+<p><strong>Entorno utilizado</strong></p>
+
+<ul>
+  <li>
+    <p>Sistema Operativo: Debian Buster</p>
+  </li>
+  <li>
+    <p>Apache: 2.4.52</p>
+  </li>
+  <li>
+    <p>PHP: 7.3</p>
+  </li>
+  <li>
+    <p>MariaDB: 10.3.25</p>
+  </li>
+  <li>
+    <p>CMS: Drupal 8.9.7 y moodle 38</p>
+  </li>
+</ul>
+
+<h3 id="instalación-y-configuración-de-un-servidor-lamp"><strong>Instalación y configuración de un servidor LAMP</strong></h3>
+
+<p>Empezamos creando una instancia de vagrant basado en un box debian o ubuntu y una vez creado ejecutamos vagrant init en el directorio donde crearemos el vagrantfile.</p>
+
+<p>Configuración del vagrantfile:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Vagrant.configure("2") do |config|
+config.vm.define :nodo1 do |nodo1|
+    nodo1.vm.box = "debian/buster64"
+    nodo1.vm.hostname = "server"
+    nodo1.vm.network :private_network, type: "dhcp"
+end
+</code></pre></div></div>
+
+<p>Una vez configurado el vagrantfile levantamos el escenario usando vagrant up y luego nos conectamos al servidor con vagrant ssh.</p>
+
+<p>Lo primero que haremos en la maquina sera ejecutar un update y un upgrade para actualizar los repositorios y paquetes del sistema a su última versión.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo apt update &amp;&amp; sudo apt upgrade -y
+</code></pre></div></div>
+
+<p>Después del update y el upgrade, empezaremos a descargar y configurar la pila LAMP, empezando por Apache que servirá los archivos del CMS al navegador del cliente:</p>
+
+<ul>
+  <li>Apache</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo apt install apache2
+</code></pre></div></div>
+
+<p>Una vez instalado sera necesario comprobar que el estado del servidor apache sea enable.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo systemctl status apache2
+</code></pre></div></div>
+
+<ul>
+  <li>Mariadb:</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>apt install mariadb-server mariadb-client
+</code></pre></div></div>
+
+<p>Una vez instalada la base de datos de MariaDB, aseguramos la base de datos para evitar problemas, por lo que cambiamos la contraseña del root de MariaDB, eliminamos usuarios anónimos, desactivamos acceso remoto a root, etc.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo mysql_secure_installation
+</code></pre></div></div>
+
+<ul>
+  <li>Instalamos PHP que se encargará de procesar la lógica del CMS y conectarse con la base de datos.</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>apt install php7.3
+</code></pre></div></div>
+
+<h3 id="instalación-de-drupal-en-el-servidor-local"><strong>Instalación de Drupal en el servidor local</strong></h3>
+
+<ul>
+  <li>Configuraremos el servidor web con virtual hosting para que el CMS sea accesible desde la dirección: www.nombrealumno-drupal.org.</li>
+</ul>
+
+<p>Configuración en el servidor en drupal.conf:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;VirtualHost *:80&gt;
+    ServerAdmin webmaster@localhost
+    DocumentRoot /srv/www/
+    ServerName www.sergioib-drupal.org
+    &lt;Directory /srv/www/drupal&gt;
+        	Options Indexes FollowSymLinks
+        	AllowOverride All
+        	Require all granted
+    &lt;/Directory&gt;
+    ErrorLog ${APACHE_LOG_DIR}/error.log
+    CustomLog ${APACHE_LOG_DIR}/access.log combined
+&lt;/VirtualHost&gt;
+</code></pre></div></div>
+
+<p>Configuración en el cliente en etc/hosts:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>172.28.128.16   www.sergioib-drupal.org
+</code></pre></div></div>
+
+<ul>
+  <li>Creamos un usuario en la base de datos para trabajar con la base de datos donde se van a guardar los datos del CMS.</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vagrant@server:~$ sudo mysql -u root -p
+Enter password: 
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 51
+Server version: 10.3.25-MariaDB-0+deb10u1 Debian 10
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]&gt; create database drupalbd;
+Query OK, 1 row affected (0.001 sec)
+
+MariaDB [(none)]&gt; create user drupal;
+Query OK, 0 rows affected (0.001 sec)
+MariaDB [(none)]&gt; grant all on drupalbd.* to drupal identified by 'drupal';
+Query OK, 0 rows affected (0.001 sec)
+</code></pre></div></div>
+
+<ul>
+  <li>Descargamos la versión que nos parezca más oportuna de Drupal y realizamos la instalación.</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>wget https://www.drupal.org/download-latest/zip
+</code></pre></div></div>
+
+<p>Una vez instalado, abrimos en un navegador la url de nuestro sitio para seguir con la instalacion en 6 pasos:</p>
+
+<p>El primer paso al elegir el idioma español, da error porque en la instalacion no se instalo la carpeta de idiomas, por lo que en el directorio /drupal/sites/default creamos el directorio /files/translations y en ese directorio translations descargamos el paquete del idioma español.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>wget https://ftp.drupal.org/files/translations/all/drupal/drupal-8.9.7.es.po
+</code></pre></div></div>
+
+<p>En el segundo paso elegimos el perfil que vamos a tener, en este caso uno estándar.</p>
+
+<p>En el tercer paso hubo varios problemas con los requistos:</p>
+
+<p>◦ Extensiones php
+    ▪ Solucion → sudo apt instal php-gd php-xml</p>
+
+<p>◦ Funcionalidad de bases de datos
+    ▪ Solucion → sudo apt install php7.3-pdo php7.3-mysqli</p>
+
+<p>◦ Problemas de permisos /sites/default/files
+    ▪ Solución → sudo chmod a+w sites/default/files</p>
+
+<p>◦ Archivo de configuración
+    ▪ Solución:
+        • sudo cp sites/default/default.settings.php sites/default/settings.php
+        • sudo chmod a+w sites/default/settings.php</p>
+
+<p>En el cuarto introducimos los datos de nuestra base de datos, nombre de la base, usuario que la va a usar y contraseña. Después instalamos el sitio y lo configuramos.</p>
+
+<ul>
+  <li>Realizamos una configuración mínima de la aplicación (Cambia la plantilla, crea algún contenido, …)</li>
+</ul>
+
+<p>Apariencia → instalar nuevo tema → pegar enlace donde este el tema → buscarlo y descargarlo</p>
+
+<p>Contenido → Añadir contenido → Elegir contenido a crear (en este caso un articulo) → Guardar los cambios</p>
+
+<ul>
+  <li>Instalamos un módulo para añadir alguna funcionalidad a drupal.</li>
+</ul>
+
+<p>Ampliar → seleccionamos un modulo, en este caso el foro→ instalar, en mi caso como ejemplo instale el modulo forum.</p>
+
+<p>Prueba de funcionamiento de Drupal 9 con las configuraciones ya realizadas:</p>
+
+<h3 id="configuración-multimodo"><strong>Configuración multimodo</strong></h3>
+
+<ul>
+  <li>Realizamos una copia de seguridad de la base de datos mysql:</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mysqldump --user=drupal --password=drupal drupalbd &gt; copiadrupalbd.sql
+</code></pre></div></div>
+
+<ul>
+  <li>Creamos otra máquina con vagrant, conectada con una red interna a la anterior y configuramos un servidor de base de datos.</li>
+</ul>
+
+<p>Configuración de vagrantfile:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Vagrant.configure("2") do |config|
+  config.vm.define :nodo1 do |nodo1|
+    nodo1.vm.box = "debian/buster64"
+    nodo1.vm.hostname = "server"
+    nodo1.vm.network :public_network,:bridge=&gt;"wlo1"
+    nodo1.vm.network :private_network, ip: "192.168.100.10/24", virtualbox__intnet: "Red_int"
+  end
+
+  config.vm.define :nodo2 do |nodo2|
+    nodo2.vm.box = "debian/buster64"
+    nodo2.vm.hostname = "server-bd"
+    nodo2.vm.network :private_network, ip: "192.168.100.20/24", virtualbox__intnet: "Red_int"
+  end
+</code></pre></div></div>
+
+<ul>
+  <li>Creamos un usuario en la base de datos para trabajar con la nueva base de datos.</li>
+</ul>
+
+<p>Instalamos mariadb igual que en la maquina anterior:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo apt install mariadb-server mariadb-client
+</code></pre></div></div>
+
+<p>Y creamos un usuario igual que en la maquina anterior:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vagrant@server-bd:~$ sudo mysql -u root -p
+Enter password: 
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 49
+Server version: 10.3.25-MariaDB-0+deb10u1 Debian 10
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]&gt; create user drupal identified by drupal;
+Query OK, 0 rows affected (0.001 sec)
+</code></pre></div></div>
+
+<ul>
+  <li>Restauramos la copia de seguridad en el nuevo servidor de base datos.</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mysql -u drupal -pdrupal drupalbd &lt; copiadrupaldb.sql
+</code></pre></div></div>
+
+<ul>
+  <li>Desinstalamos el servidor de base de datos en el servidor principal.</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo apt purge mariadb-*
+</code></pre></div></div>
+
+<ul>
+  <li>Realizamos los cambios de configuración necesario en drupal para que la página funcione.</li>
+</ul>
+
+<p>Configuración de settings.php</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$databases['default']['default'] = array (
+'database' =&gt; 'drupalbd',
+'username' =&gt; 'drupal',
+'password' =&gt; 'drupal',
+'prefix' =&gt; '',
+'host' =&gt; '192.168.100.20',
+'port' =&gt; '3306',
+'namespace' =&gt; 'Drupal\\Core\\Database\\Driver\\mysql',
+'driver' =&gt; 'mysql',
+);
+</code></pre></div></div>
+
+<h3 id="instalación-de-otro-cms-php"><strong>Instalación de otro CMS PHP</strong></h3>
+
+<p>Como segundo cms en instalacion se ha escogido moddle, por lo tanto igual que hemos hecho anteriormente con drupal comenzamos con su instalacion.</p>
+
+<p>Instalación de moodle:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo wget https://es.osdn.net/projects/sfnet_moodle/downloads/Moodle/stable38/moodle-latest-38.zip
+</code></pre></div></div>
+
+<p>En este caso no se ha podido descargar de la pagina oficial www.download.moodle.org ya que por algún motivo a la hora de descargarse no se descargaba completa y en ese caso al intentar desempaquetar el zip que se descargaba con unzip, no se podía.</p>
+
+<ul>
+  <li>Configuramos otro virtualhost y elegimos otro nombre en el mismo dominio.</li>
+</ul>
+
+<p>Una vez que tengamos la moodle en nuestro equipo empezamos a configurar el virtualhost. Copiamos el fichero drupal.conf en /etc/apache2/sites-availables y creamos un moodle.conf:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo cp /etc/apache2/sites-available/drupal.conf /etc/apache2/sites-available/moodle.conf
+</code></pre></div></div>
+
+<p>Configuración de moodle.conf:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;VirtualHost *:80&gt;
+    ServerAdmin webmaster@localhost
+    DocumentRoot /srv/www/
+    ServerName www.sergioib-drupal.org
+    &lt;Directory /srv/www/moodle&gt;
+        Options Indexes FollowSymLinks
+        AllowOverride All
+        Require all granted
+		&lt;/Directory&gt;
+</code></pre></div></div>
+
+<ul>
+  <li>Instalación de la base de datos para moodle (en el servidor de base de datos):</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vagrant@server-bd:~$ sudo mysql -u root -p
+Enter password: 
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 40
+Server version: 10.3.25-MariaDB-0+deb10u1 Debian 10
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]&gt; create database moodlebd;
+Query OK, 1 row affected (0.001 sec)
+
+MariaDB [(none)]&gt; create user moodle;
+Query OK, 0 rows affected (0.001 sec)
+
+MariaDB [(none)]&gt; grant all on moodlebd.* to moodle identified by 'moodle'
+    -&gt; ;
+Query OK, 0 rows affected (0.001 sec)
+</code></pre></div></div>
+
+<p>Modificamos de permisos /srv ya que a la hora de instalar se creara un directorio moodledata en /srv y no tiene el directorio permisos de escritura  de un fichero config.php en el directorio /srv/www/moodle ya que el script de instalación no fue capaz de generarlo.</p>
+
+<p>Contenido de config.php:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php  // Moodle configuration file
+
+unset($CFG);
+global $CFG;
+$CFG = new stdClass();
+
+$CFG-&gt;dbtype    = 'mysql';
+$CFG-&gt;dblibrary = 'native';
+$CFG-&gt;dbhost    = '192.168.100.20';
+$CFG-&gt;dbname    = 'moodlebd';
+$CFG-&gt;dbuser    = 'moodle';
+$CFG-&gt;dbpass    = 'moodle';
+$CFG-&gt;prefix    = 'mdl_';
+$CFG-&gt;dboptions = array (
+  'dbpersist' =&gt; 0,
+  'dbport' =&gt; '',
+  'dbsocket' =&gt; '',
+  'dbcollation' =&gt; 'utf8mb4_general_ci',
+);
+$CFG-&gt;wwwroot   = 'http://www.sergioib-drupal.org/moodle';
+$CFG-&gt;dataroot  = '/srv/moodledata';
+$CFG-&gt;admin     = 'admin';
+
+$CFG-&gt;directorypermissions = 0777;
+
+require_once(__DIR__ . '/lib/setup.php');
+
+// There is no php closing tag in this file,
+// it is intentional because it prevents trailing whitespace problems!
+</code></pre></div></div>
+
+<p>Algunos de los fallos saltaron en la instalacion fueron los siguientes:</p>
+
+<ul>
+  <li>dbtype en config.php debía ser cambiado a mariadb indicando asi el tipo de base de datos que usamos.</li>
+  <li>Es necesaria extensión php-intl</li>
+</ul>
+
+<p>Reiniciamos el servidor y al continuar la instalación, solo faltara poner los datos de administrador para de esa forma tener operativa la moodle.</p>
+
+<h3 id="necesidad-de-otros-servicios"><strong>Necesidad de otros servicios</strong></h3>
+
+<ul>
+  <li>La mayoría de los CMS tienen la posibilidad de mandar correos electrónicos (por ejemplo para notificar una nueva versión, notificar un comentario, etc…)</li>
+</ul>
+
+<p>Instalaremos un servidor de correo electrónico en tu servidor, por lo que debemos configurar un servidor relay de correo, para ello en el fichero /etc/postfix/main.cf, debemos poner la siguiente línea:</p>
+
+<p>Lo primero que haremos será instalar el paquete postfix</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo apt install postfix
+</code></pre></div></div>
+
+<p>Una vez que lo instalamos, en el menú de instalación podremos configurar el correo que se usara, en este caso escogemos la opción Internet Site y despues ponemos el nombre del correo que se va a usar, en este caso sergioib-drupal.org. Ahora pasamos a introducir la siguiente linea en /etc/postfix/main.cf:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>relayhost = babuino-smtp.gonzalonazareno.org
+</code></pre></div></div>
+
+<p>De forma que el fichero quede de esta forma:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>smtpd_relay_restrictions = permit_mynetworks permit_sasl_authenticated defer_unauth_destination
+myhostname = server.home
+alias_maps = hash:/etc/aliases
+alias_database = hash:/etc/aliases
+myorigin = /etc/mailname
+mydestination = $myhostname, sergioib-drupal.org, server, localhost.localdomain, localhost
+relayhost = babuino-smtp.gonzalonazareno.org
+mynetworks = 127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128
+mailbox_size_limit = 0
+recipient_delimiter = +
+inet_interfaces = all
+inet_protocols = all
+</code></pre></div></div>
+
+<p>Ahora solo queda configurar alguno de los CMS para que nos envíe algún correo:</p>
+
+<ul>
+  <li>
+    <p>En el caso de drupal lo configuramos de la siguiente forma: Configurar -&gt; People -&gt; Accont -&gt; setting -&gt; Notification email addres.</p>
+  </li>
+  <li>
+    <p>En el caso de la moodle: Configuración -&gt; Usuarios -&gt; Cuentas -&gt; Acciones de usuario masivas</p>
+  </li>
+</ul>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/categories/#aplicaciones-web" class="page__taxonomy-item p-category" rel="tag">Aplicaciones Web</a>
+    
+    </span>
+  </p>
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2021-03-11T10:13:49+01:00">March 11, 2021</time></p>
+
+      </footer>
+
+      <section class="page__share">
+  <h4 class="page__share-title">Share on</h4>
+
+  <a href="https://x.com/intent/tweet?text=Despliegue+de+un+servidor+LAMP+local+y+configuraci%C3%B3n+de+CMS+PHP%20http%3A%2F%2Flocalhost%3A4000%2Faplicaciones%2520web%2F2021%2F03%2F11%2FDespliegue-de-un-servidor-LAMP-local-y-configuraci%25C3%25B3n-de-CMS-PHP.html" class="btn btn--x" aria-label="Share on X" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on X">
+    <i class="fab fa-fw fa-x-twitter" aria-hidden="true"></i><span> X</span>
+  </a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Faplicaciones%2520web%2F2021%2F03%2F11%2FDespliegue-de-un-servidor-LAMP-local-y-configuraci%25C3%25B3n-de-CMS-PHP.html" class="btn btn--facebook" aria-label="Share on Facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook">
+    <i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span>
+  </a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http://localhost:4000/aplicaciones%20web/2021/03/11/Despliegue-de-un-servidor-LAMP-local-y-configuraci%C3%B3n-de-CMS-PHP.html" class="btn btn--linkedin" aria-label="Share on LinkedIn" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn">
+    <i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span>
+  </a>
+
+  <a href="https://bsky.app/intent/compose?text=Despliegue+de+un+servidor+LAMP+local+y+configuraci%C3%B3n+de+CMS+PHP%20http%3A%2F%2Flocalhost%3A4000%2Faplicaciones%2520web%2F2021%2F03%2F11%2FDespliegue-de-un-servidor-LAMP-local-y-configuraci%25C3%25B3n-de-CMS-PHP.html" class="btn btn--bluesky" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Bluesky">
+    <i class="fab fa-fw fa-bluesky" aria-hidden="true"></i><span> Bluesky</span>
+  </a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/servicios/2021/03/11/Mapeo-url-servidor-dhcp.html" class="pagination--pager" title="Mapeo URL Virtualhost">Previous</a>
+    
+    
+      <a href="/seguridad/2021/03/11/Integridad-firmas-autentificacion.html" class="pagination--pager" title="Integridad, firmas y autentificacion">Next</a>
+    
+  </nav>
+
+
+    </div>
+
+    
+      
+        <p>
+          Comments are configured with provider: <strong>giscus</strong>,
+          but are disabled in non-production environments.
+        </p>
+      
+    
+  </article>
+
+  
+  
+    
+<div class="page__related">
+  
+  <h2 class="page__related-title">You May Also Enjoy</h2>
+  <div class="grid__wrapper">
+    
+      
+      
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/sistemas/monitorizaci%C3%B3n/2025/05/01/Instalacion-configuracion-y-monitoreo-zabbix.html" rel="permalink">Instalación, configuración y monitorización usando Zabbix
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2025-05-01T13:19:00+02:00">May 1, 2025</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          7 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Este post describe paso a paso cómo instalar y configurar Zabbix 6.0 LTS en una máquina virtual con Debian 12. Está pensado para crear un entorno de práctica...</p>
+  </article>
+</div>
+
+    
+      
+      
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/sistemas/monitorizaci%C3%B3n/2024/04/11/Monitorizaci%C3%B3n-de-servidores-con-grafana.html" rel="permalink">Monitorización de servidores con Grafana
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2024-04-11T13:14:06+02:00">April 11, 2024</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          10 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Aprende a instalar, configurar y personalizar Grafana para la monitorización avanzada de servidores. Descubre cómo integrar Prometheus, crear dashboards inte...</p>
+  </article>
+</div>
+
+    
+      
+      
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/seguridad/2021/12/21/SoftEther-VPN.html" rel="permalink">Introducción SoftEther VPN
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2021-12-21T13:44:30+01:00">December 21, 2021</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          64 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">SoftEther VPN es uno de los software VPN multiprotocolo más potentes y rápidos del mundo en la actualidad. Funciona en sistemas Windows, Solaris, Mac, FreeBS...</p>
+  </article>
+</div>
+
+    
+      
+      
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/aplicaciones%20web/apuntes/2021/09/21/Introduccion-a-Docker.html" rel="permalink">Introducción a Docker
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2021-09-21T13:14:06+02:00">September 21, 2021</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          19 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Docker nos permite de forma sencilla crear contenedores ligeros y fáciles de mover donde ejecutar nuestras aplicaciones software sobre cualquier máquina con ...</p>
+  </article>
+</div>
+
+    
+  </div>
+</div>
+
+  
+  
+</div>
+
+      
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">&copy; 2025 <a href="http://localhost:4000">Blog de Sergio Ibáñez</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+    <script>
+  'use strict';
+
+  (function () {
+    var commentContainer = document.querySelector('#giscus-comments');
+
+    if (!commentContainer) {
+      return;
+    }
+
+    var script = document.createElement('script');
+
+    script.setAttribute('src', 'https://giscus.app/client.js');
+    script.setAttribute('data-repo', '');
+    script.setAttribute('data-repo-id', '');
+    script.setAttribute('data-category', '');
+    script.setAttribute('data-category-id', '');
+    script.setAttribute('data-mapping', 'pathname');
+    script.setAttribute('data-strict', '0');
+    script.setAttribute('data-reactions-enabled', '1');
+    script.setAttribute('data-emit-metadata', '0');
+    script.setAttribute('data-input-position', 'top');
+    script.setAttribute('data-theme', 'preferred_color_scheme');
+    script.setAttribute('data-lang',  'es');
+    
+    script.setAttribute('crossorigin', 'anonymous');
+
+    script.setAttribute('async', '');
+
+    commentContainer.appendChild(script);
+  })();
+</script>
+
+  
+
+
+
+
+  </body>
+</html>

@@ -1,0 +1,546 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.27.3 by Michael Rose
+  Copyright 2013-2025 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="es-ES" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Creacion de escenario Openstack - Blog de Sergio Ibáñez</title>
+<meta name="description" content="En este post se creara un escenario en openstack con varias maquinas virtuales donde a lo largo del curso se realizaran la mayoria de las practicas.">
+
+
+  <meta name="author" content="Sergio Ibáñez Núñez">
+  
+  <meta property="article:author" content="Sergio Ibáñez Núñez">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="es_ES">
+<meta property="og:site_name" content="Blog de Sergio Ibáñez">
+<meta property="og:title" content="Creacion de escenario Openstack">
+<meta property="og:url" content="http://localhost:4000/_posts/2021-03-12-Creacion-escenario-openstack.html">
+
+
+  <meta property="og:description" content="En este post se creara un escenario en openstack con varias maquinas virtuales donde a lo largo del curso se realizaran la mayoria de las practicas.">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2021-03-12T11:43:35+01:00">
+
+
+
+
+
+
+<link rel="canonical" href="http://localhost:4000/_posts/2021-03-12-Creacion-escenario-openstack.html">
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Blog de Sergio Ibáñez Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single" dir="ltr">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          Blog de Sergio Ibáñez
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a
+                href="/"
+                
+                
+              >Inicio</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/posts/"
+                
+                
+              >Posts</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/categories/"
+                
+                
+              >Categorías</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/tags/"
+                
+                
+              >Etiquetas</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/search/"
+                
+                
+              >Buscar</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/about/"
+                
+                
+              >Sobre mí</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="http://localhost:4000/">
+        <img src="/assets/images/avatar.png" alt="Sergio Ibáñez Núñez" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="http://localhost:4000/" itemprop="url">Sergio Ibáñez Núñez</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>Técnico IT y entusiasta de la automatización</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Creacion de escenario Openstack">
+    <meta itemprop="description" content="En este post se creara un escenario en openstack con varias maquinas virtuales donde a lo largo del curso se realizaran la mayoria de las practicas.">
+    <meta itemprop="datePublished" content="2021-03-12T11:43:35+01:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">
+            <a href="http://localhost:4000/_posts/2021-03-12-Creacion-escenario-openstack.html" itemprop="url">Creacion de escenario Openstack
+</a>
+          </h1>
+          
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <h3 id="introduccion"><strong>Introduccion</strong></h3>
+
+<p>En este post se creara un escenario en openstack con varias maquinas virtuales donde a lo largo del curso se realizaran la mayoria de las practicas.</p>
+
+<h2 id="creacion-del-escenario"><strong>Creacion del escenario</strong></h2>
+
+<ul>
+  <li>
+    <p>Tarea 1: Creación de la red interna:
+      ◦ Nombre red interna de <sergio.ibañez>
+      ◦ 10.0.1.0/24</sergio.ibañez></p>
+  </li>
+  <li>
+    <p>Tarea 2: Creación de las instancias:
+      ◦ Dulcinea:
+          ▪ Debian Buster sobre volumen con sabor m1.mini
+          ▪ Accesible directamente a través de la red externa y con una IP flotante
+          ▪ Conectada a la red interna, de la que será la puerta de enlace
+      ◦ Sancho:
+          ▪ Ubuntu 20.04 sobre volumen con sabor m1.mini
+          ▪ Conectada a la red interna
+          ▪ Accesible indirectamente a través de dulcinea
+      ◦ Quijote:
+          ▪ CentOS 7 sobre volumen con sabor m1.mini
+          ▪ Conectada a la red interna
+          ▪ Accesible indirectamente a través de dulcinea</p>
+  </li>
+</ul>
+
+<p>Escenario una vez creadas las instancias:</p>
+
+<p><img src="/images/escenario-openstack/topologia.png" alt="escenario openstack" /></p>
+
+<p>Una vez creadas las instancias, solo faltaría hacer accesible de forma indirecta a las instancias de sancho y quijote a través de dulcinea. En este caso la red 10.0.0.0/24, tiene 2 maquinas de un trabajo creado anteriormente para otra asignatura.</p>
+
+<ul>
+  <li>Tarea 3: Configuración de NAT en Dulcinea (Es necesario deshabilitar la seguridad en todos los puertos de dulcinea).</li>
+</ul>
+
+<p>Deshabilitamos la seguridad:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>       (openstackclient) sergioib@debian-sergio:~/Escritorio/Informatica/Virtualenv/openstackclient$ openstack port list
+       +--------------------------------------+------+-------------------+-------------------------------------------------------------------------+--------+
+       | ID                                   | Name | MAC Address       | Fixed IP Addresses                                                      | Status |
+       +--------------------------------------+------+-------------------+-------------------------------------------------------------------------+--------+
+       | 0d8be2be-d440-4038-93e3-1eefdf2be853 |      | fa:16:3e:13:42:a1 | ip_address='10.0.0.3', subnet_id='4f9841a0-12bc-48a4-a89c-1b5f4dd3fbf7' | ACTIVE |
+       | 44dbc572-eb86-4f34-99a5-e23b81e83aff |      | fa:16:3e:80:c5:0c | ip_address='10.0.0.2', subnet_id='4f9841a0-12bc-48a4-a89c-1b5f4dd3fbf7' | ACTIVE |
+       | 52dd0fee-42f4-4d85-ae81-cff268c7924e |      | fa:16:3e:dd:20:7b | ip_address='10.0.1.4', subnet_id='dd45ee2a-7d50-4da8-b421-8f8844b65c0d' | ACTIVE |
+       | 5b9bf738-2b3b-4844-ad00-ceee38670008 |      | fa:16:3e:42:35:7c | ip_address='10.0.0.1', subnet_id='4f9841a0-12bc-48a4-a89c-1b5f4dd3fbf7' | ACTIVE |
+       | 7fecf2dd-e6ba-4959-b0e8-823ae013421c |      | fa:16:3e:64:51:7f | ip_address='10.0.0.5', subnet_id='4f9841a0-12bc-48a4-a89c-1b5f4dd3fbf7' | ACTIVE |
+       | a0f080fa-4b6e-40a1-9ef2-6ffb0195ba11 |      | fa:16:3e:a8:ba:5c | ip_address='10.0.1.3', subnet_id='dd45ee2a-7d50-4da8-b421-8f8844b65c0d' | ACTIVE |
+       | abbc307e-b9f0-4ca1-ac2f-130eb8230906 |      | fa:16:3e:3b:d5:a6 | ip_address='10.0.0.8', subnet_id='4f9841a0-12bc-48a4-a89c-1b5f4dd3fbf7' | ACTIVE |
+       | cb2e3a19-a2d3-43ce-83d6-9257d1967b93 |      | fa:16:3e:86:3d:2d | ip_address='10.0.1.2', subnet_id='dd45ee2a-7d50-4da8-b421-8f8844b65c0d' | ACTIVE |
+       | db5ea957-1ea1-4b0e-b9d8-80b3be8cf4b6 |      | fa:16:3e:b6:b1:24 | ip_address='10.0.1.8', subnet_id='dd45ee2a-7d50-4da8-b421-8f8844b65c0d' | ACTIVE |
+       +--------------------------------------+------+-------------------+-------------------------------------------------------------------------+--------+
+</code></pre></div></div>
+
+<p>En este caso Dulcinea cuenta con dos interfaces, la 10.0.1.4 (Red Interna) y la 10.0.0.3 (red externa) por lo que deshabilitamos el grupo de seguridad en ambas interfaces:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(openstackclient) sergioib@debian-sergio:~/Escritorio/Informatica/Virtualenv/openstackclient$ openstack port set --disable-port-security 0d8be2be-d440-4038-93e3-1eefdf2be853
+(openstackclient) sergioib@debian-sergio:~/Escritorio/Informatica/Virtualenv/openstackclient$ openstack port set --disable-port-security 52dd0fee-42f4-4d85-ae81-cff268c7924e
+</code></pre></div></div>
+
+<p>Configuración de NAT (Dulcinea):</p>
+
+<p>En dulcinea empezamos poniendo la nueva regla de iptables</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>iptables -t nat -A POSTROUTING -s 10.0.1.0/24 -o eth1 -j MASQUERADE
+</code></pre></div></div>
+
+<p>De esta forma se indicara la interfaz por la que se hará nat, que en este caso es la eth0 (interfaz interna). Una vez tengamos esto, tendremos que activar nat de la siguiente forma:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sed -i '/^#net.ipv4.ip\_forward/s/^#//g' /etc/sysctl.conf
+sudo sysctl -p /etc/sysctl.conf
+</code></pre></div></div>
+
+<ul>
+  <li>Tarea 4: Definición de contraseña en todas las instancias (para poder modificarla desde consola en caso necesario)</li>
+</ul>
+
+<p>Dulcinea:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo passwd debian
+</code></pre></div></div>
+
+<p>sancho:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo passwd ubuntu
+</code></pre></div></div>
+
+<p>quijote:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo passwd centos
+</code></pre></div></div>
+
+<ul>
+  <li>Tarea 5: Modificación de las instancias sancho y quijote para que usen direccionamiento estático y dulcinea como puerta de enlace</li>
+</ul>
+
+<p>Configuración de sancho (/etc/netplan/50-cloud-init.yaml):</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>       network:
+           version: 2
+           ethernets:
+               ens3:
+                   dhcp4: no
+                   addresses:
+                   - 10.0.1.8/24
+                   macaddress: fa:16:3e:b6:b1:24
+                   gateway4: 10.0.1.4
+</code></pre></div></div>
+
+<p>Una vez configurado reiniciamos el servicio ejecutando sudo netplan apply</p>
+
+<p>Configuración de quijote:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>BOOTPROTO=static
+DEVICE=eth0
+HWADDR=fa:16:3e:a8:ba:5c
+ONBOOT=yes
+IPADDR=10.0.1.3
+NETMASK=255.255.255.0
+GATEWAY=10.0.1.4
+TYPE=Ethernet
+USERCTL=no
+</code></pre></div></div>
+
+<p>Una vez configurado, reiniciamos el servicio ejecutando service network restart.</p>
+
+<ul>
+  <li>Tarea 6: Modificación de la subred de la red interna, deshabilitando el servidor DHCP</li>
+</ul>
+
+<p>Comprobamos con openstackclient las subnet que tenemos y cogemos la ID de la que subnet a la que le quitaremos el dhcp, en este caso la red-toboso.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(openstackclient) sergioib@debian-sergio:~/Escritorio/Informatica/Virtualenv/openstackclient$ openstack subnet list
++--------------------------------------+------------+--------------------------------------+-------------+
+| ID                                   | Name       | Network                              | Subnet      |
++--------------------------------------+------------+--------------------------------------+-------------+
+| 4f9841a0-12bc-48a4-a89c-1b5f4dd3fbf7 |            | 086ed7a1-2831-403b-9b0f-bc01be9184e2 | 10.0.0.0/24 |
+| dd45ee2a-7d50-4da8-b421-8f8844b65c0d | red-toboso | 0212c291-3149-4cac-b5bd-04cbbe112008 | 10.0.1.0/24 |
++--------------------------------------+------------+--------------------------------------+-------------+
+</code></pre></div></div>
+
+<p>Una ve que se sepa la ID se ejecutara openstack subnet set –no-dhcp dd45ee2a-7d50-4da8-b421-8f8844b65c0d para dejar la subnet sin dhcp.</p>
+
+<ul>
+  <li>Tarea 7: Utilización de ssh-agent para acceder a las instancias</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sergioib@debian-sergio:~$ ssh-agent /bin/bash
+sergioib@debian-sergio:~$ ssh-add .ssh/2asir.pem 
+Identity added: .ssh/2asir.pem (.ssh/2asir.pem)
+sergioib@debian-sergio:~$ ssh -i .ssh/2asir.pem debian@172.22.200.151
+Linux dulcinea 4.19.0-11-cloud-amd64 #1 SMP Debian 4.19.146-1 (2020-09-17) x86_64
+
+The programs included with the Debian GNU/Linux system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.
+
+Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
+permitted by applicable law.
+Last login: Sat Nov 14 19:54:18 2020 from 172.23.0.66
+</code></pre></div></div>
+
+<ul>
+  <li>Tarea 8. Creación del usuario profesor en todas las instancias. Usuario que puede utilizar sudo sin contraseña</li>
+</ul>
+
+<p>Creamos los usuarios en las distintas instancias haciendo uso del comando useradd o adduser y una vez creados los usuario profesor, editamos el siguiente fichero para que a la hora de hacer sudo no solicite contraseña</p>
+
+<p>Creamos los usuarios ejecutando:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo useradd -m -s /bin/bash profesor
+</code></pre></div></div>
+
+<p>En centos7 sera suficiente ejecutando sudo adduser profesor ya que por defecto se crea el /home/usuario de forma automática cogiendo los ficheros de /etc/skell.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>nano /etc/sudoers
+profesor ALL=(ALL) NOPASSWD: ALL
+</code></pre></div></div>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/categories/#cloud" class="page__taxonomy-item p-category" rel="tag">Cloud</a>
+    
+    </span>
+  </p>
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2021-03-12T11:43:35+01:00">March 12, 2021</time></p>
+
+      </footer>
+
+      
+
+      
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+
+      
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">&copy; 2025 <a href="http://localhost:4000">Blog de Sergio Ibáñez</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>
