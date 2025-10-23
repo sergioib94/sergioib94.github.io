@@ -22,9 +22,10 @@ Actualmente continúo formándome en herramientas como **Docker, Ansible, Terraf
 
 - ITILv4  
 - Ansible  
-- Grafana & Prometheus  
+- Grafana & Prometheus
+- Mas en Linkedin y github 
 
 👉 Si quieres saber más, revisa mi [LinkedIn](https://www.linkedin.com/in/sergio-ibañez-nuñez/) o mi [Portfolio](https://sergioib94.github.io).
 
 ## Contacto
-- 📧 [Tu email profesional]
+- 📧 **Email:** sergioib309@gmail.com
