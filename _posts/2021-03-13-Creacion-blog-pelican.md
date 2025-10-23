@@ -121,4 +121,4 @@ git clone https://github.com/alexandrevicenzi/Flex.git
 
 Una vez descargado el tema, se comprueba que lo tenemos instalado en pelican ejecutando pelican-theme -l. Cuando ya se tenga el tema, se configurarara el fichero pelicanconf.py, creamos un apartado llamado "Theme" indicandole la ruta donde tenemos almacenada el tema usado, por defecto, estos temas se almacenan en /usr/lib/python3/dist-packages/pelican/themes.
 
-![inicio pelican](/images/blog-pelican/pelican_inicio.png)
+![inicio pelican](/assets/images/blog-pelican/pelican_inicio.png)

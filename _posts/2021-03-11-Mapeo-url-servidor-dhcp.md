@@ -58,7 +58,7 @@ RedirectMatch 301 ^/$ http://www.mapeo.com/principal/
 
 Con la linea anterior se indicara una redirección permanente (301) a la ruta /principal.
 
-![pagina principal](/images/mapeo-url/principal.png)
+![pagina principal](/assets/images/mapeo-url/principal.png)
 
 * Tarea 2: En el directorio principal no se permite ver la lista de los ficheros, no se permite que se siga los enlaces simbólicos y no se permite negociación de contenido. Muestra al profesor el funcionamiento. ¿Qué configuración tienes que poner?
 
@@ -129,11 +129,11 @@ Pruebas de funcionamiento:
 
 fichero1:
 
-![primer fichero](/images/mapeo-url/fichero1.png)
+![primer fichero](/assets/images/mapeo-url/fichero1.png)
 
 fichero2
 
-![forbiden](/images/mapeo-url/forbiden.png)
+![forbiden](/assets/images/mapeo-url/forbiden.png)
 
 En este caso el error 403 del fichero2 sale personalizado ya que es el ultimo ejercicio que hice, pero no se nos permite el acceso ya que los propietarios de fichero y enlace no son los mismos.
 
@@ -160,8 +160,8 @@ Ejecutamos un systemctl reload apache2 como root y comprobamos que se muestren l
 
 Error 404:
 
-![error 404](/images/mapeo-url/error_404.png)
+![error 404](/assets/images/mapeo-url/error_404.png)
 
 Error 403:
 
-![error 403](/images/mapeo-url/error_403.png)
+![error 403](/assets/images/mapeo-url/error_403.png)

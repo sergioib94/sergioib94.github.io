@@ -69,7 +69,7 @@ sudo systemctl enable grafana-server.service
 
 Con esto ya estaría completa la instalación de grafana y ya podríamos acceder a la web de grafana para poder logearnos, para ello hay que indicar en la barra de búsqueda de cualquier navegador la ip de nuestra maquina (o su dominio), indicando el puerto 3000 que es el usado por grafana por defecto. en mi caso se accede con la dirección 192.168.110.129:3000
 
-![Grafana login](/images/Grafana/grafana_login.png)
+![Grafana login](/assets/images/Grafana/grafana_login.png)
 
 NOTA: por defecto la primera vez que se accede a grafana las credenciales siempre van a ser admin/admin, una vez se acceda por primera vez pedirá un cambio de contraseña y podremos empezar a trabajar con grafana.
 
@@ -113,7 +113,7 @@ Para añadir la base de datos de prometheus a grafana accedemos primero al sitio
 
 En el menú de la izquierda vamos a la opción "connections" y después a la opción "data sources", donde nos aparecerá la opción para añadir nuestra base de datos, en este caso prometheus, para ello será necesario añadir la URL http://localhost:9090.
 
-![Data source](/images/Grafana/data-source.png)
+![Data source](/assets/images/Grafana/data-source.png)
 
 ### **Creación de dashboards** ###
 
@@ -123,7 +123,7 @@ En este caso para importar los dashboards en el menú de la izquierda buscamos l
 
 A modo de ejemplo se ha usado el dashboard Node exporter siendo el mas descargado por lo que para su uso indicamos la ID de node-exportes (1860) y ya podremos empezar a usar el dashboard.
 
-![Dashboard](/images/Grafana/metrica.png)
+![Dashboard](/assets/images/Grafana/metrica.png)
 
 Si por el contrario en lugar de importar dashboards creados por la comunidad queremos crear nuestros propios dashboards personalizados dependiendo de las necesidades que tengamos a la hora de monitorizar tendríamos que realizar los siguientes pasos:
 
@@ -131,11 +131,11 @@ Al igual que se ha hecho anteriormente, en el menú de la izquierda buscamos la 
 
 Al acceder a "add visualization" lo primero que nos pedirá grafana será que elijamos un data source que será desde donde grafana obtenga los datos de las métricas. Al tratarse de una maquina recién creada en mi caso el único data source que da la opción de seleccionar será el de prometheus pero según las necesidades que tengamos podemos instalar cualquier otro para poder usarlo.
 
-![Prometheus](/images/Grafana/prometheus.png) 
+![Prometheus](/assets/images/Grafana/prometheus.png) 
 
 Al crear un dashboard vacío, lo primero que haremos será crear los paneles. Un panel es el bloque básico para la visualización de los datos. Grafana provee diferentes tipos de paneles y cada uno de ellos provee un editor de consulta (query) dependiendo del tipo de Data Source seleccionado.
 
-![Panel vacío](/images/Grafana/panel.png)
+![Panel vacío](/assets/images/Grafana/panel.png)
 
 Vamos a crear un panel de tipo gráfico en el que por ejemplo consultaremos la tasa promedio de solicitudes HTTP en los últimos 5 minutos, para ello en la parte de abajo donde visualizamos los paneles encontraremos la opción "query" donde podremos realizar diversas consultas de datos en el apartado "metrics". Como por ejemplo lo que queremos consultar es la tasa promedio de solicitudes http la métrica que necesitamos seria la de "prometheus_http_request_total".
 

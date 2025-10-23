@@ -180,17 +180,17 @@ Ahora vamos a configurar nuestro cliente de correo electrónico para poder manda
 
 * Añade a la cuenta las opciones de seguridad para poder enviar correos firmados con tu clave privada o cifrar los mensajes para otros destinatarios.
 
-![](/images/integracion-firmas-autentificacion/seguridad_correo.png)
+![](/assets/images/integracion-firmas-autentificacion/seguridad_correo.png)
 
 * Envíamos y recibimos varios mensajes de los compañeros y compruebamos el funcionamiento adecuado de GPG.
 
 Prueba de correo de Celia a mi:
 
-![prueba de correo 1](/images/integracion-firmas-autentificacion/prueb_correo.png)
+![prueba de correo 1](/assets/images/integracion-firmas-autentificacion/prueb_correo.png)
 
 Prueba de correo de mi a Celia:
 
-![prueba de correo 2](/images/integracion-firmas-autentificacion/pruebcorreo1.png)
+![prueba de correo 2](/assets/images/integracion-firmas-autentificacion/pruebcorreo1.png)
 
 ### **Integridad de ficheros** ###
 

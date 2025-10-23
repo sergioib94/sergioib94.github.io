@@ -102,7 +102,7 @@ Inicio atlas:
 
 En colecciones podremos ver los datos que tenemos en nuestro cluster, en colecciones podremos ver todos los documentos dentro de nuestra base de datos asi como buscar documentos especificos. Atlas tambien nos permite configurar usuarios con distintos privilegios.
 
-![Inicio Atlas](/images/Mongo-01/inicio_atlas.png)
+![Inicio Atlas](/assets/images/Mongo-01/inicio_atlas.png)
 
 ### Conexion a Mongo compass ###
 
@@ -140,9 +140,9 @@ ssh tunel → none
 
 En mi caso me conecte usando la cadena ya que es mas facil a la hora de entrar varias veces:
 
-![Mongo compass conexion](/images/Mongo-01/compass.png)
+![Mongo compass conexion](/assets/images/Mongo-01/compass.png)
 
-![Mongo compass](/images/Mongo-01/compass2.png)
+![Mongo compass](/assets/images/Mongo-01/compass2.png)
 
 ### Conexion de cluster con Mongo Compass ### 
 
@@ -150,7 +150,7 @@ En la ventana de cluster sandbox al igual que cuando conectamos atlas a mongo sh
 
 En el caso de no tenerlo instalado, elegimos la opcion “i do not have mongodb compass” lo descargamos e instalamos, pero como no es este caso, copiamos la cadena que se nos da en mongo compass cambiando la parte <password> por nuestra contraseña y ya tendremos conectado nuestro cluster con mongo compass.
 
-![Compass conectado al cluster](/images/Mongo-01/compass-cluster.png)
+![Compass conectado al cluster](/assets/images/Mongo-01/compass-cluster.png)
 
 ### Panel principal de mongo compass ###
 
@@ -234,7 +234,7 @@ mongo "mongodb://cluster0-shard-00-00-jxeqq.mongodb.net:27017,cluster0-shard-00-
 1. Iniciar sesion en el cluster Atlas
 2. En la ventana “clusters” hacer clic en “connect”
 
-![Atlas cluster](/images/Mongo-01/connect_atlas.png)
+![Atlas cluster](/assets/images/Mongo-01/connect_atlas.png)
 
 3. Una vez le demos a connect, elegimos la opcion “connect with the mongo shell”.
 4. Elegimos “i have the mongo shell instaled” en caso de tener mongo shell ya instalado en el equipo y copiamos el comando que se nos da.
@@ -318,7 +318,7 @@ MongoDB Enterprise Cluster0-shard-0:PRIMARY> db.movieDetails.find().pretty()
 		"Aorere Paki"
 	],
 	"plot" : "A young Scottish man travels across America in pursuit of the woman he loves, attracting the attention of an outlaw who is willing to serve as a guide.",
-	"poster" : "http://ia.media-imdb.com/images/M/MV5BNTYxNDA5ODk5NF5BMl5BanBnXkFtZTgwNzMwMzIwNTE@._V1_SX300.jpg",
+	"poster" : "http://ia.media-imdb.com/assets/images/M/MV5BNTYxNDA5ODk5NF5BMl5BanBnXkFtZTgwNzMwMzIwNTE@._V1_SX300.jpg",
 	"imdb" : {
 		"id" : "tt3205376",
 		"rating" : 7,
@@ -368,7 +368,7 @@ MongoDB Enterprise Cluster0-shard-0:PRIMARY> db.movieDetails.find().pretty()
 		"Jeff Goldblum"
 	],
 	"plot" : "Adventurer/surgeon/rock musician Buckaroo Banzai and his band of men, the Hong Kong Cavaliers, take on evil alien invaders from the 8th dimension.",
-	"poster" : "http://ia.media-imdb.com/images/M/MV5BMTk3OTAwNDQwOF5BMl5BanBnXkFtZTgwOTE0MzQxMDE@._V1_SX300.jpg",
+	"poster" : "http://ia.media-imdb.com/assets/images/M/MV5BMTk3OTAwNDQwOF5BMl5BanBnXkFtZTgwOTE0MzQxMDE@._V1_SX300.jpg",
 	"imdb" : {
 		"id" : "tt0086856",
 		"rating" : 6.4,
@@ -404,7 +404,7 @@ MongoDB Enterprise Cluster0-shard-0:PRIMARY> db.movieDetails.find().pretty()
 		"Carolyn Jones"
 	],
 	"plot" : "A family saga covering several decades of Westward expansion in the nineteenth century--including the Gold Rush, the Civil War, and the building of the railroads.",
-	"poster" : "http://ia.media-imdb.com/images/M/MV5BNTk2NDk1NjY0MV5BMl5BanBnXkFtZTgwMzkzNTcxMTE@._V1_SX300.jpg",
+	"poster" : "http://ia.media-imdb.com/assets/images/M/MV5BNTk2NDk1NjY0MV5BMl5BanBnXkFtZTgwMzkzNTcxMTE@._V1_SX300.jpg",
 	"imdb" : {
 		"id" : "tt0056085",
 		"rating" : 7.1,
@@ -458,7 +458,7 @@ Usando la vista de la base de datos en compas, podemos crear una colección simp
 
 Al crear una nueva colección obviamente estara vacia, pero con compass podemos insertar un documento de forma sencilla haciendo clc en “add data” → “insert document”.
 
-![insercion de documentos](/images/Mongo-01/ejemplo_insert.png)
+![insercion de documentos](/assets/images/Mongo-01/ejemplo_insert.png)
 
 Creamos un pequeño documento a modo de prueba.
 
@@ -640,7 +640,7 @@ En el caso de no introducir ningun parametro en el filtro con find, se mostraran
 
 **Compass**
 
-![Primer filtro](/images/Mongo-01/filtro1.png)
+![Primer filtro](/assets/images/Mongo-01/filtro1.png)
 
 **Shell**
 
@@ -703,7 +703,7 @@ Para filtrar en una lista utilizamos los índices. Por ejemplo en la base de dat
 
 **Compass**
 
-![Filtrado de lista](/images/Mongo-01/filtros5.png)
+![Filtrado de lista](/assets/images/Mongo-01/filtros5.png)
 
 **Shell**
 
@@ -1103,7 +1103,7 @@ MongoDB Enterprise Cluster0-shard-0:PRIMARY> db.movieDetails.find({genres: "Come
 		"Jeff Goldblum"
 	],
 	"plot" : "Adventurer/surgeon/rock musician Buckaroo Banzai and his band of men, the Hong Kong Cavaliers, take on evil alien invaders from the 8th dimension.",
-	"poster" : "http://ia.media-imdb.com/images/M/MV5BMTk3OTAwNDQwOF5BMl5BanBnXkFtZTgwOTE0MzQxMDE@._V1_SX300.jpg",
+	"poster" : "http://ia.media-imdb.com/assets/images/M/MV5BMTk3OTAwNDQwOF5BMl5BanBnXkFtZTgwOTE0MzQxMDE@._V1_SX300.jpg",
 	"imdb" : {
 		"id" : "tt0086856",
 		"rating" : 6.4,
@@ -1143,7 +1143,7 @@ MongoDB Enterprise Cluster0-shard-0:PRIMARY> db.movieDetails.find({genres: "Come
 		"Colin Firth"
 	],
 	"plot" : "Follows the lives of eight very different couples in dealing with their love lives in various loosely interrelated tales all set during a frantic month before Christmas in London, England.",
-	"poster" : "http://ia.media-imdb.com/images/M/MV5BMTY4NjQ5NDc0Nl5BMl5BanBnXkFtZTYwNjk5NDM3._V1_SX300.jpg",
+	"poster" : "http://ia.media-imdb.com/assets/images/M/MV5BMTY4NjQ5NDc0Nl5BMl5BanBnXkFtZTYwNjk5NDM3._V1_SX300.jpg",
 	"imdb" : {
 		"id" : "tt0314331",
 		"rating" : 7.7,

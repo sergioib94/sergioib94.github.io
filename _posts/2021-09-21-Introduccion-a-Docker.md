@@ -4,7 +4,7 @@ title: "Introducción a Docker"
 date: 2021-09-21T13:14:06+02:00
 categories: [Aplicaciones Web, Apuntes]
 excerpt: "Docker nos permite de forma sencilla crear contenedores ligeros y fáciles de mover donde ejecutar nuestras aplicaciones software sobre cualquier máquina con Docker instalado, independientemente del sistema operativo que la máquina tenga, facilitando así también los despliegues."
-card_image: /assets/images/cards/docker-bg.jpg
+card_image: /assets/assets/images/cards/docker-bg.jpg
 ---
 
 ### **¿Qué es Docker?** ###
@@ -1027,11 +1027,11 @@ Una vez desplegado, comenzaremos con la instalación y comprobaremos que funcion
 
 Comenzamos con la instalación y comprobamos que podemos usar drupal:
 
-![Elección de idioma](/images/Intro-Docker/idioma.png)
+![Elección de idioma](/assets/images/Intro-Docker/idioma.png)
 
-![Comenzamos la instalación](/images/Intro-Docker/instalacion.png)
+![Comenzamos la instalación](/assets/images/Intro-Docker/instalacion.png)
 
-![Drupal](/images/Intro-Docker/drupal.png)
+![Drupal](/assets/images/Intro-Docker/drupal.png)
 
 ### **Instalación de Docker en Windows** ###
 
@@ -1045,13 +1045,13 @@ La instalación de docker al igual que la mayoria de instalaciones en windows es
 
 Una vez descargado, ejecutamos el fichero .exe y comenzara el proceso de instalación.
 
-![instalación docker](/images/Intro-Docker/docker1.png)
+![instalación docker](/assets/images/Intro-Docker/docker1.png)
 
 Cuando la instalación finalice, debera reiniciarse el equipo para que docker pueda poder usarse (en algunos casos se iniciará y abrirá sin necesidad de reinicio).
 
 A la hora de empezar a usar docker por primera vez, es posible que nos salga un error parecido al siguiente:
 
-![error wls2](/images/Intro-Docker/docker-error.png)
+![error wls2](/assets/images/Intro-Docker/docker-error.png)
 
 Este error se debe a que docker detecta que nuestra versión de WLS (Windows Subsystem for Linux) es antigua por lo que deberemos instalar la version actual que seria la versión 2 que es la que ahoramismo esta sustituyendo tanto el uso de Hyper-v y VirtualBox en el uso de docker.
 
@@ -1063,15 +1063,15 @@ Empezamos descargandonos la actualización [aqui](https://wslstorestorage.blob.c
 
 Una vez descargado WLS2, ejecutamos el instalador y acabar la instalacion reiniciamos docker.
 
-![instalación docker](/images/Intro-Docker/docker3.png)
+![instalación docker](/assets/images/Intro-Docker/docker3.png)
 
 Probamos a crear un par de contenedores a traves de la cmd:
 
-![creación de contenedores](/images/Intro-Docker/docker4.png)
+![creación de contenedores](/assets/images/Intro-Docker/docker4.png)
 
 Podemos ver que en windows podemos trabajar tanto por linea de comandos como por entorno gráfico.
 
-![docker desktop](/images/Intro-Docker/docker5.png)
+![docker desktop](/assets/images/Intro-Docker/docker5.png)
 
 * Usando Hyper-V:
 
@@ -1087,6 +1087,6 @@ Inicio > Configuración > Aplicaciones > Características Opcionales
 
 Marcamos "Hyper-V" y damos click en "Aceptar" para reiniciar Windows.
 
-![instalación Hyper-V](/images/Intro-Docker/docker2.png)
+![instalación Hyper-V](/assets/images/Intro-Docker/docker2.png)
 
 Después de reiniciar vamos a la configuración de docker, desmarcamos la opción de "Use the WSL 2 Based engine" y damos click en "Save & Restart".
