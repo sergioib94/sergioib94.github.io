@@ -11,7 +11,7 @@ Una vez que tengamos el repositorio en nuestra maquina, debemos de modificar la 
 
 Acceso a wordpress:
 
-![varnish wordpress](/images/varnish/varnish1.png)
+![varnish wordpress](/assets/images/varnish/varnish1.png)
 
 * Tarea 2: Vamos a hacer las pruebas de rendimiento desde la misma máquina, es decir vamos a ejecutar instrucciones similares a esta:
 
@@ -285,7 +285,7 @@ systemctl restart varnish
 
 Comprobamos que wordpress siga funcionando:
 
-![comprobacion de funcionamiento](/images/varnish/varnish2.png)
+![comprobacion de funcionamiento](/assets/images/varnish/varnish2.png)
 
 Hacemos las mismas pruebas que antes y comprobamos si ha mejorado el rendimiento:
 
@@ -533,6 +533,6 @@ Finished 50000 requests
 
 La diferencia entre usar o no varnish es bastante considerable:
 
-![comparacion de rendimiento](/images/varnish/comparativa.png)
+![comparacion de rendimiento](/assets/images/varnish/comparativa.png)
 
 Como vemos la diferencia es bastante considerable, ya que al tener el proxy inverso de varnish, en lugar de mandar la petición al servidor y acceder al index.php constantemente una y otra vez, con varnish se accede una sola, el resto de veces que se hace la peticion directamente se coge el index.php de la cache, por lo que agiliza mucho al servido y por lo tanto permite que responda mas peticiones por segundo.

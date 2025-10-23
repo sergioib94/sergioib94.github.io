@@ -196,7 +196,7 @@ mkdir /var/log/kibana
 chown -R kibana:kibana /var/log/kibana
 ~~~
 
-![kibana](/images/monitorizacion/kibana.png)
+![kibana](/assets/images/monitorizacion/kibana.png)
 
 ### **Logstash** ###
 
@@ -311,8 +311,8 @@ systemctl start metricbeat
 
 Una vez montado todo comprobaremos su funcionamiento:
 
-![monitorizacion de dulcinea](/images/monitorizacion/dulcinea.png)
+![monitorizacion de dulcinea](/assets/images/monitorizacion/dulcinea.png)
 
-![comprobacion de metricas del servidor](/images/monitorizacion/metricas.png)
+![comprobacion de metricas del servidor](/assets/images/monitorizacion/metricas.png)
 
-![monitorizacion](/images/monitorizacion/mon1.png)
+![monitorizacion](/assets/images/monitorizacion/mon1.png)

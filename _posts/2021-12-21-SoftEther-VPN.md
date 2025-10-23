@@ -421,38 +421,38 @@ rtt min/avg/max/mdev = 265.728/273.468/288.916/9.097 ms
 
 En el caso de windows (en mi caso windows 7), una vez instalado Softether-Client, lo abrimos y se nos mostrará una pantalla como la siguiente:
 
-![inicio](/images/Softether/inicio.png)
+![inicio](/assets/images/Softether/inicio.png)
 
 Este caso en Windows se hace igual que en linux, en dos sencillos pasos: primero creamos el adaptador virtual y después configuramos la conexión remota.
 
 El adaptador virtual de red lo haremos de la siguiente forma: Virtual Adapter -> New Virtual Network Adapter
 
-![creación de adaptador](/images/Softether/creacion_adaptador.png)
+![creación de adaptador](/assets/images/Softether/creacion_adaptador.png)
 
 Una vez le demos un nombre al adaptador de red virtual se empezará a crear de forma automática.
 
 Por otro lado la conexión la crearemos y configuraremos de la siguiente forma: Connect -> New VPN Connection Setting
 
-![creación de conexión](/images/Softether/creacion_adaptador.png)
+![creación de conexión](/assets/images/Softether/creacion_adaptador.png)
 
 Una vez ahi ponemos los datos de configuración de la conexión como el nombre de host de destino, su puerto, el hub al que se conectará, el usuario y contraseña del usuario que se conectará al servidor.
 
-![configuración de conexión](/images/Softether/configuracion_conexion.png)
+![configuración de conexión](/assets/images/Softether/configuracion_conexion.png)
 
 Por último conectamos con el servidor y comprobamos que obtenemos una direccion ip del servidor:
 
 Conexión
 
-![establecer conexión](/images/Softether/establecer_conexion.png)
-![estableciendo conexión](/images/Softether/estableciendo_conexion.png)
+![establecer conexión](/assets/images/Softether/establecer_conexion.png)
+![estableciendo conexión](/assets/images/Softether/estableciendo_conexion.png)
 
 Comprobación
 
-![ip pública antes de activar VPN](/images/Softether/ip_publica.png)
-![ip pública con VPN](/images/Softether/ip_publica_vpn.png)
+![ip pública antes de activar VPN](/assets/images/Softether/ip_publica.png)
+![ip pública con VPN](/assets/images/Softether/ip_publica_vpn.png)
 
-![ip antes de activar VPN](/images/Softether/ip.png)
-![ip con VPN](/images/Softether/ip_vpn.png)
+![ip antes de activar VPN](/assets/images/Softether/ip.png)
+![ip con VPN](/assets/images/Softether/ip_vpn.png)
 
 ### Caso 2: Site to site ###
 
