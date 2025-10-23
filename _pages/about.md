@@ -5,19 +5,26 @@ layout: single
 author_profile: true
 ---
 
-¡Hola! Soy Sergio Ibáñez Núñez, Técnico IT y entusiasta de la automatización.
+# ¡Hola, soy Sergio! 👋
 
-## Mi experiencia
-Especializado en sistemas, DevOps y automatización de procesos.
+Soy **administrador de sistemas y técnico IT** con experiencia en entornos Windows y Linux.  
+Me apasiona la automatización, la monitorización y las buenas prácticas DevOps.
 
-## Habilidades técnicas
-- Administración de sistemas Linux/Windows
-- Docker y contenedores
-- Automatización con scripts (PowerShell, Bash)
-- Infraestructura como código
-- DevOps practices
+Actualmente continúo formándome en herramientas como **Docker, Ansible, Terraform y Kubernetes**.
+
+## Experiencia destacada
+
+- Técnico de soporte en empresas como **Proxya, Efedos Consulting, Fervial Mercedes-Benz e Ibetia Global**.  
+- Conocimientos en **Active Directory, VMware, Zabbix, Grafana, Linux y Windows Server**.  
+- Conocimientos básicos en **Bash y Python** para automatización de tareas.  
+
+## Certificaciones
+
+- ITILv4  
+- Ansible  
+- Grafana & Prometheus  
+
+👉 Si quieres saber más, revisa mi [LinkedIn](https://www.linkedin.com/in/sergio-ibañez-nuñez/) o mi [Portfolio](https://sergioib94.github.io).
 
 ## Contacto
 - 📧 [Tu email profesional]
-- 💼 [LinkedIn](https://www.linkedin.com/in/sergio-ibañez-nuñez/)
-- 💻 [GitHub](https://github.com/sergioibanez)
