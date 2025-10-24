@@ -361,6 +361,8 @@ Ademas de poder configurar los grupos de alertas a traves del entorno grafico de
 
 ## **Configuración a traves de archivo .YML** ##
 
+**Estructura de ficheros**
+
 ~~~
 /etc/grafana/
 └── provisioning/
