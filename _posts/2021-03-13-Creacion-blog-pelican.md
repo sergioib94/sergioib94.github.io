@@ -3,6 +3,7 @@ title: "Creacion blog Pelican"
 date: 2021-03-13T22:18:18+01:00
 categories: [Aplicaciones Web]
 excerpt: "En este post se indicara como realizar la instalacion y configuracion de pelican para crear un blog."
+card_image: /assets/images/cards/debian.png
 ---
 
 ### **Instalacion de Pelican** ###

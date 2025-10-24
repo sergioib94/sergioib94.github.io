@@ -3,6 +3,7 @@ title: "HTTPS en Openstack"
 date: 2021-03-12T15:52:50+01:00
 categories: [Seguridad]
 excerpt: "Haciendo uso de un escenario virtual creado en openstack en practicas anteriores, se configurara en una maquina donde hay instalado un servidor web, configuraremos de forma adecuada el protocolo https en el servidor."
+card_image: /assets/images/cards/openstack-bg.png
 ---
 
 ### **Introducción** ###

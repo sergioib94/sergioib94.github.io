@@ -3,6 +3,7 @@ title: "Introducción a C++"
 date: 2021-06-09T16:43:19+02:00
 categories: [Apuntes]
 excerpt: "C++ es un lenguaje de programación compilado creado en 1979 derivado del lenguaje C quedándose con lo mejor de C y añadiendo funcionalidades nuevas."
+card_image: /assets/images/cards/C-bg.jpeg
 ---
 
 ### **Introducción** ###

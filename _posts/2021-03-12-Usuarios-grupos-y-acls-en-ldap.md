@@ -2,7 +2,8 @@
 title: "Usuarios, grupos y ACLs en Ldap"
 date: 2021-03-12T14:14:51+01:00
 categories: [Sistemas]
-excerpt: "En esta practica se realizaran una serie de tareas en las que se iran indicando como realizar distintas tareas en LDAP como peuden ser por ejemplo, creacion de usuarios, cracion de grupos, modificacion de datos o hacer uso de ACLS"
+excerpt: "En esta practica se realizaran una serie de tareas en las que se iran indicando como realizar distintas tareas en LDAP como pueden ser por ejemplo, creacion de usuarios, creacion de grupos, modificacion de datos o hacer uso de ACLS"
+card_image: /assets/images/cards/debian.png
 ---
 
 * Crea 10 usuarios con los nombres que prefieras en LDAP, esos usuarios deben ser objetos de los tipos posixAccount e inetOrgPerson. Estos usuarios tendrán un atributo userPassword.

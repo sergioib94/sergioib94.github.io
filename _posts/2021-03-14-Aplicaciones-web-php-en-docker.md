@@ -3,6 +3,7 @@ title: "Aplicaciones web PHP en Docker"
 date: 2021-03-14T13:26:35+01:00
 categories: [Aplicaciones web]
 excerpt: "En esta practica haciendo uso de docker, vamos a desplegar distintas aplicaciones en contenedores, en los primeros ejercicios se trabajara con bookmedik (aplicacion para organizar citas medicas) y en las dos ultimas se usara drupal y joomla."
+card_image: /assets/images/cards/docker-bg.jpg
 ---
 ### **Introduccion** ###
 

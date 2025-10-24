@@ -3,6 +3,7 @@ title: "Despliegue de un servidor LAMP local y configuración de CMS PHP"
 date: 2021-03-11T10:13:49+01:00
 categories: [Aplicaciones Web]
 excerpt: "En el siguiente post desplegaremos un entorno LAMP (Linux, Apache, MySQL y PHP) sobre una maquina virtual en Vagrant con sistema operativo unix con el fin de alojar un CMS local en este caso Drupal y moodle. Este tipo de infraestructura es ampliamente utilizada para entornos de desarrollo, pruebas e incluso producción en pequeñas empresas."
+card_image: /assets/images/cards/debian.png
 ---
 
 ### **Introducción** ###

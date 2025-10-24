@@ -3,6 +3,7 @@ title: "Active Directory"
 date: 2021-05-23T15:28:17+02:00
 categories: [Sistemas, Apuntes]
 excerpt: "Active Directory es un servicio de directorio que almacena objetos de datos en su entorno de red local. El servicio registra datos en los usuarios, dispositivos, aplicaciones, grupos, y dispositivos en una estructura jerárquica."
+card_image: /assets/images/cards/AD-bg.png
 ---
 
 ### **¿Que es?** ###

@@ -3,6 +3,7 @@ title: "Instalacion y configuracion básica OpenLDAP"
 date: 2021-03-12T14:11:19+01:00
 categories: [Sistemas]
 excerpt: "Haciendo uso de una de las maquinas virtuales creada y configurada en el post modificaciones del excenario openstack, se instalara y configurara un servidor ldap."
+card_image: /assets/images/cards/openstack-bg.png
 ---
 
 ### **Introducción** ###

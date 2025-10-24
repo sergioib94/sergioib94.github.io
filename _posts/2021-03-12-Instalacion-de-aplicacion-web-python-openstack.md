@@ -3,6 +3,7 @@ title: "Instalacion de Mezzanine en Openstack"
 date: 2021-03-12T16:01:48+01:00
 categories: [Aplicaciones Web]
 excerpt: "En este post vamos a desplegar un CMS python basado en django, en este caso se ha elegido Mezzanine."
+card_image: /assets/images/cards/openstack-bg.png
 ---
 
 ### **Introducción** ###

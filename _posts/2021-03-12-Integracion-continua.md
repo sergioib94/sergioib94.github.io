@@ -3,6 +3,7 @@ title: "Introduccion a la Integracion Continua"
 date: 2021-03-12T18:12:40+01:00
 categories: [Aplicaciones Web]
 excerpt: "La integración continua es una práctica de desarrollo de software mediante la cual los desarrolladores combinan los cambios en el código en un repositorio central de forma periódica, tras lo cual se ejecutan versiones y pruebas automáticas."
+card_image: /assets/images/cards/cicd.png
 ---
 
 ### **Introducción** ###
