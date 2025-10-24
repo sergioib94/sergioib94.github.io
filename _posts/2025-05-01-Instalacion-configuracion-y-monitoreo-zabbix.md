@@ -159,7 +159,7 @@ Una vez que tienes tu entorno Zabbix completamente funcional, puedes comenzar a 
 
 Previamente para poder practicar la monitorización con zabbix en el frontend debemos configurar primero el equipo ya que cada métrica, trigger o gráfico debe estar vinculado a un host específico (físico, virtual o lógico). La creación del equipo es bastante simple, en el menu de opciones de la izquierda buscaremos la opción configuración → equipos.
 
-1. Crear un trigger de alerta simple
+1. Crear un trigger de alerta simple.
 
 En este caso podemos crear un trigger que nos alerte cuando un parámetro (%CPU, uso de RAM, espacio en disco, etc...) de nuestro servidor sobrepase cierto valor. En este caso se creara un trigger que nos alerte cuando nuestro servidor supere el 80% de uso de CPU para ello en el frontend de zabbix buscaremos la opción configuración -> Equipos -> (host creado) -> crear iniciador.
 
@@ -183,7 +183,7 @@ Una vez ejecutado el comando stress, volveremos al frontend de Zabbix y para com
 
 *Nota: los datos que llegan del servidor tardar unos segundos en actualizarse en el frontend por lo que es posible que aunque el comando funcione, no aparezca el trigger inmediatamente*
 
-2. Configuración de notificaciones por email
+2. Configuración de notificaciones por email.
 
 Este tipo de notificaciones pueden ser útiles si se combinan con triggers como el creado anteriormente, por ejemplo en el caso anterior, una vez que el uso de CPU sobrepasara o llegara al 80% mandaría una notificación al correo especificado para la alerta. Para configurar este tipo de alertas haremos lo siguiente:
 
