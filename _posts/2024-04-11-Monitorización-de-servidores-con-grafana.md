@@ -306,9 +306,9 @@ Si monitoreamos múltiples servidores, en lugar de recibir una alerta por cada u
 
 ## ¿Como hacerlo? ##
 
-* Configuramos un Grupo de alertas en Grafana.
+## Configuramos un Grupo de alertas en Grafana.##
 
-Paso 1: Acceder a la Sección de Alerting
+Paso 1: Crear primer grupo - alertas CPU
 
 * Inicia sesión en Grafana (http://tu-servidor:3000)
 * Haz clic en el icono de campana en el menú lateral
@@ -358,6 +358,8 @@ dashboard: "/d/node-exporter-full"
 Paso 5: Por ultimo seleccionamos la opcion save rules
 
 Ademas de poder configurar los grupos de alertas a traves del entorno grafico de Grafana, tambien es posible gestionar los grupos de alertas a traves de ficheros.yml. Estas alertas se configurarian en /etcgrafana con la siguiente estructura:
+
+## **Configuración a traves de archivo .YML** ##
 
 ~~~
 /etc/grafana/
