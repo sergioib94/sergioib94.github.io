@@ -6,6 +6,19 @@ excerpt: "Aprende a instalar, configurar y personalizar Grafana para la monitori
 card_image: /assets/images/cards/grafana-bg.png
 ---
 
+### **Introducción** ###
+
+## **¿Por Qué Monitorizar tus Servidores?** ##
+
+Imagina que tu servidor web comienza a fallar a las 3 AM. ¿Te enterarías antes de que tus usuarios se quejen? La monitorización es tu sistema de alarma temprana que te avisa antes de que los problemas se conviertan en crisis.
+
+**Casos reales donde la monitorización salva el día:**
+
+- **Picos de tráfico inesperados** → Escalado automático
+- **Fugas de memoria** → Detección temprana
+- **Lentitud en la base de datos** → Optimización proactiva
+- **Ataques de seguridad** → Respuesta inmediata
+
 ### **Requisitos previos** ###
 
 * Tener acceso a una máquina debian (máquina virtual o física) con permisos de root
@@ -15,7 +28,19 @@ card_image: /assets/images/cards/grafana-bg.png
 
 ### **¿Que es grafana?** ###
 
-Grafana open source es un software de análisis y visualización de código abierto. Le permite consultar, visualizar, alertar y explorar sus métricas, registros y seguimientos sin importar dónde estén almacenados. Le proporciona herramientas para convertir los datos de su base de datos de series temporales (TSDB) en gráficos y visualizaciones interesantes.
+Grafana es una plataforma de análisis y visualización de código abierto que se ha convertido en el estándar de la industria para la monitorización. Permite:
+
+* Consultar y visualizar métricas en tiempo real
+* Configurar alertas inteligentes
+* Explorar logs y trazas
+* Crear dashboards interactivos y personalizables
+
+**Características principales:**
+
+* Soporte para múltiples fuentes de datos (Prometheus, InfluxDB, MySQL, etc.)
+* Visualizaciones ricas y personalizables
+* Alertas basadas en condiciones complejas
+* Comunidad activa con miles de dashboards preconstruidos
 
 ### **Instalación de Grafana en debian** ###
 
@@ -79,6 +104,15 @@ Al acceder a grafana, en el menú de la izquierda encontraremos varias opciones 
 ### **Instalación de Prometheus** ###
 
 Grafana necesitas añadir un nuevo data source, que es la base de datos que guarda las métricas que muestra Grafana, en este caso se hará uso de prometheus por lo que empezaremos con la instalación de prometheus en nuestra maquina. Prometheus en un sistema open-source de monitorización y alerta.
+
+**¿Por Qué Prometheus?**
+
+Prometheus es el compañero ideal para Grafana porque:
+
+* Diseñado específicamente para métricas de series temporales
+* Lenguaje de consulta potente (PromQL)
+* Modelo de datos multidimensional
+* Fácil integración con Grafana
 
 Comenzamos instalando prometheus
 
@@ -270,8 +304,152 @@ Ejemplo práctico:
 
 Si monitoreamos múltiples servidores, en lugar de recibir una alerta por cada uno, se pueden agrupar y recibir un solo mensaje que indique cuántos servidores están en estado crítico.
 
-* ¿Como hacerlo?
+## ¿Como hacerlo? ##
 
-1. Configuramos un Grupo de alertas en Grafana.
-2. Usamos etiquetas (labels) para clasificar alertas por tipo (cpu, memoria, disco).
-3. Configuramos el envío de notificaciones con una frecuencia específica (ej. cada 10 minutos).
+* Configuramos un Grupo de alertas en Grafana.
+
+Paso 1: Acceder a la Sección de Alerting
+
+* Inicia sesión en Grafana (http://tu-servidor:3000)
+* Haz clic en el icono de campana en el menú lateral
+* Selecciona "Alerting" → "Alert rules"
+
+Paso 2: Crear un Nuevo Grupo de Alertas
+
+* Haz clic en "New alert rule"
+* Pestaña "Set alert rule name" y aadimos la informacion basica:
+
+~~~
+# Ejemplo para grupo CPU
+Rule name: "HighCPUUsage-Critical"
+Group: "cpu-alerts"  # ← Este es el nombre del grupo
+~~~
+
+Paso 3: Configurar la Consulta de la Alerta
+
+* En la pestaña "Define query and alert condition" Seleccionamos como Data Source: Prometheus
+* Configuramos la consulta:
+
+~~~
+# Para alerta crítica de CPU
+100 - (avg by (instance) (rate(node_cpu_seconds_total{mode="idle"}[2m])) * 100) > 90
+~~~
+
+Paso 4: Configurar Etiquetas (Labels)
+
+* En la pestaña "Add Details":
+
+~~~
+Labels:
+  - severity: critical
+  - resource_type: cpu
+  - team: infrastructure
+  - priority: p0
+~~~
+
+Apartado annotations:
+
+~~~
+summary: "CPU crítico en {{ $labels.instance }}"
+description: "Uso de CPU en {{ $values.A }}% por más de 3 minutos"
+dashboard: "/d/node-exporter-full"
+~~~
+
+Paso 5: Por ultimo seleccionamos la opcion save rules
+
+Ademas de poder configurar los grupos de alertas a traves del entorno grafico de Grafana, tambien es posible gestionar los grupos de alertas a traves de ficheros.yml. Estas alertas se configurarian en /etcgrafana con la siguiente estructura:
+
+~~~
+/etc/grafana/
+└── provisioning/
+    └── alerting/
+        ├── config.yml          # Configuración principal
+        ├── alertmanager.yml    # Configuración Alertmanager
+        └── rules/
+            ├── cpu-alerts.yml
+            ├── memory-alerts.yml
+            ├── disk-alerts.yml
+            └── service-alerts.yml
+~~~
+
+Configuracion principal del fichero config.yml:
+
+~~~
+apiVersion: 1
+
+alerting:
+  - name: Alertmanager
+    type: alertmanager
+    access: proxy
+    org_id: 1
+    url: http://localhost:9093
+    editable: true
+
+alerting_rules:
+  - name: Infrastructure Alerts
+    org_id: 1
+    interval: 1m
+    rules:
+      - group: cpu-alerts
+        rules_path: /etc/grafana/provisioning/alerting/rules/cpu-alerts.yml
+      - group: memory-alerts
+        rules_path: /etc/grafana/provisioning/alerting/rules/memory-alerts.yml
+      - group: disk-alerts
+        rules_path: /etc/grafana/provisioning/alerting/rules/disk-alerts.yml
+~~~
+
+**Explicacion del fichero de configuracion**
+
+* Api version: 1 (este valor no es necesario cambiarlo). Este parametro define la versión del esquema de configuración. En las versiones actuales de grafana este valor siempre tiene que ser 1.
+
+* Alerting - configurador de alertmanager: Configura cómo Grafana se conecta con Alertmanager para gestionar y enviar notificaciones. En el bloque alerting tenemos varios parametros:
+    * name: Identificador unico para la configuracion de alertmanager. Este parametro puede repetirse si se tienen varios alertsmanager.
+    * type: Especifica el tipo de recurso que se está configurando, Siempre tiene que tener valor alertmanager.
+    * access: Define como grafana accede a alertmanager. Suele tener dos valores, Proxy cuando Grafana actua como intermediario o Direct si el navegador se conecta directamente.
+    * org_id: 1: Identifica la organizacion de Grafana. El valor por defecto suele ser 1, haciendo referencia a la organizacion principal, en caso de hacer referencia a una organizacion segundaria, se cambiaria el valor a 2.
+    * url: Indica donde esta ejecutandose alertmanager.
+    * editable: Permite cambiar o no la informacion desde el entorno grafico de grafana, dependiendo de si se pone a True o en False.
+    * interval: Frecuencia de evaluacion de alertas.
+    * rules: Donde se definen los grupos.
+    * rules_path: Ruta absoluta al archivo .yml con las reglas.
+
+Configuracion de fichero cpu-alerts.yml:
+
+~~~
+groups:
+  - name: cpu-alerts
+    interval: 1m
+    rules:
+      - alert: HighCPUUsageCritical
+        expr: 100 - (avg by (instance) (rate(node_cpu_seconds_total{mode="idle"}[2m])) * 100) > 90
+        for: 3m
+        labels:
+          severity: critical
+          resource_type: cpu
+          team: infrastructure
+          priority: p0
+        annotations:
+          summary: "CPU crítico en {{ $labels.instance }}"
+          description: "Uso de CPU en {{ $value }}% por más de 3 minutos"
+          dashboard: "/d/node-exporter-full"
+
+      - alert: HighCPUUsageWarning
+        expr: 100 - (avg by (instance) (rate(node_cpu_seconds_total{mode="idle"}[2m])) * 100) > 80
+        for: 5m
+        labels:
+          severity: warning
+          resource_type: cpu
+          team: infrastructure
+          priority: p1
+        annotations:
+          summary: "CPU alto en {{ $labels.instance }}"
+          description: "Uso de CPU en {{ $value }}% por más de 5 minutos"
+~~~
+
+Para que estas configuraciones se apliquen correctamente tendremos que reiniciar grafana primero.
+
+~~~
+sudo systemctl restart grafana-server
+~~~
+
+Una vez reiniciado el servicio ya deberiamos tener configurados los grupos de alertas.
