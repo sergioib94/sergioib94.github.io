@@ -3,7 +3,7 @@ title: "Active Directory en Windows vs Azure Active Directory: diferencias clave
 date: 2025-08-06T17:19:00+02:00
 categories: [Sistemas, Microsoft, Administración]
 excerpt: "Tanto **Active Directory (AD)** como **Azure Active Directory (Azure AD)** son tecnologías de Microsoft orientadas a la **gestión de identidades y accesos** dentro de entornos corporativos. A pesar de compartir nombre, no son exactamente equivalentes: cada una responde a una arquitectura y propósito diferente."
-card_image: /assets/images/cards/zabbix-bg.png
+card_image: /assets/images/cards/az.png
 ---
 
 Tanto **Active Directory (AD)** como **Azure Active Directory (Azure AD)** son tecnologías de Microsoft orientadas a la **gestión de identidades y accesos** dentro de entornos corporativos.  
