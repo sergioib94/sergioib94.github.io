@@ -3,6 +3,7 @@ title: "Instalacion y configuracion servidor DNS"
 date: 2021-03-12T12:56:19+01:00
 categories: [Servicios]
 excerpt: "En post a traves de una serie de tareas, configuraremos e instalaremos dos servidores dns para comprobar y ver su funcionamiento, dnsmaq y bind9."
+card_image: /assets/images/cards/debian.png
 ---
 
 ### **Introducción** ###

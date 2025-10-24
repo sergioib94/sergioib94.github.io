@@ -3,6 +3,7 @@ title: "Cortafuegos en escenario Openstack"
 date: 2021-03-12T17:53:20+01:00
 categories: [Seguridad]
 excerpt: "En el siguiente post se va a configurar un cortafuegos que nos permita controlar el trafico de red en un nodo instalado en un escenario en openstack creado en practicas anteriores."
+card_image: /assets/images/cards/openstack-bg.png
 ---
 
 ### **Introducción** ###

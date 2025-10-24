@@ -3,6 +3,7 @@ title: "Servidores Web, base de Datos y DNS en Openstack"
 date: 2021-03-12T14:18:01+01:00
 categories: [Servicios]
 excerpt: "Haciendo uso de nuestro escenario openstack creado en practicas anteriores instalaremos y configuraremos distintos servidores en los nodos del escenario (Servidor DNS, Servidor Web y Servidor BBDD)."
+card_image: /assets/images/cards/openstack-bg.png
 ---
 
 ### **Introducción** ###

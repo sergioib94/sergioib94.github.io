@@ -3,6 +3,7 @@ title: "Aplicaciones PHP en OVH"
 date: 2021-03-12T10:37:20+01:00
 categories: [Aplicaciones Web]
 excerpt: "En este post aprenderemos a migrar dos aplicaciones, Drupal y Nextcloud, para ello contamos con un un escenario compuesto por dos maquinas virtuales en redes distintas. La primera maquina virtual estara echa en vagrant y sera la maquina usada en la practica anterior Instalacion local CMS PHP."
+card_image: /assets/images/cards/drupal.png
 ---
 
 ## **Introduccion** ##

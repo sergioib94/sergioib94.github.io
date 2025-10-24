@@ -2,9 +2,8 @@
 title: "Despliegue CMS Java"
 date: 2021-03-12T13:49:27+01:00
 categories: [Aplicaciones Web]
-excerpt: "En este post, se va a desplegar una aplicacion cms java, en este caso Guacamole.
-
-Guacamole es una aplicacion que permite acceder a uno o más escritorios desde cualquier lugar de forma remota, sin tener que instalar un cliente, especialmente cuando no es posible instalar un cliente."
+excerpt: "En este post, se va a desplegar una aplicacion cms java, en este caso Guacamole.Guacamole es una aplicacion que permite acceder a uno o más escritorios desde cualquier lugar de forma remota, sin tener que instalar un cliente, especialmente cuando no es posible instalar un cliente."
+card_image: /assets/images/cards/guacamole.png
 ---
 
 ### **Introduccion** ###

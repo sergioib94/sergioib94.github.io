@@ -3,6 +3,7 @@ title: "Instalación y configuración basica Vmware ESXI"
 date: 2021-03-12T14:24:08+01:00
 categories: [Cloud]
 excerpt: "Vmware, es una de las herramientas más populares que se utilizan a la hora de virtualizar. La virtualización es el proceso a través del cual se emula un recurso, como por ejemplo puede ser un sistema operativo, a través de una herramienta de software. Este software en este caso, sería Vmware."
+card_image: /assets/images/cards/vmware.jpg
 ---
 
 ### **Introducción** ###

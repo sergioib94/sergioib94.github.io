@@ -2,7 +2,8 @@
 title: "Control de acceso, autentificacion y autorizacion"
 date: 2021-03-11T16:13:52+01:00
 categories: [Servicios]
-excerpt: "Haciendo uso de la practica anterior en la que instalamos el virtualhosting apache en vagrant o bien creando un escenario nuesvo en el que instalaremos un servidor dhcp, configuraremos el control de acceso, autentificacion y autorizacion para acceder al sitio web creado."
+excerpt: "Haciendo uso de la practica anterior en la que instalamos el virtualhosting apache en vagrant o bien creando un escenario nuevo en el que instalaremos un servidor dhcp, configuraremos el control de acceso, autentificacion y autorizacion para acceder al sitio web creado."
+card_image: /assets/images/cards/debian.png
 ---
 
 ## **Introduccion** ##

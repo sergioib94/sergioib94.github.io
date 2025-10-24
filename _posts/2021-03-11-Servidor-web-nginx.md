@@ -3,6 +3,7 @@ title: "Servidor Web Nginx"
 date: 2021-03-11T16:43:41+01:00
 categories: [Servicios]
 excerpt: "NGINX es un servidor web open source de alta performance que ofrece el contenido estático de un sitio web de forma rápida y fácil de configurar. Ofrece recursos de equilibrio de carga, proxy inverso y streaming, además de gestionar miles de conexiones simultáneas. El resultado de sus aportes es una mayor velocidad y escalabilidad."
+card_image: /assets/images/cards/nginx.png
 ---
 
 ## **Introducción** ##

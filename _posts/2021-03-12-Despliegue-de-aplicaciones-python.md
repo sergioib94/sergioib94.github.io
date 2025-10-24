@@ -2,7 +2,8 @@
 title: "Despliegue de aplicaciones python"
 date: 2021-03-12T12:22:28+01:00
 categories: [Aplicaciones Web]
-excerpt: "En el siguiente post, se realizaran una serie de tarseas con las que se ira mostrando como se realizara un despliegue de aplicaciones python usando para ello nuestro propio equipo como entorno de desarrollo."
+excerpt: "En el siguiente post, se realizaran una serie de tareas con las que se ira mostrando como se realizara un despliegue de aplicaciones python usando para ello nuestro propio equipo como entorno de desarrollo."
+card_image: /assets/images/cards/python.png
 ---
 
 * Tarea 1: Entorno de desarrollo

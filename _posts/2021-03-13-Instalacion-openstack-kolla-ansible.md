@@ -4,6 +4,7 @@ title: "Instalacion Openstack con Kolla Ansible"
 date: 2021-03-13T13:08:14+01:00
 categories: [Cloud]
 excerpt: "En este post crearemos un escenario virtual haciendo uso de vagrant y montaremos una instalacion de openstack haciendo uso de varias maquinas"
+card_image: /assets/images/cards/openstack-bg.png
 ---
 
 ### **Introduccion** ###
@@ -18,7 +19,7 @@ El montaje de openstack requiere de mucho recurso por parte de la maquina anfitr
 
 Tambien es recomendable usar sistemas operativos o ubuntu o centos en estos nodos (obviamente los 3 nodos deben de tener el mismo sistema operativo).
 
-### Vgrantfile ###
+### Vagrantfile ###
 
 ~~~
 Vagrant.configure("2") do |config|
