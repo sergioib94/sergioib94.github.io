@@ -18,6 +18,22 @@ En lugar de crear manualmente servidores o redes, describes todo en archivos `.t
 
 Terraform se integra con cientos de plataformas gracias a los **providers**: AWS, Azure, Google Cloud, VMware, Docker, GitHub, etc.
 
+### ¿Cuando usar terraform? ###
+
+Terraform brilla especialmente en ciertos escenarios donde la infraestructura necesita ser automatizada, replicable y coherente. A continuación, te explico los casos más comunes donde su uso resulta más recomendable:
+
+* Cuando necesitas desplegar infraestructuras reproducibles: puedes crear, destruir y volver a crear entornos idénticos (por ejemplo, desarrollo, pruebas y producción) sin depender de configuraciones manuales.
+
+* Cuando trabajas con multiples proveedores de nube: Terraform es multicloud, por lo que puedes administrar recursos en AWS, Azure, Google Cloud o incluso en entornos locales de forma unificada.
+
+* Cuando quieres automatizar despliegues de forma controlada: puedes revisar un plan detallado de lo que va a modificar, lo que reduce errores y facilita auditorías o revisiones por parte del equipo.
+
+* Cuando deseas mantener el control de versiones de la estructura: Al estar basada en archivos de texto (.tf), toda la configuración puede almacenarse en Git u otro sistema de control de versiones.
+
+* Cuando se gestionan estructuras complejas o a gran escala: Terraform facilita la organización de grandes despliegues mediante módulos reutilizables, lo que permite mantener un código limpio, organizado y fácilmente escalable.
+
+* Cuando se quiere integrar con otras herramientas DevOps: Terraform se integra perfectamente con herramientas como Ansible, Docker, Jenkins, GitLab CI/CD o Kubernetes, formando parte de pipelines de despliegue automatizado. Por ejemplo, puedes usar Terraform para crear servidores y luego usar Ansible para configurar su software interno.
+
 ### Ejemplo de definición simple:
 
 ~~~
