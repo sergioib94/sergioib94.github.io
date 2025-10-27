@@ -28,7 +28,7 @@ paginate_path: "/page:num/"
 # Autor
 author:
   name: "Sergio Ibáñez Núñez"
-  avatar: "/assets/images/avatar.png"
+  avatar: "/assets/images/avatar.PNG"
   bio: "Administrador de sistemas - Técnico de soporte IT - Monitorización"
   #location: "España"
   #links:
