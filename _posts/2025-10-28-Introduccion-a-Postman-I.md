@@ -1,5 +1,5 @@
 ---
-title: "Introducción a Postman y fundamentos del testing de APIs (Parte I)"
+title: "Introducción a Postman y testing de APIs (Parte I)"
 date: 2025-10-28T16:02:00+02:00
 categories: [Testing, APIs, Postman]
 excerpt: "Aprende desde cero qué es el testing, las APIs REST y cómo usar Postman para realizar tus primeras pruebas de servicios REST de forma práctica y visual."
