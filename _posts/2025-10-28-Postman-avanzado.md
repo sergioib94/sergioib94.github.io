@@ -1,5 +1,5 @@
 ---
-title: "Postman avanzado: automatización, mocks, monitores y CLI"
+title: "Introducción a Postman (parte 2)"
 date: 2025-10-28T17:15:00+02:00
 categories: [Testing, APIs, Postman]
 excerpt: "Aprende a automatizar pruebas, documentar servicios y usar Postman desde la línea de comandos. Domina las funciones avanzadas de Postman para entornos profesionales."
