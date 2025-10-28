@@ -27,7 +27,7 @@ paginate_path: "/page:num/"
 
 # Autor
 author:
-  name: "Sergio Ibáñez Núñez"
+  name: "Sergio Ibáñez"
   avatar: "/assets/images/avatar.PNG"
   bio: "Administrador de sistemas - Técnico de soporte IT - Monitorización"
   #location: "España"
@@ -51,7 +51,7 @@ comments:
 # Redes sociales
 social:
   type: "Person"
-  name: "Sergio Ibáñez Núñez"
+  name: "Sergio Ibáñez"
   links:
     - "https://github.com/sergioibanez"
     - "https://www.linkedin.com/in/sergio-ibañez-nuñez/"
@@ -88,7 +88,7 @@ minimal_mistakes_skin: "dark"
 # SEO
 seo:
   type: "Person"
-  name: "Sergio Ibáñez Núñez"
+  name: "Sergio Ibáñez"
 
 # Excluir archivos
 exclude:

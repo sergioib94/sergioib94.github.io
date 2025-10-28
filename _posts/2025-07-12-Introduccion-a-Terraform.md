@@ -49,6 +49,38 @@ resource "docker_container" "nginx" {
 
 Con esto, Terraform entiende que quieres ejecutar un contenedor Nginx con el puerto 8080 expuesto.
 
+### Ventajas y desventajas de usar Terraform ###
+
+**Ventajas:**
+
+* **Reproducibilidad:** Tu infraestructura es código; puedes recrearla con precisión.
+
+* **Auditable y versionable:** Historial completo en Git del estado y cambios. Cuenta con un fichero de estados, por ejemplo en CloudFormation si se hace un cambio manual, este no nota el cambio. Terraform por otra parte una vez creada la infraestructura se crea un fichero de estado y una vez que se realiza algun cambio se puede comparar lo que esta declarado en el estado con lo creado en el proveedor.
+
+* **Multi-cloud:** Un único lenguaje/herramienta para múltiples proveedores. Permite crear estructuras hibridas, por ejemplo cuando se usa CloudFormation, esta orientado a crear recursos en Amazon, sin embargo con terraform podriamos crear una estructura en la que parte de la aplicacion estuviese en Amazon y la CDN podria ser externa, no tendriamos porque usar tambien la de Amazon.
+
+* **Planificación previa:** terraform plan muestra cambios antes de aplicarlos, reduciendo sorpresas.
+
+* **Modularidad:** Módulos reutilizables facilitan la organización y escalabilidad.
+
+* **Ecosistema maduro:** Muchos providers, módulos en el registry y herramientas complementarias.
+
+**Desventajas:**
+
+* **Curva de aprendizaje:** Conceptos como state, backends y módulos requieren tiempo para dominarse.
+
+* **State sensible:** El terraform.tfstate puede contener información sensible; hay que gestionarlo y cifrarlo correctamente.
+
+* **No es de configuración interna:** Terraform es ideal para “infraestructura”; para la configuración detallada dentro de servidores (instalar paquetes, configurar servicios) otras herramientas (Ansible) suelen ser más adecuadas.
+
+* **Conflictos en equipos:** Si no se usa backend con locking, pueden ocurrir corrupciones de state por cambios concurrentes.
+
+* **Cambios destructivos:** Si no revisas el plan, puedes provocar eliminaciones involuntarias.
+
+* **Verbosidad en infra compleja:** Proyectos muy grandes requieren buena organización para no volverse inmanejables.
+
+* Al ser un proyecto opensource terraform va detras del resto de proveedores, es decir, si por ejemplo amazon saca un nuevo servicio, este servicio nuevo siempre va a tener antes la integracion en CloudFormation que en terraform.
+
 ### Conceptos básicos ###
 
 Algunos conceptos basicos que debemos conocer antes de trabajar con terraform son:
@@ -83,6 +115,12 @@ terraform-docker-demo/
 ├─ outputs.tf
 └─ terraform.tfvars
 ~~~
+
+**Instalacion de Terraform**
+
+Para la instalacion, accedemos a la pagina oficial [Terraform](https://www.terraform.io/downloads.html) de terraform donde podremos encontrar los binarios para poder descargarlos segun el sistema y arquitectura que usemos.
+
+En el caso de linux por ejemplo se descargara un fichero zip que tendremos que descomprimir usando el comando unzip. Una vez descomprimido podremos empezar a usar terraform ejecutando simplemente el comando terraform en la terminal.
 
 **Configuración de main.tf**
 
