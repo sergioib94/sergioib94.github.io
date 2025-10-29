@@ -173,4 +173,4 @@ En esta primera parte has aprendido:
 - Cómo instalar Postman y enviar tus primeras peticiones.
 - Cómo usar colecciones y variables para organizar tu trabajo.
 
-👉 En el siguiente post, aprenderás a **automatizar pruebas, documentar APIs y usar Postman desde la línea de comandos** con herramientas como **Newman**.
+👉 En el siguiente post (Introducción a Postman (parte 2)), aprenderás a **automatizar pruebas, documentar APIs y usar Postman desde la línea de comandos** con herramientas como **Newman**.
