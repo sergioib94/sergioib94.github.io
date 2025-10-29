@@ -138,8 +138,10 @@ Usos comunes:
 Los entornos permiten definir variables globales o específicas (por ejemplo, `{{url_base}}` o `{{token}}`).  
 Así puedes cambiar entre entorno de desarrollo, pruebas o producción sin modificar cada petición.
 
-* {{base_url}} → https://api.dev.local
-* {{token}} → abc123
+~~~
+{{base_url}} → https://api.dev.local
+{{token}} → abc123
+~~~
 
 Crear entornos en Postman y seleccionar el activo antes de ejecutar.
 
