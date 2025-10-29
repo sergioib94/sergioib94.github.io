@@ -105,6 +105,8 @@ El dashboard muestra los principales elementos:
 * **Zona central:** editor de peticiones.
 * **Zona inferior:** consola de respuesta (status code, tiempo, tamaño del payload).
 
+![dashboard postman](/assets/images/Postman/dashboard.PNG)
+
 ### Otras alternativas para testing de APIs REST ###
 
 Aunque Postman es la más popular, existen otras opciones como:
@@ -122,6 +124,8 @@ Enviando nuestra primera petición con Postman (paso a paso)
 * Nombre: GET Users. Guardar en colección Mi API.
 * URL: https://jsonplaceholder.typicode.com/users. Método: GET.
 * Click Send → verás respuesta JSON, headers y status.
+
+![primera peticion](/assets/images/Postman/primer_get.PNG)
 
 **¿Qué son las colecciones?**
 
@@ -156,10 +160,11 @@ Ejemplo de variables:
 
 Haciendo uso de postman podemos crear variables de la siguiente forma
 
-* Haz clic en el icono del ojo (👁️) en la parte superior derecha.
-* Selecciona “Manage Environments”.
-* Añade una nueva variable (base_url → https://jsonplaceholder.typicode.com).
+* En el sidebar izquierdo accedemos al apartado environments y seleccionamos el "+"
+* Añade una nueva variable por ejemplo: (base_url → https://jsonplaceholder.typicode.com).
 * Guarda y selecciona el entorno activo.
+
+![ejemplo de variable](/assets/images/Postman/variable.PNG)
 
 ### Conclusión ###
 En esta primera parte has aprendido:
