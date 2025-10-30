@@ -80,7 +80,7 @@ markdown
 * Añade descripciones en Markdown a cada petición.
 * Publica la documentación en línea o compártela con tu equipo.
 
-### Simulando APIs REST###
+### Simulando APIs REST ###
 
 **¿Qué es un Mock y por qué puede ser útil?**
 
