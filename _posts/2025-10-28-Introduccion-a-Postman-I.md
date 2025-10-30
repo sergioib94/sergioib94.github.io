@@ -142,10 +142,8 @@ A continuación se mostrara una prueba de envío de primera petición con Postma
 Los entornos permiten definir variables globales o específicas (por ejemplo, url_base o token).  
 Así puedes cambiar entre entorno de desarrollo, pruebas o producción sin modificar cada petición.
 
-
 * base_url → https://api.dev.local
 * token → abc123
-
 
 Crear entornos en Postman y seleccionar el activo antes de ejecutar.
 
@@ -158,11 +156,108 @@ Ejemplo de variables:
 
 **Crear variables**
 
+En Postman, las variables te permiten reutilizar valores (como URLs, tokens, IDs, etc.) sin tener que escribirlos una y otra vez.Así, si mañana cambias la fuente (por ejemplo, a una API o un Mock Server), solo cambias la variable, y todas tus peticiones seguirán funcionando.
+
 Haciendo uso de postman podemos crear variables de la siguiente forma
 
 * En el sidebar izquierdo accedemos al apartado environments y seleccionamos el "+"
-* Añade una nueva variable por ejemplo: (base_url → https://raw.githubusercontent.com/sergioib94/Proyecto-Json/master/pokedex.json).
-* Guarda y selecciona el entorno activo.
+* Añade una nueva variable por ejemplo: (base_url → https://raw.githubusercontent.com/sergioib94/Proyecto-Json/master).
+* Guarda y selecciona el entorno activo, en este caso el entorno creado seria "pokedex environment".
+
+![creación de variable](/assets/images/Postman/variable.PNG)
+
+![prueba de variable](/assets/images/Postman/prueba_variable.PNG)
+
+Una vez que ya sepamos como crear variables y sepamos usarlas podemos pasar a realizar una prueba en la que visualizaremos una parte del Json con visualizer. Para ello seguiremos los siguientes pasos:
+
+* Empezamos realizando una peticion GET como en el ejemplo anterior (GET {{base_url}}/pokedex.json)
+* Al realizar la peticion, nos vamos a la opcion scripts, donde nos apareceran dos apartados, pre-req y post-res.
+
+  * Pre-request → antes de enviar la petición (igual que siempre).
+  * Post-response → después de recibir la respuesta (lo que antes se llamaba “Tests”).
+
+* En post response indicaremos el siguiente scripts:
+
+~~~
+// Visualizer: muestra los 10 primeros Pokémon con estadísticas básicas
+
+// 1) Obtener los datos del JSON
+var body;
+try {
+  body = pm.response.json();
+} catch (e) {
+  body = null;
+}
+
+// 2) Si no hay datos válidos, mostrar mensaje
+if (!body || !body.pokemon) {
+  pm.visualizer.set("<div><strong>No se ha podido cargar la Pokédex.</strong></div>", {});
+} else {
+  // 3) Tomar los primeros 10 Pokémon y mapear propiedades necesarias
+  var list = body.pokemon.slice(0, 10).map(function(p) {
+    return {
+      id: (typeof p.id !== "undefined") ? p.id : "",
+      num: p.num || "",
+      name: p.name || "",
+      type: Array.isArray(p.type) ? p.type.join(", ") : (p.type || ""),
+      hp: (p.base && typeof p.base.HP !== "undefined") ? p.base.HP : "",
+      attack: (p.base && typeof p.base.Attack !== "undefined") ? p.base.Attack : "",
+      defense: (p.base && typeof p.base.Defense !== "undefined") ? p.base.Defense : "",
+      speed: (p.base && typeof p.base.Speed !== "undefined") ? p.base.Speed : "",
+      height: p.height || "",
+      weight: p.weight || ""
+    };
+  });
+
+  // 4) Plantilla HTML para la tabla (usamos comillas inversas para multilínea)
+  var template = `
+    <h3>Pokédex — Primeros 10 Pokémon</h3>
+    <table border="1" cellpadding="6" cellspacing="0" style="border-collapse:collapse;width:100%;font-family:Arial;">
+      <thead style="background:#f3f3f3;">
+        <tr>
+          <th>ID</th>
+          <th>Num</th>
+          <th>Nombre</th>
+          <th>Tipos</th>
+          <th>HP</th>
+          <th>Ataque</th>
+          <th>Defensa</th>
+          <th>Velocidad</th>
+          <th>Altura</th>
+          <th>Peso</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each items}}
+          <tr>
+            <td>{{this.id}}</td>
+            <td>{{this.num}}</td>
+            <td>{{this.name}}</td>
+            <td>{{this.type}}</td>
+            <td>{{this.hp}}</td>
+            <td>{{this.attack}}</td>
+            <td>{{this.defense}}</td>
+            <td>{{this.speed}}</td>
+            <td>{{this.height}}</td>
+            <td>{{this.weight}}</td>
+          </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  `;
+
+  // 5) Renderizar en Visualize
+  pm.visualizer.set(template, { items: list });
+}
+~~~
+
+**Nota**: La opcion Post-response, aparecerá si la version de postman que se esta usando es 11 o superior, en caso de que sea una versión inferior aparecerá la opción test en su lugar.
+
+Esto hará que visualizer muestre de forma sencilla a los 10 primeros pokemons de la pokedex.
+
+* Tras indicar el script en la seccion post-res, enviamos la petición y una vez enviada le damos a la opción visualice que mostrara a los 10 primeros pokemons de la pokedex.
+
+![test](/assets/images/Postman/test.PNG)
 
 ### Conclusión ###
 En esta primera parte has aprendido:
