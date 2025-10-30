@@ -118,15 +118,6 @@ Aunque Postman es la más popular, existen otras opciones como:
 
 ### Colecciones y variables ###
 
-Enviando nuestra primera petición con Postman (paso a paso)
-
-* Abrir Postman → New → Request.
-* Nombre: GET Users. Guardar en colección Mi API.
-* URL: https://jsonplaceholder.typicode.com/users. Método: GET.
-* Click Send → verás respuesta JSON, headers y status.
-
-![primera peticion](/assets/images/Postman/primer_get.PNG)
-
 **¿Qué son las colecciones?**
 
 Las colecciones agrupa varias peticiones relacionadas bajo un mismo proyecto. Permite organizar, reutilizar y compartir fácilmente las pruebas.
@@ -137,9 +128,18 @@ Usos comunes:
 * Añadir documentación y ejemplos.
 * Preparar escenarios de pruebas para Collection Runner.
 
+A continuación se mostrara una prueba de envío de primera petición con Postman (paso a paso). Para este ejemplo se va a usar la URL de un documento .json alojado en mi github [pokedex.json](https://raw.githubusercontent.com/sergioib94/Proyecto-Json/master/pokedex.json)
+
+* Abrir Postman → New → Request.
+* Nombre: GET Users. Guardar en colección Mi API.
+* URL: https://raw.githubusercontent.com/sergioib94/Proyecto-Json/master/pokedex.json. Método: GET.
+* Click Send → verás respuesta JSON, headers y status.
+
+![primera peticion](/assets/images/Postman/primer_get.PNG)
+
 **Entornos (Environments)**
 
-Los entornos permiten definir variables globales o específicas (por ejemplo, `{{url_base}}` o `{{token}}`).  
+Los entornos permiten definir variables globales o específicas (por ejemplo, {{url_base}} o {{token}}).  
 Así puedes cambiar entre entorno de desarrollo, pruebas o producción sin modificar cada petición.
 
 ~~~
@@ -161,10 +161,8 @@ Ejemplo de variables:
 Haciendo uso de postman podemos crear variables de la siguiente forma
 
 * En el sidebar izquierdo accedemos al apartado environments y seleccionamos el "+"
-* Añade una nueva variable por ejemplo: (base_url → https://jsonplaceholder.typicode.com).
+* Añade una nueva variable por ejemplo: (base_url → https://raw.githubusercontent.com/sergioib94/Proyecto-Json/master/pokedex.json).
 * Guarda y selecciona el entorno activo.
-
-![ejemplo de variable](/assets/images/Postman/variable.PNG)
 
 ### Conclusión ###
 En esta primera parte has aprendido:
