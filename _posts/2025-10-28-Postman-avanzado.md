@@ -13,7 +13,7 @@ card_image: /assets/images/cards/Postman.png
 ### Scripts
 
 Postman permite ejecutar scripts antes o después de enviar una petición.  
-Estos se escriben en **JavaScript** dentro de las pestañas **Pre-request Script** y **Tests**.
+Estos se escriben en **JavaScript** dentro de las pestañas **Pre-request Script** y **Tests** (La pestaña test para a llamarse post-response a partir de la version 11).
 
 Ejemplo básico:
 
@@ -23,7 +23,64 @@ pm.test("El código de estado es 200", function () {
 });
 ~~~
 
+![script_basico](/assets/images/Postman/script_basico.PNG)
+
 Puedes validar respuestas, guardar valores en variables o ejecutar flujos condicionales.
+
+Ejemplo de validaciones:
+
+~~~
+// 1) comprobar status
+pm.test("Status is 200", function () {
+  pm.response.to.have.status(200);
+});
+
+// 2) parsear body
+var body;
+try {
+  body = pm.response.json();
+} catch (e) {
+  body = null;
+}
+
+// 3) comprobar estructura
+pm.test("Body is object with 'pokemon' array", function () {
+  pm.expect(body, "body is null or not JSON").to.be.an("object");
+  pm.expect(body).to.have.property("pokemon");
+  pm.expect(Array.isArray(body.pokemon), "'pokemon' is not an array").to.be.true;
+});
+
+var first = (body && body.pokemon && body.pokemon[0]) ? body.pokemon[0] : null;
+
+// DEBUG: descomenta si necesitas ver las keys en consola
+console.log("Primer pokemon (obj):", first);
+if (first) {
+  console.log("Claves del primer pokemon:", Object.keys(first));
+}
+
+// 4) comprobar el primer elemento
+pm.test("Primer pokemon existe y es objeto", function () {
+  pm.expect(first, "Primer elemento no encontrado").to.be.an("object");
+});
+
+// Compruebo existencia de cada clave por separado con mensajes claros
+var expectedKeys = ["id","num","name","img","type","height","weight","base"];
+expectedKeys.forEach(function(k) {
+  pm.test("Primer pokemon tiene la propiedad: " + k, function () {
+    pm.expect(first).to.have.property(k);
+  });
+});
+
+// Comprobaciones de tipos (ejemplo)
+pm.test("Todos los pokemon tienen id numérico", function () {
+  body.pokemon.forEach(function(p) {
+    pm.expect(p).to.have.property("id");
+    pm.expect(typeof p.id).to.equal("number");
+  });
+});
+~~~
+
+![comprobaciones test](/assets/images/Postman/test2.PNG)
 
 ### Enlazando llamadas ###
 
@@ -33,20 +90,77 @@ Es posible encadenar peticiones, por ejemplo:
 * Ese token se guarda como variable (pm.environment.set("token", value)).
 * La siguiente petición lo usa en el header Authorization: Bearer {{token}}.
 
-Ejemplo:
+A modo de prueba vamos a realizar una busqueda por id haciendo uso de nuestro json:
+
+* Realizamos la siguiente request
 
 ~~~
-// En test de login
-const res = pm.response.json();
-pm.environment.set("auth_token", res.token);
+GET {{base_url}}/pokedex.json?={{id}}
 ~~~
 
-Luego en Authorization o Headers usar {{auth_token}}.
+* En el apartado de scripts, ponemos el siguiente script en pre-resquest:
+
+~~~
+// Si no existe variable 'id', se define por defecto
+if (!pm.variables.get("id")) {
+  pm.variables.set("id", "25"); // Ejemplo: Pikachu
+  console.log("Variable 'id' no definida, usando id=25");
+} else {
+  console.log("Usando id:", pm.variables.get("id"));
+}
+~~~
+
+Este script comprobara antes de ejecutar la request si tienes una variable llamada id, si no existe, la crea con valor 25 (Pikachu) y si ya existe (porque la definiste en tu entorno), usará esa.
+
+* En el apartado post-response por otro lado indicaremos este otro script:
+
+~~~
+// E: Filtrar Pokémon por ID y guardar variables
+var body = pm.response.json();
+
+// Obtener el id de la variable o de la query (?id=)
+var id = parseInt(pm.variables.get("id") || 0);
+
+// Buscar el Pokémon por su id
+var found = body.pokemon.find(function(p) { return p.id === id; });
+
+// Validar que se ha encontrado
+pm.test("Buscar Pokémon por id " + id, function() {
+  pm.expect(found, "No encontrado").to.exist;
+});
+
+// Si se encuentra, guardar variables para la siguiente request
+if (found) {
+  pm.environment.set("last_found_id", found.id);
+  pm.environment.set("last_found_name", found.name);
+  pm.environment.set("last_found_num", found.num);
+  pm.environment.set("last_found_type", Array.isArray(found.type) ? found.type.join(", ") : found.type);
+  console.log("Guardadas variables de", found.name);
+} else {
+  console.log("No se encontró Pokémon con id:", id);
+}
+~~~
+
+Con este script haremos lo siguiente:
+
+1. Carga tu pokedex.json.
+2. Busca el Pokémon cuyo id coincide con {{id}}. 
+3. Si lo encuentra, crea 4 variables de entorno: last_found_id, last_found_name, last_found_num, last_found_type
+4. Muestra el resultado en consola.
+
+* Ejecutamos la quest pulsando send.
+
+Una vez realizados los pasos mencionados, abriendo la consola de postman (Ctrl + alt + c), deberiamos ver la siguiente pantalla.
+
+![consula](/assets/images/Postman/id.PNG)
+
+Podremos comprobar las variables que han sido creadas abriendo el apartado environments en el sidebar izquierdo.
+
+![variables_25](/assets/images/Postman/pikachu.PNG)
 
 ### Collection Runner ###
 
-El Collection Runner permite ejecutar automáticamente una colección completa de peticiones.
-Ideal para pruebas de regresión o de integración continua.
+El Collection Runner permite ejecutar automáticamente una colección completa de peticiones. Ideal para pruebas de regresión o de integración continua.
 Puedes definir iteraciones, datos externos (CSV/JSON) y analizar resultados globales.
 
 Ejemplo de CVS para iteraciones:
