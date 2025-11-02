@@ -171,6 +171,116 @@ user1,pass1
 user2,pass2
 ~~~
 
+A modo de prueba pra comprobar como funcionan las collection runners, se van a usar tanto el fichero pokemon.json que se ha ido usando en todos los ejemplos practicos y ademas en este caso se va a usar tambien un fichero llamado ids.json (este fichero tambien puede crearse en formato .csv) con el siguiente contenido:
+
+~~~
+[
+  { "id": 1 },
+  { "id": 4 },
+  { "id": 7 },
+  { "id": 25 },
+  { "id": 150 }
+]
+~~~
+
+El collection runner lo que hara al leer este fichero sera crear una variable id en cada iteracion con el valor indicado en cada array.
+
+* En el sidebar izquierdo abrimos la opcion collections y seleccionamos la coleccion que se este usando, en mi caso pokedex runner.
+* Abrimos la opcion **run** (clic derecho en la collection) y una vez abierta la opcion run, añadiremos el fichero ids.json.
+
+![add_file](/assets/images/Postman/file.PNG)
+
+* Una vez subido el fichero json, antes de ejecutar el run, tenemos que asegurarnos de que la request, en este caso GET {{base_url}}/pokedex.json debemos tener en el apartado scripts, un script similar a este:
+
+~~~
+// ==========================================
+// 🧩 Visualizer + Tests con ID dinámico
+// ==========================================
+
+// 1️⃣ Obtener ID desde Runner o entorno
+let id = null;
+if (pm.iterationData && pm.iterationData.get("id")) {
+  id = parseInt(pm.iterationData.get("id"), 10);
+} else if (pm.environment.get("id")) {
+  id = parseInt(pm.environment.get("id"), 10);
+}
+
+// 2️⃣ Parsear JSON
+let body;
+try {
+  body = pm.response.json();
+  pm.test("✅ La respuesta es un JSON válido", function () {
+    pm.expect(body).to.be.an("object");
+  });
+} catch (e) {
+  pm.test("❌ Error al parsear JSON", function () {
+    throw e;
+  });
+  return;
+}
+
+// 3️⃣ Verificar estructura básica
+pm.test("✅ El JSON contiene el array 'pokemon'", function () {
+  pm.expect(body).to.have.property("pokemon");
+  pm.expect(body.pokemon).to.be.an("array");
+});
+
+// 4️⃣ Filtrar Pokémon por ID o mostrar los primeros 10
+let items = [];
+if (id) {
+  items = body.pokemon.filter(p => p.id === id);
+  pm.test(`✅ Existe un Pokémon con ID ${id}`, function () {
+    pm.expect(items.length).to.eql(1);
+  });
+} else {
+  items = body.pokemon.slice(0, 10);
+}
+
+// 5️⃣ Crear plantilla HTML (Visualizer)
+const template = `
+  <style>
+    body { font-family: Arial, sans-serif; margin: 10px; }
+    table { border-collapse: collapse; width: 100%; }
+    th, td { border: 1px solid #ccc; padding: 6px; text-align: left; }
+    th { background: #f3f3f3; }
+  </style>
+  <h3>Pokémon encontrado (ID = ${id || "sin especificar"})</h3>
+  {{#if items.length}}
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th><th>Num</th><th>Nombre</th><th>Tipo</th>
+        <th>HP</th><th>Ataque</th><th>Defensa</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each items}}
+      <tr>
+        <td>{{this.id}}</td>
+        <td>{{this.num}}</td>
+        <td>{{this.name}}</td>
+        <td>{{this.type}}</td>
+        <td>{{this.base.HP}}</td>
+        <td>{{this.base.Attack}}</td>
+        <td>{{this.base.Defense}}</td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
+  {{else}}
+    <p style="color:red;">⚠️ No se encontró ningún Pokémon con el ID indicado.</p>
+  {{/if}}
+`;
+
+pm.visualizer.set(template, { items });
+~~~
+
+* Cuando tengamos el fichero ids.json subido, le damos a la opcion **run** y se nos deberia mostrar una pantalla en la que se muestran una serie de test realizados a cada iteracion. Al hacer el run los valores ID indicados en el json deberian haberse pasado a la variable id creada en la request (se puede comprobar si se han pasado o no abriendo la consola Ctrl + Alt + C).
+
+![run](/assets/images/Postman/run.PNG)
+
+* Al haberse pasado el valor de las ID, si ejecutamos si abrimos la opcion Visualize se deben mostrar los datos de los pokemons cuyas IDs correspondan con las indicadas en el json.
+
 ### Documentación de APIs ###
 
 Una documentación clara mejora la colaboración entre equipos y reduce errores. Postman genera documentación automática a partir de las colecciones.
