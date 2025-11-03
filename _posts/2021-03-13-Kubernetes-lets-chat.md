@@ -8,9 +8,27 @@ card_image: /assets/images/cards/kubernetes-bg.png
 
 ### **Introduccion** ###
 
-En este post, lo que haremos sera primero crear un cluster de kubernetes, para lo cual nuestro equipo debe de contar con al menos 4 o 5 Gb de ram al menos ya se van a crear 3 maquinas virtuales, un nodo master o controlador y 2 nodos secundarios.
+Kubernetes se ha convertido en el estándar para la **orquestación de contenedores**. Si bien herramientas como Docker permiten ejecutar contenedores fácilmente, cuando tienes decenas (o cientos) de aplicaciones desplegadas, mantenerlas disponibles, escalarlas y actualizarlas manualmente se vuelve un reto.
 
-En este escenario credo haciendo uso de vagrant, desplegaremos una aplicacion llamada letschat usando kubeadm.
+Ahí es donde entra **Kubernetes (K8s)**: una plataforma de código abierto diseñada para automatizar el despliegue, escalado y gestión de aplicaciones en contenedores.
+
+En este post aprenderás los **conceptos básicos de Kubernetes** y montarás un pequeño **clúster local** con tres máquinas virtuales usando **Vagrant y Ansible**, sobre el que desplegarás tu primera aplicación: *Let’s Chat*, una app de mensajería autohospedada.
+
+## ¿Qué es Kubernetes?
+
+Kubernetes coordina contenedores en múltiples máquinas, gestionando su disponibilidad, escalado y comunicación.  
+Para entenderlo mejor, veamos sus elementos fundamentales:
+
+| Concepto | Descripción |
+|-----------|-------------|
+| **Clúster** | Conjunto de máquinas (nodos) que actúan como un único sistema. |
+| **Nodo maestro (Control Plane)** | Gestiona el estado del clúster, planifica los pods y responde a los comandos `kubectl`. |
+| **Nodos de trabajo (Workers)** | Ejecutan las cargas de trabajo, es decir, los contenedores (pods). |
+| **Pod** | Unidad mínima de ejecución en Kubernetes; puede contener uno o varios contenedores. |
+| **Deployment** | Define cuántos pods debe haber y cómo deben actualizarse. |
+| **Service** | Expone los pods dentro o fuera del clúster para que sean accesibles. |
+
+En resumen: **tú defines el estado deseado** (por ejemplo, “quiero 3 copias de mi aplicación web”), y **Kubernetes se encarga de mantenerlo** automáticamente.
 
 ### **Preparacion del escenario** ###
 
@@ -713,3 +731,24 @@ mongo-5c694c878b-flgcg      1/1     Running   14         27h   192.168.84.148   
 ~~~
 
 Como se puede ver se ha creado un nuevo pod. al indicar que haya 3 replicas como en este ejemplo, en el caso de eliminar una de las replicas se creara otro de forma automática. En el caso de tener varias replicas activadas, al hacer una desescalada el nodo que permanecerá sera el de mayor antigüedad.
+
+## Conclusión
+
+Has creado tu primer clúster de Kubernetes local y desplegado una aplicación real.
+En el proceso, aprendiste:
+
+* Qué es un clúster, nodo, pod, deployment y service.
+
+* Cómo usar Ansible para automatizar la instalación de Kubernetes.
+
+* Cómo desplegar, escalar y exponer una aplicación.
+
+Esto sienta una base sólida para avanzar hacia temas más avanzados como:
+
+* Helm (gestor de paquetes para Kubernetes)
+
+* Ingress (rutas HTTP internas/externas)
+
+* Volúmenes persistentes y almacenamiento
+
+* Monitorización con Prometheus y Grafana
