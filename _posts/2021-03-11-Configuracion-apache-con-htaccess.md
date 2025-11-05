@@ -77,7 +77,7 @@ require valid-user
 
 Una vez que lo tenemos todo listo, hacemos la prueba de funcionamiento para comprobar si se nos pide usuario y contraseña:
 
-![prueba de autentificacion](/assets/images/htaccess/ejercicio6-3.png)
+![prueba de autentificación](/assets/images/htaccess/ejercicio6-3.png)
 
 ### Conclusión ###
 
