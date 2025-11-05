@@ -30,6 +30,12 @@ Para entenderlo mejor, veamos sus elementos fundamentales:
 
 En resumen: **tú defines el estado deseado** (por ejemplo, “quiero 3 copias de mi aplicación web”), y **Kubernetes se encarga de mantenerlo** automáticamente.
 
+## Requisitos previos
+
+* Equipo con al menos 8 GB de RAM.
+* Tener instalados Vagrant, VirtualBox y Ansible.
+* Conocimientos básicos de Linux y SSH.
+
 ### **Preparacion del escenario** ###
 
 Empezamos creando en nuestro equipo un directorio donde almacenaremos nuestro escenario vagrant. Dicho escenario sera el siguiente:

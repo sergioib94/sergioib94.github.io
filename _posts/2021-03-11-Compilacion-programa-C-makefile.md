@@ -1,18 +1,18 @@
 ---
-title: "Compilacion programa C con Makefile"
+title: "Compilación programa C con Makefile"
 date: 2021-03-11T16:10:39+01:00
 categories: [Sistemas]
-excerpt: "En este post a modo de aprendizaje para aprender mas sobre debian y su paqueteria se va a proceder a la compilacion de un paquete escrito en C, en este caso el paquete less para posteriormente ser capaces de compilar nuestro sistema operativo."
+excerpt: "En este post a modo de aprendizaje para aprender mas sobre Debian y su paquetería se va a proceder a la compilación de un paquete escrito en C, en este caso el paquete less para posteriormente ser capaces de compilar nuestro sistema operativo."
 card_image: /assets/images/cards/debian.png
 ---
 
-## **Introduccion** ##
+## **Introducción** ##
 
-En este post a modo de aprendizaje para aprender mas sobre debian y su paqueteria se va a proceder a la compilacion de un paquete escrito en C, en este caso el paquete less para posteriormente ser capaces de compilar nuestro sistema operativo.
+En este post a modo de aprendizaje para aprender mas sobre Debian y su paquetería se va a proceder a la compilación de un paquete escrito en C, en este caso el paquete less para posteriormente ser capaces de compilar nuestro sistema operativo.
 
-### **Compilacion paquete less** ###
+### **Compilación paquete less** ### 
 
-Para dicha compilacion empezaremos ejecutando el siguiente comando para tener el código fuente del paquete que vamos a compilar que en este caso a modo de prueba se compilara el paquete less.
+Para dicha compilación empezaremos ejecutando el siguiente comando para tener el código fuente del paquete que vamos a compilar que en este caso a modo de prueba se compilara el paquete less.
 
 ~~~
 apt source less
@@ -56,7 +56,7 @@ checking for library containing regcmp... no
 checking for working terminal libraries... Cannot find terminal libraries - configure failed
 ~~~
 
-./configure nos da un error ya que faltan librerías que deben ser instaladas para que el paquete pueda compilarse. Instalamos la librería necesaria en el sistema, que en este caso es libtinfo-dev.. Una vez instala la libreria la salida de ./configure sera la siguiente:
+./configure nos da un error ya que faltan librerías que deben ser instaladas para que el paquete pueda compilarse. Instalamos la librería necesaria en el sistema, que en este caso es libtinfo-dev.. Una vez instala la librería la salida de ./configure sera la siguiente:
 
 ~~~
 vagrant@compilacion:~/less$ ./configure 

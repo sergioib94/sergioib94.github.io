@@ -1,12 +1,12 @@
 ---
-title: "Instalacion de Debian 10"
+title: "Instalación de Debian 10"
 date: 2021-03-10T21:20:45+01:00
 categories: [Sistemas]
 excerpt: "En un portátil (HP pavilion 15) con 1TB de disco se crearan particiones LVM donde se instalara un sistema debían 10."
 card_image: /assets/images/cards/debian.png
 ---
 
-## **Instacacion Debian 10** ##
+## **Instalación Debian 10** ## ##
 
 ### **Introducción** ###
 
@@ -76,7 +76,7 @@ sergioib@debian:~$ lspci
 
 Mi controlador network vemos en este caso que es el RTL8822BE.
 
-* Otro de los problemas a sido que Debian no detecta la tarjeta gráfica (problema corregido en versiones superiores de debian 10), en mi caso Nvidia GTX 1050. Para solucionar este problema lo primero es saber cual es el controlador necesario para que la gráfica funcione, esto se puede saber ejecutando el comando nvidia-detect. Este comando lo que hará sera indicar cual es el controlador que necesitara nuestro sistema, en este caso Nvidia-driver.
+* Otro de los problemas a sido que Debian no detecta la tarjeta gráfica (problema corregido en versiones superiores de Debian 10), en mi caso Nvidia GTX 1050. Para solucionar este problema lo primero es saber cual es el controlador necesario para que la gráfica funcione, esto se puede saber ejecutando el comando nvidia-detect. Este comando lo que hará sera indicar cual es el controlador que necesitara nuestro sistema, en este caso Nvidia-driver.
 
 ~~~
 sergioib@debian:~$ nvidia-detect

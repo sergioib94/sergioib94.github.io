@@ -1,14 +1,21 @@
 ---
-title: "Cifrado Asimetrico GPG Y Openssl"
+title: "Cifrado Asimétrico GPG Y Openssl"
 date: 2021-03-11T09:15:13+01:00
 categories: [Seguridad]
-excerpt: "En el siguiente post a traves de una serie de tareas se ira indicando como realizar un cifrado asimetrico haciendo uso de GPG y openssl."
+excerpt: "En el siguiente post a través de una serie de tareas se ira indicando como realizar un cifrado asimétrico haciendo uso de GPG y openssl."
 card_image: /assets/images/cards/denian.png
 ---
+
+### Introducción ###
+
+En la criptografía asimétrica se utilizan dos claves: una pública (para cifrar) y otra privada (para descifrar). Este sistema garantiza la confidencialidad de la información incluso cuando se comparte la clave pública.
+En este post veremos cómo generar y usar pares de claves con GPG (GNU Privacy Guard) y, al final, cómo realizar operaciones similares con OpenSSL.
 
 ### **Tarea 1: Generación de claves** ###
 
 * Genera un par de claves (pública y privada). ¿En que directorio se guarda las claves de un usuario?
+
+GPG permite generar un par de claves (pública y privada) que se almacenan en el directorio ~/.gnupg. A continuación, se muestra el proceso paso a paso:
 
 ~~~
 gpg --gen-key
@@ -26,6 +33,8 @@ Se nos piden algunos datos como nombre y apellidos, correo y contraseña y una v
       uid                      sergio ibañez <sergio_hd_sony@hotmail.com>
       sub   rsa3072 2020-10-06 [E] [caduca: 2022-10-06]
 ~~~
+
+**Nota:** para crear claves con una duración específica, se usa --full-generate-key y se puede establecer la validez con parámetros como 1m (un mes), 1y (un año), etc.
 
 * Lista las claves públicas que tienes en tu almacén de claves. Explica los distintos datos que nos muestra. ¿Cómo deberías haber generado las claves para indicar, por ejemplo, que tenga un 1 mes de validez?
 
@@ -122,11 +131,13 @@ ssb   rsa4096 2020-10-11 [E] [caduca: 2020-11-10]
 
 ### **Tarea 2: Importar / exportar clave pública** ###
 
-* Exporta tu clave pública en formato ASCII y guardalo en un archivo nombre_apellido.asc y envíalo al compañero con el que vas a hacer esta práctica.
+* Exporta tu clave pública en formato ASCII y guárdalo en un archivo nombre_apellido.asc y envíalo al compañero con el que vas a hacer esta práctica.
 
 ~~~
 sergioib@debian:~$ gpg --export -a sergio ibañez > sergio_ibañez.asc
 ~~~
+
+--export -a → exporta una clave en formato ASCII.
 
 * Importa las claves públicas recibidas de vuestro compañero.
 
@@ -136,6 +147,8 @@ gpg: clave 4263921B50A28F3C: clave pública "Juan Antonio Reifs <initiategnat9@g
 gpg: Cantidad total procesada: 1
 gpg:              importadas: 1
 ~~~
+
+--import → importa una clave pública externa.
 
 * Comprueba que las claves se han incluido correctamente en vuestro keyring.
 
@@ -158,6 +171,8 @@ pub   rsa3072 2020-10-07 [SC] [caduca: 2022-10-07]
 uid        [desconocida] Juan Antonio Reifs <initiategnat9@gmail.com>
 sub   rsa3072 2020-10-07 [E] [caduca: 2022-10-07]
 ~~~
+
+--list-keys → muestra todas las claves disponibles en el almacén.
 
 ### **Tarea 3: Cifrado asimétrico con claves públicas** ##
 
@@ -348,3 +363,9 @@ En este caso a la hora de descifrarlo, el compañero usa la clave publica nuestr
 sergioib@debian:~$ cat desen.txt
 se ha podido descifrar
 ~~~
+
+### Conclusión ###
+
+En este post hemos visto cómo crear y gestionar claves asimétricas con GPG, intercambiarlas con otros usuarios y realizar cifrados seguros.
+Además, hemos comprobado cómo solo los destinatarios autorizados pueden descifrar los mensajes.
+Finalmente, hemos mostrado brevemente cómo realizar estas operaciones con OpenSSL, otra herramienta fundamental para la seguridad en sistemas.
