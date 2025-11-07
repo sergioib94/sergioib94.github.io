@@ -44,7 +44,11 @@ comments:
   provider: "giscus"
   giscus:
     repo: "sergioibanez/sergioibanez.github.io"
+    repo_id: "R_kgDOLaMInA"
+    category: "Comentarios"
+    category_id: "DIC_kwDOLaMInM4CwJCA"
     mapping: "pathname"
+    reactions_enabled: "1"
     theme: "preferred_color_scheme"
     lang: "es"
 
