@@ -2,7 +2,7 @@
 title: "Linux desde 0"
 date: 2025-11-20T15:55:00+02:00
 categories: [Apuntes, Sistemas, Linux]
-excerpt: "Aprende todo lo necesarios para empezar a administrar sistemas Linux"
+excerpt: "Aprende todo lo necesario para empezar a administrar sistemas Linux"
 card_image: /assets/images/cards/debian.png
 ---
 

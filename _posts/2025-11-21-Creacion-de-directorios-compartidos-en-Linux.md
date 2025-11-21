@@ -2,7 +2,7 @@
 title: "Creación de directorios compartidos en Linux"
 date: 2025-11-21T11:27:00+02:00
 categories: [Apuntes, Sistemas, Linux]
-excerpt: "Aprende todo lo necesarios para poder compartir directorio haciendo uso de NFS y SAMBA"
+excerpt: "Aprende todo lo necesario para poder compartir directorio haciendo uso de NFS y SAMBA"
 card_image: /assets/images/cards/debian.png
 ---
 
