@@ -79,7 +79,11 @@ En linux contamos con tres herramientas principales para monitorizar los puertos
 
 * ss: Herramienta moderna para ver puertos y sockets.
 
-Con la opción -tuln: veremos todos los puertos que están actualmente escuchando. Podemos hacer uso del comando grep para identificar que procesos usan un puerto concreto. Ej: ss -tuln | grep :22.
+Con la opción -tuln: veremos todos los puertos que están actualmente escuchando. Podemos hacer uso del comando grep para identificar que procesos usan un puerto concreto. Ej: 
+
+~~~
+ss -tuln | grep :22
+~~~
 
 * nmap: Escáner puertos de tu propia máquina.
 
