@@ -1,7 +1,7 @@
 ---
 title: "Terraform (II): Terraform + AWS"
 date: 2025-11-26T13:16:00+02:00
-categories: [Apuntes, Sistemas, Linux, Terraform, AWS]
+categories: [Apuntes, Sistemas, Terraform, AWS]
 excerpt: "En este post aprenderás los conceptos fundamentales para trabajar con Terraform de forma profesional: qué es un backend y cómo permite mantener estados remotos seguros en equipos de trabajo, cómo crear y estructurar módulos reutilizables, qué es Packer y por qué es una herramienta clave para automatizar la creación de imágenes, y finalmente cómo generar tu propia AMI personalizada para AWS. Un recorrido completo y actualizado para entender cómo construir infraestructura reproducible, modular y preparada para entornos reales."
 card_image: /assets/images/cards/terraform.png
 ---
