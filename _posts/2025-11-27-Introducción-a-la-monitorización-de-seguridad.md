@@ -3,7 +3,7 @@ title: "Introducción a la monitorización de seguridad"
 date: 2025-11-27T19:31:00+02:00
 categories: [Apuntes, Seguridad]
 excerpt: "La monitorización y la observabilidad son pilares fundamentales en cualquier infraestructura moderna. Permiten entender lo que sucede dentro de los sistemas, detectar anomalías, responder a incidentes y garantizar la continuidad del servicio."
-card_image: /assets/images/cards/debian.png
+card_image: /assets/images/cards/seguridad.jpg
 ---
 
 # Introducción
