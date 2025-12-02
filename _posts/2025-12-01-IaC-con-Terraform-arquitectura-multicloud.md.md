@@ -16,7 +16,7 @@ Instalación de Terraform
 
 Para poder instalar Terraform en nuestra maquina local, buscaremos en nuestro navegador la url del sitio web de Terraform [sitio oficial terraform](https://developer.hashicorp.com/terraform/install) y seleccionamos el sistema operativo donde queramos instalarlo y lo descargamos.
 
-A modo de buenas practicas seria importante veriicar la instalacion con:
+A modo de buenas practicas seria importante verificar la instalación con:
 
 ~~~
 terraform version
