@@ -1,5 +1,5 @@
 ---
-title: "Introducción a Terraform: conceptos y primeros pasos"
+title: "Introducción a Terraform (I): conceptos y primeros pasos"
 date: 2025-07-12T13:19:00+02:00
 categories: [DevOps, Infraestructura, Terraform]
 excerpt: "Terraform es una de las herramientas más populares de **Infraestructura como Código (IaC)**. Permite **definir, desplegar y gestionar infraestructura** (máquinas virtuales, redes, contenedores, bases de datos, etc.) **de forma declarativa y reproducible**."
