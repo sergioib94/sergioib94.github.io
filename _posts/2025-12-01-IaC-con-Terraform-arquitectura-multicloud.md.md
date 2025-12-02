@@ -1,6 +1,6 @@
 ---
 title: "IaC con Terraform: arquitectura multicloud"
-date: 2025-11-26T13:16:00+02:00
+date: 2025-12-01T13:18:00+02:00
 categories: [Apuntes, Sistemas, Terraform]
 excerpt: "IaC (Infrastructure as Code) es la práctica de gestionar y aprovisionar la infraestructura mediante archivos de configuración legibles y versionables, en lugar de hacerlo manualmente. Esto permite automatizar despliegues, mejorar la reproducibilidad, evitar errores humanos y mantener un control de versiones sobre toda la infraestructura."
 card_image: /assets/images/cards/terraform.png
