@@ -6,8 +6,6 @@ excerpt: "En este post se presenta una guía completa para comprender y trabajar
 card_image: /assets/images/cards/AWS.png
 ---
 
-AWS desde 0 (I): Introducción a los servicios de almacenamiento
-
 # Introducción a Amazon EC2
 
 ## ¿Qué es EC2?
@@ -22,7 +20,9 @@ Ventajas:
 * Integración con otros servicios AWS: EC2 se puede usar junto con S3 (almacenamiento), RDS (bases de datos), VPC (redes) y muchos otros.
 * Tipos de instancias: AWS ofrece diferentes tipos según necesidad: computación, memoria, GPU, almacenamiento, etc.
 
-Ejemplo práctico: Si quieres montar una web, puedes lanzar una instancia EC2 con Linux, instalar un servidor web (Apache/Nginx) y tu aplicación, y estará accesible desde internet.
+Ejemplo practico: 
+
+Si deseas montar una página web, puedes desplegar una instancia EC2 con Amazon Linux o Ubuntu, instalar un servidor web como Apache o Nginx, subir tu aplicación y exponer los puertos adecuados mediante el grupo de seguridad. Desde ese momento, tu sitio estará accesible a través de Internet.
 
 ## Tipos de instancias EC2 y casos de uso
 
@@ -38,7 +38,7 @@ Tipos instancias EC2
 
 Independientemente del tipo de instancia que se use, cada tipo de instancia dispone de varios tamaños: nano, micro, small, medium, large, xlarge, 2xlarge y 4xlarge:
 
-# Tabla de tamaños de instancias EC2
+## Tabla de tamaños de instancias EC2 (valores aproximados)
 
 | Familia | Tamaño       | vCPU | RAM (GB) | Usos Típicos |
 |---------|--------------|------|----------|------------|
@@ -517,9 +517,15 @@ Glacier esta basado en la creación de archivos, que son los objetos que se alma
 
 Para poder configurar nuestro S3 glacier, buscamos el servicio S3, nos aparecerán dos opciones: S3 que es el que se a usado anteriormente y S3 Glacier que sera el que usaremos ahora. Usamos la opción "crear almacén" crear un almacén de S3 glacier, esta seria una forma de trabajar con S3 glacier.
 
+Este método es útil para cargas heredadas o integraciones específicas que todavía utilicen vaults (almacenes).
+
 Otra forma seria accediendo al servicio S3 > Buckets y crear un bucket, a la hora de cargar archivos en estos buckets es cuando nos aparecerá la opción de cargar glacier al agregar archivo (en la opción clase de almacenamiento).
 
+Estas clases determinan el coste y los tiempos de recuperación. También puedes automatizar el envío a Glacier mediante Lifecycle Policies (políticas de ciclo de vida). Ejemplo: mover objetos a Glacier Deep Archive después de 90 días.
+
 ## Recuperación de datos en S3 Glacier
+
+Cuando un objeto se almacena en Glacier, no está disponible de forma inmediata y debe restaurarse temporalmente antes de acceder a él. Los tipos de recuperación dependen de la clase usada.
 
 Tipos de recuperación:
 
