@@ -1,6 +1,6 @@
 ---
 title: "Laboratorio Site-to-site con Softether en Linux"
-date: 2021-12-21T13:44:30+01:00
+date: 2026-01-26T16:34:30+01:00
 categories: [Seguridad, Redes, Linux]
 excerpt: "Implementación práctica de una VPN Site-to-Site con SoftEther sobre Linux, conectando dos redes independientes mediante un escenario virtualizado. Incluye configuración del servidor y cliente, routing, Virtual Hub, troubleshooting y documentación completa orientada a entornos empresariales."
 card_image: /assets/images/cards/softether-bg.jpg
