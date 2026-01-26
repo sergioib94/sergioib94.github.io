@@ -170,7 +170,7 @@ Por ultimo ejecutamos systemctl enable softether-vpnserver y systemctl restart s
 
 Tras esto seguiremos con la configuración básica del servidor:
 
-1. Al principio, al ejecutar ./vpncmd nos aparecerán 3 opciones de configuración a elegir:
+Al principio, al ejecutar ./vpncmd nos aparecerán 3 opciones de configuración a elegir:
 
 * Management of VPN Server or VPN Bridge
 * Management of VPN client
@@ -178,9 +178,9 @@ Tras esto seguiremos con la configuración básica del servidor:
 
 En este caso como estamos configurando lo que será nuestro servidor, seleccionamos la opción 1.
 
-2. Después se nos pedirá que indiquemos el hostname o dirección de red del destino, es decir la dirección del servidor para administrarlo de forma remota, en este caso como estamos dentro del propio servidor no sera necesario indicar nada, por lo que simplemente haríamos "enter" lo que equivale a indicar que estamos en localhost.
+Después se nos pedirá que indiquemos el hostname o dirección de red del destino, es decir la dirección del servidor para administrarlo de forma remota, en este caso como estamos dentro del propio servidor no sera necesario indicar nada, por lo que simplemente haríamos "enter" lo que equivale a indicar que estamos en localhost.
 
-3. En el siguiente paso nos pedirá que especificamos el nombre de virtual hub, como en este caso aun no ha sido creado, le daremos a "enter" saltándonos este paso que mas adelante configuraremos.
+En el siguiente paso nos pedirá que especificamos el nombre de virtual hub, como en este caso aun no ha sido creado, le daremos a "enter" saltándonos este paso que mas adelante configuraremos.
 
 Por ultimo ya estaremos dentro del servidor VPN, una vez dentro lo primero sera crear el virtual hub que nos ha solicitado antes en la configuración, esta virtual hub sera la red lógica donde se conectaran los clientes, este virtual hub lo crearemos ejecutando hubcreate [nombre del hub] como en el ejemplo a continuación.
 
@@ -230,22 +230,21 @@ Con esto ya quedaría instalado y configurado todo lo necesario para que el serv
 
 SecureNAT solo se suele utilizar en los siguientes casos:
 
-1. Falta de privilegios o acceso al Kernel
-Si estás instalando el servidor VPN en una máquina donde no puedes crear puentes (bridges) o no tienes permisos de administrador total sobre las interfaces de red, SecureNAT funciona totalmente en modo usuario sin tocar el hardware.
+* Falta de privilegios o acceso al Kernel: Si estás instalando el servidor VPN en una máquina donde no puedes crear puentes (bridges) o no tienes permisos de administrador total sobre las interfaces de red, SecureNAT funciona totalmente en modo usuario sin tocar el hardware.
 
-2. VPS en la nube (AWS, Azure, Google Cloud)
+* VPS en la nube (AWS, Azure, Google Cloud)
 En la mayoría de nubes públicas, las tarjetas de red virtuales no permiten el modo promiscuo. Si intentas hacer un Local Bridge, el tráfico de otras IPs será bloqueado por el proveedor.
 
-* Solución: Activas SecureNAT para que todas las conexiones de los clientes salgan hacia internet usando la IP única de la instancia, como si fuera un router doméstico.
+   * Solución: Activas SecureNAT para que todas las conexiones de los clientes salgan hacia internet usando la IP única de la instancia, como si fuera un router doméstico.
 
-3. Configuración rápida para Clientes Móviles
+* Configuración rápida para Clientes Móviles
 Si solo quieres que un usuario con un iPhone o un PC desde su casa se conecte para navegar por internet de forma segura (sin importar la red interna):
 
-* Habilitas SecureNAT.
+   * Habilitas SecureNAT.
 
-* El usuario recibe una IP automáticamente del DHCP interno de SoftEther.
+   * El usuario recibe una IP automáticamente del DHCP interno de SoftEther.
 
-* Navega a través de la IP del servidor.
+   * Navega a través de la IP del servidor.
 
 El siguiente paso sera preparar la configuración del Local bridge, para tendremos que acceder a ./vpncmd y acceder al hub que hemos creado anteriormente. Para la creación del Local bridge ejecutaremos el siguiente comando:
 
@@ -365,55 +364,55 @@ VPN Client>accountstatusget conexión
 accountstatusget command - Get Current VPN Conecction Setting Status
 | Item | Value |
 | ---- | ---- |
-| **VPN Connection Setting Name** | conexion |
-| **Session Status** | Connection Completed (Session Established) |
-| **VLAN ID** | - |
-| **Server Name** | 192.168.149.143 |
-| **Port Number** | TCP Port 443 |
-| **Server Product Name** | SoftEther VPN Server (64 bit) |
-| **Server Version** | 4.44 |
-| **Server Build** | Build 9807 |
-| **Connection Started at** | 2026-01-26 (Mon) 10:25:21 |
-| **First Session has been Established since** | 2026-01-26 (Mon) 10:32:41 |
-| **Current Session has been Established since** | 2026-01-26 (Mon) 10:32:41 |
-| **Number of Established Sessions** | 1 Times |
-| **Half Duplex TCP Connection Mode** | No (Full Duplex Mode) |
-| **VoIP / QoS Function** | Enabled |
-| **Number of TCP Connections** | 2 |
-| **Maximum Number of TCP Connections** | 2 |
-| **Encryption** | Enabled (Algorithm: TLS_AES_256_GCM_SHA384) |
-| **Use of Compression** | No (No Compression) |
-| **Physical Underlay Protocol** | Standard TCP/IP (IPv4) / IPv4 UDPAccel_Ver=2 ChachaPoly_OpenSSL UDPAccel_MSS=1309 |
-| **UDP Acceleration is Supported** | Yes |
-| **UDP Acceleration is Active** | Yes |
-| **Session Name** | SID-VPNUSER-2 |
-| **Connection Name** | CID-223 |
-| **Session Key (160 bit)** | D7E692313E548AF491975454132784B5B1B2BD69 |
-| **Bridge / Router Mode** | No |
-| **Monitoring Mode** | No |
-| **Outgoing Data Size** | 4,870 bytes |
-| **Incoming Data Size** | 3,317 bytes |
-| **Outgoing Unicast Packets** | 8 packets |
-| **Outgoing Unicast Total Size** | 656 bytes |
-| **Outgoing Broadcast Packets** | 28 packets |
-| **Outgoing Broadcast Total Size** | 2,152 bytes |
-| **Incoming Unicast Packets** | 4 packets |
-| **Incoming Unicast Total Size** | 344 bytes |
-| **Incoming Broadcast Packets** | 4 packets |
-| **Incoming Broadcast Total Size** | 848 bytes |
+| VPN Connection Setting Name | conexion |
+| Session Status | Connection Completed (Session Established) |
+| VLAN ID | - |
+| Server Name | 192.168.149.143 |
+| Port Number | TCP Port 443 |
+| Server Product Name | SoftEther VPN Server (64 bit) |
+| Server Version | 4.44 |
+| Server Build | Build 9807 |
+| Connection Started at | 2026-01-26 (Mon) 10:25:21 |
+| First Session has been Established since | 2026-01-26 (Mon) 10:32:41 |
+| Current Session has been Established since | 2026-01-26 (Mon) 10:32:41 |
+| Number of Established Sessions | 1 Times |
+| Half Duplex TCP Connection Mode | No (Full Duplex Mode) |
+| VoIP / QoS Function | Enabled |
+| Number of TCP Connections | 2 |
+| Maximum Number of TCP Connections | 2 |
+| Encryption | Enabled (Algorithm: TLS_AES_256_GCM_SHA384) |
+| Use of Compression | No (No Compression) |
+| Physical Underlay Protocol | Standard TCP/IP (IPv4) / IPv4 UDPAccel_Ver=2 ChachaPoly_OpenSSL UDPAccel_MSS=1309 |
+| UDP Acceleration is Supported | Yes |
+| UDP Acceleration is Active | Yes |
+| Session Name | SID-VPNUSER-2 |
+| Connection Name | CID-223 |
+| Session Key (160 bit) | D7E692313E548AF491975454132784B5B1B2BD69 |
+| Bridge / Router Mode | No |
+| Monitoring Mode | No |
+| Outgoing Data Size | 4,870 bytes |
+| Incoming Data Size | 3,317 bytes |
+| Outgoing Unicast Packets | 8 packets |
+| Outgoing Unicast Total Size | 656 bytes |
+| Outgoing Broadcast Packets | 28 packets |
+| Outgoing Broadcast Total Size | 2,152 bytes |
+| Incoming Unicast Packets | 4 packets |
+| Incoming Unicast Total Size | 344 bytes |
+| Incoming Broadcast Packets | 4 packets |
+| Incoming Broadcast Total Size | 848 bytes |
 ~~~
 
 **NOTA:** Si accountstatusget devuelve un estado retraying (no recibe respuesta del servidor) o connecting (intenta conectarse) durante mas de 1 minuto significara que algo esta fallando a la hora de intentar establecer la conexión con el servidor de la LAN1 o bien el servidor no esta escuchando las peticiones.
 
-Para corregir el estado retrying algunas posibles soluciones pueden ser:
+Para corregir el estado **retrying** algunas posibles soluciones pueden ser:
 
 * Comprobar que los parámetros introducidos al ejecutar accountcreate estén todos bien (nombre de hub, usuario, nicname, etc... todos los nombres deben ponerse exactamente igual).
 
-* Revisar el firewall del servidor (LAN1) por si el firewall esta bloqueando la conexión. Para comprobar que el firewall esta realmente bien, tenemos que ejecutar el comando "netstat -tunlp | grep vpnserver" y debemos ver el proceso vpnserver escuchando en el puerto 0.0.0.0:443. Si no tiene el puerto abierto sera necesario abrirlo, bien con "iptables -I INPUT -p tcp --dport 443 -j ACCEPT" o con "ufw allow 443/tcp"
+* Revisar el firewall del servidor (LAN1) por si el firewall esta bloqueando la conexión. Para comprobar que el firewall esta realmente bien, tenemos que ejecutar el comando **netstat -tunlp | grep vpnserver** y debemos ver el proceso vpnserver escuchando en el puerto 0.0.0.0:443. Si no tiene el puerto abierto sera necesario abrirlo, bien con **iptables -I INPUT -p tcp --dport 443 -j ACCEPT** o con **ufw allow 443/tcp**.
 
 * Revisar que el servicio esta activo.
 
-Para corregir el estado connecting algunas posibles soluciones pueden ser:
+Para corregir el estado **connecting** algunas posibles soluciones pueden ser:
 
 * Re-configurar la autentificación (accountpasswordset).
 
