@@ -35,7 +35,7 @@ Aunque tanto los contenedores como las máquinas virtuales permiten la ejecució
 | Uso de CPU/RAM                  |    Optimizado, solo lo necesario    |        Consume más recursos      |
 |---------------------------------|-------------------------------------|----------------------------------|
 
-### **Caracteristicas de Docker** ###
+### **Características de Docker** ### ###
 
 * **Portabilidad**: El contenedor Docker podremos desplegarlo en cualquier otro sistema siempre y cuando soporte esta tecnología, con lo que nos ahorraremos el tener que instalar en este nuevo entorno todas aquellas aplicaciones que normalmente usemos.
 
@@ -49,13 +49,13 @@ Aunque tanto los contenedores como las máquinas virtuales permiten la ejecució
 
 ### **Instalación de Docker (Debian Buster)** ###
 
-1. Empezamos actualizando la paqueteria:
+Empezamos actualizando la paqueteria:
 
 ~~~
 sudo apt-get update
 ~~~
 
-2. Instalamos los siguientes paquetes para el uso de docker:
+Instalamos los siguientes paquetes para el uso de docker:
 
 ~~~
 sudo apt-get install \
@@ -66,14 +66,13 @@ sudo apt-get install \
     lsb-release
 ~~~
 
-3. Añadimos la clave gpg a nuestro repositorio (en este caso repositorios de debian):
+Añadimos la clave gpg a nuestro repositorio (en este caso repositorios de debian):
 
 ~~~
 curl -fsSL https://download.docker.com/linux/debian/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
 ~~~
 
-4. Configuramos el repositorio estable de docker:
-
+Configuramos el repositorio estable de docker:
 
 ~~~
 echo \
@@ -81,7 +80,7 @@ echo \
   $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 ~~~
 
-5. Instalamos Docker:
+Instalamos Docker:
 
 ~~~
 sudo apt-get update
