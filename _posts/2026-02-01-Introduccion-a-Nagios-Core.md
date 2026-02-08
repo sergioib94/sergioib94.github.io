@@ -1,5 +1,5 @@
 ---
-title: "Introducción a Nagios Core: instalación, configuración y monitorización"
+title: "Introducción a Nagios Core"
 date: 2026-02-01T112:35:00+02:00
 categories: [Monitorización, Nagios]
 excerpt: "Nagios Core es una de las herramientas clásicas de monitorización de sistemas en entornos Linux. En este artículo se explica qué es Nagios, cómo funciona su arquitectura y cómo instalarlo desde cero. A través de ejemplos prácticos aprenderás a configurar servicios, entender los estados OK/WARNING/CRITICAL y poner a prueba la monitorización forzando alertas reales en un entorno de laboratorio."
