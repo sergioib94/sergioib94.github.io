@@ -116,7 +116,7 @@ sudo systemctl start nagios
 
 Desde la máquina anfitrión, abrimos el navegador y escribimos la IP de su VM: http://[IP_DE_TU_VM]/nagios, nos pedirá las credenciales de administrador para entrar, y una vez que entremos estaremos ya en la pagina de inicio de Nagios.
 
-![inicio Nagios](/assets/images/Nagios/inicio_nagios.PNG)
+![inicio Nagios](/assets/images/Nagios/nagios.PNG)
 
 Para configurar las alertas en Nagios, debemos trabajar principalmente en el archivo de configuración del host (por defecto /usr/local/nagios/etc/objects/localhost.cfg para la máquina local). Nagios funciona definiendo Servicios, cada servicio utiliza un comando y unos parámetros (separados por !). La estructura básica de estos comandos suele ser "check_command NOMBRE_COMANDO!parametro1!parametro2"
 
