@@ -104,6 +104,67 @@ sudo make
 sudo make install
 ~~~
 
+# Definición de hosts locales y remotos #
+
+Una vez instalado Nagios, el siguiente paso es definir qué equipos vamos a monitorizar. En Nagios, todo comienza con la definición de un host.
+
+Los hosts locales suelen estar definidos en el fichero localhost.cfg. Ejemplo:
+
+~~~
+define host {
+    use linux-server
+    host_name localhost
+    alias Servidor Nagios
+    address 127.0.0.1
+}
+~~~
+
+Este host representa la propia máquina donde se ejecuta Nagios.
+
+**Host remotos**
+
+Para monitorizar otros servidores, definimos nuevos hosts. Ejemplo:
+
+~~~
+define host {
+    use linux-server
+    host_name servidor-web
+    alias Servidor Web
+    address 192.168.1.50
+}
+~~~
+
+Nagios solo necesita conectividad con el host remoto; el método de monitorización dependerá del servicio configurado.
+
+**Métodos de monitorización remota**
+
+* Ping: comprueba conectividad básica.
+* SSH: verifica que el servicio esté activo.
+* NRPE: ejecuta plugins en el host remoto (CPU, disco, RAM).
+
+Ejemplo de servicio remoto usando NRPE:
+
+~~~
+define service {
+    use generic-service
+    host_name servidor-web
+    service_description Carga del sistema
+    check_command check_nrpe!check_load
+}
+~~~
+
+**Uso de hostgroups**
+
+Los hostgroups permiten escalar la configuración:
+
+~~~
+define hostgroup {
+    hostgroup_name servidores-linux
+    alias Servidores Linux
+    members localhost,servidor-web
+}
+~~~
+
 **Verificación y pruebas**
 
 Para verificar que todo funciona, iniciamos el servicio:
