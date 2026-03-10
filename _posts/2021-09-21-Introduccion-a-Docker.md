@@ -2,7 +2,7 @@
 layout: single
 title: "Introducción a Docker"
 date: 2021-09-21T13:14:06+02:00
-categories: [Aplicaciones Web, Apuntes]
+categories: [Aplicaciones Web, Docker]
 excerpt: "Docker nos permite de forma sencilla crear contenedores ligeros y fáciles de mover donde ejecutar nuestras aplicaciones software sobre cualquier máquina con Docker instalado, independientemente del sistema operativo que la máquina tenga, facilitando así también los despliegues."
 card_image: /assets/images/cards/docker-bg.jpg
 ---
@@ -15,7 +15,7 @@ Docker nos permite de forma sencilla crear contenedores ligeros y fáciles de mo
 
 **¿Que son los contenedores?**
 
-Los contenedores son una forma de virtulización del sistema opertaivo, son como maquinas virtuales aisladas en los que podemos ejecutar cualquier cosa como por ejemplo microservicios, aplicaciones, etc... 
+Los contenedores son una forma de virtualización del sistema operativo, son como maquinas virtuales aisladas en los que podemos ejecutar cualquier cosa como por ejemplo microservicios, aplicaciones, etc... 
 
 ¿En qué se diferencian los contenedores de las máquinas virtuales?
 Aunque tanto los contenedores como las máquinas virtuales permiten la ejecución de aplicaciones en entornos aislados, existen diferencias clave entre ambos.
@@ -47,53 +47,43 @@ Aunque tanto los contenedores como las máquinas virtuales permiten la ejecució
 
 * **Uso de imágenes**: Una imagen Docker podríamos entenderla como un Sistema Operativo con aplicaciones instaladas. A partir de una imagen se puede crear un contenedor. Las imágenes de docker son portables entre diferentes plataformas, el único requisito es que en el sistema huésped esté disponible docker.
 
-### **Instalación de Docker (Debian Buster)** ###
+### **Instalación de Docker** ###
 
-Empezamos actualizando la paqueteria:
+Hy varios métodos para instalar docker, pero en este caso vamos a instalarlo a traves del repositorio oficial de docker. El repositorio oficial de Docker siempre cuenta con las últimas versiones estables, además de que obtienes actualizaciones automáticas a través de tu gestor de paquetes por lo que es la opción mas recomendada.
 
-~~~
-sudo apt-get update
-~~~
-
-Instalamos los siguientes paquetes para el uso de docker:
+Empezamos actualizando el sistema e instalando los paquetes necesarios para docker: 
 
 ~~~
-sudo apt-get install \
-    apt-transport-https \
-    ca-certificates \
-    curl \
-    gnupg \
-    lsb-release
+sudo apt update
+sudo apt install apt-transport-https ca-certificates curl gnupg lsb-release
 ~~~
 
-Añadimos la clave gpg a nuestro repositorio (en este caso repositorios de debian):
+Añadimos la clave gpg del repositorio oficial de Docker para verificar la autenticidad del paquete:
 
 ~~~
 curl -fsSL https://download.docker.com/linux/debian/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
 ~~~
 
-Configuramos el repositorio estable de docker:
+Configuramos el repositorio añadiéndolo a nuestras fuentes:
 
 ~~~
-echo \
-  "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/debian \
-  $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/debian $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 ~~~
 
-Instalamos Docker:
+Instalamos Docker engine, CLI y compose:
 
 ~~~
-sudo apt-get update
-sudo apt-get install docker-ce docker-ce-cli containerd.io
+sudo apt update
+sudo apt install docker-ce docker-ce-cli containerd.io docker-compose-plugin
 ~~~
 
-Si lo que queremos es usar docker sin sudo, ejecutaremos el siguiente comando:
+Si lo que queremos es usar docker sin sudo, es decir para usuarios sin privilegios, ejecutaremos el siguiente comando:
 
 ~~~
 sudo usermod -aG docker $USER
 ~~~
 
-### **Comandos utiles de docker** ###
+### **Comandos útiles de docker** ### ###
 
 * Ejecutar un contenedor a partir de una imagen:
 
