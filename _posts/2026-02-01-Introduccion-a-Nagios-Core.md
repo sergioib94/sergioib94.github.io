@@ -31,11 +31,68 @@ Nagios se basa en una idea muy simple:
 
 Nagios no soluciona los problemas, pero te avisa con antelación para que puedas actuar.
 
-# instalación y configuración
+# Ediciones de Nagios: Core y Nagios XI
+
+Una vez entendido cómo funciona Nagios Core y cómo se configuran los servicios básicos, es importante conocer qué otras ediciones y enfoques existen dentro del ecosistema Nagios, y en qué casos es recomendable cada uno.
+
+**¿Qué es Nagios Core?**
+
+Nagios Core es el motor de monitorización. Es software libre (open source) y es la base de todo lo demás.
+
+**Qué incluye**
+
+* Motor de chequeos (scheduler)
+* Sistema de estados: OK / WARNING / CRITICAL / UNKNOWN
+* Sistema de alertas (email, scripts, etc.)
+* Soporte de plugins
+* Configuración por ficheros .cfg
+* Interfaz web muy básica
+
+**Ventajas**
+
+* Ligero
+* Extremadamente flexible
+* Muy estable
+* Gran ecosistema de plugins
+
+**Inconvenientes**
+
+* Curva de aprendizaje
+* Mucha configuración manual
+* Interfaz obsoleta
+
+# NAGIOS XI #
+
+Nagios XI es un producto comercial que usa Nagios Core por debajo, pero añade una capa completa de gestión.
+
+**¿Qué añade sobre Core?**
+
+* Interfaz web moderna
+* Dashboards personalizables
+* Configuración 100% gráfica
+* Informes avanzados
+* Gestión de usuarios y roles
+* Asistentes de configuración (wizards)
+* Soporte oficial de Nagios Enterprises
+
+**Ventajas**
+
+* Fácil de usar
+* Mucho más visual
+* Menos errores humanos
+* Soporte profesional
+
+**Inconvenientes**
+
+* De pago
+* Menos control fino
+* Más consumo de recursos
+
+# Instalación y configuración
 
 **Actualización del sistema**
 
-Lo primero que haremos al tener lista la maquina (en el caso de que sea nueva), sera actualizar el sistema y asegurarnos de que la maquina tenga red.
+Lo primero que haremos al tener lista la máquina (en el caso de que sea nueva), será actualizar el sistema y asegurarnos de que la máquina tenga red.
 
 ~~~
 sudo apt update && sudo apt upgrade -y
@@ -43,7 +100,7 @@ sudo apt update && sudo apt upgrade -y
 
 **Instalación de dependencias**
 
-Nagios Core se compila desde código fuente y necesitamos: servidor web (Apache), pp para la interfaz web, herramientas de compilación y librerías para gráficos y plugins
+Nagios Core se compila desde código fuente y necesitamos: servidor web (Apache), php para la interfaz web, herramientas de compilación y librerías para gráficos y plugins
 
 ~~~
 sudo apt install -y autoconf gcc libc6 make wget unzip apache2 php libapache2-mod-php libgd-dev libssl-dev bc gawk dc build-essential snmp libnet-snmp-perl gettext
@@ -175,11 +232,11 @@ sudo systemctl start nagios
 
 ¿Cómo aprender practicando?
 
-Desde la máquina anfitrión, abrimos el navegador y escribimos la IP de su VM: http://[IP_DE_TU_VM]/nagios, nos pedirá las credenciales de administrador para entrar, y una vez que entremos estaremos ya en la pagina de inicio de Nagios.
+Desde la máquina anfitrión, abrimos el navegador y escribimos la IP de su VM: http://[IP_DE_TU_VM]/nagios, nos pedirá las credenciales de administrador para entrar, y una vez que entremos estaremos ya en la página de inicio de Nagios.
 
 ![inicio Nagios](/assets/images/Nagios/nagios.PNG)
 
-Para configurar las alertas en Nagios, debemos trabajar principalmente en el archivo de configuración del host (por defecto /usr/local/nagios/etc/objects/localhost.cfg para la máquina local). Nagios funciona definiendo Servicios, cada servicio utiliza un comando y unos parámetros (separados por !). La estructura básica de estos comandos suele ser "check_command NOMBRE_COMANDO!parametro1!parametro2"
+Para configurar las alertas en Nagios, debemos trabajar principalmente en el archivo de configuración del host (por defecto /usr/local/nagios/etc/objects/localhost.cfg para la máquina local). Nagios funciona definiendo Servicios, cada servicio utiliza un comando y unos parámetros (separados por !). La estructura básica de estos comandos suele ser "check_command NOMBRE_COMANDO!parámetro1!parámetro2"
 
 **Ejemplo de monitorización de carga CPU (check_local_load):**
 
@@ -199,9 +256,9 @@ El comando se divide en dos bloques separados por "!", la primera parte afecta a
 * warning: avisa de un problema potencial.
 * critical: indica un problema real que requiere intervención inmediata.
 
-Los números que encontramos en cada apartado son los límites máximos permitidos de carga, en orden 1m–5m–15m (orden fijo). Poniendo como ejemplo los valores por defecto, si en el primer minuto nuestra CPU alcanza una carga de 7 cuando por defecto esta a 5 (7 > 5), Nagios entiende esto como warning, en el caso de que después la carga del sistema baje y sea menor que los siguientes valores (4.0 y 3.0), pasara de warning a OK, en el caso contrario de que la carga de CPU siga subiendo pasará a critical.
+Los números que encontramos en cada apartado son los límites máximos permitidos de carga, en orden 1m–5m–15m (orden fijo). Poniendo como ejemplo los valores por defecto, si en el primer minuto nuestra CPU alcanza una carga de 7 cuando por defecto está a 5 (7 > 5), Nagios entiende esto como warning, en el caso de que después la carga del sistema baje y sea menor que los siguientes valores (4.0 y 3.0), pasará de warning a OK, en el caso contrario de que la carga de CPU siga subiendo pasará a critical.
 
-Estos valores pueden verse afectados dependiendo de los cores que tenga la máquina, es decir, la configuración por defecto estaría pensada para máquinas de entre 2 a 4 núcleos. Para ajustar los parametros segun los cores de la maquina podemos emplear la siguiente regla:
+Estos valores pueden verse afectados dependiendo de los cores que tenga la máquina, es decir, la configuración por defecto estaría pensada para máquinas de entre 2 a 4 núcleos. Para ajustar los parámetros según los cores de la máquina podemos emplear la siguiente regla:
 
 * WARNING ≈ 0.7 × núcleos
 * CRITICAL ≈ 1.0–1.5 × núcleos
@@ -222,11 +279,11 @@ Ejemplo:
 
 **Ejercicio para forzar el warning y el critical**
 
-Para entender como funciona el Load Average y cuando Nagios cambia de estado podemos hacer uso de los siguientes comandos:
+Para entender cómo funciona el Load Average y cuándo Nagios cambia de estado podemos hacer uso de los siguientes comandos:
 
 * Podemos comprobar la carga actual del sistema usando **uptime**. Ejemplo: load average: 0.05, 0.03, 0.01
-* Para ver cuanto núcleos tiene la maquina haremos uso de **nproc**.
-* Podemos generar carga de CPU con el comando yes. Ejemplo: yes > /dev/null. Esto consume 1 core al 100% por lo que si nuestra maquina es de 1 core, al ejecutar uptime de nuevo podremos comprobar que estará en estado de warning. Si este proceso lo repetimos abriendo varios terminales, nuestra cpu pasara a critical.
+* Para ver cuántos núcleos tiene la máquina haremos uso de **nproc**.
+* Podemos generar carga de CPU con el comando yes. Ejemplo: yes > /dev/null. Esto consume 1 core al 100% por lo que si nuestra máquina es de 1 core, al ejecutar uptime de nuevo podremos comprobar que estará en estado de warning. Si este proceso lo repetimos abriendo varios terminales, nuestra cpu pasará a critical.
 * Para acabar con el proceso yes usaremos **pkill** yes.
 
 **Ejemplo de monitorización de espacio en disco (check_local_disk):**
@@ -253,7 +310,7 @@ Envía paquetes de prueba ICMP. Ejemplo: check_ping!100.0,20%!500.0,60%.
 
 **Ejercicio para forzar critical en la red**
 
-* Podemos bloquear temporalmente ICMP ejecutando iptables -A INPUT -p icmp --icmp-type echo-request -j DROP (como root), de esta forma ping empezará a fallar, cuando empiecen a perderse paquetes se pondrá en estado warning y pasara a critical cuando cuando la perdida sea alta.
+* Podemos bloquear temporalmente ICMP ejecutando iptables -A INPUT -p icmp --icmp-type echo-request -j DROP (como root), de esta forma ping empezará a fallar, cuando empiecen a perderse paquetes se pondrá en estado warning y pasará a critical cuando cuando la perdida sea alta.
 
 * Posteriormente para restaurar el estado de la red ejecutaremos iptables -D INPUT -p icmp --icmp-type echo-request -j DROP (como root)
 
@@ -271,7 +328,7 @@ La Swap es el espacio de intercambio en disco si Debian empieza a usar mucha Swa
 check_local_swap!20!10
 ~~~
 
-En este caso la swap pasara a estado warning cuando le quede un 20% libre, mientras que si llega a 10% pasara a estado critical lo que indicara que el servidor estará a punto de "congelarse" o de empezar a cerrar programas por falta de memoria.
+En este caso la swap pasará a estado warning cuando le quede un 20% libre, mientras que si llega a 10% pasará a estado critical lo que indicara que el servidor estará a punto de "congelarse" o de empezar a cerrar programas por falta de memoria.
 
 **Ejercicio para detectar la falta de RAM**
 
@@ -282,63 +339,17 @@ Podemos detectar la falta de memoria RAM.
 * Observamos el uso de swap usando free -h, cuando la swap empiece a llenarse, cuando le quede un 20% de espacio libre debería de ponerse en estado warning, y al llegar a 10% debería de pasar a critical.
 * Una vez que hayamos hecho la prueba detenemos stress usando **pkill stress**.
 
-# Ediciones de Nagios: Core y Nagios XI
-
-Una vez entendido cómo funciona Nagios Core y cómo se configuran los servicios básicos, es importante conocer qué otras ediciones y enfoques existen dentro del ecosistema Nagios, y en qué casos es recomendable cada uno.
-
-**¿Qué es Nagios Core?**
-
-Nagios Core es el motor de monitorización. Es software libre (open source) y es la base de todo lo demás.
-
-**Qué incluye**
-
-* Motor de chequeos (scheduler)
-* Sistema de estados: OK / WARNING / CRITICAL / UNKNOWN
-* Sistema de alertas (email, scripts, etc.)
-* Soporte de plugins
-* Configuración por ficheros .cfg
-* Interfaz web muy básica
-
-**Ventajas**
-
-* Ligero
-* Extremadamente flexible
-* Muy estable
-* Gran ecosistema de plugins
-
-**Inconvenientes**
-
-* Curva de aprendizaje
-* Mucha configuración manual
-* Interfaz obsoleta
-
-# NAGIOS XI #
-
-Nagios XI es un producto comercial que usa Nagios Core por debajo, pero añade una capa completa de gestión.
-
-**¿Qué añade sobre Core?**
-
-* Interfaz web moderna
-* Dashboards personalizables
-* Configuración 100% gráfica
-* Informes avanzados
-* Gestión de usuarios y roles
-* Asistentes de configuración (wizards)
-* Soporte oficial de Nagios Enterprises
-
-**Ventajas**
-
-* Fácil de usar
-* Mucho más visual
-* Menos errores humanos
-* Soporte profesional
-
-**Inconvenientes**
-
-* De pago
-* Menos control fino
-* Más consumo de recursos
-
 # Conclusión #
 
 Nagios es una herramienta potente para detectar problemas antes de que ocurran. La clave está en entender qué mide cada servicio, ajustar correctamente los umbrales y practicar provocando situaciones reales.
+
+En mi caso, el aspecto que más me costó al montarlo fue ajustar los umbrales de carga de CPU correctamente: los valores por defecto estaban pensados para máquinas con más núcleos, y hasta que no hice los ejercicios con yes y uptime no terminé de entender la relación entre el load average y los núcleos disponibles.
+
+Nagios Core tiene una curva de aprendizaje más pronunciada que herramientas como Zabbix o Grafana, pero esa misma "dureza" de configuración en ficheros de texto te obliga a entender realmente qué estás monitorizando y por qué. Para entornos donde se necesita control total y bajo consumo de recursos, sigue siendo una opción sólida.
+
+## Ver también
+
+Si te interesa la monitorización, en este blog también puedes encontrar:
+
+- [Instalación, configuración y monitorización usando Zabbix](https://sergioib94.github.io/sistemas/monitorización/2025/05/01/Instalacion-configuracion-y-monitoreo-zabbix.html)
+- [Monitorización de servidores con Grafana](https://sergioib94.github.io/sistemas/monitorización/2024/04/11/Monitorización-de-servidores-con-grafana.html)
