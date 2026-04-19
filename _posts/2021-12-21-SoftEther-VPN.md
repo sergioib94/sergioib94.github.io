@@ -6,7 +6,7 @@ excerpt: "Implementación práctica de una VPN Site-to-Site con SoftEther sobre 
 card_image: /assets/images/cards/softether-bg.jpg
 ---
 
-### Introducción
+## Introducción
 
 Softether VPN es una solución VPN de código abierto, multiplataforma y multiprotocolo, diseñada para proporcionar conectividad remota y site-to-site segura con alto rendimiento y gran flexibilidad. Puede operar como servidor VPN, bridge VPN o cliente VPN, y está orientada tanto a entornos corporativos como a laboratorios y escenarios de formación técnica.
 
@@ -84,21 +84,25 @@ Softether ofrece múltiples mecanismos, combinables según la política de segur
 
 # Configuración del escenario
 
-El escenario esta compuesto por cuatro maquinas virtuales creadas con Vmware Workstation 17, estas cuatro maquinas virtuales contaran todas con un sistema operativo Linux, Debian en este caso sin entorno gráfico (para disminuir el consumo de recursos ya que el sistema host cuenta con 8 Gb de RAM).
+El escenario está compuesto por cuatro máquinas virtuales creadas con Vmware Workstation 17, estas cuatro máquinas virtuales contarán todas con un sistema operativo Linux, Debian en este caso sin entorno gráfico (para disminuir el consumo de recursos ya que el sistema host cuenta con 8 Gb de RAM).
 
-**Características de los clientes:**
+![escenario](/assets/images/Softether/escenario_Softether.PNG)
 
-* Ambos clientes contaran con un sistema operativo Debian sin entorno gráfico.
+## Características del escenario
+
+**Clientes:**
+
+* Ambos clientes contarán con un sistema operativo Debian sin entorno gráfico.
 * Al menos 20 GB de almacenamiento (lo recomendado por Vmware).
-* Una sola tarjeta de red, en el caso del cliente1 configurada con NAT, en el caso del cliente2 configurada con una red interna con una ip dentro del rango 10.10.10.0/24 que sera el rango ip que usara la Red2 (red de empresa simulada).
-* Ambas maquinas tendrán solo 1 CPU para disminuir el consumo de recursos.
+* Una sola tarjeta de red, en el caso del cliente1 configurada con NAT, en el caso del cliente2 configurada con una red interna con una ip dentro del rango 10.10.10.0/24 que será el rango ip que usara la Red2 (red de empresa simulada).
+* Ambas máquinas tendrán solo 1 CPU para disminuir el consumo de recursos.
 
-**Características de los servidores**
+**Servidores:**
 
 * Ambos servidores (uno que hará de servidor SoftetherVPN y otro que hará de cliente para acceder a la Red2) tendrán 1 Gb de RAM.
 * Ambos servidores tendrán al menos 20 GB de almacenamiento.
 * Al igual que los clientes tendrán sistemas operativos Debian sin entorno gráfico.
-* Los servidores contaran con dos tarjetas de red, una en modo NAT para tener red y otra en modo host-only apuntando a su red interna.
+* Los servidores contarán con dos tarjetas de red, una en modo NAT para tener red y otra en modo host-only apuntando a su red interna.
 
 # Configuración del escenario
 
@@ -117,7 +121,7 @@ iface ens34 inet static
     netmask 255.255.255.0
 ~~~
 
-Una vez configuradas la tarjeta host-only sera necesario ejecutar los siguientes comandos, por un lado systemctl restart networking para reiniciar el servicio y que cargue la nueva configuración y por otro lado sysctl -w net.ipv4.ip_forward=1 para activar el ip forwarding.
+Una vez configuradas la tarjeta host-only será necesario ejecutar los siguientes comandos, por un lado systemctl restart networking para reiniciar el servicio y que cargue la nueva configuración y por otro lado sysctl -w net.ipv4.ip_forward=1 para activar el ip forwarding.
 
 Una vez la red base es estable, desplegamos el software y aseguramos su ejecución automática. Se instalan las herramientas de compilación y se descarga el binario correspondiente (Server o Client según el nodo).
 
@@ -145,7 +149,7 @@ chmod 700 vpnserver vpncmd
 ./vpnserver start
 ~~~
 
-Una vez iniciado el servidor vpn, podremos acceder a la configuración ejecutando ./vpncmd. Hay que tener en cuenta que esta forma de iniciar el servicio sera solo temporal dado que una vez que el equipo se reinicie, tendremos que volver a iniciar vpnserver de forma manual, como esto no es algo optimo, crearemos el servicio systemd para que de esa forma el servicio se ejecute automáticamente en el arranque del sistema.
+Una vez iniciado el servidor vpn, podremos acceder a la configuración ejecutando ./vpncmd. Hay que tener en cuenta que esta forma de iniciar el servicio será solo temporal dado que una vez que el equipo se reinicie, tendremos que volver a iniciar vpnserver de forma manual, como esto no es algo optimo, crearemos el servicio systemd para que de esa forma el servicio se ejecute automáticamente en el arranque del sistema.
 
 Este servicio systemd lo crearemos editando/creando el fichero en la siguiente ruta: /etc/systemd/system/softether-vpnserver.service y añadiendo el siguiente contenido con nano.
 
@@ -178,11 +182,11 @@ Al principio, al ejecutar ./vpncmd nos aparecerán 3 opciones de configuración 
 
 En este caso como estamos configurando lo que será nuestro servidor, seleccionamos la opción 1.
 
-Después se nos pedirá que indiquemos el hostname o dirección de red del destino, es decir la dirección del servidor para administrarlo de forma remota, en este caso como estamos dentro del propio servidor no sera necesario indicar nada, por lo que simplemente haríamos "enter" lo que equivale a indicar que estamos en localhost.
+Después se nos pedirá que indiquemos el hostname o dirección de red del destino, es decir la dirección del servidor para administrarlo de forma remota, en este caso como estamos dentro del propio servidor no será necesario indicar nada, por lo que simplemente haríamos "enter" lo que equivale a indicar que estamos en localhost.
 
-En el siguiente paso nos pedirá que especificamos el nombre de virtual hub, como en este caso aun no ha sido creado, le daremos a "enter" saltándonos este paso que mas adelante configuraremos.
+En el siguiente paso nos pedirá que especificamos el nombre de virtual hub, como en este caso aún no ha sido creado, le daremos a "enter" saltándonos este paso que más adelante configuraremos.
 
-Por ultimo ya estaremos dentro del servidor VPN, una vez dentro lo primero sera crear el virtual hub que nos ha solicitado antes en la configuración, esta virtual hub sera la red lógica donde se conectaran los clientes, este virtual hub lo crearemos ejecutando hubcreate [nombre del hub] como en el ejemplo a continuación.
+Por ultimo ya estaremos dentro del servidor VPN, una vez dentro lo primero será crear el virtual hub que nos ha solicitado antes en la configuración, esta virtual hub será la red lógica donde se conectaran los clientes, este virtual hub lo crearemos ejecutando hubcreate [nombre del hub] como en el ejemplo a continuación.
 
 ~~~
 VPN Server> hubcreate Empresa 
@@ -204,7 +208,7 @@ VPN Server/Empresa>usercreate vpnuser
 
 A este usuario tendremos que asignarle una serie de datos como nombre de grupo, nombre real y descripción y le asignaremos la contraseña con userpasswordset vpnuser.
 
-Es importante indicar que los comandos anteriores para crear el usuario vpn se ejecutarían a modo de practica ya que aunque en una empresa seria posible crear los usuarios vpn para cada empleado de la empresa, pero crearlos uno por uno es bastante ineficaz si la empresa tiene muchos trabajadores. Por suerte softetherVPN permite crear múltiples usuarios automáticamente tanto a través de scripts como a través de ficheros CSV, aunque en un entorno real los usuarios seguramente no se creen en softetherVPN si no que los usuarios están ya creados en entornos como pueden ser Active directory, LDAP o RADIUS por lo que en casos reales, Softether se integrara con estos entornos donde estarán los usuarios y lo que hará sera simplemente validar la autentificación.
+Es importante indicar que los comandos anteriores para crear el usuario vpn se ejecutarían a modo de practica ya que aunque en una empresa seria posible crear los usuarios vpn para cada empleado de la empresa, pero crearlos uno por uno es bastante ineficaz si la empresa tiene muchos trabajadores. Por suerte softetherVPN permite crear múltiples usuarios automáticamente tanto a través de scripts como a través de ficheros CSV, aunque en un entorno real los usuarios seguramente no se creen en softetherVPN si no que los usuarios están ya creados en entornos como pueden ser Active directory, LDAP o RADIUS por lo que en casos reales, Softether se integrara con estos entornos donde estarán los usuarios y lo que hará será simplemente validar la autentificación.
 
 Después de la creación del hub y del usuario, tendremos que revisar que la función SecureNat esta desactivada. Por defecto esta opción suele estar habilitada por lo que para asegurarnos del estado en el que se encuentra y para evitar conflictos futuros ejecutaremos el comando "StatusGet" dentro de nuestro hub.
 
@@ -218,15 +222,15 @@ Este comando nos mostrara una tabla con varios valores en los que tendremos que 
 VPN Server/Empresa>securenatdisable
 ~~~
 
-La razón de dejarlo deshabilitado seria la siguiente, este escenario cuenta con una infraestructura de red (maquinas virtuales con IPs estáticas en Vmware). Si activamos SecureNAT, Softether creara un router virtual, un servidor DHCP y un NAT interno dentro del hub lo que provocara varios conflictos de cara al futuro:
+La razón de dejarlo deshabilitado seria la siguiente, este escenario cuenta con una infraestructura de red (máquinas virtuales con IPs estáticas en Vmware). Si activamos SecureNAT, Softether creara un router virtual, un servidor DHCP y un NAT interno dentro del hub lo que provocara varios conflictos de cara al futuro:
 
 1. **Conflicto de IPs:** SecureNAT intentara asignar IPs (por defecto la 192.168.30.1) que no coinciden con el esquema de la red.
 
-1. **Rendimiento:** Consume mucha CPU si hay mucho trafico. El local bridge es mucho mas rápido ya "habla" directamente con el kernel de Linux y la tarjeta.
+1. **Rendimiento:** Consume mucha CPU si hay mucho trafico. El local bridge es mucho más rápido ya "habla" directamente con el kernel de Linux y la tarjeta.
 
 1. **Transparencia:** Con el Local Bridge, el servidor VPN se comporta como si hubieras tirado un cable físico desde el túnel hasta el switch virtual de Vmware. 
 
-Con esto ya quedaría instalado y configurado todo lo necesario para que el servidor Softether quedara funcionando, el siguiente paso sera acceder al nodo que tendremos de servidor en la otra red, es decir la maquina que hará de puente entre las dos redes y la que permitirá el site to site.
+Con esto ya quedaría instalado y configurado todo lo necesario para que el servidor Softether quedara funcionando, el siguiente paso será acceder al nodo que tendremos de servidor en la otra red, es decir la maquina que hará de puente entre las dos redes y la que permitirá el site to site.
 
 SecureNAT solo se suele utilizar en los siguientes casos:
 
@@ -246,7 +250,7 @@ Si solo quieres que un usuario con un iPhone o un PC desde su casa se conecte pa
 
    * Navega a través de la IP del servidor.
 
-El siguiente paso sera preparar la configuración del Local bridge, para tendremos que acceder a ./vpncmd y acceder al hub que hemos creado anteriormente. Para la creación del Local bridge ejecutaremos el siguiente comando:
+El siguiente paso será preparar la configuración del Local bridge, para tendremos que acceder a ./vpncmd y acceder al hub que hemos creado anteriormente. Para la creación del Local bridge ejecutaremos el siguiente comando:
 
 ~~~
 VPN Server/Empresa>BridgeCreate Empresa /DEVICE:ens34 /TAP:no
@@ -278,7 +282,7 @@ Con este comando nos aseguramos de que la interfaz este activa.
 ip a show ens34
 ~~~
 
-Con esto comprobaremos si vuelve a tener ip y si esta levantada. Si ya esta todo listo, ya no seria necesaria mas configuración por parte del softether server, por lo que ahora pasaríamos a la parte de softether client.
+Con esto comprobaremos si vuelve a tener ip y si esta levantada. Si ya esta todo listo, ya no seria necesaria más configuración por parte del softether server, por lo que ahora pasaríamos a la parte de softether client.
 
 ## Servidor Softether Client (LAN 2)
 
@@ -297,7 +301,7 @@ iface ens33 inet static
     netmask 255.255.255.0
 ~~~
 
-Una vez configuradas la tarjeta host-only sera necesario ejecutar los siguientes comandos, por un lado systemctl restart networking para reiniciar el servicio y que cargue la nueva configuración y por otro lado sysctl -w net.ipv4.ip_forward=1 para activar el ip forwarding.
+Una vez configuradas la tarjeta host-only será necesario ejecutar los siguientes comandos, por un lado systemctl restart networking para reiniciar el servicio y que cargue la nueva configuración y por otro lado sysctl -w net.ipv4.ip_forward=1 para activar el ip forwarding.
 
 Una vez la red base es estable, desplegamos el software y aseguramos su ejecución automática. Se instalan las herramientas de compilación y se descarga el binario correspondiente (Server o Client según el nodo).
 
@@ -308,7 +312,7 @@ apt update && apt upgrade -y
 apt install build-essential wget -y
 ~~~
 
-Descarga de softether server:
+Descarga de softether client:
 
 ~~~
 wget https://github.com/SoftEtherVPN/SoftEtherVPN_Stable/releases/download/v4.44-9807-rtm/softether-vpnclient-v4.44-9807-rtm-2025.04.16-linux-x64-64bit.tar.gz
@@ -331,9 +335,9 @@ Una vez iniciado el cliente vpn, podremos acceder a la configuración ejecutando
 
 Al ejecutar ./vpncmd, aparecerá un menú con 3 opciones en el que tendremos que elegir en este caso la opción 2 (Management of VPN client).
 
-Si seguimos avanzando en la configuración lo siguiente que nos pedirá sera indicar el hostname o IP del destino, al igual que con el server le daremos a "enter" indicando que la configuración sera local.
+Si seguimos avanzando en la configuración lo siguiente que nos pedirá será indicar el hostname o IP del destino, al igual que con el server le daremos a "enter" indicando que la configuración será local.
 
-Dentro de la configuración de softether client la primera configuración sera para crear el adaptador virtual de red con el comando NicCreate [nombre].
+Dentro de la configuración de softether client la primera configuración será para crear el adaptador virtual de red con el comando NicCreate [nombre].
 
 ~~~
 VPN Client>niccreate vpn
@@ -351,17 +355,19 @@ De esta forma vincularemos el cliente con el servidor de la LAN1. Esta conexión
 VPN Client>AccountPasswordSet Conexión /PASSWORD:12345678 /TYPE:standard
 ~~~
 
+***Nota:*** La contraseña 12345678 es únicamente un ejemplo para este laboratorio. En un entorno real usa siempre contraseñas seguras.
+
 Una vez establecida la contraseña ya podremos conectar el túnel de conexión entre ambos servidores haciendo uso del comando accountconnect
 
 ~~~
 VPN Client>accountconnect conexión
 ~~~
 
-Si todo ha salido bien y se a conectado el túnel al ejecutar el comando accountstatusget debería estar en estado de "connection completed".
+Si todo ha salido bien y se ha conectado el túnel al ejecutar el comando accountstatusget debería estar en estado de "connection completed".
 
 ~~~
 VPN Client>accountstatusget conexión
-accountstatusget command - Get Current VPN Conecction Setting Status
+accountstatusget command - Get Current VPN Connection Setting Status
 | Item | Value |
 | ---- | ---- |
 | VPN Connection Setting Name | conexion |
@@ -402,13 +408,13 @@ accountstatusget command - Get Current VPN Conecction Setting Status
 | Incoming Broadcast Total Size | 848 bytes |
 ~~~
 
-**NOTA:** Si accountstatusget devuelve un estado retraying (no recibe respuesta del servidor) o connecting (intenta conectarse) durante mas de 1 minuto significara que algo esta fallando a la hora de intentar establecer la conexión con el servidor de la LAN1 o bien el servidor no esta escuchando las peticiones.
+**NOTA:** Si accountstatusget devuelve un estado retrying (no recibe respuesta del servidor) o connecting (intenta conectarse) durante más de 1 minuto significara que algo esta fallando a la hora de intentar establecer la conexión con el servidor de la LAN1 o bien el servidor no esta escuchando las peticiones.
 
 Para corregir el estado **retrying** algunas posibles soluciones pueden ser:
 
 * Comprobar que los parámetros introducidos al ejecutar accountcreate estén todos bien (nombre de hub, usuario, nicname, etc... todos los nombres deben ponerse exactamente igual).
 
-* Revisar el firewall del servidor (LAN1) por si el firewall esta bloqueando la conexión. Para comprobar que el firewall esta realmente bien, tenemos que ejecutar el comando **netstat -tunlp | grep vpnserver** y debemos ver el proceso vpnserver escuchando en el puerto 0.0.0.0:443. Si no tiene el puerto abierto sera necesario abrirlo, bien con **iptables -I INPUT -p tcp --dport 443 -j ACCEPT** o con **ufw allow 443/tcp**.
+* Revisar el firewall del servidor (LAN1) por si el firewall esta bloqueando la conexión. Para comprobar que el firewall esta realmente bien, tenemos que ejecutar el comando **netstat -tunlp | grep vpnserver** y debemos ver el proceso vpnserver escuchando en el puerto 0.0.0.0:443. Si no tiene el puerto abierto será necesario abrirlo, bien con **iptables -I INPUT -p tcp --dport 443 -j ACCEPT** o con **ufw allow 443/tcp**.
 
 * Revisar que el servicio esta activo.
 
@@ -462,7 +468,7 @@ ip link set vpn_vpn up
 
 Para comprobar que la conexión es correcta y esta establecida, desde el servidor de LAN2 haremos ping al cliente interno de la LAN1 (192.168.10.128).
 
-Si se hace ping a ambas maquinas de la LAN1, lo único que quedara sera establecer el enrutamiento en los clientes internos de ambas redes.
+Si se hace ping a ambas máquinas de la LAN1, lo único que quedara será establecer el enrutamiento en los clientes internos de ambas redes.
 
 Cliente interno (LAN1):
 
@@ -559,3 +565,5 @@ Con esto ya quedaría configurado un puente de tipo TAP.
 ## Conclusión ## 
 
 La implementación exitosa de este escenario demuestra la versatilidad de SoftEther VPN para crear túneles de Capa 2. La transición de un Local Bridge físico a uno basado en TAP y Bridge de Linux (br0) fue fundamental para garantizar la gestión local del servidor sin perder la transparencia del tráfico entre sedes. El uso del puerto TCP 443 asegura, además, una alta capacidad de evasión frente a firewalls corporativos restrictivos.
+
+El punto más complejo del laboratorio fue entender la diferencia entre el puente físico y el puente TAP: con el puente físico el escenario funcionaba para los clientes pero el propio servidor quedaba incomunicado con su red, lo que no es aceptable en un entorno real donde el servidor necesita ser administrable. La solución con TAP y br0 resuelve esto de forma limpia, aunque requiere entender bien cómo Linux gestiona las interfaces de red a nivel de kernel.
