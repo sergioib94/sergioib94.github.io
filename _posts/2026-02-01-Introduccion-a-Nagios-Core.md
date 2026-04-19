@@ -61,7 +61,7 @@ Nagios Core es el motor de monitorización. Es software libre (open source) y es
 * Mucha configuración manual
 * Interfaz obsoleta
 
-# NAGIOS XI #
+# Nagios XI #
 
 Nagios XI es un producto comercial que usa Nagios Core por debajo, pero añade una capa completa de gestión.
 
