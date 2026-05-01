@@ -10,7 +10,7 @@ Estos son mis apuntes del primer módulo del camino hacia la certificación AZ-1
 
 ---
 
-## Parte 1 — Azure Cloud Shell
+## Azure Cloud Shell
 
 ### ¿Qué es?
 
@@ -49,7 +49,7 @@ Ahora que tenemos claro cómo acceder y operar con recursos desde el terminal, e
 
 ---
 
-## Parte 2 — Plantillas ARM de JSON
+## Plantillas ARM de JSON
 
 ### ¿Qué problema resuelven?
 
