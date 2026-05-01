@@ -1,8 +1,9 @@
 ---
-title: "AZ-104 Módulo 1: Azure Cloud Shell y plantillas ARM"
+title: "AZ-104: Azure Cloud Shell y plantillas ARM"
 date: 2026-04-30T18:51:00+02:00
 categories: [Azure, az-104, Apuntes]
 description: "Apuntes del primer módulo del AZ-104: qué es Azure Cloud Shell, cómo usarlo y cómo desplegar infraestructura en Azure con plantillas ARM de JSON."
+card_image: /assets/images/cards/az.png
 ---
 
 Estos son mis apuntes del primer módulo del camino hacia la certificación AZ-104. Cubre dos herramientas fundamentales: **Azure Cloud Shell** para administrar recursos desde el navegador, y las **plantillas ARM** para desplegar infraestructura como código.
