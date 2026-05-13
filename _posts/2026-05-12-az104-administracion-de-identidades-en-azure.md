@@ -1,7 +1,7 @@
 ---
 title: "AZ-104: Administración de identidades en Azure"
 date: 2026-05-12
-categories: [azure, az-104, Apuntes]
+categories: [Azure, az-104, Apuntes]
 description: "Apuntes del módulo 2 del AZ-104: Microsoft Entra ID, gestión de usuarios, grupos, dispositivos, licencias, infraestructura física de Azure, jerarquía de administración y Azure Policy."
 card_image: /assets/images/cards/az.png
 ---
@@ -239,8 +239,6 @@ Para sistemas de RR. HH. que no exponen un endpoint SCIM, existe el **aprovision
 
 ---
 
----
-
 ## Componentes arquitectónicos principales de Azure
 
 ### ¿Qué es Azure?
@@ -348,10 +346,6 @@ Datos clave:
 - Existe un **grupo raíz de inquilino** único por directorio, del que cuelgan todos los demás
 
 Un ejemplo práctico: puedes crear un grupo de administración "Producción" con una política que restrinja la creación de VMs solo a la región West Europe. Todas las suscripciones dentro de ese grupo heredarán esa restricción automáticamente, sin tener que configurarla suscripción a suscripción.
-
----
-
-*Este post cubre las partes 1, 2 y 3 del módulo 2. El módulo continúa con Azure Policy, RBAC y autoservicio de restablecimiento de contraseña.*
 
 ---
 
@@ -511,8 +505,6 @@ Aplicar políticas directamente en producción sin probarlas antes puede causar 
 
 > 💡 Trata las definiciones de política como código: guárdalas en control de versiones y prueba cada cambio antes de desplegarlo.
 
----
-
 ## Azure RBAC: Control de acceso basado en roles
 
 ### ¿Qué es Azure RBAC?
@@ -526,16 +518,16 @@ Toda asignación de roles se construye combinando tres piezas:
 
 1. Entidad de seguridad — ¿Quién? El usuario, grupo o aplicación al que quieres conceder acceso.
 
-2. Definición de rol — ¿Qué puede hacer? Un conjunto de permisos. Azure incluye más de 70 roles integrados. Los cuatro fundamentales son:
+2. Definición de rol — ¿Qué puede hacer? Un conjunto de permisos. Azure incluye más de 70 roles integrados.Los cuatro fundamentales son:
 
-| Rol | Qué permite |
-|---|---|
-| Propietario | Acceso total, incluyendo delegar acceso a otros |
-| Colaborador | Crear y gestionar recursos, pero no asignar acceso |
-| Lector | Solo ver recursos, sin modificar nada |
-| Administrador de acceso de usuario | Gestionar quién tiene acceso, pero sin tocar los recursos |
+  | Rol | Qué permite |
+  |---|---|
+  | Propietario | Acceso total, incluyendo delegar acceso a otros |
+  | Colaborador | Crear y gestionar recursos, pero no asignar acceso |
+  | Lector | Solo ver recursos, sin modificar nada |
+  | Administrador de acceso de usuario | Gestionar quién tiene acceso, pero sin tocar los recursos |
 
-Si ningún rol integrado se ajusta a tus necesidades, puedes crear roles personalizados.
+  Si ningún rol integrado se ajusta a tus necesidades, puedes crear roles personalizados.
 
 3. Ámbito — ¿Dónde aplica? El nivel jerárquico al que se aplica el permiso. Puede ser un grupo de administración, una suscripción, un grupo de recursos o un recurso individual. Los permisos asignados en un nivel superior se heredan automáticamente hacia abajo: si asignas el rol Colaborador a un usuario en una suscripción, ese usuario puede gestionar todos los recursos de todos los grupos de recursos de esa suscripción.
 
