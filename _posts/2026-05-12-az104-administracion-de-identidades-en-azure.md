@@ -518,18 +518,22 @@ Toda asignación de roles se construye combinando tres piezas:
 
 1. Entidad de seguridad — ¿Quién? El usuario, grupo o aplicación al que quieres conceder acceso.
 
-2. Definición de rol — ¿Qué puede hacer? Un conjunto de permisos. Azure incluye más de 70 roles integrados.Los cuatro fundamentales son:
+2. Definición de rol — ¿Qué puede hacer?  
+   Un conjunto de permisos. Azure incluye más de 70 roles integrados. Los cuatro fundamentales son:
 
-  | Rol | Qué permite |
-  |---|---|
-  | Propietario | Acceso total, incluyendo delegar acceso a otros |
-  | Colaborador | Crear y gestionar recursos, pero no asignar acceso |
-  | Lector | Solo ver recursos, sin modificar nada |
-  | Administrador de acceso de usuario | Gestionar quién tiene acceso, pero sin tocar los recursos |
+   | Rol | Qué permite |
+   |---|---|
+   | Propietario | Acceso total, incluyendo delegar acceso a otros |
+   | Colaborador | Crear y gestionar recursos, pero no asignar acceso |
+   | Lector | Solo ver recursos, sin modificar nada |
+   | Administrador de acceso de usuario | Gestionar quién tiene acceso, pero sin tocar los recursos |
 
-  Si ningún rol integrado se ajusta a tus necesidades, puedes crear roles personalizados.
+   Si ningún rol integrado se ajusta a tus necesidades, puedes crear roles personalizados.
 
-3. Ámbito — ¿Dónde aplica? El nivel jerárquico al que se aplica el permiso. Puede ser un grupo de administración, una suscripción, un grupo de recursos o un recurso individual. Los permisos asignados en un nivel superior se heredan automáticamente hacia abajo: si asignas el rol Colaborador a un usuario en una suscripción, ese usuario puede gestionar todos los recursos de todos los grupos de recursos de esa suscripción.
+3. Ámbito — ¿Dónde aplica?  
+   El nivel jerárquico al que se aplica el permiso. Puede ser un grupo de administración, una suscripción, un grupo de recursos o un recurso individual.
+
+   Los permisos asignados en un nivel superior se heredan automáticamente hacia abajo: si asignas el rol Colaborador a un usuario en una suscripción, ese usuario puede gestionar todos los recursos de todos los grupos de recursos de esa suscripción.
 
 ### Modelo de permisos: additive con NotActions
 
