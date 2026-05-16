@@ -1,5 +1,5 @@
 ---
-title: "AZ-104: Administración de identidades en Azure"
+title: "AZ-104: Administración de identidades"
 date: 2026-05-12T16:50:00+02:00
 categories: [Azure, az-104, Apuntes]
 description: "Apuntes del módulo 2 del AZ-104: Microsoft Entra ID, gestión de usuarios, grupos, dispositivos, licencias, infraestructura física de Azure, jerarquía de administración y Azure Policy."
