@@ -3,6 +3,7 @@ title: "AZ-104: Implementación y administración del almacenamiento en Azure"
 date: 2026-05-16T20:43:00+02:00
 categories: [Azure, az-104, Apuntes]
 description: "Apuntes del módulo 3 del AZ-104: servicios de Azure Storage, tipos de cuentas, estrategias de replicación, Blob Storage, niveles de acceso, seguridad, Azure Files y File Sync."
+card_image: /assets/images/cards/az.png
 ---
 
 Este módulo cubre todo lo relacionado con el almacenamiento en Azure: qué servicios existen, cómo elegir el tipo de cuenta adecuado, cómo proteger los datos y cómo gestionar el ciclo de vida de la información.
