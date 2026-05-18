@@ -1,7 +1,7 @@
 ---
-title: "AZ-104: Administración del almacenamiento"
+title: "Administración del almacenamiento"
 date: 2026-05-16T20:43:00+02:00
-categories: [Azure, az-104, Apuntes]
+categories: [Azure, AZ-104, Apuntes]
 description: "Apuntes del módulo 3 del AZ-104: servicios de Azure Storage, tipos de cuentas, estrategias de replicación, Blob Storage, niveles de acceso, seguridad, Azure Files y File Sync."
 card_image: /assets/images/cards/az.png
 ---
