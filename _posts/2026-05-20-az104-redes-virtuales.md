@@ -1,6 +1,6 @@
 ---
 title: "Configuración y administración de redes virtuales"
-date: 2026-05-20T16:34:00+02:00
+date: 2026-05-20T16:30:00+02:00
 categories: [Azure, AZ-104, Apuntes]
 description: "Apuntes del módulo 5 del AZ-104: redes virtuales, subredes, NSG, DNS, emparejamiento de VNets, Load Balancer, Application Gateway y Network Watcher."
 card_image: /assets/images/cards/az.png
