@@ -84,7 +84,7 @@ docker compose version
 
 ---
 
-## 4. Fase 1 — Hardening del host
+## 4. Hardening del host
 
 Con WSL2, tu "host" real sigue siendo Windows 10; WSL2 es un subsistema Linux dentro de él, no un servidor Linux completo. Esto significa dos capas de hardening distintas:
 
@@ -94,7 +94,7 @@ Con WSL2, tu "host" real sigue siendo Windows 10; WSL2 es un subsistema Linux de
 
 Para lo que corre en contenedores, el hardening se aplica una sola vez dentro de tu Ubuntu de WSL2.
 
-# Instalación de UFW
+### Instalación de UFW
 
 ```bash
 # UFW - firewall
@@ -117,7 +117,7 @@ Debería mostrar una lista con las reglas que acabas de crear y el estado "activ
 
 ![UFW](/assets/images/lab-noc-soc/ufw.PNG)
 
-# Instalación y activación de Fail2Ban (protección fuerza bruta)
+### Instalación y activación de Fail2Ban (protección fuerza bruta)
 
 ```bash
 sudo apt install -y fail2ban
@@ -130,7 +130,7 @@ Verificamos el resultado:
 
 ![fail2ban](/assets/images/lab-noc-soc/fail2ban.PNG)
 
-# Instalación de ClamAV - antivirus (ligero, escaneo bajo demanda para no consumir RAM en background)
+### Instalación de ClamAV - antivirus (ligero, escaneo bajo demanda para no consumir RAM en background)
 
 ```bash
 sudo apt install -y clamav clamav-daemon
@@ -142,7 +142,7 @@ Freshclam descarga las firmas de virus más recientes (tardará un par de minuto
 
 **Nota:** Es posible que a la hora de ejecutar sudo freshclam de error, realmente no es un error como tal ya que al ejecutarse previamente paquete clamav-daemon, este paquete arranca automáticamente el servicio freshclam en segundo plano por lo que al ejecutar después sudo freshclam de forma manual ambos comandos "chocan" entre si llegando a provocar un posible error.
 
-# Instalación de Maldet
+### Instalación de Maldet
 
 ```bash
 cd /tmp
@@ -161,7 +161,7 @@ sudo maldet -a /tmp
 
 ---
 
-## 5. Fase 2 — Zabbix (imagen ligera)
+## 5. Zabbix (imagen ligera)
 
 Creamos el docker-compose.yml:
 
@@ -218,7 +218,7 @@ volumes:
 
 **Nota:** El método con `docker-compose` y PostgreSQL es el soportado oficialmente.
 
-# Levantamos el stack
+### Levantamos el stack
 
 ```bash
 docker compose up -d
@@ -230,7 +230,7 @@ Cuando hayamos comprobado que esta todo iniciado, ya podremos acceder a Zabbix a
 
 ![inicio de zabbix](/assets/images/lab-noc-soc/dashboard_zabbix.PNG)
 
-# Instalación de zabbix-agent para monitorizarlo
+### Instalación de zabbix-agent para monitorizarlo
 
 ```bash
 wget https://repo.zabbix.com/zabbix/7.0/ubuntu/pool/main/z/zabbix-release/zabbix-release_7.0-2+ubuntu24.04_all.deb
@@ -304,7 +304,7 @@ La IP real desde la que se conecta el contenedor de Zabbix no es `127.0.0.1` sin
 
 ---
 
-## 6. Fase 3 — Prometheus + Grafana + exporters
+## 6. Prometheus + Grafana + exporters
 
 ```bash
 mkdir -p ~/noc-soc/monitoring && cd ~/noc-soc/monitoring
@@ -376,7 +376,7 @@ Por ultimo, importaremos el dashboard de node exporter para poder hacer capturas
 
 ---
 
-## 7. Fase 4 — Dashboard unificado
+## 7. Dashboard unificado
 
 Localizamos el nombre del contenedor de grafana:
 
@@ -470,7 +470,7 @@ Un `True` confirma que el hash es válido antes de tocar la base de datos.
 
 ---
 
-## 8. Fase 5 — Loki + Promtail ("SIEM lite")
+## 8. Loki + Promtail ("SIEM lite")
 
 Creamos la carpeta del proyecto:
 
@@ -559,7 +559,7 @@ Para acercarse al concepto de "SIEM lite" (detectar patrones de seguridad en los
 
 ---
 
-## 9. Fase 6 — Gestión de incidentes: Jira Cloud Free + n8n
+## 9. Gestión de incidentes: Jira Cloud Free + n8n
 
 ### Cuenta y proyecto en Jira
 
