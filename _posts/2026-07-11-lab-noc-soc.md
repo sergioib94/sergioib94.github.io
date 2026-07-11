@@ -6,7 +6,7 @@ excerpt: "Construye un laboratorio NOC/SOC con Docker, Zabbix, Prometheus, Grafa
 card_image: /assets/images/cards/lab-noc-soc.png
 ---
 
-Todo el stack corre como contenedores directamente sobre el host, sin capa de virtualización intermedia con 8GB de RAM no hay margen para máquinas virtuales completas. Por el mismo motivo, en vez de un SIEM tradicional tipo Wazuh (cuyo motor de búsqueda recomienda un mínimo de ~4GB solo para él), la capa de seguridad se construye con Loki + Promtail + alertas en Grafana: mismo concepto de correlación de eventos, con una fracción del consumo.
+Todo el stack corre como contenedores directamente sobre el host, sin capa de virtualización intermedia, ya que con 8GB de RAM no hay margen para máquinas virtuales completas. Por el mismo motivo, en vez de un SIEM tradicional tipo Wazuh (cuyo motor de búsqueda recomienda un mínimo de ~4GB solo para él), la capa de seguridad se construye con Loki + Promtail + alertas en Grafana: mismo concepto de correlación de eventos, con una fracción del consumo.
 
 ## 1. Arquitectura objetivo
 
@@ -70,7 +70,7 @@ docker compose version
 
 ---
 
-## 3. Roadmap por fases (= posts de blog)
+## 3. Roadmap por fases
 
 | Fase | Contenido |
 |---|---|
@@ -84,7 +84,7 @@ docker compose version
 
 ---
 
-## 4. Hardening del host
+## 4. Fase 1 - Hardening del host
 
 Con WSL2, tu "host" real sigue siendo Windows 10; WSL2 es un subsistema Linux dentro de él, no un servidor Linux completo. Esto significa dos capas de hardening distintas:
 
@@ -161,7 +161,7 @@ sudo maldet -a /tmp
 
 ---
 
-## 5. Zabbix (imagen ligera)
+## 5. Fase 2 - Zabbix (imagen ligera)
 
 Creamos el docker-compose.yml:
 
@@ -304,7 +304,7 @@ La IP real desde la que se conecta el contenedor de Zabbix no es `127.0.0.1` sin
 
 ---
 
-## 6. Prometheus + Grafana + exporters
+## 6. Fase 3 - Prometheus + Grafana + exporters
 
 ```bash
 mkdir -p ~/noc-soc/monitoring && cd ~/noc-soc/monitoring
@@ -376,7 +376,7 @@ Por ultimo, importaremos el dashboard de node exporter para poder hacer capturas
 
 ---
 
-## 7. Dashboard unificado
+## 7. Fase 4 - Dashboard unificado
 
 Localizamos el nombre del contenedor de grafana:
 
@@ -470,7 +470,7 @@ Un `True` confirma que el hash es válido antes de tocar la base de datos.
 
 ---
 
-## 8. Loki + Promtail ("SIEM lite")
+## 8. Fase 5 - Loki + Promtail ("SIEM lite")
 
 Creamos la carpeta del proyecto:
 
@@ -559,7 +559,7 @@ Para acercarse al concepto de "SIEM lite" (detectar patrones de seguridad en los
 
 ---
 
-## 9. Gestión de incidentes: Jira Cloud Free + n8n
+## 9. Fase 6 - Gestión de incidentes: Jira Cloud Free + n8n
 
 ### Cuenta y proyecto en Jira
 
@@ -591,7 +591,7 @@ En este caso se va a usar el servicio de n8n para automatizar las alertas por lo
  
 Grafana Alerting permite webhooks salientes, pero no permite reformatear fácilmente el payload para que coincida con la estructura que exige la API de Jira (`fields.project.key`, `fields.issuetype.name`, etc.). En vez de pelear con plantillas de notificación limitadas, se usa **n8n** como capa de automatización intermedia: recibe la alerta de Grafana en formato libre, y la transforma en una petición correcta a la API de Jira usando su nodo nativo (con mapeo de campos visual, sin construir el JSON a mano).
 
-## Despliegue n8n
+### Despliegue n8n
 
 Creamos la carpeta del proyecto:
 
@@ -701,9 +701,9 @@ Al comprobar el workflow ente webhook y Jira funciona correctamente, realizaremo
 
 Con esto, el ciclo queda cerrado de extremo a extremo: **Zabbix/Prometheus/Loki detectan → Grafana Alerting evalúa → n8n transforma → Jira crea el ticket**, sin intervención manual.
 
-## Verificación
+### Verificación
 
-Para realizar una comprobación de que el flujo de trabajo funciona de correctamente generaremos una alerta en Ubuntu, esta alerta se reflejara en grafana a traves de un Alert Rule que configuraremos y a traves del contact point configurado anteriormente esta alerta sera mandada de forma automática primero a n8n y después a Jira donde se creara e ticket automáticamente.
+Para realizar una comprobación de que el flujo de trabajo funciona de correctamente generaremos una alerta en Ubuntu, esta alerta se reflejara en grafana a traves de un Alert Rule que configuraremos y a traves del contact point configurado anteriormente esta alerta sera mandada de forma automática primero a n8n y después a Jira donde se creara el ticket automáticamente.
 
 Una alerta que podemos activar fácilmente es por ejemplo un error de acceso haciendo uso de ssh, para ello lo primero sera instalar 
 
@@ -728,7 +728,7 @@ count_over_time({job="varlogs"} |= "Failed password" [5m])
 
 Cuando ya este la regla configurada y ejecutemos el comando ssh, para comprobar que todo funciona correctamente tendremos que revisar varias cosas que indican que todo ha funcionado automáticamente:
 
-1. Revisar sudo grep "Failed password" /var/log/auth.log y comprobar que aparece el error de usuario invalido.
+1. Revisar sudo grep "Failed password" /var/log/auth.log y comprobar que aparece el error de usuario inválido.
 2. En Grafana → Alerting → Alert Rules, la regla configurada anteriormente debería cambiar de estado, es decir, al no haber ningún intento de acceso fallido reciente, la regla debería mostrar estado 'Normal'. Cuando la ventana de 5 minutos no encuentra ninguna coincidencia, es posible que aparezca temporalmente como 'No Data'.
 
 ![alert rule](/assets/images/lab-noc-soc/alert_rule.PNG)
@@ -774,7 +774,47 @@ Verificación: tras el cambio, una prueba con un único intento SSH fallido gene
 
 ![bloqueo n8n](/assets/images/lab-noc-soc/last_wf.PNG)
 
-En la captura se ve como en la ultima prueba, aparecen dos ejecuciones con varios minutos de diferencia, la primera ejecucion que se ve es la alerta que crea el ticket en Jira (siguiente imagen), sin embargo la ultima ejecucion seria el ticket duplicado que como se ve en la imagen anterior pasa la alerta de webhook a filter y este filter la bloquea por lo que no avaba llegando a Jira.
+En la captura se ve cómo en la última prueba aparecen dos ejecuciones con varios minutos de diferencia. La ejecución más reciente (arriba) corresponde a la transición a No Data, que pasa del Webhook al nodo Filter y queda bloqueada ahí, sin llegar a Jira. La ejecución anterior (abajo) es la que sí correspondía a la alerta real, y esa es la que creó el ticket en Jira que se ve en la siguiente imagen.
 
 ![jira final](/assets/images/lab-noc-soc/jira_final.PNG)
+
+## 10. Retrospectiva
+
+Con las seis fases anteriores completadas y el ciclo de detección → notificación → ticket funcionando de extremo a extremo, toca cerrar el proyecto con una mirada de conjunto: qué se ha construido realmente, cuánto cuesta en recursos, y qué se haría distinto con más margen.
+
+Seis piezas trabajando juntas sobre un único host de 8GB: Zabbix y Prometheus cubriendo infraestructura y observabilidad, Loki actuando como capa de detección de seguridad ligera, Grafana centralizando todo en un panel único, y n8n como pegamento de automatización entre las alertas y Jira Cloud Free. Ninguna pieza por separado es especialmente novedosa, lo interesante es la combinación, y sobre todo las decisiones tomadas para que todo quepa en un presupuesto de RAM que normalmente se consideraría insuficiente para un stack de este tipo.
+
+### Presupuesto de recursos reales
+
+| Stack | Contenedores | RAM estimada (planificación) | RAM real medida |
+|---|---|---|---|
+| zabbix | postgres-server, zabbix-server, zabbix-web | ~500MB | ~23MB |
+| monitoring | prometheus, grafana, node-exporter, cadvisor | ~400MB | ~145MB |
+| logging | loki, promtail | ~250MB | ~82MB |
+| automation | n8n | ~150-250MB | ~26MB |
+| **Total** | | **~1.3-1.4GB** | **~276MB** |
+
+### Qué se añadiría con más recursos
+
+El diseño de este lab está deliberadamente optimizado para 8GB, lo cual implica renuncias conscientes que tendrían sentido revertir en un entorno con más margen:
+
+* Wazuh o un SIEM/XDR completo, en vez de la combinación Loki + Promtail + reglas de alerta. Loki cubre bien la correlación básica de eventos, pero un SIEM real añade detección de anomalías, gestión de vulnerabilidades y respuesta automatizada que quedan fuera del alcance de este enfoque ligero.
+
+* Alta disponibilidad: en la configuración actual, cada servicio es un punto único de fallo — si el host se reinicia, todo el stack cae a la vez. Con más recursos, tendría sentido replicar al menos Grafana y la base de datos de Zabbix.
+
+* Backups automatizados de los volúmenes persistentes (especialmente pgdata de Zabbix y grafana-storage), que en este lab no se han configurado por simplicidad, pero que en cualquier entorno real serían indispensables.
+
+* Alerting multicanal: ahora mismo todo el flujo termina en un ticket de Jira. Añadir un canal adicional (Telegram, email) para alertas críticas daría redundancia si Jira o n8n fallaran en el momento exacto de un incidente real.
+
+### Qué se automatizaría con IaC si se repitiera desde cero
+
+Todo el despliegue de este lab se ha hecho a mano, docker-compose.yml por docker-compose.yml. Si se repitiera el proyecto, dos piezas de Infraestructura como Código encajarían de forma natural:
+
+* Ansible para el hardening del host (Fase 1) y la instalación de dependencias (Docker, agente de Zabbix, servidor SSH) — son pasos idempotentes y repetibles que hoy están documentados como comandos manuales, pero que se prestan directamente a un playbook.
+
+* Terraform, con su provider de Docker, para levantar los cuatro stacks de forma declarativa en vez de con docker compose up -d manual en cada carpeta — especialmente útil si en el futuro se quisiera reproducir este mismo lab en una VM cloud, reutilizando la misma definición.
+
+### Conclusión
+
+Este proyecto no ha buscado replicar un NOC/SOC de nivel empresarial — ha buscado entender, con las manos en el teclado, qué implica cada pieza de esa arquitectura y qué compromisos aparecen cuando los recursos son limitados. El resultado no es solo un stack funcionando, sino un registro de decisiones (por qué Loki en vez de Wazuh, por qué PostgreSQL en vez de la imagen appliance, por qué n8n como intermediario) que, más que las herramientas en sí, es lo que se pretendía documentar con esta serie.
 ---
