@@ -817,4 +817,5 @@ Todo el despliegue de este lab se ha hecho a mano, docker-compose.yml por docker
 ### Conclusión
 
 Este proyecto no ha buscado replicar un NOC/SOC de nivel empresarial — ha buscado entender, con las manos en el teclado, qué implica cada pieza de esa arquitectura y qué compromisos aparecen cuando los recursos son limitados. El resultado no es solo un stack funcionando, sino un registro de decisiones (por qué Loki en vez de Wazuh, por qué PostgreSQL en vez de la imagen appliance, por qué n8n como intermediario) que, más que las herramientas en sí, es lo que se pretendía documentar con esta serie.
+
 ---
