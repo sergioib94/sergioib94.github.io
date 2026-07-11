@@ -1,7 +1,7 @@
 ---
 title: "Lab NOC/SOC para equipo de bajos recursos"
 date: 2026-07-11T19:55:00+02:00
-categories: [Homelab, Monitorizacion, DevOps]
+categories: [Homelab, Monitorización, DevOps]
 excerpt: "Construye un laboratorio NOC/SOC con Docker, Zabbix, Prometheus, Grafana, Loki, n8n y Jira. Una guía práctica para crear un entorno de monitorización, observabilidad y automatización en hardware de recursos limitados."
 card_image: /assets/images/cards/lab-noc-soc.png
 ---
