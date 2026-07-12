@@ -795,6 +795,8 @@ Seis piezas trabajando juntas sobre un único host de 8GB: Zabbix y Prometheus c
 | automation | n8n | ~150-250MB | ~26MB |
 | **Total** | | **~1.3-1.4GB** | **~276MB** |
 
+El consumo real medido (~276MB) resultó muy por debajo de la estimación inicial (~1.3-1.4GB), aproximadamente una quinta parte. La explicación más probable es que las estimaciones de planificación se basaron en cifras genéricas publicadas para estas imágenes bajo carga típica de producción, mientras que en este lab, con tráfico y volumen de datos mínimos (pocos hosts monitorizados, poco histórico acumulado, bajo volumen de logs), el uso real de memoria de cada proceso queda muy por debajo de su techo habitual.
+
 ### Qué se añadiría con más recursos
 
 El diseño de este lab está deliberadamente optimizado para 8GB, lo cual implica renuncias conscientes que tendrían sentido revertir en un entorno con más margen:
