@@ -6,19 +6,19 @@ excerpt: "Construye un laboratorio NOC/SOC con Docker, Zabbix, Prometheus, Grafa
 card_image: /assets/images/cards/lab-noc-soc.png
 ---
 
-Todo el stack corre como contenedores directamente sobre el host, sin capa de virtualización intermedia, ya que con 8GB de RAM no hay margen para máquinas virtuales completas. Por el mismo motivo, en vez de un SIEM tradicional tipo Wazuh (cuyo motor de búsqueda recomienda un mínimo de ~4GB solo para él), la capa de seguridad se construye con Loki + Promtail + alertas en Grafana: mismo concepto de correlación de eventos, con una fracción del consumo.
+Todo el stack corre como contenedores directamente sobre el host, sin capa de virtualización intermedia, ya que con 8GB de RAM no hay margen para máquinas virtuales completas. Por el mismo motivo, en vez de un SIEM tradicional tipo Wazuh (cuyo motor de búsqueda recomienda un mínimo de 4GB solo para él), la capa de seguridad se construye con Loki + Promtail + alertas en Grafana: mismo concepto de correlación de eventos, con una fracción del consumo.
 
 ## 1. Arquitectura objetivo
 
 ![arquitectura lab](/assets/images/lab-noc-soc/arquitectura_noc_soc_lab.png)
 
-**Presupuesto de RAM estimado con todo corriendo a la vez: ~1.2-1.5GB.** Deja margen de sobra incluso en un host con overhead de SO. La pieza de ticketing (Jira Cloud Free) es SaaS, así que no consume nada de tu máquina — decisión deliberada para no gastar tu presupuesto de RAM en algo que puedes tener gratis en la nube.
+**Presupuesto de RAM estimado con todo corriendo a la vez: 1.2-1.5GB.** Deja margen de sobra incluso en un host con overhead de SO. La pieza de ticketing (Jira Cloud Free) es SaaS, así que no consume nada de tu máquina, decisión deliberada para no gastar tu presupuesto de RAM en algo que puedes tener gratis en la nube.
 
 ---
 
 ## 2. Prerrequisitos: base sobre Windows 10
 
-Con Windows 10 de por medio y solo 8GB, la combinación más eficiente es **WSL2 + Docker Engine instalado directamente dentro de la distro Linux** (nada de Docker Desktop). Docker Desktop añade una capa gráfica y un daemon de gestión que en tu caso es puro gasto de RAM que no necesitas — todo lo que vas a hacer es por línea de comandos.
+Con Windows 10 de por medio y solo 8GB, la combinación más eficiente es **WSL2 + Docker Engine instalado directamente dentro de la distro Linux** (nada de Docker Desktop). Docker Desktop añade una capa gráfica y un daemon de gestión que en tu caso es puro gasto de RAM que no necesitas, todo se hará por linea de comandos.
 
 ### 2.1 Instalar WSL2 + Ubuntu
 
@@ -425,7 +425,7 @@ Una vez reiniciado el servicio de Grafana, volvemos a ejecutar el primer comando
 
 Si la búsqueda de Zabbix en el Datasource se hace correctamente, nos debería de aparecer Zabbix para meter los parámetros de configuración, los parámetros a configurar serian básicamente:
 
-* URL: dirección donde esta alojado nuestro servicio Zabbix, http://<IP-de-tu-host>:8080/api_jsonrpc.php.
+* URL: dirección donde esta alojado nuestro servicio Zabbix, http://IP-de-tu-host:8080/api_jsonrpc.php.
 * Username: Usuario de acceso a Zabbix.
 * Password: Contraseña de acceso a Zabbix.
 
@@ -651,7 +651,7 @@ Al nodo ya creado, tendremos que crear otro, en este caso de Jira (aparecerá co
 * Operation: Create an Issue
 * Project: seleccionamos el proyecto del desplegable, en mi caso Lab NOC-SOC
 * Issue Type: Incident (o el que tengas disponible)
-* Summary: puedes mapear esto dinámicamente desde el payload del webhook de Grafana, por ejemplo {{ $json.body.alerts[0].labels.alertname }}
+* Summary: puedes mapear esto dinámicamente desde el payload del webhook de Grafana, por ejemplo {% raw %}{{ $json.body.alerts[0].labels.alertname }}{% endraw %}
 
 ![config Jira](/assets/images/lab-noc-soc/config_n8n_jira.PNG)
 
@@ -728,16 +728,16 @@ count_over_time({job="varlogs"} |= "Failed password" [5m])
 
 Cuando ya este la regla configurada y ejecutemos el comando ssh, para comprobar que todo funciona correctamente tendremos que revisar varias cosas que indican que todo ha funcionado automáticamente:
 
-1. Revisar sudo grep "Failed password" /var/log/auth.log y comprobar que aparece el error de usuario inválido.
-2. En Grafana → Alerting → Alert Rules, la regla configurada anteriormente debería cambiar de estado, es decir, al no haber ningún intento de acceso fallido reciente, la regla debería mostrar estado 'Normal'. Cuando la ventana de 5 minutos no encuentra ninguna coincidencia, es posible que aparezca temporalmente como 'No Data'.
+* Revisar sudo grep "Failed password" /var/log/auth.log y comprobar que aparece el error de usuario inválido.
+* En Grafana → Alerting → Alert Rules, la regla configurada anteriormente debería cambiar de estado, es decir, al no haber ningún intento de acceso fallido reciente, la regla debería mostrar estado 'Normal'. Cuando la ventana de 5 minutos no encuentra ninguna coincidencia, es posible que aparezca temporalmente como 'No Data'.
 
 ![alert rule](/assets/images/lab-noc-soc/alert_rule.PNG)
 
-3. Revisar también en Alerting → Active Notifications para comprobar que la notificación de alerta a entrado en Grafana.
+* Revisar también en Alerting → Active Notifications para comprobar que la notificación de alerta a entrado en Grafana.
 
 ![active notification](/assets/images/lab-noc-soc/active_notification.PNG)
 
-4. En Jira confirmamos que en el apartado "cola" se genera de forma automática el ticket. En caso de no generarse habría que revisar en n8n.
+* En Jira confirmamos que en el apartado "cola" se genera de forma automática el ticket. En caso de no generarse habría que revisar en n8n.
 
 ![Jira notifications](/assets/images/lab-noc-soc/jira-alert.PNG)
 
