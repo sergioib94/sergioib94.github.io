@@ -348,7 +348,7 @@ volumes:
   prometheus-data:
 ```
 
-**Nota:** los volúmenes `grafana-storage` y `prometheus-data` deben estar montados explícitamente en cada servicio (líneas `volumes:` dentro de `grafana` y `prometheus`), no solo declarados al final del archivo. Sin ese montaje, cualquier cambio futuro que obligue a recrear el contenedor (por ejemplo, editar el compose para añadir una red) borra toda la configuración interna de Grafana — datasources, dashboards, usuarios — porque vivía solo en la capa de escritura temporal del contenedor anterior. Este es un fallo real que ocurrió durante el desarrollo del lab (ver Fase 5) y que este montaje explícito evita desde el principio.
+**Nota:** los volúmenes `grafana-storage` y `prometheus-data` deben estar montados explícitamente en cada servicio (líneas `volumes:` dentro de `grafana` y `prometheus`), no solo declarados al final del archivo. Sin ese montaje, cualquier cambio futuro que obligue a recrear el contenedor (por ejemplo, editar el compose para añadir una red) borra toda la configuración interna de Grafana, datasources, dashboards, usuarios porque vivía solo en la capa de escritura temporal del contenedor anterior. Este es un fallo real que ocurrió durante el desarrollo del lab (ver Fase 5) y que este montaje explícito evita desde el principio.
 
 También en este mismo directorio, crearemos el fichero de configuración para prometheus:
 
@@ -466,7 +466,7 @@ print(bcrypt.checkpw(b'NuevaPassword', b'<HASH_GENERADO>'))
 
 Un `True` confirma que el hash es válido antes de tocar la base de datos.
  
-**Lección de fondo:** tras esto, se creó un usuario dedicado (`grafana-api`) solo para la integración con Grafana, en vez de seguir usando la cuenta `Admin` — principio de menor privilegio, y evita que un fallo de configuración en una integración bloquee la cuenta de administrador principal.
+**Lección de fondo:** tras esto, se creó un usuario dedicado (`grafana-api`) solo para la integración con Grafana, en vez de seguir usando la cuenta `Admin` con un principio de menor privilegio, y evita que un fallo de configuración en una integración bloquee la cuenta de administrador principal.
 
 ---
 
@@ -575,9 +575,9 @@ Teniendo ya la cuenta y el proyecto creados, lo que haremos sera generar un API 
 1. Vamos a id.atlassian.com/manage-profile/security/api-tokens.
 2. Creamos el API token, dándole un nombre descriptivo y copiamos el token generado (esto es importante dado que el Token se muestra una única vez y mas adelante sera necesario usarlo).
 
-**Nota:** El token es una credencial sensible — nunca debe incluirse en texto plano en documentación pública, capturas de pantalla, ni en el propio repositorio del proyecto. Trátalo con el mismo cuidado que una contraseña.
+**Nota:** El token es una credencial sensible por lo que nunca debe incluirse en texto plano en documentación pública, capturas de pantalla, ni en el propio repositorio del proyecto.
 
-Configuramos el Contact Point en Grafana Alerting
+### Configuramos el Contact Point en Grafana Alerting
 
 Para realizar la configuración, nos dirigimos en Grafana a Alerting → Contact points → Add contact point indicando la siguiente configuración:
 
@@ -623,7 +623,7 @@ volumes:
   n8n-data:
 ```
 
-**Nota:** N8N_SECURE_COOKIE=false es necesario porque accedes por http:// en vez de https:// (típico en un lab local) — sin esto, n8n puede rechazar el login por cookies inseguras.
+**Nota:** N8N_SECURE_COOKIE=false es necesario porque accedes por http:// en vez de https:// (típico en un lab local), sin esto, n8n puede rechazar el login por cookies inseguras.
 
 Levantamos el contenedor:
 
@@ -757,7 +757,8 @@ La query:
 count_over_time({job="varlogs"} |= "Failed password" [5m])
 ```
 
-Solo devuelve un punto de datos cuando hay al menos una coincidencia en la ventana de 5 minutos. En cuanto esa ventana queda vacía, la query no devuelve nada, y Grafana interpreta la ausencia de datos como un estado No Data — que, por defecto, también genera notificaciones, con un alertname genérico (DatasourceNoData) distinto al de la alerta real.
+Solo devuelve un punto de datos cuando hay al menos una coincidencia en la ventana de 5 minutos. En cuanto esa ventana queda vacía, la query no devuelve nada, y Grafana interpreta la ausencia de datos como un estado No Data que, por defecto, también genera notificaciones, con un alertname genérico (DatasourceNoData) distinto al de la alerta real.
+
 Como el workflow de n8n no distinguía el origen de la notificación, creaba un ticket tanto para la alerta real como para esta pseudo-alerta de "sin datos".
 
 La solución: filtrar por nombre de alerta en n8n. Se añadió un nodo Filter en el workflow, justo entre el Webhook y el nodo de Jira, con la condición:
@@ -800,7 +801,7 @@ El diseño de este lab está deliberadamente optimizado para 8GB, lo cual implic
 
 * Wazuh o un SIEM/XDR completo, en vez de la combinación Loki + Promtail + reglas de alerta. Loki cubre bien la correlación básica de eventos, pero un SIEM real añade detección de anomalías, gestión de vulnerabilidades y respuesta automatizada que quedan fuera del alcance de este enfoque ligero.
 
-* Alta disponibilidad: en la configuración actual, cada servicio es un punto único de fallo — si el host se reinicia, todo el stack cae a la vez. Con más recursos, tendría sentido replicar al menos Grafana y la base de datos de Zabbix.
+* Alta disponibilidad: en la configuración actual, cada servicio es un punto único de fallo, si el host se reinicia, todo el stack cae a la vez. Con más recursos, tendría sentido replicar al menos Grafana y la base de datos de Zabbix.
 
 * Backups automatizados de los volúmenes persistentes (especialmente pgdata de Zabbix y grafana-storage), que en este lab no se han configurado por simplicidad, pero que en cualquier entorno real serían indispensables.
 
@@ -810,12 +811,12 @@ El diseño de este lab está deliberadamente optimizado para 8GB, lo cual implic
 
 Todo el despliegue de este lab se ha hecho a mano, docker-compose.yml por docker-compose.yml. Si se repitiera el proyecto, dos piezas de Infraestructura como Código encajarían de forma natural:
 
-* Ansible para el hardening del host (Fase 1) y la instalación de dependencias (Docker, agente de Zabbix, servidor SSH) — son pasos idempotentes y repetibles que hoy están documentados como comandos manuales, pero que se prestan directamente a un playbook.
+* Ansible para el hardening del host (Fase 1) y la instalación de dependencias (Docker, agente de Zabbix, servidor SSH), son pasos repetibles que hoy están documentados como comandos manuales, pero que se prestan directamente a un playbook.
 
-* Terraform, con su provider de Docker, para levantar los cuatro stacks de forma declarativa en vez de con docker compose up -d manual en cada carpeta — especialmente útil si en el futuro se quisiera reproducir este mismo lab en una VM cloud, reutilizando la misma definición.
+* Terraform, con su provider de Docker, para levantar los cuatro stacks de forma declarativa en vez de con docker compose up -d manual en cada carpeta, especialmente útil si en el futuro se quisiera reproducir este mismo lab en una VM cloud, reutilizando la misma definición.
 
 ### Conclusión
 
-Este proyecto no ha buscado replicar un NOC/SOC de nivel empresarial — ha buscado entender, con las manos en el teclado, qué implica cada pieza de esa arquitectura y qué compromisos aparecen cuando los recursos son limitados. El resultado no es solo un stack funcionando, sino un registro de decisiones (por qué Loki en vez de Wazuh, por qué PostgreSQL en vez de la imagen appliance, por qué n8n como intermediario) que, más que las herramientas en sí, es lo que se pretendía documentar con esta serie.
+Este proyecto no ha buscado replicar un NOC/SOC de nivel empresarial, ha buscado entender qué implica cada pieza de esa arquitectura y qué compromisos aparecen cuando los recursos son limitados. El resultado no es solo un stack funcionando, sino un registro de decisiones (por qué Loki en vez de Wazuh, por qué PostgreSQL en vez de la imagen appliance, por qué n8n como intermediario) que, más que las herramientas en sí, es lo que se pretendía documentar con esta serie.
 
 ---
