@@ -28,11 +28,11 @@ En vez de mirar una gráfica y juzgar a ojo si "hay un hueco", usé tres señale
 
 ### Las métricas de referencia
 
-**`scrape_duration_seconds{job="node-exporter"}`** — Con esta métrica mediremos cuánto tarda cada ciclo de recolección.
+* **`scrape_duration_seconds{job="node-exporter"}`**: Con esta métrica mediremos cuánto tarda cada ciclo de recolección.
 
-**`up{job="node-exporter"}`** — vale `1` si el scrape tuvo éxito, `0` si falló.
+* **`up{job="node-exporter"}`**: vale `1` si el scrape tuvo éxito, `0` si falló.
 
-**`promtail_read_lines_total{path="..."}`, `promtail_sent_entries_total`, `promtail_dropped_entries_total`** — cuántas líneas leyó, envió y descartó Promtail, para cruzar con el volumen real recibido en Loki.
+* **`promtail_read_lines_total{path="..."}`, `promtail_sent_entries_total`, `promtail_dropped_entries_total`**: cuántas líneas leyó, envió y descartó Promtail, para cruzar con el volumen real recibido en Loki.
 
 ### Instalación de la herramienta de carga de CPU/IO
 
@@ -107,7 +107,7 @@ chmod +x ~/noc-soc/capture_stats.sh
 
 ### El script de verificación de Promtail
 
-Promtail solo expone la métrica `promtail_read_lines_total` para un archivo mientras detecta actividad reciente en él — si el archivo lleva un rato inactivo, la serie desaparece del todo en vez de quedarse en 0. Por eso el script incluye un pequeño "calentamiento" antes de cada snapshot inicial.
+Promtail solo expone la métrica `promtail_read_lines_total` para un archivo mientras detecta actividad reciente en él, si el archivo lleva un rato inactivo, la serie desaparece del todo en vez de quedarse en 0. Por eso el script incluye un pequeño "calentamiento" antes de cada snapshot inicial.
 
 ```bash
 nano ~/noc-soc/verify_promtail.sh
@@ -249,7 +249,7 @@ Sin carga sintética, la métrica `promtail_read_lines_total` para mi archivo di
 
 Antes de sacar ninguna conclusión sobre Prometheus o Loki, hay un patrón que salta a la vista en la tabla: **la tasa de logs realmente conseguida se queda muy por debajo de la configurada, y esa diferencia crece cuanto más agresiva es la tasa que pido.** Al 80% en el nivel ligero, cae al 46.7% en el medio, y se desploma al 15.8% en el alto.
 
-La causa no está en Prometheus, ni en Promtail, ni en Loki — está en mi propio `generate_log_burst.sh`. El script escribe cada línea con una llamada `echo` individual dentro de un bucle `for`, y ese bucle interno (más la llamada `sleep 1`) tarda en ejecutarse más de un segundo real cuanto mayor es el número de líneas por iteración. El control de duración del script se basa en el contador `$SECONDS` de bash, que mide tiempo real transcurrido así que, en vez de completar exactamente 120 iteraciones de un segundo cada una, el script completa **cada vez menos iteraciones** a medida que cada una tarda más en escribirse: 96 iteraciones en el nivel 1, 56 en el nivel 2, solo 19 en el nivel 3.
+La causa no está en Prometheus, ni en Promtail, ni en Loki, está en mi propio `generate_log_burst.sh`. El script escribe cada línea con una llamada `echo` individual dentro de un bucle `for`, y ese bucle interno (más la llamada `sleep 1`) tarda en ejecutarse más de un segundo real cuanto mayor es el número de líneas por iteración. El control de duración del script se basa en el contador `$SECONDS` de bash, que mide tiempo real transcurrido así que, en vez de completar exactamente 120 iteraciones de un segundo cada una, el script completa **cada vez menos iteraciones** a medida que cada una tarda más en escribirse: 96 iteraciones en el nivel 1, 56 en el nivel 2, solo 19 en el nivel 3.
 
 Es decir: **nunca llegué a generar la carga de logs que creía estar generando.** El "nivel alto" de 2000 líneas/seg, en la práctica, entregó una carga real más parecida a 317 líneas/seg sostenidas, bastante menos agresiva de lo que el diseño del experimento pretendía.
 
@@ -402,7 +402,7 @@ La corrección del generador de carga no fue un detalle menor: cambió por compl
 
 Con carga real mucho más cercana al objetivo, las conclusiones de fondo de la primera ronda se mantienen en los niveles 1 y 2: **cero líneas perdidas** en todo el pipeline Promtail → Loki (`dropped_entries_total` en 0 en los tres niveles con carga, y el volumen en Loki coincide casi al dígito con `read_lines` en cada uno: 11.6K, 58K y 216K), y **ninguna caída de scrape** (`up{job="node-exporter"}` se mantuvo en `1` durante las cuatro ventanas, incluida la de nivel 3).
 
-Pero el nivel 3 corregido sí deja una señal que no había aparecido en ningún momento de la primera ronda: un pico de `scrape_duration_seconds` unas 5–16 veces por encima del rango habitual, ubicado exactamente en el tramo donde coinciden `stress-ng --cpu 4 --io 2` y el pico de escritura de logs. No es un fallo de scrape ni un hueco en la serie —el pico sigue estando muy por debajo de cualquier `scrape_timeout` razonable, por eso `up` no se movió— pero es la primera evidencia medible, reproducible y localizada en el tiempo de que las tareas de recolección sí compiten por recursos cuando la carga real se acerca a la que el comentario original planteaba.
+Pero el nivel 3 corregido sí deja una señal que no había aparecido en ningún momento de la primera ronda: un pico de `scrape_duration_seconds` unas 5–16 veces por encima del rango habitual, ubicado exactamente en el tramo donde coinciden `stress-ng --cpu 4 --io 2` y el pico de escritura de logs. No es un fallo de scrape ni un hueco en la serie, el pico sigue estando muy por debajo de cualquier `scrape_timeout` razonable, por eso `up` no se movió pero es la primera evidencia medible, reproducible y localizada en el tiempo de que las tareas de recolección sí compiten por recursos cuando la carga real se acerca a la que el comentario original planteaba.
 
 ## Qué significa esto para la hipótesis original
 
@@ -429,4 +429,4 @@ Antes de dar el experimento por cerrado, quiero llevarlo un paso más allá para
 - Reducir `scrape_timeout` en la configuración de Prometheus para bajar artificialmente el umbral de fallo y comprobar si con eso sí se hace visible un gap con la carga actual.
 - Repetir el nivel 3 varias veces para confirmar que el pico de 0.25s es un patrón reproducible y no ruido de una sola muestra.
 
-Pero antes de seguir subiendo la carga sobre el mismo stack, el siguiente post va a cambiar de terreno: voy a sustituir Prometheus por VictoriaMetrics y Promtail por Alloy en el lab, y repetir exactamente esta misma batería de pruebas — los mismos cuatro niveles, los mismos scripts, las métricas equivalentes — para comprobar si el comportamiento bajo carga real se mantiene, mejora o empeora con ese cambio de stack. Si el pico de `scrape_duration_seconds` del nivel 3 era una particularidad de Prometheus/Promtail o un límite más general del hardware de 8GB, es algo que solo se puede responder repitiendo el experimento con otras herramientas — y es exactamente lo que toca hacer a continuación.
+Pero antes de seguir subiendo la carga sobre el mismo stack, el siguiente post va a cambiar de terreno: voy a sustituir Prometheus por VictoriaMetrics y Promtail por Alloy en el lab, y repetir exactamente esta misma batería de pruebas los mismos cuatro niveles, los mismos scripts, las métricas equivalentes para comprobar si el comportamiento bajo carga real se mantiene, mejora o empeora con ese cambio de stack. Si el pico de `scrape_duration_seconds` del nivel 3 era una particularidad de Prometheus/Promtail o un límite más general del hardware de 8GB, es algo que solo se puede responder repitiendo el experimento con otras herramientas y es exactamente lo que toca hacer a continuación.
