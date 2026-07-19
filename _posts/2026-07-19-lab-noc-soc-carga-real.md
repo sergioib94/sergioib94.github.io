@@ -1,5 +1,5 @@
 ---
-title: "¿Aparecen huecos de telemetría bajo carga real? Poniendo a prueba mi lab NOC/SOC"
+title: "Carga real lab SOC/NOC: ¿aparecen gaps cuando coincide scraping con picos de logs?"
 date: 2026-07-19T11:00:00+02:00
 categories: [Homelab, Monitorización, DevOps]
 excerpt: "Un comentario en LinkedIn planteó una duda legítima sobre mi lab NOC/SOC: ¿aguanta la telemetría cuando coinciden picos de logs y de scraping? Diseñé un experimento reproducible para comprobarlo y el hallazgo más interesante no fue el que esperaba."
