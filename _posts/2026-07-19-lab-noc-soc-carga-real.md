@@ -171,15 +171,15 @@ Y en Grafana Explore, tras cada nivel (ajustando el rango de tiempo a la ventana
 
 Sin carga sintética, la métrica `promtail_read_lines_total` para mi archivo directamente no aparece, comportamiento esperado ya que Promtail solo la expone mientras hay actividad reciente en el archivo. `scrape_duration_seconds` se mantuvo entre 0.02-0.12s, y `up` permaneció en `1` durante toda la ventana. En Loki, la query filtrada por `synthetic-load` devolvió 0 resultados (confirmando que no había contaminación de pruebas anteriores), y la query sin filtro mostró solo 3 líneas de actividad normal de fondo del sistema.
 
-![](/assets/images/lab-noc-soc-carga-real/A/prueba_0.PNG)
+![preparacion prueba 0](/assets/images/lab-noc-soc-carga-real/A/prueba_0.PNG)
 
-![](/assets/images/lab-noc-soc-carga-real/A/prueba_0_up.PNG)
+![prueba 0 up](/assets/images/lab-noc-soc-carga-real/A/prueba_0_up.PNG)
 
-![](/assets/images/lab-noc-soc-carga-real/A/prueba_0_scrape.PNG)
+![prueba 0 scrape](/assets/images/lab-noc-soc-carga-real/A/prueba_0_scrape.PNG)
 
-![](/assets/images/lab-noc-soc-carga-real/A/prueba_0_loki1.PNG)
+![prueba 0 query](/assets/images/lab-noc-soc-carga-real/A/prueba_0_loki1.PNG)
 
-![](/assets/images/lab-noc-soc-carga-real/A/prueba_0_loki2.PNG)
+![prueba 0 query](/assets/images/lab-noc-soc-carga-real/A/prueba_0_loki2.PNG)
 
 ### Nivel 1 — Ligero (100 líneas/seg)
 
@@ -194,13 +194,13 @@ Sin carga sintética, la métrica `promtail_read_lines_total` para mi archivo di
 | Pico `scrape_duration_seconds` | ~0.12s |
 | `up` | Sin caídas |
 
-![](/assets/images/lab-noc-soc-carga-real/A/prueba_1.PNG)
+![prueba 1](/assets/images/lab-noc-soc-carga-real/A/prueba_1.PNG)
 
-![](/assets/images/lab-noc-soc-carga-real/A/prueba_1_up.PNG)
+![prueba 1 up](/assets/images/lab-noc-soc-carga-real/A/prueba_1_up.PNG)
 
-![](/assets/images/lab-noc-soc-carga-real/A/prueba_1_scrape.PNG)
+![prueba 1 scrape](/assets/images/lab-noc-soc-carga-real/A/prueba_1_scrape.PNG)
 
-![](/assets/images/lab-noc-soc-carga-real/A/prueba_1_loki.PNG)
+![prueba 1 query](/assets/images/lab-noc-soc-carga-real/A/prueba_1_loki.PNG)
 
 
 ### Nivel 2 — Medio (500 líneas/seg + `stress-ng --cpu 2`)
@@ -216,13 +216,13 @@ Sin carga sintética, la métrica `promtail_read_lines_total` para mi archivo di
 | Pico `scrape_duration_seconds` | ~0.05s |
 | `up` | Sin caídas |
 
-![](/assets/images/lab-noc-soc-carga-real/A/prueba_2.PNG)
+![prueba 2](/assets/images/lab-noc-soc-carga-real/A/prueba_2.PNG)
 
-![](/assets/images/lab-noc-soc-carga-real/A/prueba_2_up.PNG)
+![prueba 2 up](/assets/images/lab-noc-soc-carga-real/A/prueba_2_up.PNG)
 
-![](/assets/images/lab-noc-soc-carga-real/A/prueba_2_scrape.PNG)
+![prueba 2 scrape](/assets/images/lab-noc-soc-carga-real/A/prueba_2_scrape.PNG)
 
-![](/assets/images/lab-noc-soc-carga-real/A/prueba_2_loki.PNG)
+![prueba 2 query](/assets/images/lab-noc-soc-carga-real/A/prueba_2_loki.PNG)
 
 ### Nivel 3 — Alto (2000 líneas/seg + `stress-ng --cpu 4 --io 2`)
 
@@ -237,13 +237,13 @@ Sin carga sintética, la métrica `promtail_read_lines_total` para mi archivo di
 | Pico `scrape_duration_seconds` | ~0.04s |
 | `up` | Sin caídas |
 
-![](/assets/images/lab-noc-soc-carga-real/A/prueba_3.PNG)
+![prueba 3](/assets/images/lab-noc-soc-carga-real/A/prueba_3.PNG)
 
-![](/assets/images/lab-noc-soc-carga-real/A/prueba_3_up.PNG)
+![prueba 3 up](/assets/images/lab-noc-soc-carga-real/A/prueba_3_up.PNG)
 
-![](/assets/images/lab-noc-soc-carga-real/A/prueba_3_scrape.PNG)
+![prueba 3 scrape](/assets/images/lab-noc-soc-carga-real/A/prueba_3_scrape.PNG)
 
-![](/assets/images/lab-noc-soc-carga-real/A/prueba_3_loki.PNG)
+![prueba 3 query](/assets/images/lab-noc-soc-carga-real/A/prueba_3_loki.PNG)
 
 ## El hallazgo real: no fue el sistema, fue mi propio script de prueba
 
@@ -309,15 +309,15 @@ Con `generate_log_burst.sh` reescrito para escribir en lotes (un solo `printf -v
 
 Igual que en la primera ronda: sin carga sintética, `promtail_read_lines_total` para mi archivo no aparece (comportamiento esperado, la serie solo existe mientras hay actividad reciente), y `sent_entries_total` global apenas se mueve por el ruido de fondo del sistema (546 → 559 en casi cuatro minutos). En Loki, la query filtrada por `synthetic-load` no devolvió resultados, y la query sin filtro solo mostró actividad normal de red del host. `scrape_duration_seconds` se mantuvo en el rango de milisegundos habitual (0.02–0.12s, con un pico aislado de 1.2s al arrancar la ventana de Explore, probablemente el primer scrape tras abrir el panel) y `up` no registró ninguna caída. Nada nuevo aquí, tal y como cabía esperar de un control.
 
-![](/assets/images/lab-noc-soc-carga-real/B/prueba_0.PNG)
+![prueba 0](/assets/images/lab-noc-soc-carga-real/B/prueba_0.PNG)
 
-![](/assets/images/lab-noc-soc-carga-real/B/prueba_0_up.PNG)
+![prueba 0 up](/assets/images/lab-noc-soc-carga-real/B/prueba_0_up.PNG)
 
-![](/assets/images/lab-noc-soc-carga-real/B/prueba_0_scrape.PNG)
+![prueba 0 scrape](/assets/images/lab-noc-soc-carga-real/B/prueba_0_scrape.PNG)
 
-![](/assets/images/lab-noc-soc-carga-real/B/prueba_0_loki.PNG)
+![prueba 0 query](/assets/images/lab-noc-soc-carga-real/B/prueba_0_loki.PNG)
 
-![](/assets/images/lab-noc-soc-carga-real/B/prueba_0_lok2.PNG)
+![prueba 0 query](/assets/images/lab-noc-soc-carga-real/B/prueba_0_lok2.PNG)
 
 ### Nivel 1 — Ligero corregido (100 líneas/seg objetivo)
 
@@ -332,13 +332,13 @@ Igual que en la primera ronda: sin carga sintética, `promtail_read_lines_total`
 | Rango `scrape_duration_seconds` | 0.015–0.055s |
 | `up` | Sin caídas |
 
-![](/assets/images/lab-noc-soc-carga-real/B/prueba_1.PNG)
+![prueba 1](/assets/images/lab-noc-soc-carga-real/B/prueba_1.PNG)
 
-![](/assets/images/lab-noc-soc-carga-real/B/prueba_1_up.PNG)
+![prueba 1 up](/assets/images/lab-noc-soc-carga-real/B/prueba_1_up.PNG)
 
-![](/assets/images/lab-noc-soc-carga-real/B/prueba_1_scrape.PNG)
+![prueba 1 scrape](/assets/images/lab-noc-soc-carga-real/B/prueba_1_scrape.PNG)
 
-![](/assets/images/lab-noc-soc-carga-real/B/prueba_1_loki.PNG)
+![prueba 1 query](/assets/images/lab-noc-soc-carga-real/B/prueba_1_loki.PNG)
 
 Frente al 80% de la primera ronda, el script corregido se queda a menos de un 3.5% del objetivo. La gráfica de volumen en Loki muestra barras consistentes en torno a las 50 líneas por bucket de 10s, sin los huecos irregulares que delataban al bucle antiguo.
 
@@ -355,13 +355,13 @@ Frente al 80% de la primera ronda, el script corregido se queda a menos de un 3.
 | Rango `scrape_duration_seconds` | 0.015–0.0325s |
 | `up` | Sin caídas |
 
-![](/assets/images/lab-noc-soc-carga-real/B/prueba_2.PNG)
+![prueba 2](/assets/images/lab-noc-soc-carga-real/B/prueba_2.PNG)
 
-![](/assets/images/lab-noc-soc-carga-real/B/prueba_2_up.PNG)
+![prueba 2 up](/assets/images/lab-noc-soc-carga-real/B/prueba_2_up.PNG)
 
-![](/assets/images/lab-noc-soc-carga-real/B/prueba_2_scrape.PNG)
+![prueba 2 scrape](/assets/images/lab-noc-soc-carga-real/B/prueba_2_scrape.PNG)
 
-![](/assets/images/lab-noc-soc-carga-real/B/prueba_2_loki.PNG)
+![prueba 2 query](/assets/images/lab-noc-soc-carga-real/B/prueba_2_loki.PNG)
 
 Aquí está el salto más claro respecto al intento anterior: del 46.7% conseguido con el script antiguo al 96.7% con el corregido, con `stress-ng --cpu 2` corriendo en paralelo durante toda la ventana. Sí aparecen dos picos discretos en `scrape_duration_seconds` (~0.03s) que coinciden aproximadamente con el arranque del burst de logs y con el tramo central de `stress-ng`, pero siguen siendo del mismo orden de magnitud que el ruido del nivel 0.
 
@@ -378,13 +378,13 @@ Aquí está el salto más claro respecto al intento anterior: del 46.7% consegui
 | Pico `scrape_duration_seconds` | **~0.25s** |
 | `up` | Sin caídas |
 
-![](/assets/images/lab-noc-soc-carga-real/B/prueba_3.PNG)
+![prueba 3](/assets/images/lab-noc-soc-carga-real/B/prueba_3.PNG)
 
-![](/assets/images/lab-noc-soc-carga-real/B/prueba_3_up.PNG)
+![prueba 3 up](/assets/images/lab-noc-soc-carga-real/B/prueba_3_up.PNG)
 
-![](/assets/images/lab-noc-soc-carga-real/B/prueba_3_scrape.PNG)
+![prueba 3 scrape](/assets/images/lab-noc-soc-carga-real/B/prueba_3_scrape.PNG)
 
-![](/assets/images/lab-noc-soc-carga-real/B/prueba_3_loki.PNG)
+![prueba 3 query](/assets/images/lab-noc-soc-carga-real/B/prueba_3_loki.PNG)
 
 Este es el nivel que por fin se acerca a lo que el comentario original planteaba: casi 1.800 líneas/seg reales sostenidas, combinadas con `stress-ng --cpu 4 --io 2`. Y aquí, por primera vez en las dos rondas, `scrape_duration_seconds` deja de moverse en el rango habitual de 0.015–0.055s: hay un pico claro de **~0.25s** alrededor de las 19:10:40, justo en mitad de la ventana en la que coinciden el stress de CPU/IO y el tramo más denso del burst de logs. El resto de la ventana vuelve a caer a valores de 0.02–0.05s.
 
