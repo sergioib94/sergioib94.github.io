@@ -1,6 +1,6 @@
 ---
 title: "Lab NOC/SOC cambios de stack: VictoriaMetrics y Alloy"
-date: 2026-07-22T11:00:00+02:00
+date: 2026-07-22T:10:00:00+02:00
 categories: [Homelab, Monitorización, DevOps]
 excerpt: "Promtail llegó a su fin de soporte el pasado marzo, así que además de curiosidad técnica ahora tengo una razón de peso para el cambio. Repito la misma batería de pruebas de carga de los dos posts anteriores, pero esta vez con VictoriaMetrics y Alloy — y el resultado del nivel más agresivo no es lo que esperaba."
 card_image: /assets/images/cards/lab-noc-soc-modificado.png
