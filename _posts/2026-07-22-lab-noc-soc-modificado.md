@@ -2,7 +2,7 @@
 title: "Lab NOC/SOC cambios de stack: VictoriaMetrics y Alloy"
 date: 2026-07-22T:10:00:00+02:00
 categories: [Homelab, Monitorización, DevOps]
-excerpt: "Promtail llegó a su fin de soporte el pasado marzo, así que además de curiosidad técnica ahora tengo una razón de peso para el cambio. Repito la misma batería de pruebas de carga de los dos posts anteriores, pero esta vez con VictoriaMetrics y Alloy — y el resultado del nivel más agresivo no es lo que esperaba."
+excerpt: "Promtail llegó a su fin de soporte el pasado marzo, así que además de curiosidad técnica ahora tengo una razón de peso para el cambio. Repito la misma batería de pruebas de carga de los dos posts anteriores, pero esta vez con VictoriaMetrics y Alloy y el resultado del nivel más agresivo no es lo que esperaba."
 card_image: /assets/images/cards/lab-noc-soc-modificado.png
 ---
 
@@ -12,7 +12,7 @@ Ese hallazgo dejaba una pregunta abierta: ¿esa degradación es una particularid
 
 ## Hipótesis
 
-Sustituyendo Prometheus por VictoriaMetrics (compatible con PromQL y con el modelo de scraping de Prometheus) y Promtail por Grafana Alloy (su sucesor oficial), y repitiendo los mismos cuatro niveles de carga sobre el mismo hardware, el comportamiento observado sin pérdida de logs, sin caídas de scrape, degradación de latencia visible solo en el nivel más agresivo— se mantendría aproximadamente igual, porque el cuello de botella real estaría en los recursos del host compartidos, no en la implementación concreta del recolector.
+Sustituyendo Prometheus por VictoriaMetrics (compatible con PromQL y con el modelo de scraping de Prometheus) y Promtail por Grafana Alloy (su sucesor oficial), y repitiendo los mismos cuatro niveles de carga sobre el mismo hardware, el comportamiento observado sin pérdida de logs, sin caídas de scrape, degradación de latencia visible solo en el nivel más agresivo se mantendría aproximadamente igual, porque el cuello de botella real estaría en los recursos del host compartidos, no en la implementación concreta del recolector.
 
 Spoiler: los datos no le dan la razón a esta hipótesis, y es la parte más interesante del post.
 
@@ -107,7 +107,7 @@ docker compose ps
 ✔ Container monitoring-victoriametrics-1         Started
 ```
 
-VictoriaMetrics trae su propia UI en `http://localhost:8428/target` para confirmar targets, y en Grafana el datasource pasa de tipo Prometheus apuntando a `http://prometheus:9090` a tipo Prometheus apuntando a `http://victoriametrics:8428` — mismo tipo de datasource, porque VictoriaMetrics expone una API compatible con Prometheus.
+VictoriaMetrics trae su propia UI en `http://localhost:8428/target` para confirmar targets, y en Grafana el datasource pasa de tipo Prometheus apuntando a `http://prometheus:9090` a tipo Prometheus apuntando a `http://victoriametrics:8428` mismo tipo de datasource, porque VictoriaMetrics expone una API compatible con Prometheus.
 
 ![victoriametrics target](/assets/images/lab-noc-soc-modificado/vm_target.PNG)
 
@@ -162,7 +162,7 @@ loki.write "default" {
 }
 ```
 
-Grafana Labs ofrece una herramienta de conversión (`alloy convert --source-format=promtail`) para traducir configuraciones de Promtail a River automáticamente, aunque avisan de que es "best effort" — para un caso tan simple como este, fue más rápido escribirlo a mano partiendo del `promtail-config.yml` original.
+Grafana Labs ofrece una herramienta de conversión (`alloy convert --source-format=promtail`) para traducir configuraciones de Promtail a River automáticamente, aunque avisan de que es "best effort" para un caso tan simple como este, fue más rápido escribirlo a mano partiendo del `promtail-config.yml` original.
 
 ## Troubleshooting: un problema que Docker Compose no resuelve solo
 
@@ -226,7 +226,7 @@ echo "read_lines(mi archivo)=$READ  sent_entries(global)=$SENT  dropped_entries(
 chmod +x ~/noc-soc/verify_alloy.sh
 ```
 
-`sent_entries_total` sale en Alloy en una única línea (`loki.write.default`), y `dropped_entries_total` sí viene desglosado en cinco líneas por `reason` (`ingester_error`, `line_too_long`, `queue_is_full`, `rate_limited`, `stream_limited`) — el mismo patrón que tenía Promtail, así que el `awk '{sum+=$2}'` las suma correctamente.
+`sent_entries_total` sale en Alloy en una única línea (`loki.write.default`), y `dropped_entries_total` sí viene desglosado en cinco líneas por `reason` (`ingester_error`, `line_too_long`, `queue_is_full`, `rate_limited`, `stream_limited`) el mismo patrón que tenía Promtail, así que el `awk '{sum+=$2}'` las suma correctamente.
 
 ## Metodología: la misma de siempre
 
@@ -342,6 +342,6 @@ Dos lecturas de esta tabla, y no tienen el mismo peso:
 
 **Sin pérdida de logs y sin caídas de scrape con ningún stack**, en los cuatro niveles probados con ambas combinaciones. Esa parte de la conclusión de los dos posts anteriores se sostiene igual con VictoriaMetrics y Alloy.
 
-**La hipótesis de partida de este post no se cumple.** Esperaba un comportamiento similar entre stacks porque asumía que el límite estaba en el hardware compartido; en su lugar, encontré que VictoriaMetrics mantiene la latencia de scrape muchísimo más contenida que Prometheus bajo exactamente la misma carga real. Es el tipo de resultado que vale más que uno que confirme lo que ya esperaba: cambia la pregunta de "¿aguanta mi lab la carga?" a "¿qué hace Prometheus distinto de VictoriaMetrics en ese momento concreto?" — y esa es una pregunta que este experimento, tal como está diseñado, no puede responder por sí solo.
+**La hipótesis de partida de este post no se cumple.** Esperaba un comportamiento similar entre stacks porque asumía que el límite estaba en el hardware compartido; en su lugar, encontré que VictoriaMetrics mantiene la latencia de scrape muchísimo más contenida que Prometheus bajo exactamente la misma carga real. Es el tipo de resultado que vale más que uno que confirme lo que ya esperaba: cambia la pregunta de "¿aguanta mi lab la carga?" a "¿qué hace Prometheus distinto de VictoriaMetrics en ese momento concreto?" y esa es una pregunta que este experimento, tal como está diseñado, no puede responder por sí solo.
 
 **Con una sola ejecución por nivel y por stack, esto es una observación, no una ley.** Antes de escribirlo como una conclusión firme sobre qué motor de métricas "es mejor", necesitaría repetir el nivel 3 varias veces en ambos stacks para descartar que ese pico de 0.25s en Prometheus fuera una anomalía puntual de esa ejecución concreta y no un patrón reproducible.
