@@ -199,7 +199,7 @@ Unos días después de dar por cerrada la migración, empecé a notar que tanto 
 |---|---|---|
 | ea5a4fbe7317 | grafana/grafana:latest | Restarting (1) 26 seconds ago |
 
-Grafana llevaba un tiempo entrando en un bucle de reinicio constante — arranca, falla, Docker lo reinicia, vuelve a fallar. Cada intento de arranque consume CPU e I/O por sí solo (carga de plugins, indexado de dashboards, conexión a su base de datos interna), así que un contenedor atrapado en este bucle puede convertirse en un consumidor de recursos sostenido sin que salte ningún error visible en el resto del stack.
+Grafana llevaba un tiempo entrando en un bucle de reinicio constante, arranca, falla, Docker lo reinicia, vuelve a fallar. Cada intento de arranque consume CPU e I/O por sí solo (carga de plugins, indexado de dashboards, conexión a su base de datos interna), así que un contenedor atrapado en este bucle puede convertirse en un consumidor de recursos sostenido sin que salte ningún error visible en el resto del stack.
 
 Los logs señalaron el problema exacto:
 
@@ -207,7 +207,7 @@ Los logs señalaron el problema exacto:
 docker logs monitoring-grafana-1 --tail=50
 ```
 
-El comando nos muestra el siguiente error: unable to open database file (14). Es el código 14 de SQLite (`SQLITE_CANTOPEN`) — Grafana no podía abrir su propia base de datos interna, alojada en el volumen persistente `grafana-storage`. Antes de asumir corrupción del volumen, descarté lo obvio:
+El comando nos muestra el siguiente error: unable to open database file (14). Es el código 14 de SQLite (`SQLITE_CANTOPEN`), Grafana no podía abrir su propia base de datos interna, alojada en el volumen persistente `grafana-storage`. Antes de asumir corrupción del volumen, descarté lo obvio:
 
 ```bash
 df -h
@@ -222,9 +222,9 @@ sudo ls -la /var/lib/docker/volumes/monitoring_grafana-storage/_data
 -rw-r----- 1 sergioib sergioib 1802240 Jul 24 13:33 grafana.db
 ```
 
-Ahí estaba: el archivo `grafana.db` pertenecía a mi propio usuario del host (`sergioib`), no al UID `472` con el que corre el proceso de Grafana dentro del contenedor (el mismo patrón se repetía en un par de carpetas más del volumen). Con permisos `640`, solo el propietario puede escribir — y como el proceso de Grafana no es ese propietario, se quedaba sin permiso sobre su propia base de datos en cada arranque.
+Ahí estaba: el archivo `grafana.db` pertenecía a mi propio usuario del host (`sergioib`), no al UID `472` con el que corre el proceso de Grafana dentro del contenedor (el mismo patrón se repetía en un par de carpetas más del volumen). Con permisos `640`, solo el propietario puede escribir y como el proceso de Grafana no es ese propietario, se quedaba sin permiso sobre su propia base de datos en cada arranque.
 
-La causa más probable: en algún momento de la migración toqué archivos del volumen directamente desde el host con `sudo` (revisando o copiando algo puntual), lo que dejó esos archivos con la propiedad de mi usuario en vez de la del proceso del contenedor — un tipo de descuido fácil de cometer precisamente cuando se está moviendo configuración entre varios `docker-compose.yml` a la vez.
+La causa más probable: en algún momento de la migración toqué archivos del volumen directamente desde el host con `sudo` (revisando o copiando algo puntual), lo que dejó esos archivos con la propiedad de mi usuario en vez de la del proceso del contenedor, un tipo de descuido fácil de cometer precisamente cuando se está moviendo configuración entre varios `docker-compose.yml` a la vez.
 
 La solución es devolver la propiedad al UID correcto:
 
@@ -240,7 +240,7 @@ docker ps -a --filter "name=monitoring-grafana-1"
 
 Sin más reinicios. El consumo de `Vmmem` visto desde Windows bajó de forma notable tras el fix (de ~4GB a ~2.7GB), confirmando que buena parte de la lentitud que llevaba días arrastrando no era el propio stack de observabilidad funcionando con normalidad, sino este bucle de fallos silencioso.
 
-**Lección para la próxima migración:** si en algún punto hay que tocar el contenido de un volumen de Docker directamente desde el host (con `sudo cp`, `sudo nano`, o simplemente mirar algo con `sudo ls`), conviene devolver la propiedad al UID del contenedor inmediatamente después, en vez de asumir que Docker se encarga de ello — no lo hace, y el fallo resultante (un error de SQLite, en este caso) no tiene nada que ver a simple vista con el cambio real que lo provocó.
+**Lección para la próxima migración:** si en algún punto hay que tocar el contenido de un volumen de Docker directamente desde el host (con `sudo cp`, `sudo nano`, o simplemente mirar algo con `sudo ls`), conviene devolver la propiedad al UID del contenedor inmediatamente después, en vez de asumir que Docker se encarga de ello no lo hace, y el fallo resultante (un error de SQLite, en este caso) no tiene nada que ver a simple vista con el cambio real que lo provocó.
 
 ## Ajuste necesario en `verify_alloy.sh`: los nombres de métrica cambian
 
