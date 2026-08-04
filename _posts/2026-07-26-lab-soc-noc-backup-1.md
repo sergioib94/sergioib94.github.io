@@ -360,7 +360,7 @@ Backblaze → **B2 Cloud Storage → Buckets → Create a Bucket**:
  
 ![application key creada, restringida al bucket](/assets/images/lab-noc-soc-bk1/B2_key2.PNG)
  
-*Troubleshooting: `B2_ACCOUNT_ID` vs `B2_ACCOUNT_KEY`.* Es fácil confundir cuál es cuál — `B2_ACCOUNT_ID` **no** es el ID de la cuenta de Backblaze en general, sino el `keyID` de esta Application Key en concreto (visible en el listado de `Application Keys`). `B2_ACCOUNT_KEY` es la `applicationKey`, que Backblaze **solo muestra una vez**, en el momento exacto de crear la clave si se cierra esa pantalla sin copiarla, no hay forma de recuperarla después, ni desde el panel ni por soporte; la única opción es borrar la clave y crear una nueva.
+*Troubleshooting: `B2_ACCOUNT_ID` vs `B2_ACCOUNT_KEY`.* Es fácil confundir cuál es cuál, `B2_ACCOUNT_ID` **no** es el ID de la cuenta de Backblaze en general, sino el `keyID` de esta Application Key en concreto (visible en el listado de `Application Keys`). `B2_ACCOUNT_KEY` es la `applicationKey`, que Backblaze **solo muestra una vez**, en el momento exacto de crear la clave si se cierra esa pantalla sin copiarla, no hay forma de recuperarla después, ni desde el panel ni por soporte; la única opción es borrar la clave y crear una nueva.
  
 **3. Guardar las credenciales fuera del script**
  
@@ -520,11 +520,11 @@ Con el mismo webhook que ya usa el pipeline **Grafana Alerting → n8n → Jira*
 
 ![mismo error 400 con los IDs correctos fijados a mano](/assets/images/lab-noc-soc-bk1/persiste.PNG)
 
-4. **Verificación manual: el ticket sí se podía crear a mano, desde la propia interfaz de Jira, con el mismo usuario.** Esto descartó un problema de permisos del usuario o de licencia de agente en el proyecto — si el usuario podía crear el ticket a mano, el bloqueo no estaba en Jira, sino en cómo n8n se estaba autenticando.
+4. **Verificación manual: el ticket sí se podía crear a mano, desde la propia interfaz de Jira, con el mismo usuario.** Esto descartó un problema de permisos del usuario o de licencia de agente en el proyecto, si el usuario podía crear el ticket a mano, el bloqueo no estaba en Jira, sino en cómo n8n se estaba autenticando.
 
 ![comprobación de roles del usuario en Jira](/assets/images/lab-noc-soc-bk1/personas.PNG)
 
-5. **La causa real: la credencial de Jira en n8n nunca llegó a autenticarse.** Al revisar `Credentials → Jira SW Cloud account` en n8n, el propio panel mostraba: `Couldn't connect with these settings: Authorization failed — please check your credentials`. El mensaje de error genérico de la API de Jira (`"the target project doesn't exist or you don't have permission"`) es indistinguible entre un problema de datos, de permisos, o de autenticación — por eso la investigación tuvo que descartar las dos primeras causas antes de llegar a la tercera, que era la real: **el API token había caducado** desde que se configuró la integración en el primer post de la serie.
+5. **La causa real: la credencial de Jira en n8n nunca llegó a autenticarse.** Al revisar `Credentials → Jira SW Cloud account` en n8n, el propio panel mostraba: `Couldn't connect with these settings: Authorization failed — please check your credentials`. El mensaje de error genérico de la API de Jira (`"the target project doesn't exist or you don't have permission"`) es indistinguible entre un problema de datos, de permisos, o de autenticación por eso la investigación tuvo que descartar las dos primeras causas antes de llegar a la tercera, que era la real: **el API token había caducado** desde que se configuró la integración en el primer post de la serie.
 
 **Arreglo**: token nuevo generado desde `id.atlassian.com/manage-profile/security/api-tokens`, credencial de n8n actualizada (mismo email, token nuevo), reconexión confirmada, y creación del ticket verificada con el mismo fallo simulado de la prueba de fuego.
  
