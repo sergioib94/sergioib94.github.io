@@ -6,7 +6,7 @@ excerpt: "La Parte 1 dejó el mecanismo montado, probado con restauraciones parc
 card_image: /assets/images/cards/lab-noc-soc-restic-2.png
 ---
 
-La [Parte 1](/lab-noc-soc-restic-1) dejó Restic instalado, el script de backup funcionando contra dos repositorios (local y Backblaze B2), la retención aplicada, y una restauración real puesta a prueba pero en caliente, con los contenedores todavía corriendo, y de forma parcial, sin haber destruido nunca el estado original. Quedaba pendiente la prueba de fondo: destruir el lab de verdad, parar los servicios, borrar los volúmenes originales, y levantar todo de cero únicamente a partir de lo que hay en el repositorio. Este post es esa prueba, con el troubleshooting real que salió al hacerla.
+La [Parte 1](/lab-noc-soc-backup-1) dejó Restic instalado, el script de backup funcionando contra dos repositorios (local y Backblaze B2), la retención aplicada, y una restauración real puesta a prueba pero en caliente, con los contenedores todavía corriendo, y de forma parcial, sin haber destruido nunca el estado original. Quedaba pendiente la prueba de fondo: destruir el lab de verdad, parar los servicios, borrar los volúmenes originales, y levantar todo de cero únicamente a partir de lo que hay en el repositorio. Este post es esa prueba, con el troubleshooting real que salió al hacerla.
 
 ## Preparación: dejar los dashboards en condiciones de servir de baseline
 
