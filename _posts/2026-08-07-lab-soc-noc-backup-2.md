@@ -133,7 +133,7 @@ docker exec automation-n8n-1 n8n list:workflow --active=true
 cat /var/lib/node_exporter/textfile_collector/backup_status.prom
 ```
 
-![baseline de Zabbix, Grafana, VictoriaMetrics, Loki y n8n](/assets/images/lab-noc-soc-bk2/fase1_previa.PNG)
+![baseline de Zabbix, Grafana, VictoriaMetrics, Loki y n8n](/assets/images/lab-noc-soc-bk2/fase_1_previa.PNG)
 
 *Troubleshooting: basic auth de Grafana devolvía 401 con la contraseña "correcta".* La primera pasada, con `curl -u admin:<contraseña>`, daba resultados inconsistentes entre endpoints, `/api/search` a veces devolvía datos con una contraseña que `/api/datasources` rechazaba con la misma credencial. Aislar el código HTTP real (`-o /tmp/resp.json -w "HTTP: %{http_code}\n"`, en vez de fiarse de si `jq` daba error o no) confirmó que una de las dos contraseñas probadas era la incorrecta de verdad (401 con `messageId: "password-auth.failed"`), y el resultado "positivo" que parecía dar en `/api/search` no era autenticación real. Arreglo definitivo: en vez de seguir depurando basic auth, migrar a un **Service Account token** (`Administration → Service accounts → Add service account token`), que da 401 limpio si falla y 200 real si funciona, sin la ambigüedad de si un fallback anónimo está devolviendo datos parciales.
 
