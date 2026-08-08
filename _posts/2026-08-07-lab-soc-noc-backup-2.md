@@ -6,7 +6,7 @@ excerpt: "La Parte 1 dejó el mecanismo montado, probado con restauraciones parc
 card_image: /assets/images/cards/lab-noc-soc-restic-2.png
 ---
 
-La [Parte 1](/lab-noc-soc-restic-1) dejó Restic instalado, el script de backup funcionando contra dos repositorios (local y Backblaze B2), la retención aplicada, y una restauración real puesta a prueba — pero en caliente, con los contenedores todavía corriendo, y de forma parcial, sin haber destruido nunca el estado original. Quedaba pendiente la prueba de fondo: destruir el lab de verdad, parar los servicios, borrar los volúmenes originales, y levantar todo de cero únicamente a partir de lo que hay en el repositorio. Este post es esa prueba, con el troubleshooting real que salió al hacerla.
+La [Parte 1](/lab-noc-soc-restic-1) dejó Restic instalado, el script de backup funcionando contra dos repositorios (local y Backblaze B2), la retención aplicada, y una restauración real puesta a prueba pero en caliente, con los contenedores todavía corriendo, y de forma parcial, sin haber destruido nunca el estado original. Quedaba pendiente la prueba de fondo: destruir el lab de verdad, parar los servicios, borrar los volúmenes originales, y levantar todo de cero únicamente a partir de lo que hay en el repositorio. Este post es esa prueba, con el troubleshooting real que salió al hacerla.
 
 ## Preparación: dejar los dashboards en condiciones de servir de baseline
 
@@ -26,7 +26,7 @@ Warning: at least one source file could not be read
 
 VictoriaMetrics usa un motor tipo LSM-tree que fusiona y borra ficheros pequeños en segundo plano de forma continua, incluso con el contenedor sirviendo tráfico normal. Restic escanea el directorio como una foto fija: si entre listar un fichero e intentar leerlo VictoriaMetrics ya lo fusionó y borró, Restic se encuentra un `lstat` sobre algo que ha dejado de existir. Es una condición de carrera inherente a hacer backup en caliente de un motor de series temporales, no un fallo de Restic ni del script.
 
-El snapshot se generaba igualmente (`85fa74ad saved`, `a8b81c7c saved`), con exit code 3 — "completado con avisos", distinto de un fallo real. El script, sin embargo, trataba cualquier código de salida distinto de 0 como fallo total:
+El snapshot se generaba igualmente (`85fa74ad saved`, `a8b81c7c saved`), con exit code 3 "completado con avisos", distinto de un fallo real. El script, sin embargo, trataba cualquier código de salida distinto de 0 como fallo total:
 
 ```bash
 restic backup "${VOLUME_PATHS[@]}" --tag noc-soc --tag "$(date +%Y%m%d)" \
@@ -56,7 +56,7 @@ Al añadir `discovery.docker` y `loki.source.docker` a la config de Alloy para d
 error="server returned HTTP status 400 Bad Request (400): entry with timestamp ... too old, oldest acceptable timestamp is: ..."
 ```
 
-`loki.source.docker` lee el histórico completo de logs de cada contenedor desde que arrancó, vía la API de Docker — y los contenedores del lab llevaban semanas corriendo, muy por encima del límite por defecto de Loki (7 días). Loki descarta el lote entero si contiene una sola entrada demasiado vieja, así que ni siquiera lo reciente pasaba. Arreglo, ampliando temporalmente la ventana aceptada:
+`loki.source.docker` lee el histórico completo de logs de cada contenedor desde que arrancó, vía la API de Docker y los contenedores del lab llevaban semanas corriendo, muy por encima del límite por defecto de Loki (7 días). Loki descarta el lote entero si contiene una sola entrada demasiado vieja, así que ni siquiera lo reciente pasaba. Arreglo, ampliando temporalmente la ventana aceptada:
 
 ```yaml
 limits_config:
@@ -91,10 +91,6 @@ loki.source.docker "containers" {
 
 Con esto, los 9 contenedores del lab empezaron a aparecer con su propio label `container` en vez de una única serie genérica.
 
-### Las unidades del dashboard de Docker Containers no tenían sentido físico
-
-CPU aparecía en mB/s y memoria en MB/s — ninguna de las dos cosas es correcta. Memoria (`container_memory_usage_bytes`) es un valor absoluto en un instante dado, no una tasa; llevaba un `rate()` de más y la unidad puesta en el panel no correspondía. Arreglo: quitar el `rate()` de la query de memoria y fijar la unidad del panel a **Data → bytes(IEC)**, que escala automáticamente a KiB/MiB/GiB sin necesidad de convertir nada en la query.
-
 ## Hipótesis
 
 Con el baseline reconstruido, y antes de tocar nada, la expectativa por componente, apoyada en lo ya aprendido en la Parte 1:
@@ -102,7 +98,7 @@ Con el baseline reconstruido, y antes de tocar nada, la expectativa por componen
 - **VictoriaMetrics**: se auto-reconciliará, igual que hizo en el incidente de restauración en caliente de la Parte 1 ("unclean shutdown" detectado y reparado solo).
 - **n8n**: recuperación con reintentos, sin intervención manual, como ya se vio antes.
 - **Loki**: si esta vez se restaura con el contenedor parado de antemano (la lección de la Parte 1), no debería repetir el error fatal del WAL.
-- **Grafana**: sin certeza previa — nunca se sometió a una destrucción real de raíz, solo a la restauración en caliente accidental.
+- **Grafana**: sin certeza previa nunca se sometió a una destrucción real de raíz, solo a la restauración en caliente accidental.
 - **Zabbix (Postgres)**: al ser un dump lógico, no un volumen en caliente, se espera una restauración limpia si el proceso (parar, restaurar, aplicar el dump) se sigue en orden.
 
 ## Fase 1: evidencia antes
@@ -132,9 +128,9 @@ cat /var/lib/node_exporter/textfile_collector/backup_status.prom
 
 ![baseline de Zabbix, Grafana, VictoriaMetrics, Loki y n8n](/assets/images/lab-noc-soc-bk2/fase1_previa.PNG)
 
-*Troubleshooting: basic auth de Grafana devolvía 401 con la contraseña "correcta".* La primera pasada, con `curl -u admin:<contraseña>`, daba resultados inconsistentes entre endpoints — `/api/search` a veces devolvía datos con una contraseña que `/api/datasources` rechazaba con la misma credencial. Aislar el código HTTP real (`-o /tmp/resp.json -w "HTTP: %{http_code}\n"`, en vez de fiarse de si `jq` daba error o no) confirmó que una de las dos contraseñas probadas era la incorrecta de verdad (401 con `messageId: "password-auth.failed"`), y el resultado "positivo" que parecía dar en `/api/search` no era autenticación real. Arreglo definitivo: en vez de seguir depurando basic auth, migrar a un **Service Account token** (`Administration → Service accounts → Add service account token`), que da 401 limpio si falla y 200 real si funciona, sin la ambigüedad de si un fallback anónimo está devolviendo datos parciales.
+*Troubleshooting: basic auth de Grafana devolvía 401 con la contraseña "correcta".* La primera pasada, con `curl -u admin:<contraseña>`, daba resultados inconsistentes entre endpoints, `/api/search` a veces devolvía datos con una contraseña que `/api/datasources` rechazaba con la misma credencial. Aislar el código HTTP real (`-o /tmp/resp.json -w "HTTP: %{http_code}\n"`, en vez de fiarse de si `jq` daba error o no) confirmó que una de las dos contraseñas probadas era la incorrecta de verdad (401 con `messageId: "password-auth.failed"`), y el resultado "positivo" que parecía dar en `/api/search` no era autenticación real. Arreglo definitivo: en vez de seguir depurando basic auth, migrar a un **Service Account token** (`Administration → Service accounts → Add service account token`), que da 401 limpio si falla y 200 real si funciona, sin la ambigüedad de si un fallback anónimo está devolviendo datos parciales.
 
-*Troubleshooting: `n8n list:workflow --active` fallaba con "Expected string, received boolean".* En la versión de n8n del lab, el flag ya no es booleano de solo presencia — espera un valor explícito. Arreglo: `--active=true` en vez de `--active`.
+*Troubleshooting: `n8n list:workflow --active` fallaba con "Expected string, received boolean".* En la versión de n8n del lab, el flag ya no es booleano de solo presencia, espera un valor explícito. Arreglo: `--active=true` en vez de `--active`.
 
 ## Fase 2: backup fresco garantizado
 
@@ -150,7 +146,7 @@ source ~/.b2-credentials
 restic snapshots --repo b2:noc-soc-restic-backup:restic-repo
 ```
 
-*Troubleshooting: Restic pedía la contraseña del repositorio de forma interactiva.* En una sesión de bash nueva, sin `sudo -E` de por medio, no hay nada que propague `RESTIC_PASSWORD_FILE` — hay que exportarla explícitamente en cada sesión antes de operar sobre el repositorio, y para B2 además cargar `~/.b2-credentials`.
+*Troubleshooting: Restic pedía la contraseña del repositorio de forma interactiva.* En una sesión de bash nueva, sin `sudo -E` de por medio, no hay nada que propague `RESTIC_PASSWORD_FILE`, hay que exportarla explícitamente en cada sesión antes de operar sobre el repositorio, y para B2 además cargar `~/.b2-credentials`.
 
 Con el backup confirmado en verde (esta vez de verdad, con el exit code 3 tratado como aviso), snapshot local `4a8ca03d` como el que ancla toda la restauración posterior.
 
@@ -178,9 +174,9 @@ sudo find /var/lib/docker/volumes/zabbix_pgdata/_data -mindepth 1 -delete
 
 Se optó por el escenario de destrucción total en Zabbix: no solo probar la restauración lógica del dump en un volumen intacto, sino borrar también `zabbix_pgdata` y depender enteramente de `zabbix_pgdump.sql` para reconstruir la base desde cero.
 
-*Troubleshooting: `docker compose stop zabbix-postgres-server-1` fallaba con "no such service".* El nombre del contenedor (`zabbix-postgres-server-1`, con el sufijo `-1` de índice que añade Compose) no es el nombre del servicio definido en el `docker-compose.yml`. `docker compose stop`/`up` necesitan el nombre de servicio, no el de contenedor — se confirmó con `docker compose -f zabbix/docker-compose.yml config --services`.
+*Troubleshooting: `docker compose stop zabbix-postgres-server-1` fallaba con "no such service".* El nombre del contenedor (`zabbix-postgres-server-1`, con el sufijo `-1` de índice que añade Compose) no es el nombre del servicio definido en el `docker-compose.yml`. `docker compose stop`/`up` necesitan el nombre de servicio, no el de contenedor por lo que se confirmó el nombre con `docker compose -f zabbix/docker-compose.yml config --services`.
 
-Tras el borrado, `docker ps -a` mostró todo `Exited` salvo `alloy`, `node-exporter`, `cadvisor` y `zabbix-web` — los cuatro componentes sin estado persistente propio, que no formaban parte de esta prueba. Loki terminó con `Exited (137)` (SIGKILL tras timeout de cierre), coherente con lo ya visto en la Parte 1 sobre su comportamiento de cierre, aunque aquí sin consecuencia porque su volumen se borró de todas formas.
+Tras el borrado, `docker ps -a` mostró todo `Exited` salvo `alloy`, `node-exporter`, `cadvisor` y `zabbix-web`, los cuatro componentes sin estado persistente propio que no formaban parte de esta prueba. Loki terminó con `Exited (137)` (SIGKILL tras timeout de cierre), coherente con lo ya visto en la Parte 1 sobre su comportamiento de cierre, aunque aquí sin consecuencia porque su volumen se borró de todas formas.
 
 ## Fase 4: restauración desde cero
 
@@ -198,7 +194,7 @@ sudo -E restic restore latest --target / --include /var/lib/docker/volumes/autom
 
 ![restauración por volumen, con --include filtrando de verdad esta vez](/assets/images/lab-noc-soc-bk2/restauracion_local.PNG)
 
-A diferencia del incidente de la Parte 1, cada restauración devolvió un número de ficheros distinto y proporcional al volumen real (711, 700, 291, 18 ficheros/directorios), no los 1290 del snapshot completo — `--include` filtró correctamente esta vez.
+A diferencia del incidente de la Parte 1, cada restauración devolvió un número de ficheros distinto y proporcional al volumen real (711, 700, 291, 18 ficheros/directorios), no los 1290 del snapshot completo por lo que `--include` filtró correctamente esta vez.
 
 Restauración del dump de Zabbix a una ruta temporal:
 
@@ -219,7 +215,7 @@ sudo cat /tmp/zabbix-restore/home/sergioib/noc-soc/backups/tmp/zabbix_pgdump.sql
   | docker exec -i zabbix-postgres-server-1 psql -U zabbix
 ```
 
-*Troubleshooting: el `docker logs` tras el primer intento de `up -d` mostraba mensajes de cierre (`FATAL: terminating connection...`, `database system is shut down`).* Confundía porque parecía un fallo de arranque nuevo, pero eran los logs **residuales** del cierre del contenedor durante la Fase 3 — el propio `up -d` había fallado en seco por el mismo problema de nombre de servicio ya visto (`zabbix-postgres-server-1` como nombre de contenedor, no de servicio), así que nunca llegó a intentarse un arranque real. Con el nombre de servicio correcto, Postgres inicializó limpio sobre el volumen vacío.
+*Troubleshooting: el `docker logs` tras el primer intento de `up -d` mostraba mensajes de cierre (`FATAL: terminating connection...`, `database system is shut down`).* Confundía porque parecía un fallo de arranque nuevo, pero eran los logs **residuales** del cierre del contenedor durante la Fase 3, el propio `up -d` había fallado en seco por el mismo problema de nombre de servicio ya visto (`zabbix-postgres-server-1` como nombre de contenedor, no de servicio), así que nunca llegó a intentarse un arranque real. Con el nombre de servicio correcto, Postgres inicializó limpio sobre el volumen vacío.
 
 *Troubleshooting: "Permission denied" al leer el dump restaurado.* El fichero pertenece a `root` por haberse restaurado con `sudo -E`. Solución trivial: leerlo también con `sudo` al aplicarlo (`sudo cat ... | docker exec -i ...`).
 
@@ -243,7 +239,7 @@ docker exec zabbix-postgres-server-1 psql -U zabbix -c "SELECT count(*) FROM tri
 
 ![409 hosts y 6927 triggers, coincidencia exacta con el baseline](/assets/images/lab-noc-soc-bk2/verificacion_de_zabbix.PNG)
 
-Y, la validación más relevante de toda la prueba: **Loki no repitió el error fatal de WAL de la Parte 1.** Al restaurarse con el contenedor ya parado desde el principio de la Fase 3 — en vez de en caliente como en el incidente accidental anterior — arrancó sin el bucle de reinicio, confirmando que la causa raíz identificada entonces (segmentos de WAL no secuenciales por restaurar sin parar el proceso) era correcta, y que seguir el proceso correcto la evita por completo.
+Y, la validación más relevante de toda la prueba: **Loki no repitió el error fatal de WAL de la Parte 1.** Al restaurarse con el contenedor ya parado desde el principio de la Fase 3 en vez de en caliente como en el incidente accidental anterior, arrancó sin el bucle de reinicio confirmando que la causa raíz identificada entonces (segmentos de WAL no secuenciales por restaurar sin parar el proceso) era correcta, y que seguir el proceso correcto la evita por completo.
 
 ## Fase 5: verificación
 
@@ -278,7 +274,7 @@ curl -s -G 'http://localhost:3100/loki/api/v1/query_range' \
 
 ![logs de node-exporter presentes pese a no aparecer en label/container/values](/assets/images/lab-noc-soc-bk2/entradas_node.PNG)
 
-El query devolvió entradas reales y recientes, incluyendo logs propios del arranque del contenedor (`"TLS is disabled"`, `"Listening on"`). Los datos estaban ahí — fue un falso negativo del endpoint de labels, no una pérdida real, probablemente porque `label/container/values` refleja streams con actividad en cierta ventana o caché de índice, y en el momento exacto de la consulta ese stream concreto no había generado suficiente tráfico reciente para listarse, pese a tener datos ya escritos. La lección: para confirmar presencia o ausencia real de datos en Loki, consultar el propio contenido (`query_range`) es más fiable que consultar el índice de labels.
+El query devolvió entradas reales y recientes, incluyendo logs propios del arranque del contenedor (`"TLS is disabled"`, `"Listening on"`). Los datos estaban ahí, fue un falso negativo del endpoint de labels, no una pérdida real, probablemente porque `label/container/values` refleja streams con actividad en cierta ventana o caché de índice, y en el momento exacto de la consulta ese stream concreto no había generado suficiente tráfico reciente para listarse, pese a tener datos ya escritos. La lección: para confirmar presencia o ausencia real de datos en Loki, consultar el propio contenido (`query_range`) es más fiable que consultar el índice de labels.
 
 ## Tabla de resultados
 
@@ -297,14 +293,14 @@ El query devolvió entradas reales y recientes, incluyendo logs propios del arra
 
 ## Contraste con la hipótesis
 
-- **VictoriaMetrics**: confirmado, sin novedad respecto a la Parte 1 — nada que reconciliar esta vez porque la restauración fue en frío, con el contenedor parado.
+- **VictoriaMetrics**: confirmado, sin novedad respecto a la Parte 1, nada que reconciliar esta vez porque la restauración fue en frío con el contenedor parado.
 - **n8n**: el workflow quedó activo sin intervención manual, con el mismo ID que antes de la destrucción.
-- **Loki**: confirmado con más solidez que la propia hipótesis — no solo "no debería repetir el error", sino que la ausencia del error valida retroactivamente el diagnóstico de la Parte 1.
+- **Loki**: confirmado con más solidez que la propia hipótesis, no solo "no debería repetir el error", sino que la ausencia del error valida retroactivamente el diagnóstico de la Parte 1.
 - **Grafana**: sin sorpresas, dashboards y datasources íntegros. La incertidumbre de partida quedó despejada.
 - **Zabbix**: restauración limpia con el proceso en orden (Postgres arriba primero, dump aplicado después), tal como se esperaba, con el único obstáculo siendo de nomenclatura de Compose, no del propio proceso de backup/restore.
 
 ## El lab sobrevive intacto
 
-Con una destrucción real —servicios parados, los cinco volúmenes de datos borrados de raíz, incluido el escenario más agresivo en Zabbix (destrucción total del volumen de Postgres, dependiendo solo del dump lógico)— y una restauración completa desde Restic, el resultado es una tabla sin ninguna pérdida de datos real. El único desajuste encontrado (el label de Loki) se investigó hasta confirmar que era un falso negativo del índice, no una pérdida de contenido.
+Con una destrucción real (servicios parados), los cinco volúmenes de datos borrados de raíz, incluido el escenario más agresivo en Zabbix (destrucción total del volumen de Postgres, dependiendo solo del dump lógico) y una restauración completa desde Restic, el resultado es una tabla sin ninguna pérdida de datos real. El único desajuste encontrado (el label de Loki) se investigó hasta confirmar que era un falso negativo del índice, no una pérdida de contenido.
 
 El mecanismo montado en la Parte 1, con las correcciones que salieron de ponerlo a prueba entonces (`--include` en vez de `--path`, parar los contenedores antes de restaurar, distinguir exit codes de Restic), sostiene lo que promete: el lab entero es reconstruible desde cero a partir del repositorio, sin depender de que ningún volumen original sobreviva.
