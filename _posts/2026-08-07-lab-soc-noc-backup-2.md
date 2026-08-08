@@ -14,6 +14,11 @@ Antes de poder medir nada hacía falta algo que en su momento no tenía: dashboa
 
 Montar los dashboards (Docker Containers, Node Exporter, Logs, Overview) sacó a la luz tres problemas de fondo que merece la pena documentar, porque sin arreglarlos el baseline habría sido tan poco fiable como no tener baseline en absoluto.
 
+![dashboard docker containers](/assets/images/lab-noc-soc-bk2/dashboard_docker.PNG)
+![dashboard node-exporter](/assets/images/lab-noc-soc-bk2/dashboard_node.PNG)
+![dashboard logs](/assets/images/lab-noc-soc-bk2/dashboard_logs.PNG)
+![dashboard overview](/assets/images/lab-noc-soc-bk2/dashboard_overview.PNG)
+
 ### El backup llevaba días fallando sin que nadie se diera cuenta
 
 El panel de "último backup" marcaba FALLO de forma persistente. La causa, una vez aislada con la salida completa del script:
@@ -47,6 +52,8 @@ fi
 ```
 
 Mismo cambio replicado en el bloque de B2. Con esto, el dashboard pasó a reflejar la realidad: verde cuando el snapshot es utilizable, aunque tenga avisos benignos de ficheros transitorios, y solo rojo cuando de verdad no se genera un snapshot.
+
+![dashboard overview](/assets/images/lab-noc-soc-bk2/dashboard_overview_arreglado.PNG)
 
 ### Loki descartaba en bloque todo lo que llegaba de los contenedores Docker
 
