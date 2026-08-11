@@ -16,6 +16,18 @@ Terraform aprovisiona infraestructura, crea y destruye recursos por otro lado An
 
 ## Estructura del repositorio
 
+### Base del repositorio
+ 
+Antes de escribir ningún rol, toca dejar Ansible operativo y el esqueleto del repositorio en su sitio.
+ 
+**Instalación de Ansible** en la VM de WSL2:
+ 
+```bash
+sudo apt update
+sudo apt install -y ansible
+ansible --version
+```
+
 ```
 noc-soc-ansible/
 ├── ansible.cfg
@@ -35,7 +47,728 @@ noc-soc-ansible/
 └── site.yml
 ```
 
-Cada rol mapea 1:1 con una sección de los posts anteriores. `docker_base` instala Docker y crea la red compartida `noc-soc-shared`; `restic` instala el binario, inicializa los repositorios y despliega el script de backup como plantilla; los cuatro roles de stack (`zabbix_stack`, `monitoring_stack`, `logging_stack`, `automation_stack`) despliegan cada `docker-compose.yml` y lo levantan vía el módulo `community.docker.docker_compose_v2`; `backup_alerting` provisiona por código la regla de alerta de Grafana y el cron diario del backup.
+### Estructura
+
+Empezamos con la creación del repositorio y la estructura base
+ 
+```bash
+mkdir -p ~/noc-soc-ansible/{inventory,group_vars/all,roles}
+cd ~/noc-soc-ansible
+git init
+```
+ 
+```bash
+cat > ansible.cfg << 'EOF'
+[defaults]
+inventory = inventory/hosts.yml
+roles_path = roles
+host_key_checking = False
+vault_password_file = .vault_pass
+EOF
+```
+ 
+**Inventario**: como todo el lab corre en la misma VM de WSL2 donde se ejecuta Ansible, no hace falta SSH —conexión local:
+ 
+```yaml
+# inventory/hosts.yml
+all:
+  hosts:
+    lab:
+      ansible_connection: local
+      ansible_python_interpreter: /usr/bin/python3
+```
+
+Comprobamos que se conecta correctamente:
+
+```bash
+ansible lab -m ping
+# lab | SUCCESS => { "changed": false, "ping": "pong" }
+```
+ 
+**Colección de Docker**, necesaria para el módulo que levanta los `docker-compose.yml`:
+ 
+```bash
+ansible-galaxy collection install community.docker
+```
+ 
+```yaml
+# requirements.yml
+collections:
+  - name: community.docker
+    version: ">=3.0.0"
+```
+
+Fijar la versión en requirements.yml (en vez de depender de lo que tengas instalado en este momento) es lo que hace el repo reproducible en otra máquina
+ 
+**Configuración de Vault**
+
+Antes de tocar código, hay que decidir la contraseña maestra del vault y crear el fichero de secretos vacío, para que desde el primer commit ya tengamos el hábito de nunca escribir una credencial en texto plano:
+ 
+```bash
+mkdir -p group_vars/all
+ansible-vault create group_vars/all/vault.yml
+```
+
+Pedirá la contraseña del vault (guardada en un gestor de contraseñas, no en el repo) y abrirá un editor en el que dejaremos una primera entrada de pruebas:
+
+```bash
+vault_test: "vault funcionando"
+```
+
+Verificamos que se puede leer:
+
+```bash
+ansible-vault view group_vars/all/vault.yml
+```
+ 
+**Esqueleto de los 7 roles**, vacíos por ahora:
+ 
+```bash
+cd roles
+for role in docker_base restic zabbix_stack monitoring_stack logging_stack automation_stack backup_alerting; do
+  ansible-galaxy init "$role"
+done
+cd ..
+```
+
+ansible-galaxy init genera la estructura estándar de cada rol (tasks/, handlers/, templates/, defaults/, meta/) para que no tengas que crearla a mano, se queda vacía de lógica, lista para rellenar.
+ 
+**Variables globales**:
+ 
+```yaml
+# group_vars/all/vars.yml
+lab_user: sergioib
+noc_soc_home: "/home/{{ lab_user }}/noc-soc"
+restic_repo_local: "/mnt/c/Users/sergio.ib/noc-soc-backups/restic-repo"
+restic_repo_remote: "b2:noc-soc-restic-backup:restic-repo"
+```
+ 
+**Playbook principal**, con los 7 roles ya referenciados y etiquetados:
+ 
+```yaml
+# site.yml
+- name: Provisionar el lab NOC/SOC completo
+  hosts: lab
+  become: true
+  roles:
+    - docker_base
+    - { role: restic, tags: restic }
+    - { role: zabbix_stack, tags: zabbix_stack }
+    - { role: monitoring_stack, tags: monitoring_stack }
+    - { role: logging_stack, tags: logging_stack }
+    - { role: automation_stack, tags: automation_stack }
+    - { role: backup_alerting, tags: backup_alerting }
+```
+ 
+**Publicación en GitHub**, vía SSH (más cómodo que tokens HTTPS para iterar sin fricción):
+ 
+```bash
+ssh-keygen -t ed25519 -C "sergioib94@users.noreply.github.com"
+# clave pública añadida en GitHub → Settings → SSH and GPG keys
+ 
+git config --global user.name "sergioib94"
+git config --global user.email "sergioib94@users.noreply.github.com"
+git remote add origin git@github.com:sergioib94/noc-soc-ansible.git
+git add .
+git commit -m "Estructura base del repositorio Ansible para el lab NOC/SOC"
+git push -u origin main
+```
+ 
+## Construcción de los 7 roles
+ 
+Cada rol traduce a tareas idempotentes lo que hasta ahora hacía a mano, documentado paso a paso en los posts anteriores.
+ 
+### Rol `docker_base`
+ 
+Instala Docker Engine y el plugin de Compose, crea la red compartida entre stacks y el directorio base del lab:
+
+```yaml
+# roles/docker_base/defaults/main.yml
+---
+docker_users:
+  - "{{ lab_user }}"
+```
+
+roles/docker_base/tasks/main.yml: Traduce a tareas idempotentes lo que en su día fue instalación manual, el objetivo es que ejecutar esto en una máquina nueva deje Docker exactamente como lo tienes ahora:
+
+```yaml
+# roles/docker_base/tasks/main.yml
+---
+- name: Instalar dependencias previas
+  ansible.builtin.apt:
+    name:
+      - ca-certificates
+      - curl
+      - gnupg
+    state: present
+    update_cache: true
+
+- name: Crear directorio para la clave GPG de Docker
+  ansible.builtin.file:
+    path: /etc/apt/keyrings
+    state: directory
+    mode: "0755"
+
+- name: Descargar la clave GPG oficial de Docker
+  ansible.builtin.get_url:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    dest: /etc/apt/keyrings/docker.asc
+    mode: "0644"
+
+- name: Añadir el repositorio de Docker
+  ansible.builtin.apt_repository:
+    repo: >-
+      deb [arch={{ 'amd64' if ansible_architecture == 'x86_64' else ansible_architecture }}
+      signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu
+      {{ ansible_distribution_release }} stable
+    state: present
+    filename: docker
+
+- name: Instalar Docker Engine y el plugin de Compose
+  ansible.builtin.apt:
+    name:
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+      - docker-compose-plugin
+    state: present
+    update_cache: true
+
+- name: Asegurar que el servicio Docker está activo y habilitado
+  ansible.builtin.systemd:
+    name: docker
+    state: started
+    enabled: true
+
+- name: Añadir usuarios al grupo docker
+  ansible.builtin.user:
+    name: "{{ item }}"
+    groups: docker
+    append: true
+  loop: "{{ docker_users }}"
+
+- name: Crear el directorio base del lab
+  ansible.builtin.file:
+    path: "{{ noc_soc_home }}"
+    state: directory
+    owner: "{{ ansible_user_id }}"
+    mode: "0755"
+
+- name: Crear la red Docker compartida del lab
+  community.docker.docker_network:
+    name: noc-soc-shared
+    state: present
+```
+
+**Nota:** En el paso del grupo Docker, si el usuario aún no pertenecía a ese grupo el cambio no surte efecto hasta la siguiente sesión de login.
+
+### Rol `restic`
+ 
+Instala el binario en una versión fija, guarda las credenciales cifradas, inicializa ambos repositorios y despliega el script de backup como plantilla:
+
+```yaml
+# roles/restic/defaults/main.yml
+---
+restic_version: "0.17.3"
+restic_binary_path: /usr/local/bin/restic
+```
+
+Fija la versión explícitamente en vez de instalar "la última" para que el rol sea reproducible.
+ 
+```yaml
+# roles/restic/tasks/main.yml (resumen)
+---
+- name: Comprobar si Restic ya está instalado con la versión correcta
+  ansible.builtin.command: "{{ restic_binary_path }} version"
+  register: restic_check
+  changed_when: false
+  failed_when: false
+
+- name: Instalar bzip2 (necesario para descomprimir el binario de Restic)
+  ansible.builtin.apt:
+    name: bzip2
+    state: present
+  when: restic_version not in (restic_check.stdout | default(''))
+
+- name: Descargar el binario de Restic
+  ansible.builtin.get_url:
+    url: "https://github.com/restic/restic/releases/download/v{{ restic_version }}/restic_{{ restic_version }}_linux_amd64.bz2"
+    dest: "/tmp/restic_{{ restic_version }}_linux_amd64.bz2"
+    mode: "0644"
+  when: restic_version not in (restic_check.stdout | default(''))
+
+- name: Descomprimir el binario
+  ansible.builtin.command: "bunzip2 -f /tmp/restic_{{ restic_version }}_linux_amd64.bz2"
+  args:
+    creates: "/tmp/restic_{{ restic_version }}_linux_amd64"
+  when: restic_version not in (restic_check.stdout | default(''))
+
+- name: Instalar el binario en el PATH
+  ansible.builtin.copy:
+    src: "/tmp/restic_{{ restic_version }}_linux_amd64"
+    dest: "{{ restic_binary_path }}"
+    mode: "0755"
+    remote_src: true
+  when: restic_version not in (restic_check.stdout | default(''))
+
+- name: Guardar la contraseña del repositorio Restic
+  ansible.builtin.copy:
+    content: "{{ vault_restic_password }}"
+    dest: "/home/{{ lab_user }}/.restic-password"
+    owner: "{{ lab_user }}"
+    mode: "0600"
+  no_log: true
+
+- name: Guardar las credenciales de Backblaze B2
+  ansible.builtin.template:
+    src: b2-credentials.j2
+    dest: "/home/{{ lab_user }}/.b2-credentials"
+    owner: "{{ lab_user }}"
+    mode: "0600"
+  no_log: true
+
+- name: Inicializar el repositorio local de Restic (si no existe)
+  ansible.builtin.command: "{{ restic_binary_path }} init"
+  environment:
+    RESTIC_REPOSITORY: "{{ restic_repo_local }}"
+    RESTIC_PASSWORD_FILE: "/home/{{ lab_user }}/.restic-password"
+  register: restic_init_local
+  failed_when:
+    - restic_init_local.rc != 0
+    - "'config file already exists' not in restic_init_local.stderr"
+  changed_when: "'created restic repository' in restic_init_local.stdout"
+
+- name: Desplegar el script de backup
+  ansible.builtin.template:
+    src: backup_restic.sh.j2
+    dest: "{{ noc_soc_home }}/backup_restic.sh"
+    owner: "{{ lab_user }}"
+    mode: "0750"
+```
+ 
+```jinja2
+# roles/restic/templates/b2-credentials.j2
+export B2_ACCOUNT_ID="{{ vault_b2_account_id }}"
+export B2_ACCOUNT_KEY="{{ vault_b2_account_key }}"
+```
+
+```jinja2
+# roles/restic/templates/backup_restic.sh.j2
+#!/bin/bash
+set -euo pipefail
+
+source /home/{{ ansible_user_id }}/.b2-credentials
+export RESTIC_PASSWORD_FILE="/home/{{ ansible_user_id }}/.restic-password"
+
+VOLUME_PATHS=(
+  "{{ noc_soc_home }}/backups/tmp"
+  /var/lib/docker/volumes/automation_n8n-data/_data
+  /var/lib/docker/volumes/logging_loki-data/_data
+  /var/lib/docker/volumes/monitoring_grafana-storage/_data
+  /var/lib/docker/volumes/monitoring_victoriametrics-data/_data
+)
+
+BACKUP_OK=1
+
+echo "Volcando Zabbix (Postgres)..."
+mkdir -p "{{ noc_soc_home }}/backups/tmp"
+docker exec zabbix-postgres-server-1 pg_dumpall -U zabbix > "{{ noc_soc_home }}/backups/tmp/zabbix_pgdump.sql"
+
+echo "Ejecutando restic backup (local)..."
+export RESTIC_REPOSITORY="{{ restic_repo_local }}"
+restic backup "${VOLUME_PATHS[@]}" --tag noc-soc --tag "$(date +%Y%m%d)" || true
+rc=$?
+if [ $rc -eq 3 ]; then
+  echo "AVISO: backup local completado con algunos ficheros no leíbles (normal en volúmenes activos como VictoriaMetrics)"
+elif [ $rc -ne 0 ]; then
+  echo "FALLO en restic backup (local)"
+  BACKUP_OK=0
+fi
+
+echo "Ejecutando restic backup (B2)..."
+export RESTIC_REPOSITORY="{{ restic_repo_remote }}"
+restic backup "${VOLUME_PATHS[@]}" --tag noc-soc --tag "$(date +%Y%m%d)" || true
+rc=$?
+if [ $rc -eq 3 ]; then
+  echo "AVISO: backup B2 completado con algunos ficheros no leíbles (normal en volúmenes activos como VictoriaMetrics)"
+elif [ $rc -ne 0 ]; then
+  echo "FALLO en restic backup (B2)"
+  BACKUP_OK=0
+fi
+
+echo "Aplicando política de retención (local)..."
+export RESTIC_REPOSITORY="{{ restic_repo_local }}"
+restic forget --keep-daily 7 --keep-weekly 4 --keep-monthly 6 --prune
+
+echo "Aplicando política de retención (B2)..."
+export RESTIC_REPOSITORY="{{ restic_repo_remote }}"
+restic forget --keep-daily 7 --keep-weekly 4 --keep-monthly 6 --prune
+
+echo "Verificando integridad del repositorio (local)..."
+export RESTIC_REPOSITORY="{{ restic_repo_local }}"
+restic check
+
+echo "Verificando integridad del repositorio (B2)..."
+export RESTIC_REPOSITORY="{{ restic_repo_remote }}"
+restic check
+
+mkdir -p /var/lib/node_exporter/textfile_collector
+cat <<EOM > /var/lib/node_exporter/textfile_collector/backup_status.prom
+backup_last_run_timestamp $(date +%s)
+backup_last_run_success $BACKUP_OK
+EOM
+
+echo "Backup con Restic completado (éxito: $BACKUP_OK)"
+```
+
+Aquí es donde entra el script ya corregido de la Parte 2 (con el manejo de exit code 3), ahora como plantilla.
+
+Una vez configurado el fichero, debemos añadir las variables del vault correspondiente:
+
+```bash
+ansible-vault edit group_vars/all/vault.yml --vault-password-file .vault_pass
+```
+
+```yaml
+vault_test: "vault funcionando"
+vault_restic_password: "tu-contraseña-real-de-restic"
+vault_b2_account_id: "tu-account-id-real"
+vault_b2_account_key: "tu-account-key-real"
+```
+
+Probamos solo estos dos roles antes de seguir con el resto para ir validando los roles por partes:
+
+```bash
+ansible-playbook site.yml --check --ask-become-pass --diff
+```
+ 
+### `monitoring_stack`
+ 
+VictoriaMetrics, Grafana, node-exporter y cadvisor, copiados fielmente del compose real —incluido el montaje del textfile_collector en node-exporter (el mecanismo que expone `backup_last_run_success`) y el directorio de provisioning de Grafana:
+
+```yaml
+# roles/monitoring_stack/defaults/main.yml
+---
+monitoring_dir: "{{ noc_soc_home }}/monitoring"
+grafana_admin_user: admin
+```
+ 
+```yaml
+# roles/monitoring_stack/tasks/main.yml
+---
+- name: Crear el directorio del stack de monitoring
+  ansible.builtin.file:
+    path: "{{ monitoring_dir }}"
+    state: directory
+    owner: "{{ lab_user }}"
+    mode: "0755"
+
+- name: Desplegar el docker-compose.yml de monitoring
+  ansible.builtin.template:
+    src: docker-compose.yml.j2
+    dest: "{{ monitoring_dir }}/docker-compose.yml"
+    owner: "{{ lab_user }}"
+    mode: "0644"
+  register: monitoring_compose_file
+
+- name: Desplegar la config de scrape (victoriametrics.yml)
+  ansible.builtin.template:
+    src: victoriametrics.yml.j2
+    dest: "{{ monitoring_dir }}/victoriametrics.yml"
+    owner: "{{ lab_user }}"
+    mode: "0644"
+  register: monitoring_scrape_config
+
+- name: Levantar el stack de monitoring
+  community.docker.docker_compose_v2:
+    project_src: "{{ monitoring_dir }}"
+    state: present
+    recreate: "{{ 'always' if (monitoring_compose_file.changed or monitoring_scrape_config.changed) else 'auto' }}"
+```
+ 
+El recreate condicional es la pieza clave del patrón: si cambia el compose o el config de scrape, fuerza a recrear los contenedores para que el cambio surta efecto; si no cambió nada, Ansible no reinicia servicios innecesariamente en cada ejecución, esto es lo que hace que el playbook sea seguro de correr repetidamente sin causar downtime evitable.
+
+```yaml
+# roles/monitoring_stack/templates/docker-compose.yml.j2
+services:
+  victoriametrics:
+    image: victoriametrics/victoria-metrics:latest
+    ports: ["8428:8428"]
+    volumes:
+      - ./victoriametrics.yml:/etc/victoriametrics/scrape.yml
+      - victoriametrics-data:/storage
+    command:
+      - "-storageDataPath=/storage"
+      - "-promscrape.config=/etc/victoriametrics/scrape.yml"
+    restart: unless-stopped
+
+  grafana:
+    image: grafana/grafana:latest
+    ports: ["3000:3000"]
+    volumes:
+      - grafana-storage:/var/lib/grafana
+    restart: unless-stopped
+
+  node-exporter:
+    image: prom/node-exporter:latest
+    ports: ["9100:9100"]
+    volumes:
+      - /var/lib/node_exporter/textfile_collector:/var/lib/node_exporter/textfile_collector:ro
+    command:
+      - "--collector.textfile.directory=/var/lib/node_exporter/textfile_collector"
+    restart: unless-stopped
+
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:latest
+    ports: ["8081:8080"]
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:ro
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+    restart: unless-stopped
+
+networks:
+  default:
+    name: noc-soc-shared
+    external: true
+
+volumes:
+  grafana-storage:
+  victoriametrics-data:
+```
+
+```yaml
+# roles/monitoring_stack/templates/victoriametrics.yml.j2
+---
+global:
+  scrape_interval: 15s
+scrape_configs:
+  - job_name: 'node-exporter'
+    static_configs: [{targets: ['node-exporter:9100']}]
+  - job_name: 'cadvisor'
+    static_configs: [{targets: ['cadvisor:8080']}]
+```
+
+Promabos el rol igual que hemos hecho anteriormente:
+
+```bash
+ansible-playbook site.yml --ask-become-pass --diff --tags monitoring_stack
+```
+ 
+### `logging_stack`
+ 
+Loki + Alloy, con el `discovery.docker` y el relabeling que ya se corrigió en la Parte 2 de los posts de backup —Alloy sin eso solo veía logs del sistema, no de los contenedores:
+
+```yml
+# roles/logging_stack/defaults/main.yml
+---
+logging_dir: "{{ noc_soc_home }}/logging"
+```
+
+```yml
+# roles/logging_stack/tasks/main.yml
+---
+- name: Crear el directorio del stack de logging
+  ansible.builtin.file:
+    path: "{{ logging_dir }}"
+    state: directory
+    owner: "{{ lab_user }}"
+    mode: "0755"
+
+- name: Desplegar el docker-compose.yml de logging
+  ansible.builtin.template:
+    src: docker-compose.yml.j2
+    dest: "{{ logging_dir }}/docker-compose.yml"
+    owner: "{{ lab_user }}"
+    mode: "0644"
+  register: logging_compose_file
+
+- name: Desplegar la config de Alloy
+  ansible.builtin.template:
+    src: alloy-config.alloy.j2
+    dest: "{{ logging_dir }}/alloy-config.alloy"
+    owner: "{{ lab_user }}"
+    mode: "0644"
+  register: logging_alloy_config
+
+- name: Levantar el stack de logging
+  community.docker.docker_compose_v2:
+    project_src: "{{ logging_dir }}"
+    state: present
+    recreate: "{{ 'always' if (logging_compose_file.changed or logging_alloy_config.changed) else 'auto' }}"
+```
+
+```yml
+# roles/logging_stack/templates/docker-compose.yml.j2
+---
+services:
+  loki:
+    image: grafana/loki:latest
+    ports:
+      - "3100:3100"
+    volumes:
+      - loki-data:/loki
+    restart: unless-stopped
+
+  #promtail:
+  # image: grafana/promtail:latest
+  #ports:
+  # - "9080:9080"
+  #volumes:
+  # - /var/log:/var/log:ro
+  #- ./promtail-config.yml:/etc/promtail/config.yml
+  #command: -config.file=/etc/promtail/config.yml
+  #restart: unless-stopped
+
+  alloy:
+    image: grafana/alloy:latest
+    ports: ["12345:12345"]
+    volumes:
+      - /var/log:/var/log:ro
+      - ./alloy-config.alloy:/etc/alloy/config.alloy
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    command: run --server.http.listen-addr=0.0.0.0:12345 /etc/alloy/config.alloy
+    restart: unless-stopped
+
+networks:
+  default:
+    name: noc-soc-shared
+    external: true
+
+volumes:
+  loki-data:
+```
+
+```hlc
+# roles/logging_stack/templates/alloy-config.alloy.j2 (fragmento)
+local.file_match "varlogs" {
+  path_targets = [{
+    __address__ = "localhost",
+    __path__    = "/var/log/*.log",
+    job         = "varlogs",
+  }]
+}
+
+loki.source.file "varlogs" {
+  targets    = local.file_match.varlogs.targets
+  forward_to = [loki.write.default.receiver]
+}
+
+loki.write "default" {
+  endpoint {
+    url = "http://loki:3100/loki/api/v1/push"
+  }
+}
+
+discovery.docker "containers" {
+  host = "unix:///var/run/docker.sock"
+}
+
+discovery.relabel "containers" {
+  targets = discovery.docker.containers.targets
+
+  rule {
+    source_labels = ["__meta_docker_container_name"]
+    regex         = "/(.*)"
+    target_label  = "container"
+  }
+}
+
+loki.source.docker "containers" {
+  host          = "unix:///var/run/docker.sock"
+  targets       = discovery.docker.containers.targets
+  relabel_rules = discovery.relabel.containers.rules
+  forward_to    = [loki.write.default.receiver]
+}
+```
+
+Comprobamos el rol:
+
+```bash
+ansible-playbook site.yml --ask-become-pass --diff --tags logging_stack
+```
+
+### `automation_stack`
+ 
+n8n, el rol más simple de los siete un único servicio, sin red compartida (sus integraciones son por API externa, no contenedores internos):
+
+```yaml
+# roles/automation_stack/defaults/main.yml
+---
+automation_dir: "{{ noc_soc_home }}/automation"
+```
+
+```yaml
+# roles/automation_stack/tasks/main.yml
+---
+- name: Crear el directorio del stack de automation
+  ansible.builtin.file:
+    path: "{{ automation_dir }}"
+    state: directory
+    owner: "{{ lab_user }}"
+    mode: "0755"
+
+- name: Desplegar el docker-compose.yml de automation
+  ansible.builtin.template:
+    src: docker-compose.yml.j2
+    dest: "{{ automation_dir }}/docker-compose.yml"
+    owner: "{{ lab_user }}"
+    mode: "0644"
+  register: automation_compose_file
+
+- name: Levantar el stack de automation
+  community.docker.docker_compose_v2:
+    project_src: "{{ automation_dir }}"
+    state: present
+    recreate: "{{ 'always' if automation_compose_file.changed else 'auto' }}"
+```
+
+```yaml
+# roles/automation_stack/templates/docker-compose.yml.j2
+services:
+  n8n:
+    image: n8nio/n8n:latest
+    ports: ["5678:5678"]
+    environment:
+      - N8N_SECURE_COOKIE=false
+    volumes:
+      - n8n-data:/home/node/.n8n
+    restart: unless-stopped
+ 
+volumes:
+  n8n-data:
+```
+
+Realizamos la comprobacion del rol:
+
+```bash
+ansible-playbook site.yml --ask-become-pass --diff --tags automation_stack
+```
+ 
+Este fue el único rol que quedó `changed=0` desde el primer intento —la plantilla coincidió byte a byte con el compose real.
+ 
+### `backup_alerting`
+ 
+La regla de alerta de Grafana ("Failed Backup", el ciclo Normal → Pending → Firing sobre `backup_last_run_success`) exportada vía la API de provisioning y desplegada como fichero, más el cron diario del backup:
+ 
+```yaml
+# roles/backup_alerting/tasks/main.yml
+- name: Desplegar la regla de alerta de backup fallido
+  ansible.builtin.template:
+    src: backup-alert.yaml.j2
+    dest: "{{ noc_soc_home }}/monitoring/provisioning/alerting/backup-alert.yaml"
+ 
+- name: Programar la ejecución diaria del backup
+  ansible.builtin.cron:
+    name: "Backup NOC-SOC con Restic"
+    minute: "0"
+    hour: "3"
+    job: "{{ noc_soc_home }}/backup_restic.sh >> /var/log/noc-soc-backup.log 2>&1"
+    user: root
+```
+ 
+La regla, en `backup-alert.yaml.j2`, reproduce exactamente las dos condiciones que ya se explicaban en el post de la Parte 1 de backups: `backup_last_run_success < 1` o `time() - backup_last_run_timestamp > 93600` (26 horas), combinadas con un `math` de tipo OR, `for: 5m`. Tras aplicarla, `"provenance": "file"` en la API de Grafana confirma que la regla ya se gestiona desde el fichero, no desde la UI.
 
 Los secretos como contraseña de Restic, credenciales de B2, contraseña de Postgres de Zabbix, viven cifrados en `group_vars/all/vault.yml`, nunca en texto plano en el repo.
 
