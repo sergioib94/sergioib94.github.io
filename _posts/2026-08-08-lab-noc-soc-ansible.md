@@ -6,7 +6,7 @@ excerpt: "Los dos posts de Restic dejaron el lab con backups fiables y una prueb
 card_image: /assets/images/cards/ansible_lab.png
 ---
 
-Los dos posts sobre backups con Restic ([I](https://sergioib94.github.io/homelab/devops/backups/2026/08/04/lab-soc-noc-backup-1.html), [II](https://sergioib94.github.io/homelab/devops/backups/2026/08/04/lab-soc-noc-backup-2.html)) dejaron algo importante demostrado: los **datos** del lab sobreviven a una destrucción real. Pero todo el proceso para llegar a ese estado: instalar Docker, levantar cada stack, configurar Loki, provisionar la alerta de Grafana, seguía viviendo en mi cabeza y en el historial de bash. Nada de eso estaba versionado, y nada garantizaba que fuera reproducible en una máquina distinta a la mía.
+Los dos posts sobre backups con Restic ([I]((/homelab/devops/backups/2026/08/04/lab-soc-noc-backup-1.html)), [II]((/homelab/devops/backups/2026/08/04/lab-soc-noc-backup-2.html))) dejaron algo importante demostrado: los **datos** del lab sobreviven a una destrucción real. Pero todo el proceso para llegar a ese estado: instalar Docker, levantar cada stack, configurar Loki, provisionar la alerta de Grafana, seguía viviendo en mi cabeza y en el historial de bash. Nada de eso estaba versionado, y nada garantizaba que fuera reproducible en una máquina distinta a la mía.
 
 Este post cubre la migración de todo el lab a Ansible: la estructura del repositorio, los 7 roles, el troubleshooting real de cada uno, y la prueba que de verdad importaba, no solo si el playbook corre sin errores, sino si es capaz de reconstruir el **host entero**, desde una máquina vacía con un único comando.
 
