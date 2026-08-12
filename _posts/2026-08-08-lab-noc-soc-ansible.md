@@ -81,7 +81,7 @@ ansible lab -m ping
 # lab | SUCCESS => { "changed": false, "ping": "pong" }
 ```
 
-![ping-pong](/assets/images/lab-noc-soc-ansible/ping-pong.png)
+![ping-pong](/assets/images/lab-noc-soc-ansible/ping_pong.PNG)
  
 **Colección de Docker**, necesaria para el módulo que levanta los `docker-compose.yml`:
  
@@ -119,7 +119,7 @@ Verificamos que se puede leer:
 ansible-vault view group_vars/all/vault.yml
 ```
 
-![Vault creado y entrada de prueba descifrada correctamente](/assets/images/lab-noc-soc-ansible/vault-creado.png)
+![Vault creado y entrada de prueba descifrada correctamente](/assets/images/lab-noc-soc-ansible/vault-creado.PNG)
  
 **Esqueleto de los 7 roles**, vacíos por ahora:
  
@@ -131,7 +131,7 @@ done
 cd ..
 ```
 
-![Los 7 roles creados con ansible-galaxy init](/assets/images/lab-noc-soc-ansible/roles-esqueleto.png)
+![Los 7 roles creados con ansible-galaxy init](/assets/images/lab-noc-soc-ansible/roles-esqueleto.PNG)
 
 ansible-galaxy init genera la estructura estándar de cada rol (tasks/, handlers/, templates/, defaults/, meta/) para que no tengas que crearla a mano, se queda vacía de lógica, lista para rellenar.
  
@@ -176,7 +176,7 @@ git commit -m "Estructura base del repositorio Ansible para el lab NOC/SOC"
 git push -u origin main
 ```
 
-![Push inicial completado: rama main creada en GitHub](/assets/images/lab-noc-soc-ansible/git-push-ok.png)
+![Push inicial completado: rama main creada en GitHub](/assets/images/lab-noc-soc-ansible/git-push-ok.PNG)
 
 ## Construcción de los 7 roles
  
@@ -446,7 +446,7 @@ Probamos solo estos dos roles antes de seguir con el resto para ir validando los
 ansible-playbook site.yml --check --ask-become-pass --diff
 ```
 
-![Primera aplicación de docker_base y restic, ya corregida](/assets/images/lab-noc-soc-ansible/docker-restic-primer-run.png)
+![Primera aplicación de docker_base y restic, ya corregida](/assets/images/lab-noc-soc-ansible/docker-restic-primer-run.PNG)
 
 
 ### `monitoring_stack`
@@ -571,7 +571,7 @@ Promabos el rol igual que hemos hecho anteriormente:
 ansible-playbook site.yml --ask-become-pass --diff --tags monitoring_stack
 ```
 
-![Diff de monitoring_stack aplicado sin pérdida de configuración](/assets/images/lab-noc-soc-ansible/monitoring-stack-diff.png)
+![Diff de monitoring_stack aplicado sin pérdida de configuración](/assets/images/lab-noc-soc-ansible/monitoring-stack-diff.PNG)
 
 ### `logging_stack`
  
@@ -706,7 +706,7 @@ Comprobamos el rol:
 ansible-playbook site.yml --ask-become-pass --diff --tags logging_stack
 ```
 
-![Diff de logging_stack: Loki y Alloy aplicados limpiamente](/assets/images/lab-noc-soc-ansible/logging-stack-diff.png)
+![Diff de logging_stack: Loki y Alloy aplicados limpiamente](/assets/images/lab-noc-soc-ansible/logging-stack-diff.PNG)
 
 ### `automation_stack`
  
@@ -765,7 +765,7 @@ Realizamos la comprobacion del rol:
 ansible-playbook site.yml --ask-become-pass --diff --tags automation_stack
 ```
 
-![Recap de automation_stack con changed=0 desde el primer intento](/assets/images/lab-noc-soc-ansible/automatizacion-stack.png)
+![Recap de automation_stack con changed=0 desde el primer intento](/assets/images/lab-noc-soc-ansible/automatizacion-stack.PNG)
 
 Este fue el único rol que quedó `changed=0` desde el primer intento —la plantilla coincidió byte a byte con el compose real.
 
@@ -886,7 +886,7 @@ docker exec zabbix-postgres-server-1 psql -U zabbix -c "SELECT count(*) FROM hos
 docker exec zabbix-postgres-server-1 psql -U zabbix -c "SELECT count(*) FROM triggers;"
 ```
 
-![zabbix_stack aplicado: 409 hosts y 6927 triggers verificados](/assets/images/lab-noc-soc-ansible/zabbix-stack-verificado.png)
+![zabbix_stack aplicado: 409 hosts y 6927 triggers verificados](/assets/images/lab-noc-soc-ansible/zabbix-stack-verificado.PNG)
 
 ### `backup_alerting`
  
@@ -1076,7 +1076,7 @@ El primer comando confirma que Grafana cargó el fichero de provisioning sin err
 
 La regla, en `backup-alert.yaml.j2`, reproduce exactamente las dos condiciones que ya se explicaban en el post de la Parte 1 de backups: `backup_last_run_success < 1` o `time() - backup_last_run_timestamp > 93600` (26 horas), combinadas con un `math` de tipo OR, `for: 5m`. Tras aplicarla, `"provenance": "file"` en la API de Grafana confirma que la regla ya se gestiona desde el fichero, no desde la UI.
 
-![Regla de alerta provisionada por código, con provenance: file](/assets/images/lab-noc-soc-ansible/alerta-provisionada.png)
+![Regla de alerta provisionada por código, con provenance: file](/assets/images/lab-noc-soc-ansible/alerta-provisionada.PNG)
 
 Los secretos como contraseña de Restic, credenciales de B2, contraseña de Postgres de Zabbix, viven cifrados en `group_vars/all/vault.yml`, nunca en texto plano en el repo.
 
@@ -1110,9 +1110,9 @@ ansible-playbook site.yml --ask-become-pass --diff
 
 Resultado: `ok=34, changed=0, failed=0, skipped=4` (los 4 `skipped` son los pasos condicionales de instalación de Restic, que se saltan porque la versión ya coincide).
 
-![Recap de la ejecución completa: ok=34, changed=0, failed=0](/assets/images/lab-noc-soc-ansible/prueba-1.1.png)
-![Recap de la ejecución completa: ok=34, changed=0, failed=0](/assets/images/lab-noc-soc-ansible/prueba-1.2.png)
-![Recap de la ejecución completa: ok=34, changed=0, failed=0](/assets/images/lab-noc-soc-ansible/prueba-1.3.png)
+![Recap de la ejecución completa: ok=34, changed=0, failed=0](/assets/images/lab-noc-soc-ansible/prueba-1.1.PNG)
+![Recap de la ejecución completa: ok=34, changed=0, failed=0](/assets/images/lab-noc-soc-ansible/prueba-1.2.PNG)
+![Recap de la ejecución completa: ok=34, changed=0, failed=0](/assets/images/lab-noc-soc-ansible/prueba-1.3.PNG)
 
 **Idempotencia**: relanzar el mismo comando inmediatamente después, sin cambiar nada.
 
@@ -1122,7 +1122,7 @@ ansible-playbook site.yml --ask-become-pass --diff
 
 Resultado idéntico: `changed=0` en la segunda pasada. 
 
-![Recap de la segunda ejecución, idéntico al anterior](/assets/images/lab-noc-soc-ansible/prueba2-idempotencia.png)
+![Recap de la segunda ejecución, idéntico al anterior](/assets/images/lab-noc-soc-ansible/prueba2-idempotencia.PNG)
 
 La propiedad que define si algo es IaC de verdad, ejecutar el mismo playbook dos veces no debería producir ningún cambio la segunda vez queda confirmada con datos reales, no solo como afirmación.
 
@@ -1156,7 +1156,7 @@ curl -s -H "Authorization: Bearer <token>" http://localhost:3000/api/v1/provisio
 
 Baseline capturado: 409 hosts, 6927 triggers, 4 dashboards, 4 datasources, `count(up)=2`, 387 series, 6 contenedores con logs en Loki, workflow activo `JzRIkp8Yj0Rih5Q2`, cron instalado para `root`, alerta con `datasourceUid: dfsoxl3imcqo0a`.
 
-![Baseline completo capturado antes de destruir nada](/assets/images/lab-noc-soc-ansible/fase1-baseline.png)
+![Baseline completo capturado antes de destruir nada](/assets/images/lab-noc-soc-ansible/fase1-baseline.PNG)
 
 *Troubleshooting: el backup de la Fase 2 falló con `wrong password or no key found` en ambos repositorios.* Al revisar el vault, `vault_restic_password` seguía teniendo el valor de marcador (`"usuario"`) puesto durante la construcción inicial del rol, nunca corregido con la contraseña real. Peor aún: `site.yml` tenía el rol `restic` sin su tag correspondiente, así que un primer intento de corrección con `ansible-playbook --tags restic` no aplicó ningún cambio real, el playbook se saltó el rol entero sin avisar. Con el tag añadido y la contraseña real localizada (afortunadamente, sí estaba anotada fuera del sistema), el backup local se resolvió. El repositorio B2 dio un segundo problema independiente, 401 en `b2_authorize_account` resuelto regenerando la Application Key desde la consola de Backblaze. Ambos incidentes confirman por qué un valor de marcador nunca debería quedar en un vault sin verificar que abre de verdad lo que dice proteger.
 
@@ -1205,7 +1205,7 @@ Con la sesión corregida, infraestructura confirmada arriba pero con volúmenes 
 
 *Troubleshooting: la restauración de Zabbix perdió 7 hosts y 48 triggers en el primer intento.* El dump SQL, verificado línea a línea contra el fichero (`awk` sobre el bloque `COPY public.hosts`), contenía los 409/6927 correctos, el problema no estaba en el backup, sino en su aplicación. La imagen `postgres:16-alpine`, al arrancar con `POSTGRES_DB=zabbix` sobre un volumen vacío, se autoinicializa creando ya el rol y la base `zabbix` antes de que el dump se aplicara encima. El `pg_dumpall`, que también incluye sus propias sentencias `CREATE ROLE`/`CREATE DATABASE`, chocó parcialmente con lo ya creado, y `psql` sin `ON_ERROR_STOP` siguió adelante en silencio tras cada conflicto puntual, dejando algunas filas sin insertar. Arreglo: `DROP DATABASE zabbix`, filtrar la sentencia `CREATE ROLE zabbix` del propio dump (el rol ya existe, generado por la imagen, y no puede eliminarse estando conectado como sí mismo), y reaplicar con `-v ON_ERROR_STOP=1` para que cualquier conflicto futuro pare la ejecución en vez de pasar desapercibido:
 
-![Error "role zabbix already exists" al aplicar el dump con ON_ERROR_STOP=1](/assets/images/lab-noc-soc-ansible/zabbix-role-conflict.png)
+![Error "role zabbix already exists" al aplicar el dump con ON_ERROR_STOP=1](/assets/images/lab-noc-soc-ansible/zabbix-role-conflict.PNG)
 
 ```bash
 sudo sed '/^CREATE ROLE zabbix;/d' zabbix_pgdump.sql \
@@ -1216,7 +1216,7 @@ Resultado: 409 hosts, 6927 triggers, coincidencia exacta.
 
 *Troubleshooting: Loki repitió el bucle de reinicio por WAL no secuencial, pese a haber parado el contenedor antes de restaurar, la misma lección aplicada de la Parte 1.* Este fue el hallazgo más interesante de toda la prueba: parar el contenedor antes de restaurar no basta si el propio snapshot capturó a Loki con escritura activa en el WAL en el momento del backup. Un primer intento de limpiar solo el directorio `wal/` no resolvió nada; la solución real fue reinicializar el volumen completo desde cero y restaurar de nuevo:
 
-![Log de Loki con "get segment range: segments are not sequential" tras la restauración](/assets/images/lab-noc-soc-ansible/loki-wal-error.png)
+![Log de Loki con "get segment range: segments are not sequential" tras la restauración](/assets/images/lab-noc-soc-ansible/loki-wal-error.PNG)
 
 ```bash
 docker compose -f logging/docker-compose.yml stop loki
@@ -1244,7 +1244,7 @@ Con esto, Loki arrancó limpio. La lección revisada respecto a la Parte 1: para
 | n8n | Workflow activo | `JzRIkp8Yj0Rih5Q2` | `JzRIkp8Yj0Rih5Q2` | Idéntico |
 | Cron | Backup diario (root) | presente | presente | Idéntico |
 
-![Verificación final: Loki con los 6 contenedores y length=1, tras reinicializar el volumen](/assets/images/lab-noc-soc-ansible/fase5-verificacion.png)
+![Verificación final: Loki con los 6 contenedores y length=1, tras reinicializar el volumen](/assets/images/lab-noc-soc-ansible/fase5-verificacion.PNG)
 
 ## El host es reconstruible, con matices honestos
 
