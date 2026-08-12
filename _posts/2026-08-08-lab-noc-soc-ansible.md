@@ -1,6 +1,6 @@
 ---
 title: "Lab NOC/SOC: de comandos manuales a IaC con Ansible"
-date: 2026-08-12T18:00+02:00
+date: 2026-08-12T13:27+02:00
 categories: [Homelab, DevOps, Ansible]
 excerpt: "Los dos posts de Restic dejaron el lab con backups fiables y una prueba de destrucción de datos superada. Quedaba el siguiente hueco real: todo el proceso de construcción vivía en la cabeza y en el historial de bash, no en código. Este post documenta la migración a Ansible, rol a rol, y la prueba definitiva: destruir el host entero —no solo los datos— y reconstruirlo con un único comando."
 card_image: /assets/images/cards/ansible_lab.png
