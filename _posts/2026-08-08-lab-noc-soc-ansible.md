@@ -1,9 +1,9 @@
 ---
 title: "Lab NOC/SOC: de comandos manuales a IaC con Ansible"
-date: 2026-08-14T18:00+02:00
+date: 2026-08-12T18:00+02:00
 categories: [Homelab, DevOps, Ansible]
 excerpt: "Los dos posts de Restic dejaron el lab con backups fiables y una prueba de destrucción de datos superada. Quedaba el siguiente hueco real: todo el proceso de construcción vivía en la cabeza y en el historial de bash, no en código. Este post documenta la migración a Ansible, rol a rol, y la prueba definitiva: destruir el host entero —no solo los datos— y reconstruirlo con un único comando."
-card_image: /assets/images/cards/lab-noc-soc-ansible.png
+card_image: /assets/images/cards/ansible_lab.png
 ---
 
 Los dos posts sobre backups con Restic ([I](https://sergioib94.github.io/homelab/devops/backups/2026/08/04/lab-soc-noc-backup-1.html), [II](https://sergioib94.github.io/homelab/devops/backups/2026/08/04/lab-soc-noc-backup-2.html)) dejaron algo importante demostrado: los **datos** del lab sobreviven a una destrucción real. Pero todo el proceso para llegar a ese estado: instalar Docker, levantar cada stack, configurar Loki, provisionar la alerta de Grafana, seguía viviendo en mi cabeza y en el historial de bash. Nada de eso estaba versionado, y nada garantizaba que fuera reproducible en una máquina distinta a la mía.
