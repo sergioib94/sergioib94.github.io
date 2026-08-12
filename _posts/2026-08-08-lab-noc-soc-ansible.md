@@ -1,6 +1,6 @@
 ---
 title: "Lab NOC/SOC: de comandos manuales a IaC con Ansible"
-date: 2026-08-14T18:0015:28+02:00
+date: 2026-08-14T18:00+02:00
 categories: [Homelab, DevOps, Ansible]
 excerpt: "Los dos posts de Restic dejaron el lab con backups fiables y una prueba de destrucción de datos superada. Quedaba el siguiente hueco real: todo el proceso de construcción vivía en la cabeza y en el historial de bash, no en código. Este post documenta la migración a Ansible, rol a rol, y la prueba definitiva: destruir el host entero —no solo los datos— y reconstruirlo con un único comando."
 card_image: /assets/images/cards/lab-noc-soc-ansible.png
@@ -14,9 +14,7 @@ Este post cubre la migración de todo el lab a Ansible: la estructura del reposi
 
 Terraform aprovisiona infraestructura, crea y destruye recursos por otro lado Ansible configura estado sobre algo que ya existe. Todo lo que hasta ahora hacía a mano en este lab (instalar paquetes, levantar `docker-compose.yml`, editar configs) es configuración, no aprovisionamiento, así que Ansible es la herramienta correcta para esta fase. Terraform entrará en juego el día que parte del lab viva fuera de esta máquina como por ejemplo en una VM de Azure, candidata natural dado que estoy preparandome el AZ-104.
 
-## Estructura del repositorio
-
-### Base del repositorio
+## Base del repositorio
  
 Antes de escribir ningún rol, toca dejar Ansible operativo y el esqueleto del repositorio en su sitio.
  
@@ -46,8 +44,6 @@ noc-soc-ansible/
 │   └── backup_alerting/
 └── site.yml
 ```
-
-### Estructura
 
 Empezamos con la creación del repositorio y la estructura base
  
@@ -84,6 +80,8 @@ Comprobamos que se conecta correctamente:
 ansible lab -m ping
 # lab | SUCCESS => { "changed": false, "ping": "pong" }
 ```
+
+![ping-pong](/assets/images/lab-noc-soc-ansible/ping-pong.png)
  
 **Colección de Docker**, necesaria para el módulo que levanta los `docker-compose.yml`:
  
@@ -120,6 +118,8 @@ Verificamos que se puede leer:
 ```bash
 ansible-vault view group_vars/all/vault.yml
 ```
+
+![Vault creado y entrada de prueba descifrada correctamente](/assets/images/lab-noc-soc-ansible/vault-creado.png)
  
 **Esqueleto de los 7 roles**, vacíos por ahora:
  
@@ -130,6 +130,8 @@ for role in docker_base restic zabbix_stack monitoring_stack logging_stack autom
 done
 cd ..
 ```
+
+![Los 7 roles creados con ansible-galaxy init](/assets/images/lab-noc-soc-ansible/roles-esqueleto.png)
 
 ansible-galaxy init genera la estructura estándar de cada rol (tasks/, handlers/, templates/, defaults/, meta/) para que no tengas que crearla a mano, se queda vacía de lógica, lista para rellenar.
  
@@ -173,7 +175,9 @@ git add .
 git commit -m "Estructura base del repositorio Ansible para el lab NOC/SOC"
 git push -u origin main
 ```
- 
+
+![Push inicial completado: rama main creada en GitHub](/assets/images/lab-noc-soc-ansible/git-push-ok.png)
+
 ## Construcción de los 7 roles
  
 Cada rol traduce a tareas idempotentes lo que hasta ahora hacía a mano, documentado paso a paso en los posts anteriores.
@@ -251,7 +255,7 @@ roles/docker_base/tasks/main.yml: Traduce a tareas idempotentes lo que en su dí
   ansible.builtin.file:
     path: "{{ noc_soc_home }}"
     state: directory
-    owner: "{{ ansible_user_id }}"
+    owner: "{{ lab_user }}"
     mode: "0755"
 
 - name: Crear la red Docker compartida del lab
@@ -357,7 +361,7 @@ export B2_ACCOUNT_KEY="{{ vault_b2_account_key }}"
 #!/bin/bash
 set -euo pipefail
 
-source /home/{{ ansible_user_id }}/.b2-credentials
+source /home/{{ lab_user }}/.b2-credentials
 export RESTIC_PASSWORD_FILE="/home/{{ ansible_user_id }}/.restic-password"
 
 VOLUME_PATHS=(
@@ -441,7 +445,10 @@ Probamos solo estos dos roles antes de seguir con el resto para ir validando los
 ```bash
 ansible-playbook site.yml --check --ask-become-pass --diff
 ```
- 
+
+![Primera aplicación de docker_base y restic, ya corregida](/assets/images/lab-noc-soc-ansible/docker-restic-primer-run.png)
+
+
 ### `monitoring_stack`
  
 VictoriaMetrics, Grafana, node-exporter y cadvisor, copiados fielmente del compose real —incluido el montaje del textfile_collector en node-exporter (el mecanismo que expone `backup_last_run_success`) y el directorio de provisioning de Grafana:
@@ -479,6 +486,13 @@ grafana_admin_user: admin
     mode: "0644"
   register: monitoring_scrape_config
 
+- name: Crear el directorio de provisioning de Grafana
+  ansible.builtin.file:
+    path: "{{ monitoring_dir }}/provisioning/alerting"
+    state: directory
+    owner: "{{ lab_user }}"
+    mode: "0755"
+
 - name: Levantar el stack de monitoring
   community.docker.docker_compose_v2:
     project_src: "{{ monitoring_dir }}"
@@ -507,6 +521,7 @@ services:
     ports: ["3000:3000"]
     volumes:
       - grafana-storage:/var/lib/grafana
+      - ./provisioning:/etc/grafana/provisioning
     restart: unless-stopped
 
   node-exporter:
@@ -555,10 +570,12 @@ Promabos el rol igual que hemos hecho anteriormente:
 ```bash
 ansible-playbook site.yml --ask-become-pass --diff --tags monitoring_stack
 ```
- 
+
+![Diff de monitoring_stack aplicado sin pérdida de configuración](/assets/images/lab-noc-soc-ansible/monitoring-stack-diff.png)
+
 ### `logging_stack`
  
-Loki + Alloy, con el `discovery.docker` y el relabeling que ya se corrigió en la Parte 2 de los posts de backup —Alloy sin eso solo veía logs del sistema, no de los contenedores:
+Loki + Alloy, con el `discovery.docker` y el relabeling que ya se corrigió en la Parte 2 de los posts de backup, Alloy sin eso solo veía logs del sistema, no de los contenedores:
 
 ```yml
 # roles/logging_stack/defaults/main.yml
@@ -689,6 +706,8 @@ Comprobamos el rol:
 ansible-playbook site.yml --ask-become-pass --diff --tags logging_stack
 ```
 
+![Diff de logging_stack: Loki y Alloy aplicados limpiamente](/assets/images/lab-noc-soc-ansible/logging-stack-diff.png)
+
 ### `automation_stack`
  
 n8n, el rol más simple de los siete un único servicio, sin red compartida (sus integraciones son por API externa, no contenedores internos):
@@ -745,20 +764,145 @@ Realizamos la comprobacion del rol:
 ```bash
 ansible-playbook site.yml --ask-become-pass --diff --tags automation_stack
 ```
- 
+
+![Recap de automation_stack con changed=0 desde el primer intento](/assets/images/lab-noc-soc-ansible/automatizacion-stack.png)
+
 Este fue el único rol que quedó `changed=0` desde el primer intento —la plantilla coincidió byte a byte con el compose real.
- 
+
+### `zabbix_stack`
+
+```yaml
+# roles/zabbix_stack/defaults/main.yml
+---
+zabbix_dir: "{{ noc_soc_home }}/zabbix"
+```
+
+```yaml
+# roles/zabbix_stack/tasks/main.yml
+---
+- name: Crear el directorio del stack de Zabbix
+  ansible.builtin.file:
+    path: "{{ zabbix_dir }}"
+    state: directory
+    owner: "{{ lab_user }}"
+    mode: "0755"
+
+- name: Desplegar el docker-compose.yml de Zabbix
+  ansible.builtin.template:
+    src: docker-compose.yml.j2
+    dest: "{{ zabbix_dir }}/docker-compose.yml"
+    owner: "{{ lab_user }}"
+    mode: "0644"
+  register: zabbix_compose_file
+
+- name: Levantar Postgres primero (postgres-server)
+  community.docker.docker_compose_v2:
+    project_src: "{{ zabbix_dir }}"
+    services: [postgres-server]
+    state: present
+    recreate: "{{ 'always' if zabbix_compose_file.changed else 'auto' }}"
+
+- name: Esperar a que Postgres acepte conexiones
+  ansible.builtin.command: >
+    docker exec zabbix-postgres-server-1 pg_isready -U zabbix
+  register: pg_ready
+  retries: 10
+  delay: 3
+  until: pg_ready.rc == 0
+  changed_when: false
+
+- name: Levantar zabbix-server y zabbix-web
+  community.docker.docker_compose_v2:
+    project_src: "{{ zabbix_dir }}"
+    services: [zabbix-server, zabbix-web]
+    state: present
+    recreate: "{{ 'always' if zabbix_compose_file.changed else 'auto' }}"
+```
+
+```yaml
+# roles/zabbix_stack/templates/docker-compose.yml.j2
+---
+services:
+  postgres-server:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: zabbix
+      POSTGRES_PASSWORD: "{{ vault_zabbix_postgres_password }}"
+      POSTGRES_DB: zabbix
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  zabbix-server:
+    image: zabbix/zabbix-server-pgsql:alpine-7.0-latest
+    environment:
+      DB_SERVER_HOST: postgres-server
+      POSTGRES_USER: zabbix
+      POSTGRES_PASSWORD: "{{ vault_zabbix_postgres_password }}"
+      POSTGRES_DB: zabbix
+    ports:
+      - "10051:10051"
+    depends_on:
+      - postgres-server
+    restart: unless-stopped
+
+  zabbix-web:
+    image: zabbix/zabbix-web-nginx-pgsql:alpine-7.0-latest
+    environment:
+      DB_SERVER_HOST: postgres-server
+      POSTGRES_USER: zabbix
+      POSTGRES_PASSWORD: "{{ vault_zabbix_postgres_password }}"
+      POSTGRES_DB: zabbix
+      ZBX_SERVER_HOST: zabbix-server
+      PHP_TZ: Europe/Madrid
+    ports:
+      - "8080:8080"
+    depends_on:
+      - zabbix-server
+    restart: unless-stopped
+
+volumes:
+  pgdata:
+```
+
+Añadimos la variable al vault:
+
+```bash
+ansible-vault edit group_vars/all/vault.yml --vault-password-file .vault_pass
+```
+
+```bash
+vault_zabbix_postgres_password: "zabbix_pwd"
+```
+
+Probamos que funciona correctamente:
+
+```bash
+ansible-playbook site.yml --ask-become-pass --diff --tags zabbix_stack
+```
+
+```bash
+docker exec zabbix-postgres-server-1 psql -U zabbix -c "SELECT count(*) FROM hosts;"
+docker exec zabbix-postgres-server-1 psql -U zabbix -c "SELECT count(*) FROM triggers;"
+```
+
+![zabbix_stack aplicado: 409 hosts y 6927 triggers verificados](/assets/images/lab-noc-soc-ansible/zabbix-stack-verificado.png)
+
 ### `backup_alerting`
  
 La regla de alerta de Grafana ("Failed Backup", el ciclo Normal → Pending → Firing sobre `backup_last_run_success`) exportada vía la API de provisioning y desplegada como fichero, más el cron diario del backup:
  
 ```yaml
 # roles/backup_alerting/tasks/main.yml
+---
 - name: Desplegar la regla de alerta de backup fallido
   ansible.builtin.template:
     src: backup-alert.yaml.j2
     dest: "{{ noc_soc_home }}/monitoring/provisioning/alerting/backup-alert.yaml"
- 
+    owner: "{{ lab_user }}"
+    mode: "0644"
+  register: backup_alert_rule
+
 - name: Programar la ejecución diaria del backup
   ansible.builtin.cron:
     name: "Backup NOC-SOC con Restic"
@@ -767,8 +911,172 @@ La regla de alerta de Grafana ("Failed Backup", el ciclo Normal → Pending → 
     job: "{{ noc_soc_home }}/backup_restic.sh >> /var/log/noc-soc-backup.log 2>&1"
     user: root
 ```
- 
+roles/backup_alerting/templates/backup-alert.yaml.j2:
+
+```yaml
+apiVersion: 1
+groups:
+  - orgId: 1
+    name: BK
+    folder: "{{ grafana_alert_folder }}"
+    interval: 1m
+    rules:
+      - uid: efu239b2mboqoe
+        title: "Failed Backup"
+        condition: E
+        data:
+          - refId: A
+            relativeTimeRange:
+              from: 600
+              to: 0
+            datasourceUid: "{{ grafana_prometheus_datasource_uid }}"
+            model:
+              datasource:
+                type: prometheus
+                uid: "{{ grafana_prometheus_datasource_uid }}"
+              editorMode: code
+              exemplar: false
+              expr: "backup_last_run_success"
+              instant: true
+              intervalMs: 1000
+              legendFormat: "__auto"
+              maxDataPoints: 43200
+              range: false
+              refId: A
+          - refId: B
+            relativeTimeRange:
+              from: 600
+              to: 0
+            datasourceUid: "{{ grafana_prometheus_datasource_uid }}"
+            model:
+              datasource:
+                type: prometheus
+                uid: "{{ grafana_prometheus_datasource_uid }}"
+              editorMode: code
+              exemplar: false
+              expr: "time() - backup_last_run_timestamp"
+              instant: true
+              intervalMs: 1000
+              legendFormat: "__auto"
+              maxDataPoints: 43200
+              range: false
+              refId: B
+          - refId: C
+            relativeTimeRange:
+              from: 0
+              to: 0
+            datasourceUid: "__expr__"
+            model:
+              conditions:
+                - evaluator:
+                    params: [1]
+                    type: lt
+                  operator:
+                    type: and
+                  query:
+                    params: [C]
+                  reducer:
+                    params: []
+                    type: last
+                  type: query
+              datasource:
+                type: "__expr__"
+                uid: "__expr__"
+              expression: A
+              intervalMs: 1000
+              maxDataPoints: 43200
+              refId: C
+              type: threshold
+          - refId: D
+            relativeTimeRange:
+              from: 0
+              to: 0
+            datasourceUid: "__expr__"
+            model:
+              conditions:
+                - evaluator:
+                    params: [93600, 0]
+                    type: gt
+                  operator:
+                    type: and
+                  query:
+                    params: []
+                  reducer:
+                    params: []
+                    type: avg
+                  type: query
+              datasource:
+                name: Expression
+                type: "__expr__"
+                uid: "__expr__"
+              expression: B
+              intervalMs: 1000
+              maxDataPoints: 43200
+              refId: D
+              type: threshold
+          - refId: E
+            relativeTimeRange:
+              from: 0
+              to: 0
+            datasourceUid: "__expr__"
+            model:
+              conditions:
+                - evaluator:
+                    params: [0, 0]
+                    type: gt
+                  operator:
+                    type: and
+                  query:
+                    params: []
+                  reducer:
+                    params: []
+                    type: avg
+                  type: query
+              datasource:
+                name: Expression
+                type: "__expr__"
+                uid: "__expr__"
+              expression: "$C || $D"
+              intervalMs: 1000
+              maxDataPoints: 43200
+              refId: E
+              type: math
+        noDataState: NoData
+        execErrState: Error
+        for: 5m
+        keep_firing_for: 10m
+        isPaused: false
+        notification_settings:
+          receiver: "Backup-alerts"
+```
+
+```yaml
+# roles/backup_alerting/defaults/main.yml
+---
+grafana_alert_folder: "BK" # nombre de la carpeta donde esta la alerta creada en Grafana
+grafana_prometheus_datasource_uid: "dfsoxl3imcqo0a"
+```
+
+Probamos con --diff antes de aplicar:
+
+```bash
+ansible-playbook site.yml --ask-become-pass --diff --tags monitoring_stack,backup_alerting
+```
+
+Verificacion final:
+
+```bash
+docker logs monitoring-grafana-1 --tail 30 | grep -i alert
+curl -s -H "Authorization: Bearer <tu-service-account-token>" \
+  http://localhost:3000/api/v1/provisioning/alert-rules | jq '.[] | select(.title=="Failed Backup")'
+crontab -l
+```
+
+El primer comando confirma que Grafana cargó el fichero de provisioning sin errores de parseo; el segundo, que la regla existe con el mismo UID de antes; el tercero, que el cron del backup diario quedó instalado.
+
 La regla, en `backup-alert.yaml.j2`, reproduce exactamente las dos condiciones que ya se explicaban en el post de la Parte 1 de backups: `backup_last_run_success < 1` o `time() - backup_last_run_timestamp > 93600` (26 horas), combinadas con un `math` de tipo OR, `for: 5m`. Tras aplicarla, `"provenance": "file"` en la API de Grafana confirma que la regla ya se gestiona desde el fichero, no desde la UI.
+
+![Regla de alerta provisionada por código, con provenance: file](/assets/images/lab-noc-soc-ansible/alerta-provisionada.png)
 
 Los secretos como contraseña de Restic, credenciales de B2, contraseña de Postgres de Zabbix, viven cifrados en `group_vars/all/vault.yml`, nunca en texto plano en el repo.
 
@@ -802,7 +1110,9 @@ ansible-playbook site.yml --ask-become-pass --diff
 
 Resultado: `ok=34, changed=0, failed=0, skipped=4` (los 4 `skipped` son los pasos condicionales de instalación de Restic, que se saltan porque la versión ya coincide).
 
-![Recap de la ejecución completa: ok=34, changed=0, failed=0](/assets/images/lab-noc-soc-ansible/prueba1-completa.png)
+![Recap de la ejecución completa: ok=34, changed=0, failed=0](/assets/images/lab-noc-soc-ansible/prueba-1.1.png)
+![Recap de la ejecución completa: ok=34, changed=0, failed=0](/assets/images/lab-noc-soc-ansible/prueba-1.2.png)
+![Recap de la ejecución completa: ok=34, changed=0, failed=0](/assets/images/lab-noc-soc-ansible/prueba-1.3.png)
 
 **Idempotencia**: relanzar el mismo comando inmediatamente después, sin cambiar nada.
 
@@ -882,8 +1192,6 @@ sudo gpasswd -d sergioib docker
 
 Verificación: `which docker` sin resultado, `~/noc-soc` inexistente. El host quedó limpio de verdad, no solo "parado" , a diferencia de la Parte 2 aquí no sobrevive ni Docker ni ningún fichero de configuración.
 
-![Verificación de que el host quedó realmente limpio: sin Docker, sin ~/noc-soc](/assets/images/lab-noc-soc-ansible/fase3-host-limpio.png)
-
 ## Fase 4: reconstrucción íntegra
 
 ```bash
@@ -893,11 +1201,11 @@ ansible-playbook site.yml --ask-become-pass --diff
 
 *Troubleshooting: `permission denied while trying to connect to the docker API` tras la reinstalación.* El propio rol `docker_base` reañade al usuario al grupo `docker`, pero un cambio de grupo no surte efecto en una sesión de shell ya abierta, el kernel no reevalúa los grupos de un proceso en marcha. Cerrar y reabrir la terminal (o `newgrp docker` para verificar sin reiniciar del todo) resolvió el problema. Es el mismo tipo de fricción invisible en ejecuciones incrementales que solo aparece al reconstruir un host realmente virgen.
 
-![Error de permisos contra el socket de Docker tras la reinstalación](/assets/images/lab-noc-soc-ansible/permission-denied-docker.png)
-
 Con la sesión corregida, infraestructura confirmada arriba pero con volúmenes vacíos, 402 hosts (correspondientes a las plantillas por defecto de Zabbix 7.0, no a datos reales) antes de restaurar nada.
 
 *Troubleshooting: la restauración de Zabbix perdió 7 hosts y 48 triggers en el primer intento.* El dump SQL, verificado línea a línea contra el fichero (`awk` sobre el bloque `COPY public.hosts`), contenía los 409/6927 correctos, el problema no estaba en el backup, sino en su aplicación. La imagen `postgres:16-alpine`, al arrancar con `POSTGRES_DB=zabbix` sobre un volumen vacío, se autoinicializa creando ya el rol y la base `zabbix` antes de que el dump se aplicara encima. El `pg_dumpall`, que también incluye sus propias sentencias `CREATE ROLE`/`CREATE DATABASE`, chocó parcialmente con lo ya creado, y `psql` sin `ON_ERROR_STOP` siguió adelante en silencio tras cada conflicto puntual, dejando algunas filas sin insertar. Arreglo: `DROP DATABASE zabbix`, filtrar la sentencia `CREATE ROLE zabbix` del propio dump (el rol ya existe, generado por la imagen, y no puede eliminarse estando conectado como sí mismo), y reaplicar con `-v ON_ERROR_STOP=1` para que cualquier conflicto futuro pare la ejecución en vez de pasar desapercibido:
+
+![Error "role zabbix already exists" al aplicar el dump con ON_ERROR_STOP=1](/assets/images/lab-noc-soc-ansible/zabbix-role-conflict.png)
 
 ```bash
 sudo sed '/^CREATE ROLE zabbix;/d' zabbix_pgdump.sql \
