@@ -1158,8 +1158,6 @@ Baseline capturado: 409 hosts, 6927 triggers, 4 dashboards, 4 datasources, `coun
 
 ![Baseline completo capturado antes de destruir nada](/assets/images/lab-noc-soc-ansible/fase1-baseline.PNG)
 
-*Troubleshooting: el backup de la Fase 2 falló con `wrong password or no key found` en ambos repositorios.* Al revisar el vault, `vault_restic_password` seguía teniendo el valor de marcador (`"usuario"`) puesto durante la construcción inicial del rol, nunca corregido con la contraseña real. Peor aún: `site.yml` tenía el rol `restic` sin su tag correspondiente, así que un primer intento de corrección con `ansible-playbook --tags restic` no aplicó ningún cambio real, el playbook se saltó el rol entero sin avisar. Con el tag añadido y la contraseña real localizada (afortunadamente, sí estaba anotada fuera del sistema), el backup local se resolvió. El repositorio B2 dio un segundo problema independiente, 401 en `b2_authorize_account` resuelto regenerando la Application Key desde la consola de Backblaze. Ambos incidentes confirman por qué un valor de marcador nunca debería quedar en un vault sin verificar que abre de verdad lo que dice proteger.
-
 ## Fase 2: backup fresco garantizado
 
 ```bash
