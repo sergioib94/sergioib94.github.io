@@ -1170,6 +1170,12 @@ restic snapshots --repo b2:noc-soc-restic-backup:restic-repo
 
 Con ambos repositorios confirmados y snapshot fresco anotado, red de seguridad real antes de destruir nada.
 
+*Troubleshooting: el backup de la Fase 2 falló con wrong password or no key found en ambos repositorios. La investigación llevó varios pasos:* primero se revisó el vault con ansible-vault view, confirmando que vault_restic_password tenía un valor que no correspondía a la contraseña real usada al inicializar los repositorios en la Parte 1. Se comprobó el .bash_history y el historial de Git del propio vault.yml en busca de algún valor anterior, sin resultado, los prompts interactivos de restic init nunca dejan la contraseña en texto plano en ningún log. La pista definitiva apareció al buscar por sistema de ficheros capturas de pantalla del proceso original (find /mnt/c/Users/sergio.ib -iname "*restic*"), que llevó a localizar la contraseña real anotada fuera del propio sistema. Con el valor correcto en el vault y con el rol restic corregido en site.yml, que en un primer momento carecía de su tag, haciendo que un intento de reaplicar el vault no surtiera ningún efecto, el backup local se resolvió. El repositorio B2 dio un segundo problema independiente, 401 en b2_authorize_account, resuelto regenerando la Application Key desde la consola de Backblaze.
+
+*Troubleshooting: con la contraseña corregida, el backup a B2 seguía fallando con `unable to open cache: open /home/sergioib/.cache/restic/CACHEDIR.TAG`.* La causa: el script corre unas veces como `root` (vía cron o `sudo -E ~/noc-soc/backup_restic.sh`, que con `-E` preserva `$HOME` del usuario original) y otras como `sergioib` directamente en comandos manuales —ambos contextos compartían la misma ruta de caché dentro de `~/.cache/restic`, y el primero en usarla dejaba subdirectorios con su propio UID, bloqueando al otro. Arreglo: separar explícitamente la caché de cada contexto con `RESTIC_CACHE_DIR`, fijado en la propia plantilla del script (`/root/.cache/restic` para las ejecuciones como root), en vez de depender del `$HOME` heredado.
+
+Un segundo incidente en el mismo tramo: al editar la plantilla para añadir esa variable, `~/noc-soc/backup_restic.sh` apareció vacío tras la siguiente ejecución del rol `restic` —recordatorio de que ese fichero no se edita directamente, es generado desde `backup_restic.sh.j2`, y cualquier cambio (o pérdida accidental de contenido) tiene que corregirse en la plantilla, no en el fichero desplegado.
+
 ## Fase 3: destrucción total del host
 
 ```bash
