@@ -818,12 +818,13 @@ Antes de convertir reverse_proxy en una tarea ansible para automatizarlo, ha que
 
 **Nota:** Una limitación que vale la pena dejar clara: el SSO que consigue Authelia aquí es a nivel de proxy, no de aplicación. Una sola sesión en auth.lab.local basta para pasar el control de acceso de los tres servicios sin volver a loguearte en Authelia pero cada aplicación conserva su propio sistema de login interno, así que Grafana, Zabbix y n8n te siguen pidiendo sus credenciales individuales la primera vez que entras en cada una. Para cerrar del todo esa brecha haría falta que cada app confiara en los headers que Authelia ya envía (Remote-User, Remote-Groups), algo que Grafana soporta de forma nativa vía auth.proxy pero que Zabbix y n8n no ofrecen de forma fiable. De momento se queda así: doble capa de autenticación en vez de un login único de extremo a extremo que tampoco es una mala solución de defensa en profundidad.
 
-## Fase 6: Reconstruccion de reserve_proxy en Ansible
+## Fase 6: Reconstruccion de reverse_proxy en Ansible
 
 Vamos a convertir todo el proceso manual en el rol reverse_proxy de Ansible. Dado que ya validamos cada pieza a mano, esto es "traducir" los comandos que ya funcionan a tareas idempotentes.
 
 Empezamos configurando defaults/main.yml:
 
+{% raw %}
 ```yaml
 lab_domain: "lab.local"
 lab_base_dir: "/home/sergioib/noc-soc-ansible"
@@ -839,6 +840,7 @@ authelia_session_secret: "{{ vault_authelia_session_secret }}"
 authelia_storage_encryption_key: "{{ vault_authelia_storage_encryption_key }}"
 authelia_jwt_secret: "{{ vault_authelia_jwt_secret }}"
 ```
+{% endraw %}
 
 **Nota**: los tres secretos de Authelia no deben ir en texto plano en el repo, la forma correcta de indicarlos es meterlos en el fichero ansible-vaul, ya que los secretos ya estarian generados.
 
@@ -883,6 +885,7 @@ Añadimos la configuracion de tasks/network.yml:
 
 Añadimos la configuracion de tasks/mkcert.yml
 
+{% raw %}
 ```yaml
 ---
 - name: Instalar libnss3-tools
@@ -939,9 +942,11 @@ Añadimos la configuracion de tasks/mkcert.yml
     chdir: "{{ certs_dir }}"
   when: not wildcard_cert.stat.exists
 ```
+{% endraw %}
 
 Añadimos la configuracion tasks/traefik.yml:
 
+{% raw %}
 ```yaml
 ---
 - name: Crear directorio de Traefik
@@ -978,9 +983,11 @@ Añadimos la configuracion tasks/traefik.yml:
       - docker-compose.reverse-proxy.yml
     state: present
 ```
+{% endraw %}
 
 Añadimos la configuracion tasks/authelia.yml:
 
+{% raw %}
 ```yaml
 ---
 - name: Crear directorio de Authelia
@@ -1003,9 +1010,11 @@ Añadimos la configuracion tasks/authelia.yml:
     mode: '0644'
   notify: Recrear authelia
 ```
+{% endraw %}
 
 Añadimos la configuracion handlers/mail.yml:
 
+{% raw %}
 ```yaml
 ---
 - name: Recrear traefik
@@ -1031,11 +1040,13 @@ Añadimos la configuracion handlers/mail.yml:
     state: present
   listen: "Recrear stack reverse-proxy"
 ```
+{% endraw %}
 
 A parte de los ficheros indicados anteriormente tendremos que editar las plantillas, excepto templates/traefik.yml.j2 que en principio se quedaria igual.
 
 templates/traefik.yml.j2:
 
+{% raw %}
 ```yaml
 entryPoints:
   web:
@@ -1063,9 +1074,11 @@ api:
 log:
   level: INFO
 ```
+{% endraw %}
 
 templates/traefik_dynamic.yml.j2:
 
+{% raw %}
 ```yaml
 http:
   middlewares:
@@ -1089,9 +1102,11 @@ tls:
         certFile: /certs/lab.crt
         keyFile: /certs/lab.key
 ```
+{% endraw %}
 
 templates/authelia_configuration.yml.j2:
 
+{% raw %}
 ```yaml
 theme: dark
 
@@ -1136,9 +1151,11 @@ notifier:
   filesystem:
     filename: /config/data/notification.txt
 ```
+{% endraw %}
 
 templates/docker-compose.reverse-proxy.yml.j2:
 
+{% raw %}
 ```yaml
 services:
   traefik:
@@ -1188,6 +1205,7 @@ networks:
 volumes:
   authelia-data:
 ```
+{% endraw %}
 
 files/users_database.yml:
 
@@ -1248,6 +1266,8 @@ Configuracion handlers/main.yml:
     state: present
   listen: "Recrear stack reverse-proxy"
 ```
+
+**Nota:** Este error se ha debido a un error a la hora de crear el fichero ya que por error se le puso el nombre de handlers/mail.yml en lugar de handlers/main.yml
 
 Hacemos la prueba ejecutando de nuevo:
 
@@ -1337,4 +1357,6 @@ Todo el proceso quedó primero validado a mano, servicio a servicio, y después 
 
 Una aclaración honesta que vale la pena dejar por escrito: el SSO que monté es a nivel de proxy, no de aplicación. Una sola sesión en Authelia basta para pasar el control de acceso de los tres servicios sin volver a loguearte ahí pero cada aplicación conserva su propio sistema de login interno. Grafana soporta auto-login vía headers (auth.proxy) para cerrar esa brecha; Zabbix y n8n no lo permiten de forma fiable, así que de momento se quedan con esa doble capa (Authelia + login propio), que tampoco es mala idea como defensa en profundidad.
 
-Como en los posts anteriores, el código completo del rol está en el repo: [enlace a noc-soc-ansible]. El siguiente paso natural sería [aquí puedes cerrar con tu plan real, por ejemplo, retomar la automatización de la restauración de Restic que quedó pendiente, o el salto a Kubernetes/cloud que mencionaste como objetivo a más largo plazo].
+Como en los posts anteriores, el código completo del rol está en el repo: [enlace a noc-soc-ansible](https://github.com/sergioib94/noc-soc-ansible). Em el siguiente post, el objetivo sería montar un pipeline de alertas con IA:
+Zabbix/Grafana disparando hacia n8n, y n8n pasando el contexto a Claude para
+un primer triage automático antes de que la alerta llegue a una persona.
