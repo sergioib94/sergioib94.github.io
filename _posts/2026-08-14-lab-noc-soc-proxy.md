@@ -201,6 +201,10 @@ Debe devolver lab.crt: OK.
 
 ## Fase 2: Traefik
 
+Hasta ahora, cada servicio del lab (Grafana, Zabbix, n8n) exponía su puerto directamente al host: localhost:3000, localhost:8080, etc. Eso significa tres cosas expuestas por separado, cada una con su propia superficie de ataque, sin cifrado (HTTP plano) y sin ningún control de acceso común entre ellas. Un reverse proxy resuelve esto centralizando el tráfico: en vez de que cada servicio reciba peticiones directamente, todas pasan primero por un único punto de entrada, que decide a qué servicio interno redirigir según el dominio solicitado (grafana.lab.local, zabbix.lab.local...). Esto permite aplicar TLS, autenticación y logging en un solo sitio, en vez de replicarlo (o directamente no tenerlo) en cada aplicación por separado.
+
+Traefik es el reverse proxy elegido para esta fase. A diferencia de un proxy tradicional tipo Nginx (donde defines manualmente cada ruta en un archivo de configuración central), Traefik se integra directamente con Docker: detecta automáticamente los contenedores en marcha y lee su configuración de enrutado desde labels puestas en el propio docker-compose de cada servicio. Eso significa que añadir o quitar un servicio del proxy no requiere tocar ningún archivo de Traefik, basta con etiquetar (o desetiquetar) el contenedor correspondiente, lo cual encaja bien con un enfoque de infraestructura declarativa como el que se sigue en el resto de este repo con Ansible.
+
 ### Estructura y Docker-compose
 
 Creamos la estructura del rol: 
@@ -811,6 +815,8 @@ curl -k https://localhost
 Estos comandos deben fallar todos, confirmando asi que ninguno de los servicios es accesible sin pasar por traefik. En el caso del curl -k https://localhost, este devolvera un error 404 ya que `localhost` ya no coincide con ninguno de los routers definidos (grafana.lab.local, zabbix.lab.local, etc) por lo que traefik no encuentra ningun router al que enroutar.
 
 Antes de convertir reverse_proxy en una tarea ansible para automatizarlo, ha que realizar una prueba rapida para comprobar que los tres servicios grafana.lab.local, zabbix.lab.local y n8n.lab.local redirigen a auth.lab.local y tras logearse con usuario/contraseña y codigo, te devuelve al servicio ya autenticado por lo que al intentar acceder al resto de servicios no seria necesario volver a pasar por Authelia.
+
+**Nota:** Una limitación que vale la pena dejar clara: el SSO que consigue Authelia aquí es a nivel de proxy, no de aplicación. Una sola sesión en auth.lab.local basta para pasar el control de acceso de los tres servicios sin volver a loguearte en Authelia pero cada aplicación conserva su propio sistema de login interno, así que Grafana, Zabbix y n8n te siguen pidiendo sus credenciales individuales la primera vez que entras en cada una. Para cerrar del todo esa brecha haría falta que cada app confiara en los headers que Authelia ya envía (Remote-User, Remote-Groups), algo que Grafana soporta de forma nativa vía auth.proxy pero que Zabbix y n8n no ofrecen de forma fiable. De momento se queda así: doble capa de autenticación en vez de un login único de extremo a extremo que tampoco es una mala solución de defensa en profundidad.
 
 ## Fase 6: Reconstruccion de reserve_proxy en Ansible
 
