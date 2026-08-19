@@ -7,24 +7,28 @@ author_profile: true
 
 # ¡Hola, soy Sergio! 👋
 
-Soy **administrador de sistemas y técnico IT** con experiencia en entornos Windows y Linux.
+Soy Técnico de Sistemas con más de 4 años de experiencia en soporte técnico y gestión de incidencias en entornos Windows corporativos de alto volumen (Servicio Andaluz de Salud, Vocento), bajo SLA estricto.
 
-Actualmente continúo formándome en herramientas como **Docker, Ansible, Terraform y Kubernetes**.
+Por iniciativa propia, he construido un stack de monitorización tipo NOC/SOC (Zabbix, Prometheus, Grafana, Loki), con automatización vía Ansible y hardening de acceso todo documentado paso a paso en este blog. Es el proyecto en el que aplico y consolido lo que aprendí en mi formación en Administración de Sistemas (ASIR).
 
 ## Experiencia destacada
 
-- Técnico de soporte en empresas como **Ayesa (anteriormente Proxya), Efedos Consulting, Fervial Mercedes-Benz e Ibetia Global**.  
-- Conocimientos en **Active Directory, VMware, Zabbix, Grafana, Linux y Windows Server**.  
-- Conocimientos básicos en **Bash y Python** para automatización de tareas.  
+* Soporte técnico y gestión de incidencias en Ayesa (anteriormente Proxya), Efedos Consulting, Fervial Mercedes-Benz e Ibetia Global.
+* Gestión de accesos, credenciales y alta de usuarios en Active Directory.
+* Automatización con Bash y Python para tareas de sistema.
+
+## Proyecto personal
+
+* Laboratorio de Monitorización NOC/SOC: stack de observabilidad con Zabbix, Prometheus/Grafana, Loki y Ansible, con hardening de acceso (Traefik, TLS, SSO).
 
 ## Certificaciones
 
-- ITILv4  
-- Ansible  
-- Grafana & Prometheus
-- Mas en Linkedin 
-
-👉 Si quieres sobre mis otros certificados revisa mi perfil [LinkedIn_certificados](https://www.linkedin.com/in/sergio-ibañez-nuñez/details/certifications).
+* ITIL v4 (2022)
+* AZ-104: Gestión de identidades en Azure (módulos)
+* Ansible
+* Grafana & Prometheus
+* Mas en [LinkedIn](https://www.linkedin.com/in/sergio-ibañez-nuñez/details/certifications).
 
 ## Contacto
-- 📧 **Email:** sergioib309@gmail.com
+
+**Email:** sergioib309@gmail.com
