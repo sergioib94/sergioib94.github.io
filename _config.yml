@@ -29,7 +29,7 @@ paginate_path: "/page:num/"
 author:
   name: "Sergio Ibáñez"
   avatar: "/assets/images/avatar.PNG"
-  bio: "Administrador de sistemas - Técnico de soporte IT - Monitorización"
+  bio: "Técnico de Sistemas/Soporte | Monitorización & Observabilidad (Zabbix · Prometheus · Grafana) | IaC con Ansible/Terraform | Hacia DevOps/Cloud"
   #location: "España"
   #links:
     #- label: "GitHub"
