@@ -24,7 +24,7 @@ En una pestaña distinta fuera de la interfaz de slack accedemos a api.slack.com
 
 ![create for scratch](/assets/images/lab-noc-soc-pipeline/create_from_scratch.PNG)
 
-Tras confirmar la creación de la app, en el menu lateral izquierdo buscaremos la opción "Incomming webhoocks" en la que primero pondremos a **on** la opción "Activate Incoming Webhooks" y segundo tendremos que bajar hasta "Add New Webhook to Workspace", elegimos el canal (general-noc-soc-alertas o el que hayas creado) y copiamos la URL del webhoock que se nos crea ya que sera necesario para mas adelante, en mi caso https://hooks.slack.com/services/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.
+Tras confirmar la creación de la app, en el menu lateral izquierdo buscaremos la opción "Incomming webhoocks" en la que primero pondremos a **on** la opción "Activate Incoming Webhooks" y segundo tendremos que bajar hasta "Add New Webhook to Workspace", elegimos el canal (general-noc-soc-alertas o el que hayas creado) y copiamos la URL del webhoock que se nos crea ya que sera necesario para mas adelante.
 
 ![webhook activate](/assets/images/lab-noc-soc-pipeline/webhook_activate.PNG)
 
