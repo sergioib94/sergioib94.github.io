@@ -446,6 +446,24 @@ Esta comprobación es fácil de realizar, para ello lo que hacemos será modific
 
 ![prueba 1](/assets/images/lab-noc-soc-pipeline/prueba_1.PNG)
 
+Con una API key inválida, Basic LLM Chain falla con "Authorization failed" y el workflow entero se detiene ahí, la alerta no llega a Slack. Esto confirma que ahora mismo no hay ningún mecanismo de fallback, es decir, si Groq falla por cualquier motivo (credencial, rate limit, caída del servicio), la alerta se pierde sin más. Es una limitación real y vale la pena solucionarla antes de cerrar la fase.
+
+Para solucionar esto, accedemos a la configuración de Basic LLM Chain y activamos la opción "on error/error handling" y cambiamos de Stop Workflow (valor por defecto) a Continue (using error output). Esto hace que el nodo, en vez de detener todo el workflow al fallar, genere una segunda salida (la de error) por la que sigue fluyendo el dato.
+
+Es a esta segunda salida, donde conectaremos un nodo HTTP con la siguiente configuración:
+
+* Method: POST
+* URL: la misma que el webhook de slack
+* Body (Json):
+
+```json
+{
+  "text": "⚠️ *Alerta sin enriquecer (fallo del triage IA)*\nOrigen: {{ $json.origen }}\nHost: {{ $json.host }}\nAlerta: {{ $json.alerta_nombre }}\nSeveridad reportada: {{ $json.severidad }}\nEstado: {{ $json.estado }}\n\n_El análisis automático no estuvo disponible — revisar manualmente._"
+}
+```
+
+De esta forma, aunque Groq de error la alerta seguirá su curso hasta llegar a slack y no se perderá, pero llegara sin enriquecer (si el triage/clasificación realizados)
+
 ### Prueba 2: Alertas repetidas
 
 Zabbix reenvía alertas si el estado del trigger fluctúa. ¿El pipeline manda un mensaje a Slack cada vez, generando ruido, o hay algún tipo de deduplicación?
