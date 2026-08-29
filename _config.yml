@@ -21,6 +21,8 @@ plugins:
   - jekyll-paginate
   - jekyll-include-cache
   - jekyll-archives
+  - jekyll-remote-theme
+
 
 # Paginación
 paginate: 5
