@@ -21,6 +21,8 @@ Por iniciativa propia, he construido un stack de monitorización tipo NOC/SOC (Z
 
 * Laboratorio de Monitorización NOC/SOC: stack de observabilidad con Zabbix, Prometheus/Grafana, Loki y Ansible, con hardening de acceso (Traefik, TLS, SSO).
 
+[Homelab](https://sergioib94.github.io/categories/homelab/)
+
 ## Certificaciones
 
 * ITIL v4 (2022)
