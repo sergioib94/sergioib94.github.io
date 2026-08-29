@@ -35,6 +35,13 @@ jobs:
         env:
           JEKYLL_ENV: production
 
+      - name: Debug - listar _site
+        run: |
+          echo "--- Contenido de _site ---"
+          ls -la _site/
+          echo "--- Primeras líneas de _site/index.html ---"
+          head -30 _site/index.html || echo "index.html NO EXISTE"
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
@@ -50,10 +57,3 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-
-      - name: Debug - listar _site
-        run: |
-          echo "--- Contenido de _site ---"
-          ls -la _site/
-          echo "--- Primeras líneas de _site/index.html ---"
-          head -30 _site/index.html || echo "index.html NO EXISTE"
