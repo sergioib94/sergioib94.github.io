@@ -23,7 +23,6 @@ plugins:
   - jekyll-archives
   - jekyll-remote-theme
 
-
 # Paginación
 paginate: 5
 paginate_path: "/page:num/"
