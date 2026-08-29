@@ -11,7 +11,7 @@ author_profile: true
 <div class="entries-grid">
 {% for category in site.categories %}
   <div class="entry-item">
-    <h3 id="{{ category[0] | slugify }}">{{ category[0] }}</h3>
+    <h3 id="{{ category[0] | slugify }}"><a href="/categories/{{ category[0] | slugify }}/">{{ category[0] }}</a></h3>
     <p><strong>{{ category[1].size }}</strong> post{{ category[1].size | pluralize }}</p>
     <ul>
     {% for post in category[1] limit:3 %}
@@ -19,7 +19,7 @@ author_profile: true
     {% endfor %}
     </ul>
     {% if category[1].size > 3 %}
-      <p><small>...y {{ category[1].size | minus: 3 }} más</small></p>
+      <p><small><a href="/categories/{{ category[0] | slugify }}/">...y {{ category[1].size | minus: 3 }} más</a></small></p>
     {% endif %}
   </div>
 {% endfor %}
@@ -40,6 +40,13 @@ author_profile: true
 .entry-item h3 {
   margin-top: 0;
   color: #2c3e50;
+}
+.entry-item h3 a {
+  color: inherit;
+  text-decoration: none;
+}
+.entry-item h3 a:hover {
+  text-decoration: underline;
 }
 </style>
 
