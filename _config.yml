@@ -20,6 +20,7 @@ plugins:
   - jekyll-sitemap
   - jekyll-paginate
   - jekyll-include-cache
+  - jekyll-archives
 
 # Paginación
 paginate: 5
@@ -122,7 +123,7 @@ exclude:
 
 # Para categorías y etiquetas
 category_archive:
-  type: liquid
+  type: jekyll-archives
   path: /categories/
 tag_archive:
   type: liquid
@@ -139,3 +140,12 @@ include:
   - _pages
   - _posts
   - _data
+
+# bloque jekyil-archives
+jekyll-archives:
+  enabled:
+    - categories
+  layouts:
+    category: archive-taxonomy
+  permalinks:
+    category: /categories/:name/
