@@ -50,3 +50,10 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+      - name: Debug - listar _site
+        run: |
+          echo "--- Contenido de _site ---"
+          ls -la _site/
+          echo "--- Primeras líneas de _site/index.html ---"
+          head -30 _site/index.html || echo "index.html NO EXISTE"
